@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>OLEA3D Retro Hub</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+background:#0d0d0d;
+color:white;
+text-align:center;
+}
+
+header{
+
+padding:30px;
+background:linear-gradient(180deg,#1a1a1a,#0d0d0d);
+}
+
+.logo{
+width:180px;
+border-radius:50%;
+box-shadow:0 0 25px gold;
+}
+
+h1{
+color:#d4af37;
+margin-top:15px;
+}
+
+.sub{
+color:#9acd32;
+font-size:18px;
+}
+
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:20px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.card{
+background:#181818;
+border:2px solid #d4af37;
+border-radius:15px;
+padding:20px;
+box-shadow:0 0 15px rgba(212,175,55,.3);
+}
+
+.card h2{
+
+color:#d4af37;
+}
+
+.btn{
+display:inline-block;
+padding:12px 20px;
+background:#6b8e23;
+color:white;
+text-decoration:none;
+border-radius:8px;
+font-weight:bold;
+margin-top:10px;
+}
+
+.btn:hover{
+background:#88aa33;
+}
+
+.proximamente{
+opacity:.6;
+
+}
+
+footer{
+margin-top:40px;
+padding:20px;
+background:#111;
+color:#aaa;
+}
+
+.music{
+margin-top:20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<img src="logo.png" class="logo">
+
+<h1>OLEA3D RETRO HUB</h1>
+
+<p class="sub">
+Colección Retro NFC · Juega desde tu móvil
+</p>
+
+<div class="music">
+<button onclick="toggleMusic()" class="btn">
+🎵 Música Retro ON/OFF
+</button>
+</div>
+
+</header>
+
+<div class="container">
+
+<div class="card">
+<h2>🎮 TETRIS</h2>
+
+<p>Ya disponible</p>
+
+<a class="btn"
+href="https://jaimepc83.github.io/tetrisNes/">
+JUGAR
+</a>
+</div>
+
+<div class="card proximamente">
+<h2>🦍 DONKEY KONG 64</h2>
+<p>Próximamente</p>
+</div>
+
+<div class="card proximamente">
+<h2>🗡️ ZELDA</h2>
+<p>Próximamente</p>
+</div>
+
+<div class="card proximamente">
+<h2>🍄 MARIO BROS</h2>
+
+<p>Próximamente</p>
+</div>
+
+</div>
+
+<footer>
+
+<p><strong>@olea3d</strong></p>
+
+<p>
+Acerca tu llavero NFC y disfruta de la experiencia retro.
+</p>
+
+</footer>
+
+<audio id="retroMusic" loop>
+<source src="retro.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+function toggleMusic(){
+const audio=document.getElementById("retroMusic");
+
+if(audio.paused){
+audio.play();
+}else{
+audio.pause();
+}
+}
+
+</script>
+
+</body>
+</html>
