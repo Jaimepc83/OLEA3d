@@ -49,11 +49,18 @@ gap:20px;
 }
 
 .card{
-background:#181818;
-border:2px solid #d4af37;
-border-radius:15px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+border:2px solid #f7d24a;
+border-radius:20px;
 padding:20px;
-box-shadow:0 0 15px rgba(212,175,55,.3);
+transition:0.3s;
+box-shadow:0 0 15px rgba(247,210,74,0.3);
+}
+
+.card:hover{
+transform:translateY(-10px) scale(1.03);
+box-shadow:0 0 30px rgba(247,210,74,0.8);
 }
 
 .card h2{
@@ -94,6 +101,16 @@ font-weight:bold;
 color:#9dff3d;
 text-shadow:0 0 10px #9dff3d;
 }
+.nfc-badge{
+display:inline-block;
+background:#9dff3d;
+color:#111;
+font-weight:bold;
+padding:5px 12px;
+border-radius:20px;
+margin-bottom:10px;
+box-shadow:0 0 10px #9dff3d;
+}  
 .music{
 margin-top:20px;
 }
@@ -108,7 +125,9 @@ margin-top:20px;
 <img src="logo.png" class="logo">
 
 <h1>OLEA3D RETRO HUB</h1>
-  
+  <div class="nfc-badge">
+📡 NFC RETRO COLLECTION
+</div> 
 <div class="stats">
 🎮 Juegos disponibles: 1<br>
 🏆 Total colección: 4
@@ -130,6 +149,7 @@ Colección Retro NFC · Juega desde tu móvil
 
 <div class="card">
 <img src="TetrisNes.png" width="150">
+<div class="nfc-badge">NFC</div>
 <h2>🎮 TETRIS</h2>
 
 <p>Ya disponible</p>
