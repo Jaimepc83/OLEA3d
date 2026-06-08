@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tetris - OLEA3D Retro Hub</title>
+</head>
+
+<body>
+
+<h1>🎮 TETRIS</h1>
+
+<img src="TetrisNes.png" width="250">
+
+<p>
+El clásico juego de puzles de Nintendo.
+</p>
+
+<a href="https://jaimepc83.github.io/tetrisNes/">
+
+🎮 JUGAR AHORA
+</a>
+
+<br><br>
+
+<a href="index.html">
+⬅ Volver al catálogo
+</a>
+
+</body>
+</html>
