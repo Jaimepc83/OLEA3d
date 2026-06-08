@@ -19,19 +19,13 @@ text-align:center;
 header{
 
 padding:30px;
-background:
-linear-gradient(
-180deg,
-#1f2330 0%,
-#242845 40%,
-#161824 100%
-);
+background:linear-gradient(180deg,#1a1a1a,#0d0d0d);
+}
 
 .logo{
-width:280px;
+width:180px;
 border-radius:50%;
 box-shadow:0 0 25px gold;
-animation: flotar 3s ease-in-out infinite;
 }
 
 h1{
@@ -50,17 +44,16 @@ max-width:1200px;
 margin:auto;
 padding:20px;
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
 gap:20px;
 }
 
 .card{
- background:red !important;
 background:rgba(255,255,255,0.05);
 backdrop-filter:blur(10px);
 border:2px solid #f7d24a;
 border-radius:20px;
-padding:10px;
+padding:20px;
 transition:0.3s;
 box-shadow:0 0 15px rgba(247,210,74,0.3);
 cursor:pointer;
@@ -129,14 +122,6 @@ box-shadow:0 0 10px #9dff3d;
 .music{
 margin-top:20px;
 }
-@keyframes flotar{
-0%{
-transform:translateY(0px);
-}
-
-50%{
-transform:translateY(-8px);
-}
 
 </style>
 </head>
@@ -173,20 +158,15 @@ Colección Retro NFC · Juega desde tu móvil
 🎮 NES
 </h1>
   <div style="text-align:center;margin-bottom:20px;">
-<img src="nes.jpg" width="320"
-style="border-radius:15px;box-shadow:0 0 25px rgba(247,210,74,0.8);animation: flotar 3s ease-in-out infinite;">
+<img src="nes.jpg" width="320" style="border-radius:15px;box-shadow:0 0 25px rgba(247,210,74,0.8);">
 </div>
 
  <div class="container"> 
    
 <div class="card">
-<img src="TetrisNes.png" width="140">
-
-<div style="margin-top:10px;">
-<span class="nfc-badge">NFC</span>
-<span class="nfc-badge">⭐ LEGENDARIO</span>
-</div>
-
+<img src="TetrisNes.png" width="150">
+<div class="nfc-badge">NFC</div>
+<div class="nfc-badge">⭐ LEGENDARIO</div>
 <h2>🎮 TETRIS</h2>
 
 <p>Ya disponible</p>
@@ -197,12 +177,8 @@ JUGAR
 </a>
 </div>
   <div class="card">
-<img src="SuperMarioBros.jpg" width="140">
-
-<div style="margin-top:10px;">
-<span class="nfc-badge">NFC</span>
-</div>
-
+<img src="SuperMarioBros.jpg" width="150">
+<div class="nfc-badge">NFC</div>
 <h2>🍄 SUPER MARIO BROS</h2>
 <p>Ya disponible</p>
 <a href="SuperMarioFicha.html" class="btn">JUGAR</a>
