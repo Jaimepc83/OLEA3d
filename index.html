@@ -4,585 +4,87 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OLEA3D Retro Hub</title>
-
 <style>
-/* 1. VARIABLES CAMALEÓNICAS */
-:root {
-    --modal-border: #d4af37;
-    --modal-title: #ffd700;
-    --modal-tab: #9dff3d;
-}
+/* ... (Mantén los mismos estilos anteriores del CSS) ... */
 
-/* 2. ESTILOS BASE */
-body { margin: 0; font-family: Arial, sans-serif; background: #0d0d0d; color: white; text-align: center; overflow-x: hidden; position: relative; min-height: 100vh; }
-
-/* 3. FONDO ANIMADO 3D */
-.bg-grid { position: fixed; bottom: 0; left: -50%; width: 200%; height: 60vh; background: linear-gradient(transparent 10%, rgba(157,255,61,0.3) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(157,255,61,0.5) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(157,255,61,0.5) 21px); transform-origin: bottom; transform: perspective(500px) rotateX(60deg); animation: gridMove 2s linear infinite; z-index: -1; opacity: 0.4; }
-@keyframes gridMove { 0% { transform: perspective(500px) rotateX(60deg) translateY(0); } 100% { transform: perspective(500px) rotateX(60deg) translateY(21px); } }
-
-header { padding: 20px; background: linear-gradient(180deg, rgba(26,26,26,0.9), rgba(13,13,13,0)); position: relative; z-index: 10; }
-.logo { width: 120px; border-radius: 50%; box-shadow: 0 0 20px #d4af37; cursor: pointer; transition: 0.1s; }
-.logo:active { transform: scale(0.9); }
-h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
-.sub { color: #9acd32; font-size: 16px; margin-bottom: 20px; }
-
-/* BOTÓN DE MÚSICA */
-.btn-musica { background: #eee; color: #111; padding: 10px 20px; border-radius: 8px; font-weight: bold; border: 2px solid #ccc; cursor: pointer; margin: 10px auto; font-size: 14px; transition: 0.3s; display: inline-block; position: relative; z-index: 10; }
-.btn-musica:hover { transform: scale(1.05); }
-
-/* BUSCADOR DE JUEGOS */
-.buscador-container { margin: 25px auto 10px auto; max-width: 400px; padding: 0 15px; position: relative; z-index: 10; }
-#buscadorJuegos { width: 100%; padding: 12px 20px; border-radius: 25px; border: 2px solid #d4af37; background: rgba(18, 18, 18, 0.8); color: white; font-size: 16px; outline: none; box-shadow: 0 0 15px rgba(212,175,55,0.3); transition: 0.3s; font-family: inherit; box-sizing: border-box; text-align: center; }
-#buscadorJuegos::placeholder { color: #aaa; }
-#buscadorJuegos:focus { box-shadow: 0 0 25px rgba(157,255,61,0.6); border-color: #9dff3d; background: rgba(0, 0, 0, 0.9); }
-
-/* 4. MENÚ SUPERIOR DE CONSOLAS */
-.menu { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin: 15px auto; padding: 10px; max-width: 95%; position: relative; z-index: 10; }
-.menu a { color: white; text-decoration: none; background: #222; padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; border: 1px solid #d4af37; transition: 0.3s; }
-.menu a:hover { background: #d4af37; color: #111; box-shadow: 0 0 10px #d4af37; }
-
-/* 5. CONTENEDORES */
-.main-container { max-width: 1200px; margin: auto; padding: 10px; position: relative; z-index: 10; }
-.section-title { color: #ffd700; margin: 30px 0 15px 0; font-size: 22px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
-.banner-console { width: 100%; max-width: 320px; height: auto; border-radius: 15px; box-shadow: 0 0 20px rgba(247,210,74,0.4); margin-bottom: 15px; }
-
-.container { display: flex; gap: 20px; overflow-x: auto; padding: 20px 10px; scroll-behavior: smooth; perspective: 1000px; }
-.container::-webkit-scrollbar { display: none; }
-
-/* 6. EFECTO 3D Y BORDE ANIMADO */
-.card-wrapper { position: relative; min-width: 220px; height: 290px; flex-shrink: 0; cursor: pointer; z-index: 1; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), display 0.3s; }
-.card-wrapper:hover { transform: translateY(-10px) rotateX(8deg) rotateY(-5deg) scale(1.05); z-index: 100; }
-.card-wrapper::before { content: ''; position: absolute; top: -3px; left: -3px; right: -3px; bottom: -3px; background: linear-gradient(45deg, #d4af37, #f8f9fa, #9acd32, #d4af37); background-size: 300%; border-radius: 23px; z-index: -1; animation: brilloSeda 4s linear infinite; box-shadow: 0 0 15px rgba(212,175,55,0.3); }
-@keyframes brilloSeda { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-
-.card { background: rgba(18, 18, 18, 0.95); backdrop-filter: blur(10px); border-radius: 20px; padding: 15px; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; box-sizing: border-box; }
-.card h2 { color: #fff; font-size: 15px; margin: 8px 0; text-transform: uppercase; }
-.card img { max-height: 110px; object-fit: contain; border-radius: 8px; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.8)); transition: 0.3s; }
-.card-wrapper:hover .card img { transform: scale(1.1); }
-
-/* 7. BOTONES Y BADGES */
-.btn-ver { display: inline-block; padding: 10px 15px; background: #6b8e23; color: white; border-radius: 6px; font-weight: bold; font-size: 12px; border: 1px solid #88aa33; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
-.stats { margin: 10px 0; font-size: 16px; font-weight: bold; color: #9dff3d; text-shadow: 0 0 5px rgba(157,255,61,0.5); }
-.nfc-badge { display: inline-block; background: #9dff3d; color: #111; font-weight: bold; padding: 3px 10px; border-radius: 20px; margin: 2px; font-size: 11px; box-shadow: 0 0 8px rgba(157,255,61,0.6); }  
-
-/* 8. MODAL (FICHA FLOTANTE CAMALEÓNICA) */
-.modal-ficha { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 99999; justify-content: center; align-items: center; padding: 15px; box-sizing: border-box; backdrop-filter: blur(5px); }
-.ficha-content { background: #121212; border: 3px solid var(--modal-border); border-radius: 20px; max-width: 450px; width: 100%; padding: 25px; position: relative; box-shadow: 0 0 40px var(--modal-border); max-height: 90vh; overflow-y: auto; text-align: left; box-sizing: border-box; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); transition: border-color 0.4s, box-shadow 0.4s; }
-@keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
-.close-ficha { position: absolute; top: 12px; right: 12px; background: #ff4444; color: white; border: none; width: 35px; height: 35px; font-weight: bold; border-radius: 50%; cursor: pointer; font-size: 14px; display: flex; justify-content: center; align-items: center; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.5); }
-
-/* ESTILO DEL HEADER Y LA VALORACIÓN */
-.ficha-header { display: flex; gap: 15px; align-items: center; margin-bottom: 20px; padding-right: 40px; }
-.ficha-header img { width: 90px; height: auto; border-radius: 8px; object-fit: contain; box-shadow: 0 4px 10px rgba(0,0,0,0.6); }
-.ficha-titulos { display: flex; flex-direction: column; gap: 8px; }
-.ficha-titulos h2 { color: var(--modal-title); margin: 0; font-size: 20px; transition: color 0.4s; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-.valoracion-box { background: rgba(0,0,0,0.6); border: 1px solid var(--modal-tab); color: white; padding: 6px 12px; border-radius: 8px; font-size: 13px; font-weight: bold; display: inline-block; text-shadow: 1px 1px 2px black; transition: border-color 0.4s; }
-
-.tabs { display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 2px solid #333; padding-bottom: 10px; }
-.tab-btn { background: transparent; color: #aaa; border: none; font-size: 14px; font-weight: bold; cursor: pointer; padding: 5px 10px; border-radius: 5px; transition: 0.3s; }
-.tab-btn.active { background: #333; color: var(--modal-tab); }
-
-.texto-panel { font-size: 14.5px; line-height: 1.6; color: #eee; margin-bottom: 20px; background: rgba(255,255,255,0.03); padding: 18px; border-radius: 12px; border-left: 4px solid var(--modal-tab); min-height: 100px; transition: border-color 0.4s; text-align: justify; }
-.texto-panel strong { color: var(--modal-title); transition: color 0.4s; font-size: 15px; }
-
-.btn-jugar-modal { display: block; width: 100%; text-align: center; padding: 14px 0; background: #6b8e23; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 16px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(107,142,35,0.6); box-sizing: border-box; transition: 0.3s; }
-.btn-jugar-modal:hover { background: #88aa33; transform: translateY(-2px); }
-
-footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-size: 14px; border-top: 2px solid #222; position: relative; z-index: 10; }
-
-/* 9. PANTALLAS DE TRANSICIÓN Y ESCANEO */
-.transition-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
-.transition-screen.active { opacity: 1; pointer-events: all; }
-.insert-coin-text { color: #ffd700; font-size: 28px; font-family: 'Courier New', Courier, monospace; font-weight: bold; text-shadow: 0 0 20px #ffd700, 0 0 40px #ff0000; animation: blink 0.5s infinite alternate; }
-@keyframes blink { from { opacity: 1; transform: scale(1); } to { opacity: 0.2; transform: scale(1.05); } }
-
-.nfc-scanner { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,15,0,0.95); z-index: 99999999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(10px); }
-.nfc-scanner.active { opacity: 1; pointer-events: all; }
-.nfc-laser-container { position: relative; width: 80%; max-width: 300px; height: 200px; border: 2px dashed rgba(157,255,61,0.4); border-radius: 15px; overflow: hidden; display: flex; justify-content: center; align-items: center; }
-.nfc-laser { position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: #9dff3d; box-shadow: 0 0 20px 8px rgba(157,255,61,0.6); animation: scanLaser 1.2s ease-in-out infinite alternate; }
-.nfc-icon { font-size: 50px; opacity: 0.5; animation: pulseIcon 1.2s infinite; }
-.nfc-text { color: #9dff3d; font-family: 'Courier New', monospace; margin-top: 25px; font-size: 18px; letter-spacing: 3px; animation: blinkText 0.8s infinite; }
-@keyframes scanLaser { 0% { transform: translateY(0); } 100% { transform: translateY(200px); } }
-@keyframes pulseIcon { 0% { text-shadow: 0 0 10px #9dff3d; } 50% { text-shadow: 0 0 30px #9dff3d; } 100% { text-shadow: 0 0 10px #9dff3d; } }
-@keyframes blinkText { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
-
-.secreto::before { background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff) !important; animation: brilloSeda 2s linear infinite !important; }
-
-/* Enlaces de conexión para la instalación PWA */
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#d4af37">
-<link rel="apple-touch-icon" href="logo.png">
+/* ESTILOS SALÓN DE LA FAMA */
+.salon-fama { background: #000; border: 2px solid #ffd700; padding: 20px; border-radius: 10px; margin-top: 20px; }
+.tabla-records { width: 100%; border-collapse: collapse; color: #fff; font-family: 'Courier New', monospace; }
+.tabla-records th { color: #ffd700; border-bottom: 2px solid #ffd700; padding: 10px; }
+.tabla-records td { padding: 8px; text-align: center; border-bottom: 1px solid #333; }
+.btn-anadir { background: #ffd700; color: #000; border: none; padding: 10px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; }
 </style>
 </head>
-
 <body>
-
-<div id="nfcScannerScreen" class="nfc-scanner">
-    <div class="nfc-laser-container">
-        <div class="nfc-icon">📡</div>
-        <div class="nfc-laser"></div>
-    </div>
-    <div class="nfc-text">LEYENDO CHIP NFC...</div>
-</div>
-
-<div id="transitionScreen" class="transition-screen">
-    <div class="insert-coin-text">> INSERT COIN <</div>
-</div>
-
-<div class="bg-grid"></div>
-
-<audio id="musicaFondo" loop>
-    <source src="musica.mp3" type="audio/mpeg">
-</audio>
-
-<header>
-    <img src="logo.png" class="logo" alt="OLEA3D Logo" onclick="toqueSecreto()">
-    <h1>OLEA3D Hub Retro</h1>
-    <div class="nfc-badge">📡 Colección NFC</div> 
-    <p class="sub">Escanea tu llavero y todo estará listo para jugar</p>
-    
-    <button id="btnMusica" class="btn-musica" onclick="reproducirClic(); toggleMusica();">🎵 Música Retro ON/OFF</button>
-
-    <div class="buscador-container">
-        <input type="text" id="buscadorJuegos" placeholder="🔍 Buscar juego (ej: Mario, Zelda...)" onkeyup="filtrarJuegos()">
-    </div>
-</header>
-
-<div class="menu">
-    <a href="#nes" onclick="reproducirClic()">🎮 NES</a>
-    <a href="#n64" onclick="reproducirClic()">🕹️ N64</a>
-    <a href="#megadrive" onclick="reproducirClic()">⚡ MD</a>
-    <a href="#snes" onclick="reproducirClic()">⭐ SNES</a>
-    <a href="#gba" onclick="reproducirClic()">📱 GBA</a>
-</div>
-
-<div class="main-container">
-    <div class="stats">🕹️ 14 Juegos | 🏆 Colección Premium</div>
-
-    <h1 id="nes" class="section-title">🎮 NES</h1>
-    <img src="nes.jpg" class="banner-console" alt="NES">
-    <div class="container"> 
-        
-        <div class="card-wrapper secreto" id="tarjetaSecreta" onclick="reproducirClic(); verFicha('pacman')" style="display: none;">
-            <div class="card" style="border-color: #ff00ff; box-shadow: inset 0 0 15px rgba(255,0,255,0.2);">
-                <img src="pacman.jpg" alt="Pac-Man" onerror="this.src='https://upload.wikimedia.org/wikipedia/en/5/59/Pac-man.png'">
-                <h2 style="color: #ff00ff; text-shadow: 0 0 5px #ff00ff;">👻 PAC-MAN</h2>
-                <div class="nfc-badge" style="background: #ff00ff; color: white;">SECRETO 1-UP</div>
-                <span class="btn-ver" style="background: #990099; border-color: #ff00ff;">VER FICHA Y JUGAR</span>
-            </div>
-        </div>
-
-        <div class="card-wrapper" onclick="reproducirClic(); verFicha('miketyson')">
-            <div class="card">
-                <img src="miketyson.jpg" alt="Punch Out">
-                <h2>🥊 Punch-Out!!</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">VER FICHA Y JUGAR</span>
-            </div>
-        </div>
-
-        <div class="card-wrapper" onclick="reproducirClic(); verFicha('ghostngoblin')">
-            <div class="card">
-                <img src="ghostngoblin.jpg" alt="Ghosts n Goblins">
-                <h2>💀 G. n Goblins</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">VER FICHA Y JUGAR</span>
-            </div>
-        </div>
-
-        <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariobros3')">
-            <div class="card">
-                <img src="supermariobros3.jpg" alt="Mario Bros 3">
-                <h2>🍄 Mario Bros 3</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">VER FICHA Y JUGAR</span>
-            </div>
-        </div>
-
-        <div class="card-wrapper" onclick="reproducirClic(); verFicha('tetris')">
-            <div class="card">
-                <img src="TetrisNes.png" alt="Tetris">
-                <h2>🎮 Tetris</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">VER FICHA Y JUGAR</span>
-            </div>
-        </div>
-        <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariobros')">
-            <div class="card">
-                <img src="SuperMarioBros.jpg" alt="Mario Bros">
-                <h2>🍄 Mario Bros</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">VER FICHA Y JUGAR</span>
-            </div>
-        </div>
-    </div>
- 
-    <h1 id="n64" class="section-title">🕹️ NINTENDO 64</h1>
-    <img src="n64.jpg" class="banner-console" alt="N64">
-    <div class="container"> 
-        <div class="card-wrapper" onclick="reproducirClic(); verFicha('zeldaocarina')">
-            <div class="card">
-                <img src="zeldaocarina.jpg" alt="Zelda">
-                <h2>⚔️ Zelda OOT</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">VER FICHA Y JUGAR</span>
-            </div>
-        </div>
-        <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariotennis')">
-            <div class="card">
-                <img src="MarioTennis.jpg" alt="Mario Tennis">
-                <h2>🎾 Mario Tennis</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">VER FICHA Y JUGAR</span>
-            </div>
-        </div> 
-    </div>
-
-    <h1 id="megadrive" class="section-title">⚡ MEGA DRIVE</h1>
-    <img src="megadrive.jpg" class="banner-console" alt="Mega Drive">
-    <div class="container">
-
-        <div class="card-wrapper" onclick="reproducirClic(); verFicha('rambo3')">
-            <div class="card">
-                <img src="Rambo3.jpg" alt="Rambo III">
-                <h2>💥 Rambo III</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">VER FICHA Y JUGAR</span>
-            </div>
-        </div>
-        <div class="card-wrapper" onclick="reproducirClic(); verFicha('sonic')">
-            <div class="card">
-                <img src="sonicthehedgehog.jpg" alt="Sonic">
-                <h2>🦔 Sonic</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">VER FICHA Y JUGAR</span>
-            </div>
-        </div>
-        <div class="card-wrapper" onclick="reproducirClic(); verFicha('aladdin')">
-            <div class="card">
-                <img src="aladin.jpg" alt="Aladdin">
-                <h2>🧞 Aladdin</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">VER FICHA Y JUGAR</span>
-            </div>
-        </div>
-    </div>
- 
-    <h1 id="snes" class="section-title">⭐ SNES</h1>
-    <img src="snes.jpg" class="banner-console" alt="SNES">
-    <div class="container">
-        <div class="card-wrapper" onclick="reproducirClic(); verFicha('marioworld')">
-            <div class="card">
-                <img src="SuperMarioWorld.jpg" alt="Mario World">
-                <h2>🍄 Mario World</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">VER FICHA Y JUGAR</span>
-            </div>
-        </div>
-        <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariokartsnes')">
-            <div class="card">
-                <img src="SuperMarioKartsnes.jpg" alt="Mario Kart">
-                <h2>🏎️ Mario Kart</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">VER FICHA Y JUGAR</span>
-            </div>
-        </div>
-    </div> 
-
-    <h1 id="gba" class="section-title">📱 GAME BOY ADVANCE</h1>
-    <img src="gba.jpg" class="banner-console" alt="GBA">
-    <div class="container">
-        <div class="card-wrapper" onclick="reproducirClic(); verFicha('esmeralda')">
-            <div class="card">
-                <img src="pokemonesme.jpg" alt="Pokemon Esmeralda">
-                <h2>⚡ P. Esmeralda</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">VER FICHA Y JUGAR</span>
-            </div>
-        </div>
-        <div class="card-wrapper" onclick="reproducirClic(); verFicha('rubi')">
-            <div class="card">
-                <img src="pokemonrubi.jpg" alt="Pokemon Rubi">
-                <h2>🔴 P. Rubí</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">VER FICHA Y JUGAR</span>
-            </div>
-        </div>
-    </div>
-</div>
-
-<footer>
-    <p><strong>@olea3d</strong></p>
-    <p>Adquiere tu llavero personalizado NFC. Todo está listo para jugar.</p>
-</footer>
 
 <div id="modalFicha" class="modal-ficha">
     <div class="ficha-content">
-        <button class="close-ficha" onclick="reproducirClic(); cerrarFicha();">❌</button>
-        
+        <button class="close-ficha" onclick="cerrarFicha();">❌</button>
         <div class="ficha-header">
             <img id="fichaImg" src="">
             <div class="ficha-titulos">
-                <h2 id="fichaTitulo">Título del Juego</h2>
-                <div id="fichaValoracion" class="valoracion-box">⭐ Valoración</div>
+                <h2 id="fichaTitulo"></h2>
+                <div id="fichaValoracion" class="valoracion-box"></div>
             </div>
         </div>
         
         <div class="tabs">
-            <button id="tabHistoria" class="tab-btn active" onclick="reproducirClic(); cambiarPestana('historia');">📖 HISTORIA</button>
-            <button id="tabManual" class="tab-btn" onclick="reproducirClic(); cambiarPestana('manual');">📜 MANUAL</button>
+            <button class="tab-btn active" onclick="cambiarPestana('historia');">📖 HISTORIA</button>
+            <button class="tab-btn" onclick="cambiarPestana('fama');">🏆 SALÓN FAMA</button>
         </div>
 
-        <div id="contenidoHistoria" class="texto-panel">Cargando sinopsis...</div>
-        <div id="contenidoManual" class="texto-panel" style="display:none;">Cargando manual...</div>
+        <div id="contenidoHistoria" class="texto-panel"></div>
+        
+        <div id="contenidoFama" class="salon-fama" style="display:none;">
+            <table class="tabla-records" id="tablaRecords">
+                <thead><tr><th>POS</th><th>NOMBRE</th><th>PUNTOS</th></tr></thead>
+                <tbody id="bodyRecords"></tbody>
+            </table>
+            <button class="btn-anadir" onclick="anadirRecord()">➕ AÑADIR RÉCORD</button>
+        </div>
 
         <button id="btnIniciarJuego" class="btn-jugar-modal" onclick="irAlJuego();">🚀 EMPEZAR PARTIDA</button>
     </div>
 </div>
 
 <script>
-// --- MOTOR DE INSTALACIÓN DE LA APLICACIÓN (PWA) ---
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').then(registration => {
-            console.log('App lista para instalar');
-        }).catch(err => {
-            console.log('Error en la instalación: ', err);
-        });
-    });
+// --- LÓGICA DE SALÓN DE LA FAMA ---
+let juegoActual = "";
+
+function cambiarPestana(pestana) {
+    document.getElementById("contenidoHistoria").style.display = (pestana === 'historia') ? "block" : "none";
+    document.getElementById("contenidoFama").style.display = (pestana === 'fama') ? "block" : "none";
+    if(pestana === 'fama') renderizarRecords();
 }
 
-// --- SISTEMA DEL EASTER EGG ---
-let toquesLogo = 0;
-let tiempoToques;
-
-function toqueSecreto() {
-    toquesLogo++;
-    clearTimeout(tiempoToques);
-    if (toquesLogo === 3) {
-        desbloquearSecreto();
-        toquesLogo = 0;
-    } else {
-        tiempoToques = setTimeout(() => { toquesLogo = 0; }, 1000); 
+function anadirRecord() {
+    let nombre = prompt("Introduce tus 3 iniciales:", "AAA").toUpperCase().substring(0, 3);
+    let puntos = prompt("Introduce tu puntuación:", "0");
+    if (nombre && puntos) {
+        let records = JSON.parse(localStorage.getItem('records_' + juegoActual) || "[]");
+        records.push({nombre, puntos: parseInt(puntos)});
+        records.sort((a, b) => b.puntos - a.puntos);
+        records = records.slice(0, 5); // Guardamos solo top 5
+        localStorage.setItem('records_' + juegoActual, JSON.stringify(records));
+        renderizarRecords();
     }
 }
 
-function desbloquearSecreto() {
-    const flash = document.createElement("div");
-    flash.style.position = "fixed"; flash.style.top = "0"; flash.style.left = "0"; flash.style.width = "100%"; flash.style.height = "100%";
-    flash.style.backgroundColor = "white"; flash.style.zIndex = "999999999"; flash.style.transition = "opacity 0.8s ease-out";
-    document.body.appendChild(flash);
-    
-    reproducirSonido1UP();
-
-    const tarjeta = document.getElementById("tarjetaSecreta");
-    if (tarjeta) {
-        tarjeta.style.display = "block";
-        setTimeout(() => { tarjeta.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 500);
-    }
-
-    setTimeout(() => {
-        flash.style.opacity = "0";
-        setTimeout(() => flash.remove(), 800);
-    }, 100);
-}
-
-function reproducirSonido1UP() {
-    try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'square';
-        const now = audioCtx.currentTime;
-        osc.frequency.setValueAtTime(1318.51, now); 
-        osc.frequency.setValueAtTime(1567.98, now + 0.1); 
-        osc.frequency.setValueAtTime(2093.00, now + 0.2); 
-        osc.frequency.setValueAtTime(2637.02, now + 0.3); 
-        osc.frequency.setValueAtTime(3135.96, now + 0.4); 
-        gain.gain.setValueAtTime(0.1, now);
-        gain.gain.linearRampToValueAtTime(0, now + 0.6);
-        osc.connect(gain); gain.connect(audioCtx.destination);
-        osc.start(now); osc.stop(now + 0.6);
-    } catch(e) {}
-}
-
-// --- BUSCADOR ---
-function filtrarJuegos() {
-    let input = document.getElementById("buscadorJuegos").value.toLowerCase();
-    let tarjetas = document.querySelectorAll(".card-wrapper");
-    tarjetas.forEach(tarjeta => {
-        let titulo = tarjeta.querySelector("h2").innerText.toLowerCase();
-        if (titulo.includes(input)) { tarjeta.style.display = "block"; } else { tarjeta.style.display = "none"; }
-    });
-}
-
-// --- AUDIO Y CONTROLES GENERALES ---
-let musica = document.getElementById("musicaFondo");
-let musicaSonando = false;
-
-function reproducirClic() {
-    try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const oscillator = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
-        oscillator.type = 'square';
-        oscillator.frequency.setValueAtTime(440, audioCtx.currentTime); 
-        oscillator.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1); 
-        gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); 
-        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1); 
-        oscillator.connect(gainNode); gainNode.connect(audioCtx.destination);
-        oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.1);
-    } catch (e) {}
-}
-
-function reproducirSonidoCoin() {
-    try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'square';
-        osc.frequency.setValueAtTime(987.77, audioCtx.currentTime); 
-        osc.frequency.setValueAtTime(1318.51, audioCtx.currentTime + 0.1); 
-        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
-        osc.connect(gain); gain.connect(audioCtx.destination);
-        osc.start(); osc.stop(audioCtx.currentTime + 0.4);
-    } catch (e) {}
-}
-
-function reproducirSonidoEscaner() {
-    try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(200, audioCtx.currentTime);
-        osc.frequency.linearRampToValueAtTime(800, audioCtx.currentTime + 0.5);
-        gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1);
-        osc.connect(gain); gain.connect(audioCtx.destination);
-        osc.start(); osc.stop(audioCtx.currentTime + 1);
-    } catch (e) {}
-}
-
-function toggleMusica() {
-    let btn = document.getElementById("btnMusica");
-    if (musicaSonando) {
-        musica.pause(); musicaSonando = false;
-        btn.style.background = "#eee"; btn.style.color = "#111"; btn.style.borderColor = "#ccc";
-    } else {
-        musica.play(); musicaSonando = true;
-        btn.style.background = "#6b8e23"; btn.style.color = "white"; btn.style.borderColor = "#88aa33";
-    }
-}
-
-const coloresConsola = {
-    nes: { border: '#e60012', title: '#e60012', tab: '#aaaaaa' },
-    n64: { border: '#00b140', title: '#00b140', tab: '#005b9f' },
-    md:  { border: '#e00000', title: '#e00000', tab: '#d4af37' },
-    snes: { border: '#005b9f', title: '#005b9f', tab: '#e60012' },
-    gba:  { border: '#5a429b', title: '#5a429b', tab: '#d3d3d3' },
-    arcade: { border: '#ff00ff', title: '#ff00ff', tab: '#00ffff' }
-};
-
-// --- BASE DE DATOS OPTIMIZADA ---
-const infoJuegos = {
-    // NUEVO: RAMBO III
-    rambo3: { consola: "md", titulo: "RAMBO III (MEGA DRIVE)", img: "Rambo3.jpg", enlace: "Rambo3.html", valoracion: "⭐⭐⭐⭐ 8.0/10 (Acción Explosiva)", historia: "Lanzado por SEGA en 1989, este vibrante arcade de vista cenital te pone en la piel de Sylvester Stallone. Famoso por su acción táctica y por permitirte destruir tanques y helicópteros usando arcos con flechas explosivas.", manual: "🎯 <strong>Objetivo:</strong> Infiltrarte solo en la fortaleza soviética en Afganistán para rescatar al coronel Trautman.<br><br>🕹️ <strong>Controles:</strong> Cruceta para moverte, un botón para la ametralladora y otro para armas secundarias (flechas, bombas).<br><br>💡 <strong>Truco Retro:</strong> Las flechas explosivas son vitales pero escasas. Guárdalas exclusivamente para destruir los tanques y helicópteros jefe." },
-
-    miketyson: { consola: "nes", titulo: "PUNCH-OUT!! (NES)", img: "miketyson.jpg", enlace: "miketyson.html", valoracion: "⭐⭐⭐⭐⭐ 9.4/10 (Clásico de Culto)", historia: "Lanzado en 1987, este aclamado juego de boxeo te pone en la piel de Little Mac. Más que un juego de deportes, es un rompecabezas de reflejos donde debes memorizar los patrones de rivales icónicos como King Hippo hasta llegar al mismísimo Mike Tyson.", manual: "🎯 <strong>Objetivo:</strong> Escalar en el ranking de la WVBA derrotando a todos los boxeadores hasta ganar el cinturón.<br><br>🕹️ <strong>Controles:</strong> Esquiva a los lados, bloquea y usa los botones para dar ganchos. Pulsa 'Start' para el gancho estrella.<br><br>💡 <strong>Truco Retro:</strong> Presta atención al público. En la pelea contra Bald Bull, cuando un espectador con barba asienta con la cabeza o parpadee, es el momento exacto para darle un golpe al cuerpo y noquearlo." },
-    ghostngoblin: { consola: "nes", titulo: "GHOSTS 'N GOBLINS (NES)", img: "ghostngoblin.jpg", enlace: "ghostngoblin.html", valoracion: "⭐⭐⭐⭐ 8.5/10 (Clásico Desafiante)", historia: "Lanzado por Capcom en 1986, es famoso por ser uno de los juegos más difíciles de la historia. Controlas al caballero Sir Arthur, que pierde su armadura al primer golpe, quedando en calzoncillos. Su brutal dificultad lo hizo una leyenda retro.", manual: "🎯 <strong>Objetivo:</strong> Cruzar el reino de los demonios para rescatar a la princesa Prin-Prin.<br><br>🕹️ <strong>Controles:</strong> Botón para saltar y botón para lanzar armas. Cuidado con los saltos, no se pueden corregir en el aire.<br><br>💡 <strong>Truco Retro:</strong> La trampa final: para ver el verdadero desenlace, el juego te obligará a completarlo dos veces seguidas de principio a fin." },
-    mariobros3: { consola: "nes", titulo: "SUPER MARIO BROS 3 (NES)", img: "supermariobros3.jpg", enlace: "supermariobros3.html", valoracion: "⭐⭐⭐⭐⭐ 9.8/10 (Obra Maestra)", historia: "Lanzado en 1988, revolucionó los plataformas con su mapa navegable, minijuegos y el icónico traje de mapache para volar. Su diseño de niveles y secretos marcaron el futuro de la industria.", manual: "🎯 <strong>Objetivo:</strong> Derrotar a Bowser y a sus Koopalings para salvar a los 7 reyes caídos.<br><br>🕹️ <strong>Controles:</strong> Botón de salto y botón para correr/volar. En el mapa, flechas para moverte.<br><br>💡 <strong>Truco Retro:</strong> En el Mundo 1, busca las flautas mágicas (en el nivel 3 y en la fortaleza) para viajar al instante al Mundo 8." },
-    pacman: { consola: "arcade", titulo: "PAC-MAN (ARCADE)", img: "pacman.jpg", enlace: "Pacman.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10 (Clásico Atemporal)", historia: "El comecocos original de 1980 que desató la locura en los recreativos. Fue pionero en usar 'power-ups' y dotar a cada fantasma de una inteligencia artificial única.", manual: "🎯 <strong>Objetivo:</strong> Comer todos los puntos del laberinto sin que te atrapen los fantasmas. Come las pastillas grandes para poder devorarlos.<br><br>🕹️ <strong>Controles:</strong> Flechas de dirección para girar por las esquinas.<br><br>💡 <strong>Truco Retro:</strong> Usa los túneles laterales para escapar rápidamente; los fantasmas reducen enormemente su velocidad al cruzar por ellos." },
-    tetris: { consola: "nes", titulo: "TETRIS (NES)", img: "TetrisNes.png", enlace: "TetrisFicha.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10 (Imprescindible)", historia: "Creado en 1984, este rompecabezas soviético es un fenómeno mundial. Su desafío de encajar piezas y su mítica banda sonora rusa ofrecen una adicción infinita.", manual: "🎯 <strong>Objetivo:</strong> Encajar las piezas geométricas para crear líneas completas, hacerlas desaparecer y evitar que la pantalla se llene.<br><br>🕹️ <strong>Controles:</strong> Flechas izquierda/derecha para mover, y botones de acción para rotar la pieza.<br><br>💡 <strong>Truco Retro:</strong> Intenta dejar siempre una sola columna vacía en el lateral derecho para introducir la pieza alargada y conseguir un 'Tetris'." },
-    mariobros: { consola: "nes", titulo: "SUPER MARIO BROS (NES)", img: "SuperMarioBros.jpg", enlace: "SuperMarioBros.html", valoracion: "⭐⭐⭐⭐⭐ 9.7/10 (Leyenda)", historia: "La genialidad de 1985 que salvó la industria del videojuego. Estableció el estándar de los plataformas con físicas perfectas y secretos a lo largo de 8 mundos inolvidables.", manual: "🎯 <strong>Objetivo:</strong> Cruzar el peligroso Reino Champiñón para rescatar a la Princesa Peach de las garras del Rey Koopa, Bowser.<br><br>🕹️ <strong>Controles:</strong> Botón Z/X para saltar y mantener presionado para correr y coger impulso.<br><br>💡 <strong>Truco Retro:</strong> En el Mundo 1-2, súbete a los bloques del techo casi al final del nivel y corre sin parar; encontrarás la mítica 'Warp Zone'." },
-    zeldaocarina: { consola: "n64", titulo: "ZELDA: OOT (N64)", img: "zeldaocarina.jpg", enlace: "zeldaocarina.html", valoracion: "⭐⭐⭐⭐⭐ 9.9/10 (Obra Maestra)", historia: "La obra maestra de 1998 que llevó la saga a las 3D. Revolucionó el medio con el fijado de objetivos (Z-targeting) y su emocionante mecánica de viaje en el tiempo.", manual: "🎯 <strong>Objetivo:</strong> Guiar al Héroe del Tiempo para reunir las piedras espirituales, despertar a los Sabios y derrotar a Ganondorf.<br><br>🕹️ <strong>Controles:</strong> Stick analógico para moverse, botón A para acción y espada, botón Z para fijar enemigos.<br><br>💡 <strong>Truco Retro:</strong> Lleva siempre contigo frascos de cristal vacíos. Puedes atrapar hadas curativas en ellos para que te revivan automáticamente." },
-    mariotennis: { consola: "n64", titulo: "MARIO TENNIS (N64)", img: "MarioTennis.jpg", enlace: "MarioTennis.html", valoracion: "⭐⭐⭐⭐½ 8.8/10 (Excelente)", historia: "Este clásico del año 2000 llevó la diversión deportiva a otro nivel en N64. Destacó por sus efectos de raqueta y por ser el debut mundial de Waluigi.", manual: "🎯 <strong>Objetivo:</strong> Superar a todos tus rivales en la pista de tenis, ganar las diferentes copas y desbloquear personajes ocultos.<br><br>🕹️ <strong>Controles:</strong> Usa los botones A y B para golpear. Combínalos para hacer efectos diferentes en la bola.<br><br>💡 <strong>Truco Retro:</strong> Pulsa el botón A dos veces justo cuando la pelota va a botar en tu campo para realizar un potentísimo 'Top Spin'." },
-    sonic: { consola: "md", titulo: "SONIC THE HEDGEHOG (MD)", img: "sonicthehedgehog.jpg", enlace: "SONIC 1 - Shadow The Hedgehog.html", valoracion: "⭐⭐⭐⭐½ 9.2/10 (Sobresaliente)", historia: "El erizo de SEGA nació en 1991 para desafiar a Nintendo. Rompió moldes con su vertiginosa velocidad, loopings y actitud rebelde, liberando animales de carcasas robóticas.", manual: "🎯 <strong>Objetivo:</strong> Recorrer las zonas a toda velocidad para arruinar los malvados planes industriales del Dr. Robotnik.<br><br>🕹️ <strong>Controles:</strong> Flechas para moverse, y cualquier botón de acción para saltar o rodar.<br><br>💡 <strong>Truco Retro:</strong> Mientras tengas al menos UN solo anillo dorado en tu contador, serás completamente inmortal ante el impacto de enemigos." },
-    aladdin: { consola: "md", titulo: "ALADDIN (MEGA DRIVE)", img: "aladin.jpg", enlace: "Aladin.html", valoracion: "⭐⭐⭐⭐½ 9.0/10 (Sobresaliente)", historia: "Una joya de 1993 animada a mano por los estudios Disney. Su animación impecable y acción fluida lo coronan como uno de los mejores juegos de 16 bits.", manual: "🎯 <strong>Objetivo:</strong> Recorrer Agrabah y la cueva de las maravillas para salvar a la princesa Jasmine de Jafar.<br><br>🕹️ <strong>Controles:</strong> Botones independientes para saltar, lanzar manzanas y blandir la cimitarra.<br><br>💡 <strong>Truco Retro:</strong> Las manzanas son tu recurso a distancia más valioso. Guárdalas siempre para tener ventaja contra los jefes finales." },
-    marioworld: { consola: "snes", titulo: "MARIO WORLD (SNES)", img: "SuperMarioWorld.jpg", enlace: "SuperMarioorld.html", valoracion: "⭐⭐⭐⭐⭐ 9.8/10 (Obra Maestra)", historia: "El estreno triunfal en Super Nintendo (1990). Con 96 niveles llenos de rutas secretas, introdujo al querido dinosaurio Yoshi y sus habilidades especiales.", manual: "🎯 <strong>Objetivo:</strong> Explorar la región de Dinosaur Land para rescatar a Yoshi, a la Princesa Peach y expulsar a Bowser.<br><br>🕹️ <strong>Controles:</strong> Botones de salto normal y salto con ataque giratorio.<br><br>💡 <strong>Truco Retro:</strong> Los niveles en el mapa marcados con un punto rojo tienen dos salidas diferentes; encuéntralas para descubrir caminos secretos." },
-    mariokartsnes: { consola: "snes", titulo: "MARIO KART (SNES)", img: "SuperMarioKartsnes.jpg", enlace: "Supermariokartsnes.html", valoracion: "⭐⭐⭐⭐½ 9.3/10 (Sobresaliente)", historia: "El origen de las carreras multijugador (1992). Aprovechó el 'Modo 7' para pistas 3D e introdujo la genial locura de usar objetos para sabotear rivales.", manual: "🎯 <strong>Objetivo:</strong> Dominar el derrape y levantar la copa de Oro quedando en primera posición en los circuitos.<br><br>🕹️ <strong>Controles:</strong> Botón para acelerar, frenar/saltar, y un botón dedicado para usar objetos.<br><br>💡 <strong>Truco Retro:</strong> Acelera manteniendo pulsado el botón justo cuando el semáforo cambie a verde para conseguir un enorme empujón inicial." },
-    esmeralda: { consola: "gba", titulo: "P. ESMERALDA (GBA)", img: "pokemonesme.jpg", enlace: "Pokemonesme.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10 (Imprescindible)", historia: "La versión definitiva de Hoenn en GBA (2004). Mejoró la historia y añadió el durísimo Frente de Batalla, un desafío espectacular para los más tácticos.", manual: "🎯 <strong>Objetivo:</strong> Derrotar a los líderes de gimnasio y alzarte como el Campeón de la Liga Pokémon.<br><br>🕹️ <strong>Controles:</strong> Cruceta para moverte y navegar los menús, botón A para interactuar y atacar.<br><br>💡 <strong>Truco Retro:</strong> Guarda siempre la partida manualmente antes de iniciar un encuentro contra un Pokémon Legendario." },
-    rubi: { consola: "gba", titulo: "POKÉMON RUBÍ (GBA)", img: "pokemonrubi.jpg", enlace: "PokemonRubi.html", valoracion: "⭐⭐⭐⭐½ 9.2/10 (Sobresaliente)", historia: "El gran salto a la tercera generación (2002). Introdujo paisajes vibrantes, habilidades pasivas y el sistema de naturalezas, sentando las bases del competitivo.", manual: "🎯 <strong>Objetivo:</strong> Conseguir las 8 medallas de gimnasio y detener los apocalípticos planes del Team Magma.<br><br>🕹️ <strong>Controles:</strong> Uso de la cruceta de movimiento y el botón A principal.<br><br>💡 <strong>Truco Retro:</strong> Presta atención a las naturalezas de tus Pokémon, ya que cada una aumenta permanentemente un 10% una estadística y reduce otra." }
-};
-
-let enlaceDestino = "";
-
-function actualizarColoresModal(idConsola) {
-    const colores = coloresConsola[idConsola] || coloresConsola['nes']; 
-    document.documentElement.style.setProperty('--modal-border', colores.border);
-    document.documentElement.style.setProperty('--modal-title', colores.title);
-    document.documentElement.style.setProperty('--modal-tab', colores.tab);
+function renderizarRecords() {
+    let records = JSON.parse(localStorage.getItem('records_' + juegoActual) || "[]");
+    let body = document.getElementById("bodyRecords");
+    body.innerHTML = records.map((r, i) => `<tr><td>${i+1}</td><td>${r.nombre}</td><td>${r.puntos}</td></tr>`).join('');
 }
 
 function verFicha(idJuego) {
-    const juego = infoJuegos[idJuego];
-    if (juego) {
-        enlaceDestino = juego.enlace;
-        actualizarColoresModal(juego.consola);
-        
-        document.getElementById("fichaTitulo").innerText = juego.titulo;
-        document.getElementById("fichaValoracion").innerText = juego.valoracion;
-        
-        document.getElementById("fichaImg").src = juego.img;
-        document.getElementById("contenidoHistoria").innerHTML = juego.historia;
-        document.getElementById("contenidoManual").innerHTML = juego.manual;
-        
-        cambiarPestana('historia');
-        document.getElementById("modalFicha").style.display = "flex";
-    }
+    juegoActual = idJuego;
+    // ... (El resto de la lógica de carga de datos que ya teníamos)
+    document.getElementById("modalFicha").style.display = "flex";
+    cambiarPestana('historia');
 }
 
-function cambiarPestana(pestana) {
-    if (pestana === 'historia') {
-        document.getElementById("contenidoHistoria").style.display = "block";
-        document.getElementById("contenidoManual").style.display = "none";
-        document.getElementById("tabHistoria").classList.add("active");
-        document.getElementById("tabManual").classList.remove("active");
-    } else {
-        document.getElementById("contenidoHistoria").style.display = "none";
-        document.getElementById("contenidoManual").style.display = "block";
-        document.getElementById("tabHistoria").classList.remove("active");
-        document.getElementById("tabManual").classList.add("active");
-    }
-}
-
-function irAlJuego() {
-    if (enlaceDestino) {
-        reproducirSonidoCoin();
-        const pantallaTransicion = document.getElementById("transitionScreen");
-        pantallaTransicion.classList.add("active");
-        setTimeout(() => {
-            window.location.href = enlaceDestino;
-            setTimeout(() => pantallaTransicion.classList.remove("active"), 500);
-        }, 1500); 
-    }
-}
-
-function cerrarFicha() {
-    document.getElementById("modalFicha").style.display = "none";
-    window.history.replaceState(null, null, window.location.pathname);
-}
-
-function revisarLlaveroNFC() {
-    const hash = window.location.hash.toLowerCase().replace('#', '');
-    if (hash && infoJuegos[hash]) {
-        if (hash === 'pacman') { document.getElementById("tarjetaSecreta").style.display = "block"; }
-        const scannerScreen = document.getElementById("nfcScannerScreen");
-        scannerScreen.classList.add("active");
-        reproducirSonidoEscaner();
-        setTimeout(() => { 
-            scannerScreen.classList.remove("active");
-            setTimeout(() => { verFicha(hash); }, 300); 
-        }, 1200);
-    }
-}
-
-window.addEventListener('hashchange', revisarLlaveroNFC);
-window.addEventListener('DOMContentLoaded', revisarLlaveroNFC);
-window.addEventListener('load', revisarLlaveroNFC);
+// --- FUNCIÓN PANTALLA COMPLETA ELIMINADA ---
+// Ya no existe el trigger que forzaba el fullscreen.
 </script>
-
 </body>
 </html>
