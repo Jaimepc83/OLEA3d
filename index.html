@@ -186,6 +186,542 @@ footer {
     box-shadow: 0 0 8px var(--color-badge);
 }  
 
+/* --- VENTANA FLOTANTE DE LA HISTORIA --- */
+.modal-ficha {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.94) !important;
+    z-index: 9999 !important;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.ficha-content {
+    background: #121212 !important;
+    border: 3px solid var(--color-glow) !important;
+    border-radius: 25px !important;
+    max-width: 450px;
+    width: 100%;
+    padding: 25px;
+    position: relative;
+    box-shadow: 0 0 35px var(--color-glow) !important;
+    text-align: left;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.ficha-header {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-right: 40px;
+}
+
+.ficha-header img {
+    width: 85px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.ficha-header h2 {
+    color: #ffd700 !important;
+    margin: 0;
+    font-size: 20px;
+}
+
+.ficha-historia {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #eee !important;
+    margin-bottom: 15px;
+    background: rgba(255,255,255,0.03);
+    padding: 12px;
+    border-radius: 12px;
+    border-left: 4px solid var(--color-badge);
+}
+
+.ficha-controles {
+    background: #1a1a1a;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 13px;
+}
+
+.ficha-controles strong { color: var(--color-badge); }
+
+.close-ficha {
+    position: absolute !important;
+    top: 15px !important; 
+    right: 15px !important;
+    background: #ff4444 !important;
+    color: white !important; 
+    border: none !important;
+    width: 35px !important; 
+    height: 35px !important;
+    font-weight: bold !important; 
+    font-size: 16px !important;
+    border-radius: 50% !important; 
+    cursor: pointer !important;
+    display: flex !important; 
+    justify-content: center !important; 
+    align-items: center !important;
+    box-shadow: 0 0 10px rgba(255,0,0,0.5);
+    z-index: 99999 !important;
+}
+
+.btn-jugar-real {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    padding: 15px 0 !important;
+    font-size: 18px !important;
+    background: #6b8e23 !important;
+    color: white !important;
+    font-weight: bold !important;
+    border-radius: 12px !important;
+    border: none !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 15px rgba(107, 142, 35, 0.6) !important;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <img src="logo.png" class="logo">
+    <h1>OLEA3D RETRO HUB</h1>
+    <div class="nfc-badge">📡 LLAVEROS NFC DISPONIBLES</div> 
+    <div class="stats">
+        🎮 Juegos listos: 12<br>
+        🏆 Total colección: 15
+    </div>
+    <p class="sub">Colección Retro NFC · Acerca tu llavero y juega al instante</p>
+    <div class="music">
+        <button onclick="toggleMusic()" class="btn">🎵 Música Retro ON/OFF</button>
+    </div>
+</header>
+
+<div class="menu" id="topMenu">
+    <a href="#nes" onclick="cambiarAmbiente('#ff2a2a', '#ff4444')">🎮 NES</a>
+    <a href="#n64" onclick="cambiarAmbiente('#3b5998', '#5b79b8')">🕹️ N64</a>
+    <a href="#megadrive" onclick="cambiarAmbiente('#00a2ff', '#33b5ff')">⚡ Mega Drive</a>
+    <a href="#snes" onclick="cambiarAmbiente('#8a2be2', '#a04ff0')">⭐ SNES</a>
+    <a href="#gba" onclick="cambiarAmbiente('#9dff3d', '#b6ff66')">📱 GBA</a>
+</div>
+
+<div style="max-width:1200px;margin:auto;">
+
+    <h1 id="nes" class="section-title">🎮 NES</h1>
+    <div style="text-align:center;margin-bottom:20px;">
+        <img src="nes.jpg" width="320" class="banner-console">
+    </div>
+    <div class="container"> 
+        <div class="card" onclick="verFicha('tetris')">
+            <img src="TetrisNes.png" width="150">
+            <h2>🎮 TETRIS</h2>
+            <div class="nfc-badge">VER HISTORIA</div>
+        </div>
+        <div class="card" onclick="verFicha('mariobros')">
+            <img src="SuperMarioBros.jpg" width="150">
+            <h2>🍄 SUPER MARIO BROS</h2>
+            <div class="nfc-badge">VER HISTORIA</div>
+        </div>
+    </div>
+ 
+    <h1 id="n64" class="section-title">🕹️ NINTENDO 64</h1>
+    <div style="text-align:center;margin-bottom:20px;">
+        <img src="n64.jpg" width="320" class="banner-console">
+    </div>
+    <div class="container"> 
+        <div class="card" onclick="verFicha('dk64')">
+            <img src="DonkeyKong64.jpg" width="150" onerror="this.style.display='none'">
+            <h2>🦍 DONKEY KONG 64</h2>
+            <div class="nfc-badge">VER HISTORIA</div>
+        </div>
+        <div class="card" onclick="verFicha('zeldaocarina')">
+            <img src="zeldaocarina.jpg" width="150">
+            <h2>⚔️ ZELDA OCARINA OF TIME</h2>
+            <div class="nfc-badge">VER HISTORIA</div>
+        </div>
+        <div class="card" onclick="verFicha('mariotennis')">
+            <img src="MarioTennis.jpg" width="150">
+            <h2>🎾 MARIO TENNIS</h2>
+            <div class="nfc-badge">VER HISTORIA</div>
+        </div> 
+    </div>
+
+    <h1 id="megadrive" class="section-title">⚡ SEGA MEGA DRIVE</h1>
+    <div style="text-align:center;margin-bottom:20px;">
+        <img src="megadrive.jpg" width="320" class="banner-console">
+    </div>
+    <div class="container">
+        <div class="card" onclick="verFicha('sonic')">
+            <img src="sonicthehedgehog.jpg" width="150">
+            <h2>🦔 SONIC THE HEDGEHOG</h2>
+            <div class="nfc-badge">VER HISTORIA</div>
+        </div>
+        <div class="card" onclick="verFicha('goldenaxe')">
+            <img src="GoldenAxe.jpg" width="150">
+            <h2>⚔️ GOLDEN AXE</h2>
+            <div class="nfc-badge">VER HISTORIA</div>
+        </div>
+        <div class="card" onclick="verFicha('aladdin')">
+            <img src="aladin.jpg" width="150">
+            <h2>🧞 ALADDIN</h2>
+            <div class="nfc-badge">VER HISTORIA</div>
+        </div>
+    </div>
+ 
+    <h1 id="snes" class="section-title">⭐ SUPER NINTENDO (SNES)</h1>
+    <div style="text-align:center;margin-bottom:20px;">
+        <img src="snes.jpg" width="320" class="banner-console">
+    </div>
+    <div class="container">
+        <div class="card" onclick="verFicha('marioworlsnes')">
+            <img src="SuperMarioWorld.jpg" width="150">
+            <h2>🍄🦖 SUPER MARIO WORLD</h2>
+            <div class="nfc-badge">VER HISTORIA</div>
+        </div>
+        <div class="card" onclick="verFicha('mariokartsnes')">
+            <img src="SuperMarioKartsnes.jpg" width="150">
+            <h2>🏎️ SUPER MARIO KART</h2>
+            <div class="nfc-badge">VER HISTORIA</div>
+        </div>
+    </div> 
+
+    <h1 id="gba" class="section-title">📱 GAME BOY ADVANCE</h1>
+    <div style="text-align:center;margin-bottom:20px;">
+        <img src="gba.jpg" width="320" class="banner-console">
+    </div>
+    <div class="container">
+        <div class="card" onclick="verFicha('minishcap')">
+            <h2>⚔️ THE LEGEND OF ZELDA: MINISH CAP</h2>
+            <div class="nfc-badge">VER HISTORIA</div>
+        </div>
+        <div class="card" onclick="verFicha('mariokartgba')">
+            <h2>🏎️ MARIO KART SUPER CIRCUIT</h2>
+            <div class="nfc-badge">VER HISTORIA</div>
+        </div>
+        <div class="card" onclick="verFicha('esmeralda')">
+            <img src="pokemonesme.jpg" width="150">
+            <h2>⚡ POKÉMON ESMERALDA</h2>
+            <div class="nfc-badge">VER HISTORIA</div>
+        </div>
+        <div class="card" onclick="verFicha('rubi')">
+            <img src="pokemonrubi.jpg" width="150">
+            <h2>🔴 POKÉMON RUBÍ</h2>
+            <div class="nfc-badge">VER HISTORIA</div>
+        </div>
+        <div class="card" onclick="verFicha('zafiro')">
+            <img src="Pokeonsaphi.jpg" width="150">
+            <h2>🔷 POKÉMON ZAFIRO</h2>
+            <div class="nfc-badge">VER HISTORIA</div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p><strong>@olea3d</strong></p>
+    <p>Adquiere tu llavero personalizado NFC y vive la experiencia retro al instante.</p>
+</footer>
+
+<div id="modalFicha" class="modal-ficha">
+    <div class="ficha-content">
+        <button class="close-ficha" onclick="cerrarFicha()">❌</button>
+        <div class="ficha-header">
+            <img id="fichaImg" src="" alt="Portada">
+            <h2 id="fichaTitulo">Título del juego</h2>
+        </div>
+        <div id="fichaHistoria" class="ficha-historia">Sinopsis...</div>
+        <div class="ficha-controles">
+            🎮 <strong>Controles en Móvil:</strong> Botones táctiles virtuales.<br>
+            ⌨️ <strong>Controles en PC:</strong> Flechas / Z, X, C / Enter.
+        </div>
+        <button id="btnJugarYa" class="btn-jugar-real" onclick="iniciarJuegoReal()">🚀 EMPEZAR PARTIDA</button>
+    </div>
+</div>
+
+<audio id="retroMusic" loop>
+    <source src="retro.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+let enlaceActual = "";
+
+function toggleMusic(){
+    const audio = document.getElementById("retroMusic");
+    if(audio.paused) { audio.play().catch(e => {}); } else { audio.pause(); }
+}
+
+// SINTETIZADOR BLINDADO CONTRA ERRORES
+let audioCtx = null;
+function initAudio() {
+    try {
+        if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+    } catch(e) { console.log("Audio no soportado"); }
+}
+
+function playBeep() {
+    try {
+        initAudio();
+        if(!audioCtx || audioCtx.state === 'suspended') return;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.08);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.08);
+    } catch(e){}
+}
+
+function playCoinSound() {
+    try {
+        initAudio();
+        if(!audioCtx || audioCtx.state === 'suspended') return;
+        const ahora = audioCtx.currentTime;
+        function nota(freq, start, duration) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, start);
+            gain.gain.setValueAtTime(0.03, start);
+            gain.gain.exponentialRampToValueAtTime(0.00001, start + duration);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(start);
+            osc.stop(start + duration);
+        }
+        nota(987.77, ahora, 0.08);
+        nota(1318.51, ahora + 0.08, 0.22);
+    } catch(e){}
+}
+
+function cambiarAmbiente(colorGlow, colorBadge) {
+    playBeep();
+    document.documentElement.style.setProperty('--color-glow', colorGlow);
+    document.documentElement.style.setProperty('--color-badge', colorBadge);
+}
+
+const infoJuegos = {
+    tetris: { titulo: "TETRIS (NES)", img: "TetrisNes.png", enlace: "TetrisFicha.html", historia: "Diseñado originalmente por el ingeniero soviético Alekséi Pázhitnov en 1984, Tetris se convirtió en un fenómeno mundial absoluto al llegar a la NES. Un juego de puzles atemporal donde el orden de las piezas de geometría pura es la delgada línea entre la victoria y el colapso absoluto de tu pantalla." },
+    mariobros: { titulo: "SUPER MARIO BROS (NES)", img: "SuperMarioBros.jpg", enlace: "SuperMarioBros.html", historia: "Lanzado en 1985 por Shigeru Miyamoto, este juego redefinió la industria entera del videojuego. Acompaña a Mario a través del Reino Champiñón para rescatar a la Princesa Peach de las garras del malvado Bowser en el plataformas más influyente y legendario de todos los tiempos." },
+    dk64: { titulo: "DONKEY KONG 64 (N64)", img: "DonkeyKong64.jpg", enlace: "DonkeyKong64.html", historia: "El simio más famoso de Nintendo da el salto total a los entornos en 3D en 1999 de la mano de Rare. Explora la Isla de Donkey Kong, libera a tus compañeros capturados y recupera la mítica reserva de plátanos de oro robada por King K. Rool." },
+    zeldaocarina: { titulo: "ZELDA: OCARINA OF TIME (N64)", img: "zeldaocarina.jpg", enlace: "zeldaocarina.html", historia: "Considerada unánimemente una de las obras maestras absolutas de la historia de los videojuegos. Sigue el viaje épico de Link a través del tiempo en el Reino de Hyrule para detener los planes del temible Ganondorf y proteger la Trifuerza." },
+    mariotennis: { titulo: "MARIO TENNIS (N64)", img: "MarioTennis.jpg", enlace: "MarioTennis.html", historia: "La diversión deportiva arcade definitiva llegó a la Nintendo 64 en el año 2000. Los personajes icónicos del Reino Champiñón se reunieron en la pista de tenis con tiros especiales, torneos frenéticos y la aparición estelar de Waluigi." },
+    sonic: { titulo: "SONIC THE HEDGEHOG (MEGA DRIVE)", img: "sonicthehedgehog.jpg", enlace: "SONIC 1 - Shadow The Hedgehog.html", historia: "SEGA necesitaba un héroe capaz de competir con Nintendo en 1991, y lo encontró en un erizo azul ultrarrápido. Recorre Green Hill Zone a velocidades de vértigo, destruye los robots del Dr. Eggman y pon a salvo las esmeraldas del caos." },
+    goldenaxe: { titulo: "GOLDEN AXE (MEGA DRIVE)", img: "GoldenAxe.jpg", enlace: "GoldenAxe.html", historia: "El clásico 'Beat 'em up' de espada y brujería definitivo lanzado en 1989. Elige entre el guerrero Ax Battler, la amazona Tyris Flare o el enano Gilius Thunderhead y desata la furia de la magia para vengar la caída del reino frente al tirano Death Adder." },
+    aladdin: { titulo: "ALADDIN (MEGA DRIVE)", img: "aladin.jpg", enlace: "Aladin.html", historia: "Con animaciones dibujadas a mano directamente por los propios artistas de Disney en 1993, este título es una joya visual de los 16 bits. Recorre las calles de Agrabah, blande tu cimitarra y vuela en la alfombra mágica esquivando las trampas de Jafar." },
+    marioworlsnes: { titulo: "SUPER MARIO WORLD (SNES)", img: "SuperMarioWorld.jpg", enlace: "SuperMarioorld.html", historia: "La cumbre de los plataformas en 2D estrenó el cerebro de la bestia (SNES) en 1990. Explora la idílica Isla de los Dinosaurios, descubre salidas secretas en el mapa y monta por primera vez a lomos de tu fiel compañero dinosaurio: ¡Yoshi!" },
+    mariokartsnes: { titulo: "SUPER MARIO KART (SNES)", img: "SuperMarioKartsnes.jpg", enlace: "Supermariokartsnes.html", historia: "El origen de una leyenda de las carreras multijugador en 1992. Utiliza caparazones, plátanos y champiñones para sabotear a tus rivales en circuitos planos renderizados con el revolucionario Modo 7 gráfico de la Super Nintendo." },
+    minishcap: { titulo: "ZELDA: THE MINISH CAP (GBA)", img: "logo.png", enlace: "ZeldaMinishCap.html", historia: "Link cuenta en esta ocasión con la ayuda de Ezero, un sombrero mágico que le otorga el poder de encoger hasta el tamaño de los minúsculos Minish. Una aventura pixel-art bellísima de 2004 llena de puzles, templos e ingenio." },
+    mariokartgba: { titulo: "MARIO KART SUPER CIRCUIT (GBA)", img: "logo.png", enlace: "MarioKartSuperCircuit.html", historia: "Toda la velocidad salvaje y la rivalidad de los circuitos de Mario Kart condensados de forma perfecta en la pantalla de tu Game Boy Advance en el año 2001. ¡Ideal para derrapar en cualquier lugar!" },
+    esmeralda: { titulo: "POKÉMON ESMERALDA (GBA)", img: "pokemonesme.jpg", enlace: "Pokemonesme.html", historia: "La edición definitiva de la tercera generación en la región de Hoenn (2004). Entrena duro, desafía al Frente de Batalla y detén el choque apocalíptico entre los Pokémon legendarios de la tierra y el mar: Groudon y Kyogre, invocando al majestuoso Rayquaza." },
+    rubi: { titulo: "POKÉMON RUBÍ (GBA)", img: "pokemonrubi.jpg", enlace: "PokemonRubi.html", historia: "El inicio de una era Pokémon en los 32 bits de Game Boy Advance. Explora Hoenn, enfréntate a los planes magmáticos del Team Magma y hazte con el control del titán de la tierra Groudon." },
+    zafiro: { titulo: "POKÉMON ZAFIRO (GBA)", img: "Pokeonsaphi.jpg", enlace: "Pokemonsaphi.html", historia: "La contraparte océanica de la tercera generación. Combate contra los piratas del Team Aqua que planean expandir los océanos del mundo y captura al legendario Kyogre en las profundidades marinas." }
+};
+
+function verFicha(idJuego) {
+    const juego = infoJuegos[idJuego];
+    if (juego) {
+        enlaceActual = juego.enlace;
+        
+        // Ejecutar sonido blindado (si falla, no pasa nada y sigue adelante)
+        try { playCoinSound(); } catch(e){}
+        
+        document.getElementById("fichaTitulo").innerText = juego.titulo;
+        document.getElementById("fichaImg").src = juego.img;
+        document.getElementById("fichaHistoria").innerText = juego.historia;
+        document.getElementById("modalFicha").style.display = "flex";
+    }
+}
+
+function iniciarJuegoReal() {
+    if(enlaceActual !== "") {
+        window.location.href = enlaceActual;
+    }
+}
+
+function cerrarFicha() {
+    document.getElementById("modalFicha").style.display = "none";
+    window.history.replaceState({}, document.title, window.location.pathname);
+}
+
+window.addEventListener('load', () => {
+    const hash = window.location.hash.toLowerCase().replace('#', '');
+    if (hash && infoJuegos[hash]) {
+        setTimeout(() => {
+            verFicha(hash);
+        }, 300);
+    }
+});
+</script>
+
+</body>
+</html>
+
+h1 {
+    color: #d4af37;
+    margin-top: 15px;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+.sub {
+    color: #9acd32;
+    font-size: 18px;
+}
+
+.menu {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 20px auto;
+    padding: 10px;
+    max-width: 800px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13, 13, 13, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 30px;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    background: #222;
+    padding: 10px 18px;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: bold;
+    border: 1px solid var(--color-glow);
+    transition: all 0.2s ease;
+}
+
+.menu a:hover {
+    background: var(--color-glow);
+    color: #111;
+    box-shadow: 0 0 15px var(--color-glow);
+    transform: translateY(-2px);
+}
+
+.section-title {
+    color: #ffd700;
+    margin: 50px 0 20px 0;
+    transition: color 0.3s ease;
+}
+
+.banner-console {
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(247, 210, 74, 0.4);
+}
+
+.container {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 25px 20px;
+    scroll-behavior: smooth;
+    align-items: stretch;
+}
+
+.container::-webkit-scrollbar { display: none; }
+.container { -ms-overflow-style: none; scrollbar-width: none; } 
+
+.card {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--color-glow);
+    border-radius: 20px;
+    padding: 20px;
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 0 15px rgba(247, 210, 74, 0.15);
+    cursor: pointer;
+    min-width: 250px;
+    height: 330px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card:hover {
+    transform: scale(1.06) translateY(-5px);
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 30px var(--color-glow);
+}
+
+.card h2 {
+    color: #fff;
+    font-size: 17px;
+    margin: 10px 0;
+}
+.card:hover h2 {
+    color: #ffd700;
+}
+
+.card img {
+    max-height: 140px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 20px;
+    background: #6b8e23;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+footer {
+    margin-top: 60px;
+    padding: 30px;
+    background: #111;
+    color: #aaa;
+    border-top: 2px solid #222;
+}
+
+.stats {
+    margin: 15px 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--color-badge);
+    text-shadow: 0 0 10px var(--color-badge);
+}
+
+.nfc-badge {
+    display: inline-block;
+    background: var(--color-badge);
+    color: #111;
+    font-weight: bold;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin: 2px;
+    font-size: 11px;
+    box-shadow: 0 0 8px var(--color-badge);
+}  
+
 /* --- CORRECCIÓN EN CALIENTE DE LA VENTANA DE HISTORIA --- */
 .modal-ficha {
     display: none;
