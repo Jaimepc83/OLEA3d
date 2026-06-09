@@ -6,63 +6,74 @@
 <title>OLEA3D Retro Hub</title>
 
 <style>
-/* ESTILOS BASE */
-body { margin: 0; font-family: Arial, sans-serif; background: #0d0d0d; color: white; text-align: center; overflow-x: hidden; }
-header { padding: 20px; background: linear-gradient(180deg, #1a1a1a, #0d0d0d); }
-.logo { width: 120px; border-radius: 50%; box-shadow: 0 0 20px gold; }
-h1 { color: #d4af37; margin-top: 10px; font-size: 24px; }
+/* 1. ESTILOS BASE Y FILTRO CRT (RETRO TV) */
+body { margin: 0; font-family: Arial, sans-serif; background: #0d0d0d; color: white; text-align: center; overflow-x: hidden; position: relative; }
+/* Capa de líneas de televisión antigua */
+body::before { content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); z-index: 999; background-size: 100% 2px, 3px 100%; pointer-events: none; opacity: 0.6; }
+
+header { padding: 20px; background: linear-gradient(180deg, #1a1a1a, #0d0d0d); position: relative; z-index: 10; }
+.logo { width: 120px; border-radius: 50%; box-shadow: 0 0 20px #d4af37; }
+h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
 .sub { color: #9acd32; font-size: 16px; margin-bottom: 20px; }
 
-/* BOTÓN DE MÚSICA */
-.btn-musica { background: #eee; color: #111; padding: 10px 20px; border-radius: 8px; font-weight: bold; border: 2px solid #ccc; cursor: pointer; margin: 10px auto 20px auto; font-size: 14px; transition: 0.3s; display: inline-block; }
+/* 2. BOTÓN DE MÚSICA */
+.btn-musica { background: #eee; color: #111; padding: 10px 20px; border-radius: 8px; font-weight: bold; border: 2px solid #ccc; cursor: pointer; margin: 10px auto 20px auto; font-size: 14px; transition: 0.3s; display: inline-block; position: relative; z-index: 10; }
 .btn-musica:hover { transform: scale(1.05); }
 
-/* MENÚ SUPERIOR DE CONSOLAS */
-.menu { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin: 10px auto; padding: 10px; max-width: 95%; }
+/* 3. MENÚ SUPERIOR DE CONSOLAS */
+.menu { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin: 10px auto; padding: 10px; max-width: 95%; position: relative; z-index: 10; }
 .menu a { color: white; text-decoration: none; background: #222; padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; border: 1px solid #d4af37; transition: 0.3s; }
 .menu a:hover { background: #d4af37; color: #111; box-shadow: 0 0 10px #d4af37; }
 
-/* CONTENEDORES Y SECCIONES */
-.main-container { max-width: 1200px; margin: auto; padding: 10px; }
-.section-title { color: #ffd700; margin: 30px 0 15px 0; font-size: 22px; }
-.banner-console { width: 100%; max-width: 320px; height: auto; border-radius: 15px; box-shadow: 0 0 20px rgba(247,210,74,0.6); }
+/* 4. CONTENEDORES */
+.main-container { max-width: 1200px; margin: auto; padding: 10px; position: relative; z-index: 10; }
+.section-title { color: #ffd700; margin: 30px 0 15px 0; font-size: 22px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+.banner-console { width: 100%; max-width: 320px; height: auto; border-radius: 15px; box-shadow: 0 0 20px rgba(247,210,74,0.4); margin-bottom: 15px; }
 
-/* CONTENEDOR HORIZONTAL DE TARJETAS */
-.container { display: flex; gap: 15px; overflow-x: auto; padding: 15px 5px; scroll-behavior: smooth; }
+.container { display: flex; gap: 20px; overflow-x: auto; padding: 20px 10px; scroll-behavior: smooth; perspective: 1000px; /* Necesario para el efecto 3D */ }
 .container::-webkit-scrollbar { display: none; }
 
-/* TARJETAS DE JUEGO (CARDS) */
-.card { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border: 2px solid #f7d24a; border-radius: 20px; padding: 15px; transition: 0.3s; box-shadow: 0 0 10px rgba(247,210,74,0.2); cursor: pointer; min-width: 220px; height: 280px; flex-shrink: 0; display: flex; flex-direction: column; justify-content: space-between; align-items: center; box-sizing: border-box; }
-.card:hover { transform: scale(1.03); box-shadow: 0 0 20px rgba(157,255,61,0.5); }
+/* 5. EFECTO 3D Y BORDE ANIMADO TIPO FILAMENTO SEDA/JADE */
+.card-wrapper { position: relative; min-width: 220px; height: 290px; flex-shrink: 0; cursor: pointer; z-index: 1; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+/* El efecto de movimiento al pasar el dedo o ratón */
+.card-wrapper:hover { transform: translateY(-10px) rotateX(8deg) rotateY(-5deg) scale(1.05); z-index: 100; }
+
+/* El borde de colores fluyendo */
+.card-wrapper::before { content: ''; position: absolute; top: -3px; left: -3px; right: -3px; bottom: -3px; background: linear-gradient(45deg, #d4af37, #f8f9fa, #9acd32, #d4af37); background-size: 300%; border-radius: 23px; z-index: -1; animation: brilloSeda 4s linear infinite; box-shadow: 0 0 15px rgba(212,175,55,0.3); }
+@keyframes brilloSeda { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+.card { background: rgba(18, 18, 18, 0.95); backdrop-filter: blur(10px); border-radius: 20px; padding: 15px; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; box-sizing: border-box; }
 .card h2 { color: #fff; font-size: 15px; margin: 8px 0; text-transform: uppercase; }
-.card img { max-height: 110px; object-fit: contain; border-radius: 8px; }
+.card img { max-height: 110px; object-fit: contain; border-radius: 8px; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.8)); transition: 0.3s; }
+.card-wrapper:hover .card img { transform: scale(1.1); }
 
-/* BOTONES Y BADGES */
-.btn-ver { display: inline-block; padding: 10px 15px; background: #6b8e23; color: white; border-radius: 6px; font-weight: bold; font-size: 12px; border: 1px solid #88aa33; }
-.stats { margin: 10px 0; font-size: 16px; font-weight: bold; color: #9dff3d; }
-.nfc-badge { display: inline-block; background: #9dff3d; color: #111; font-weight: bold; padding: 3px 10px; border-radius: 20px; margin: 2px; font-size: 11px; }  
+/* 6. BOTONES Y BADGES */
+.btn-ver { display: inline-block; padding: 10px 15px; background: #6b8e23; color: white; border-radius: 6px; font-weight: bold; font-size: 12px; border: 1px solid #88aa33; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
+.stats { margin: 10px 0; font-size: 16px; font-weight: bold; color: #9dff3d; text-shadow: 0 0 5px rgba(157,255,61,0.5); }
+.nfc-badge { display: inline-block; background: #9dff3d; color: #111; font-weight: bold; padding: 3px 10px; border-radius: 20px; margin: 2px; font-size: 11px; box-shadow: 0 0 8px rgba(157,255,61,0.6); }  
 
-/* MODAL (VENTANA FLOTANTE DE LA FICHA Y MANUAL) */
-.modal-ficha { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; justify-content: center; align-items: center; padding: 15px; box-sizing: border-box; }
-.ficha-content { background: #121212; border: 3px solid #ffd700; border-radius: 20px; max-width: 420px; width: 100%; padding: 20px; position: relative; box-shadow: 0 0 30px rgba(254,215,0,0.5); max-height: 90vh; overflow-y: auto; text-align: left; box-sizing: border-box; }
-.close-ficha { position: absolute; top: 12px; right: 12px; background: #ff4444; color: white; border: none; width: 35px; height: 35px; font-weight: bold; border-radius: 50%; cursor: pointer; font-size: 14px; display: flex; justify-content: center; align-items: center; z-index: 10; }
+/* 7. MODAL (FICHA FLOTANTE) */
+.modal-ficha { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 99999; justify-content: center; align-items: center; padding: 15px; box-sizing: border-box; backdrop-filter: blur(5px); }
+.ficha-content { background: #121212; border: 3px solid #d4af37; border-radius: 20px; max-width: 420px; width: 100%; padding: 20px; position: relative; box-shadow: 0 0 40px rgba(212,175,55,0.5); max-height: 90vh; overflow-y: auto; text-align: left; box-sizing: border-box; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+@keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.close-ficha { position: absolute; top: 12px; right: 12px; background: #ff4444; color: white; border: none; width: 35px; height: 35px; font-weight: bold; border-radius: 50%; cursor: pointer; font-size: 14px; display: flex; justify-content: center; align-items: center; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.5); }
 .ficha-header { display: flex; gap: 15px; align-items: center; margin-bottom: 15px; padding-right: 40px; }
-.ficha-header img { width: 70px; height: auto; border-radius: 8px; object-fit: contain; }
+.ficha-header img { width: 80px; height: auto; border-radius: 8px; object-fit: contain; }
 .ficha-header h2 { color: #ffd700; margin: 0; font-size: 18px; }
 
 /* PESTAÑAS DE MANUAL E HISTORIA */
 .tabs { display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 2px solid #333; padding-bottom: 10px; }
 .tab-btn { background: transparent; color: #aaa; border: none; font-size: 14px; font-weight: bold; cursor: pointer; padding: 5px 10px; border-radius: 5px; transition: 0.3s; }
-.tab-btn.active { background: #333; color: #ffd700; }
+.tab-btn.active { background: #333; color: #9dff3d; }
 
 .texto-panel { font-size: 14px; line-height: 1.6; color: #eee; margin-bottom: 20px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 12px; border-left: 4px solid #9dff3d; min-height: 120px; }
 .texto-panel strong { color: #ffd700; }
 
-/* BOTÓN DE JUGAR LISTO */
-.btn-jugar-modal { display: block; width: 100%; text-align: center; padding: 14px 0; background: #6b8e23; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 16px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(107,142,35,0.4); box-sizing: border-box; }
-.btn-jugar-modal:hover { background: #88aa33; }
+.btn-jugar-modal { display: block; width: 100%; text-align: center; padding: 14px 0; background: #6b8e23; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 16px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(107,142,35,0.6); box-sizing: border-box; transition: 0.3s; }
+.btn-jugar-modal:hover { background: #88aa33; transform: translateY(-2px); }
 
-footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-size: 14px; border-top: 2px solid #222; }
+footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-size: 14px; border-top: 2px solid #222; position: relative; z-index: 10; }
 </style>
 </head>
 
@@ -77,136 +88,173 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
     <h1>OLEA3D Hub Retro</h1>
     <div class="nfc-badge">📡 Colección NFC</div> 
     <p class="sub">Escanea tu llavero o toca una tarjeta para jugar</p>
-    
-    <button id="btnMusica" class="btn-musica" onclick="toggleMusica()">🎵 Música Retro ON/OFF</button>
+    <button id="btnMusica" class="btn-musica" onclick="reproducirClic(); toggleMusica();">🎵 Música Retro ON/OFF</button>
 </header>
 
 <div class="menu">
-    <a href="#nes">🎮 NES</a>
-    <a href="#n64">🕹️ N64</a>
-    <a href="#megadrive">⚡ MD</a>
-    <a href="#snes">⭐ SNES</a>
-    <a href="#gba">📱 GBA</a>
+    <a href="#nes" onclick="reproducirClic()">🎮 NES</a>
+    <a href="#n64" onclick="reproducirClic()">🕹️ N64</a>
+    <a href="#megadrive" onclick="reproducirClic()">⚡ MD</a>
+    <a href="#snes" onclick="reproducirClic()">⭐ SNES</a>
+    <a href="#gba" onclick="reproducirClic()">📱 GBA</a>
 </div>
 
 <div class="main-container">
-    <div class="stats">🕹️ 10 Juegos Listos | 🏆 Colección Premium</div>
+    <div class="stats">🕹️ 10 Juegos | 🏆 Colección Premium</div>
 
     <h1 id="nes" class="section-title">🎮 NES</h1>
     <img src="nes.jpg" class="banner-console" alt="NES">
     <div class="container"> 
-        <div class="card" onclick="verFicha('tetris')">
-            <img src="TetrisNes.png" alt="Tetris">
-            <h2>🎮 Tetris</h2>
-            <div class="nfc-badge">LLAVERO NFC</div>
-            <span class="btn-ver">VER FICHA Y JUGAR</span>
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('tetris')">
+            <div class="card">
+                <img src="TetrisNes.png" alt="Tetris">
+                <h2>🎮 Tetris</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">VER FICHA Y JUGAR</span>
+            </div>
         </div>
-        <div class="card" onclick="verFicha('mariobros')">
-            <img src="SuperMarioBros.jpg" alt="Mario Bros">
-            <h2>🍄 Mario Bros</h2>
-            <div class="nfc-badge">LLAVERO NFC</div>
-            <span class="btn-ver">VER FICHA Y JUGAR</span>
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariobros')">
+            <div class="card">
+                <img src="SuperMarioBros.jpg" alt="Mario Bros">
+                <h2>🍄 Mario Bros</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">VER FICHA Y JUGAR</span>
+            </div>
         </div>
     </div>
  
     <h1 id="n64" class="section-title">🕹️ NINTENDO 64</h1>
     <img src="n64.jpg" class="banner-console" alt="N64">
     <div class="container"> 
-        <div class="card" onclick="verFicha('zeldaocarina')">
-            <img src="zeldaocarina.jpg" alt="Zelda">
-            <h2>⚔️ Zelda OOT</h2>
-            <div class="nfc-badge">LLAVERO NFC</div>
-            <span class="btn-ver">VER FICHA Y JUGAR</span>
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('zeldaocarina')">
+            <div class="card">
+                <img src="zeldaocarina.jpg" alt="Zelda">
+                <h2>⚔️ Zelda OOT</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">VER FICHA Y JUGAR</span>
+            </div>
         </div>
-        <div class="card" onclick="verFicha('mariotennis')">
-            <img src="MarioTennis.jpg" alt="Mario Tennis">
-            <h2>🎾 Mario Tennis</h2>
-            <div class="nfc-badge">LLAVERO NFC</div>
-            <span class="btn-ver">VER FICHA Y JUGAR</span>
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariotennis')">
+            <div class="card">
+                <img src="MarioTennis.jpg" alt="Mario Tennis">
+                <h2>🎾 Mario Tennis</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">VER FICHA Y JUGAR</span>
+            </div>
         </div> 
     </div>
 
     <h1 id="megadrive" class="section-title">⚡ MEGA DRIVE</h1>
     <img src="megadrive.jpg" class="banner-console" alt="Mega Drive">
     <div class="container">
-        <div class="card" onclick="verFicha('sonic')">
-            <img src="sonicthehedgehog.jpg" alt="Sonic">
-            <h2>🦔 Sonic</h2>
-            <div class="nfc-badge">LLAVERO NFC</div>
-            <span class="btn-ver">VER FICHA Y JUGAR</span>
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('sonic')">
+            <div class="card">
+                <img src="sonicthehedgehog.jpg" alt="Sonic">
+                <h2>🦔 Sonic</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">VER FICHA Y JUGAR</span>
+            </div>
         </div>
-        <div class="card" onclick="verFicha('aladdin')">
-            <img src="aladin.jpg" alt="Aladdin">
-            <h2>🧞 Aladdin</h2>
-            <div class="nfc-badge">LLAVERO NFC</div>
-            <span class="btn-ver">VER FICHA Y JUGAR</span>
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('aladdin')">
+            <div class="card">
+                <img src="aladin.jpg" alt="Aladdin">
+                <h2>🧞 Aladdin</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">VER FICHA Y JUGAR</span>
+            </div>
         </div>
     </div>
  
     <h1 id="snes" class="section-title">⭐ SNES</h1>
     <img src="snes.jpg" class="banner-console" alt="SNES">
     <div class="container">
-        <div class="card" onclick="verFicha('marioworld')">
-            <img src="SuperMarioWorld.jpg" alt="Mario World">
-            <h2>🍄 Mario World</h2>
-            <div class="nfc-badge">LLAVERO NFC</div>
-            <span class="btn-ver">VER FICHA Y JUGAR</span>
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('marioworld')">
+            <div class="card">
+                <img src="SuperMarioWorld.jpg" alt="Mario World">
+                <h2>🍄 Mario World</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">VER FICHA Y JUGAR</span>
+            </div>
         </div>
-        <div class="card" onclick="verFicha('mariokartsnes')">
-            <img src="SuperMarioKartsnes.jpg" alt="Mario Kart">
-            <h2>🏎️ Mario Kart</h2>
-            <div class="nfc-badge">LLAVERO NFC</div>
-            <span class="btn-ver">VER FICHA Y JUGAR</span>
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariokartsnes')">
+            <div class="card">
+                <img src="SuperMarioKartsnes.jpg" alt="Mario Kart">
+                <h2>🏎️ Mario Kart</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">VER FICHA Y JUGAR</span>
+            </div>
         </div>
     </div> 
 
     <h1 id="gba" class="section-title">📱 GAME BOY ADVANCE</h1>
     <img src="gba.jpg" class="banner-console" alt="GBA">
     <div class="container">
-        <div class="card" onclick="verFicha('esmeralda')">
-            <img src="pokemonesme.jpg" alt="Pokemon Esmeralda">
-            <h2>⚡ P. Esmeralda</h2>
-            <div class="nfc-badge">LLAVERO NFC</div>
-            <span class="btn-ver">VER FICHA Y JUGAR</span>
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('esmeralda')">
+            <div class="card">
+                <img src="pokemonesme.jpg" alt="Pokemon Esmeralda">
+                <h2>⚡ P. Esmeralda</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">VER FICHA Y JUGAR</span>
+            </div>
         </div>
-        <div class="card" onclick="verFicha('rubi')">
-            <img src="pokemonrubi.jpg" alt="Pokemon Rubi">
-            <h2>🔴 P. Rubí</h2>
-            <div class="nfc-badge">LLAVERO NFC</div>
-            <span class="btn-ver">VER FICHA Y JUGAR</span>
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('rubi')">
+            <div class="card">
+                <img src="pokemonrubi.jpg" alt="Pokemon Rubi">
+                <h2>🔴 P. Rubí</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">VER FICHA Y JUGAR</span>
+            </div>
         </div>
     </div>
 </div>
 
 <footer>
     <p><strong>@olea3d</strong></p>
-    <p>Adquiere tu llavero personalizado NFC y vive la experiencia retro al instante.</p>
+    <p>Adquiere tu llavero personalizado NFC. Todo está listo para jugar.</p>
 </footer>
 
 <div id="modalFicha" class="modal-ficha">
     <div class="ficha-content">
-        <button class="close-ficha" onclick="cerrarFicha()">❌</button>
+        <button class="close-ficha" onclick="reproducirClic(); cerrarFicha();">❌</button>
         <div class="ficha-header">
             <img id="fichaImg" src="">
             <h2 id="fichaTitulo">Título del Juego</h2>
         </div>
         
         <div class="tabs">
-            <button id="tabHistoria" class="tab-btn active" onclick="cambiarPestana('historia')">📖 HISTORIA</button>
-            <button id="tabManual" class="tab-btn" onclick="cambiarPestana('manual')">📜 MANUAL</button>
+            <button id="tabHistoria" class="tab-btn active" onclick="reproducirClic(); cambiarPestana('historia');">📖 HISTORIA</button>
+            <button id="tabManual" class="tab-btn" onclick="reproducirClic(); cambiarPestana('manual');">📜 MANUAL</button>
         </div>
 
         <div id="contenidoHistoria" class="texto-panel">Cargando sinopsis...</div>
         <div id="contenidoManual" class="texto-panel" style="display:none;">Cargando manual...</div>
 
-        <button id="btnIniciarJuego" class="btn-jugar-modal" onclick="irAlJuego()">🚀 EMPEZAR PARTIDA</button>
+        <button id="btnIniciarJuego" class="btn-jugar-modal" onclick="reproducirClic(); irAlJuego();">🚀 EMPEZAR PARTIDA</button>
     </div>
 </div>
 
 <script>
-// --- SISTEMA DE AUDIO ---
+// --- SISTEMA DE AUDIO (MÚSICA Y SFX) ---
 let musica = document.getElementById("musicaFondo");
 let musicaSonando = false;
+
+// Generador de sonido de "Clic" retro integrado (sin necesidad de archivo externo)
+function reproducirClic() {
+    try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        oscillator.type = 'square';
+        oscillator.frequency.setValueAtTime(440, audioCtx.currentTime); // Tono de inicio
+        oscillator.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1); // Sube rápido
+        gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); // Volumen bajo
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1); // Se apaga
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        oscillator.start();
+        oscillator.stop(audioCtx.currentTime + 0.1);
+    } catch (e) { console.log("Sonido bloqueado por el navegador"); }
+}
 
 function toggleMusica() {
     let btn = document.getElementById("btnMusica");
@@ -225,58 +273,18 @@ function toggleMusica() {
     }
 }
 
-// Base de datos de juegos con Historia y Manual de Instrucciones
+// Base de datos de juegos (Tetris revertido a TetrisFicha.html para evitar el Error 404)
 const infoJuegos = {
-    tetris: { 
-        titulo: "TETRIS (NES)", img: "TetrisNes.png", enlace: "Tetris.html", 
-        historia: "Diseñado originalmente por el ingeniero soviético Alekséi Pázhitnov en 1984, Tetris se convirtió en un fenómeno mundial absoluto al llegar a la NES.",
-        manual: "🎯 <strong>Objetivo:</strong> Encajar las piezas geométricas para limpiar líneas y sumar puntos.<br><br>🕹️ <strong>Controles:</strong> Usa las flechas para mover y rotar las piezas.<br><br>💡 <strong>Truco Retro:</strong> Intenta dejar siempre una columna vacía en el lateral derecho para meter la pieza alargada (el 'palo') y conseguir un 'Tetris' de 4 líneas de golpe." 
-    },
-    mariobros: { 
-        titulo: "SUPER MARIO BROS (NES)", img: "SuperMarioBros.jpg", enlace: "SuperMarioBros.html", 
-        historia: "Lanzado en 1985 por Shigeru Miyamoto, este título redefinió la industria entera del videojuego. Acompaña a Mario a través del Reino Champiñón.",
-        manual: "🎯 <strong>Objetivo:</strong> Rescatar a la Princesa Peach de las garras de Bowser cruzando el Reino Champiñón.<br><br>🕹️ <strong>Controles:</strong> Z/X para saltar y correr. En móvil, botones táctiles.<br><br>💡 <strong>Truco Retro:</strong> En el Mundo 1-2, puedes caminar por encima del techo casi al final del nivel para encontrar las famosas tuberías secretas (Warp Zone) y saltarte mundos." 
-    },
-    zeldaocarina: { 
-        titulo: "ZELDA: OOT (N64)", img: "zeldaocarina.jpg", enlace: "zeldaocarina.html", 
-        historia: "Considerada una de las obras maestras absolutas de la historia. Sigue el viaje épico de Link a través del tiempo en el Reino de Hyrule.",
-        manual: "🎯 <strong>Objetivo:</strong> Reunir las piedras espirituales, despertar a los sabios y derrotar al Rey del Mal, Ganondorf.<br><br>🕹️ <strong>Controles:</strong> Stick para moverse, A para atacar, Z para fijar enemigos.<br><br>💡 <strong>Truco Retro:</strong> Busca tarros vacíos (Botellas). Son el objeto más útil del juego, puedes guardar hadas en ellos para revivir automáticamente si te quedas sin corazones." 
-    },
-    mariotennis: { 
-        titulo: "MARIO TENNIS (N64)", img: "MarioTennis.jpg", enlace: "MarioTennis.html", 
-        historia: "La diversión deportiva arcade definitiva llegó a la Nintendo 64 en el año 2000. Los personajes del Reino Champiñón se reunieron en la pista de tenis.",
-        manual: "🎯 <strong>Objetivo:</strong> Ganar copas y torneos superando a tus rivales en la pista.<br><br>🕹️ <strong>Controles:</strong> Usa los botones A y B para golpear.<br><br>💡 <strong>Truco Retro:</strong> Pulsa el botón A dos veces justo cuando la pelota va a botar para hacer un 'Top Spin' potente, o B para un golpe cortado." 
-    },
-    sonic: { 
-        titulo: "SONIC THE HEDGEHOG (MD)", img: "sonicthehedgehog.jpg", enlace: "SONIC 1 - Shadow The Hedgehog.html", 
-        historia: "SEGA necesitó un héroe capaz de competir con Nintendo en 1991, y lo encontró en un erizo azul ultrarrápido.",
-        manual: "🎯 <strong>Objetivo:</strong> Frenar los malvados planes del Dr. Eggman y liberar a los animales del bosque.<br><br>🕹️ <strong>Controles:</strong> Flechas para moverse, botón de salto para rodar.<br><br>💡 <strong>Truco Retro:</strong> Recuerda que mientras tengas al menos UN anillo dorado en tu contador, serás inmortal ante los golpes enemigos." 
-    },
-    aladdin: { 
-        titulo: "ALADDIN (MEGA DRIVE)", img: "aladin.jpg", enlace: "Aladin.html", 
-        historia: "Con animaciones dibujadas a mano por los artistas de Disney en 1993, este título es una joya visual de los 16 bits.",
-        manual: "🎯 <strong>Objetivo:</strong> Recorrer Agrabah para salvar a la princesa Jasmine del malvado hechicero Jafar.<br><br>🕹️ <strong>Controles:</strong> Saltar, lanzar manzanas y blandir espada.<br><br>💡 <strong>Truco Retro:</strong> Las manzanas son tu mejor arma a distancia. Guárdalas siempre para los combates contra los jefes finales." 
-    },
-    marioworld: { 
-        titulo: "MARIO WORLD (SNES)", img: "SuperMarioWorld.jpg", enlace: "SuperMarioorld.html", 
-        historia: "La cumbre de los plataformas en 2D estrenó el cerebro de la bestia (SNES) en 1990. ¡Yoshi hace su primera aparición!",
-        manual: "🎯 <strong>Objetivo:</strong> Salvar Dinosaur Land y expulsar a Bowser de la región.<br><br>🕹️ <strong>Controles:</strong> Botones de salto y ataque giratorio.<br><br>💡 <strong>Truco Retro:</strong> Muchos niveles tienen salidas secretas (normalmente indicadas en color rojo en el mapa). Encuéntralas para desbloquear el místico 'Star Road'." 
-    },
-    mariokartsnes: { 
-        titulo: "MARIO KART (SNES)", img: "SuperMarioKartsnes.jpg", enlace: "Supermariokartsnes.html", 
-        historia: "El origen de una leyenda de las carreras multijugador en 1992 que revolucionó el Modo 7 gráfico.",
-        manual: "🎯 <strong>Objetivo:</strong> Conseguir la copa de Oro quedando primero en todas las pistas del circuito.<br><br>🕹️ <strong>Controles:</strong> Acelerar, frenar y botón para usar objetos.<br><br>💡 <strong>Truco Retro:</strong> Acelera justo en el momento exacto en el que el semáforo cambia a verde para conseguir un pequeño Turbo inicial." 
-    },
-    esmeralda: { 
-        titulo: "P. ESMERALDA (GBA)", img: "pokemonesme.jpg", enlace: "Pokemonesme.html", 
-        historia: "La edición definitiva de la tercera generación. Detén el choque apocalíptico entre los legendarios Groudon y Kyogre.",
-        manual: "🎯 <strong>Objetivo:</strong> Completar la Pokédex de Hoenn y superar a la Liga Pokémon.<br><br>🕹️ <strong>Controles:</strong> Cruceta para moverte, botón A para interactuar.<br><br>💡 <strong>Truco Retro:</strong> Guarda siempre la partida en tu consola antes de enfrentarte a cualquier Pokémon Legendario por si te quedas sin Pokéballs." 
-    },
-    rubi: { 
-        titulo: "POKÉMON RUBÍ (GBA)", img: "pokemonrubi.jpg", enlace: "PokemonRubi.html", 
-        historia: "Explora Hoenn, enfréntate a los planes magmáticos del Team Magma y hazte con el control del titán de la tierra.",
-        manual: "🎯 <strong>Objetivo:</strong> Conseguir las 8 medallas de gimnasio y detener al Team Magma.<br><br>🕹️ <strong>Controles:</strong> Cruceta de movimiento y botón A.<br><br>💡 <strong>Truco Retro:</strong> Presta atención a las naturalezas de tus Pokémon, ya que aumentan unas estadísticas y reducen otras." 
-    }
+    tetris: { titulo: "TETRIS (NES)", img: "TetrisNes.png", enlace: "TetrisFicha.html", historia: "Diseñado por Alekséi Pázhitnov en 1984, se convirtió en un fenómeno mundial.", manual: "🎯 <strong>Objetivo:</strong> Encajar las piezas.<br><br>🕹️ <strong>Controles:</strong> Flechas de dirección.<br><br>💡 <strong>Truco:</strong> Deja una columna libre a la derecha." },
+    mariobros: { titulo: "SUPER MARIO BROS (NES)", img: "SuperMarioBros.jpg", enlace: "SuperMarioBros.html", historia: "Lanzado en 1985 por Shigeru Miyamoto, redefinió la industria.", manual: "🎯 <strong>Objetivo:</strong> Rescatar a la Princesa Peach.<br><br>🕹️ <strong>Controles:</strong> Z/X para saltar y correr.<br><br>💡 <strong>Truco:</strong> En el Mundo 1-2, camina por el techo." },
+    zeldaocarina: { titulo: "ZELDA: OOT (N64)", img: "zeldaocarina.jpg", enlace: "zeldaocarina.html", historia: "Una de las obras maestras de la historia. Viaja por Hyrule.", manual: "🎯 <strong>Objetivo:</strong> Detener a Ganondorf.<br><br>🕹️ <strong>Controles:</strong> Stick y botón A.<br><br>💡 <strong>Truco:</strong> Busca tarros vacíos para guardar hadas." },
+    mariotennis: { titulo: "MARIO TENNIS (N64)", img: "MarioTennis.jpg", enlace: "MarioTennis.html", historia: "La diversión deportiva arcade definitiva.", manual: "🎯 <strong>Objetivo:</strong> Ganar torneos.<br><br>🕹️ <strong>Controles:</strong> A y B para golpear.<br><br>💡 <strong>Truco:</strong> Pulsa A dos veces para Top Spin." },
+    sonic: { titulo: "SONIC THE HEDGEHOG (MD)", img: "sonicthehedgehog.jpg", enlace: "SONIC 1 - Shadow The Hedgehog.html", historia: "El héroe veloz de SEGA para competir con Nintendo en 1991.", manual: "🎯 <strong>Objetivo:</strong> Frenar a Dr. Eggman.<br><br>🕹️ <strong>Controles:</strong> Flechas y salto.<br><br>💡 <strong>Truco:</strong> Mientras tengas un anillo eres inmortal." },
+    aladdin: { titulo: "ALADDIN (MEGA DRIVE)", img: "aladin.jpg", enlace: "Aladin.html", historia: "Animaciones dibujadas por artistas de Disney en 1993.", manual: "🎯 <strong>Objetivo:</strong> Salvar a Jasmine.<br><br>🕹️ <strong>Controles:</strong> Lanzar manzanas y espada.<br><br>💡 <strong>Truco:</strong> Guarda manzanas para los jefes." },
+    marioworld: { titulo: "MARIO WORLD (SNES)", img: "SuperMarioWorld.jpg", enlace: "SuperMarioorld.html", historia: "La cumbre de los plataformas en 2D estrenó la SNES en 1990.", manual: "🎯 <strong>Objetivo:</strong> Salvar Dinosaur Land.<br><br>🕹️ <strong>Controles:</strong> Salto y giro.<br><br>💡 <strong>Truco:</strong> Busca las salidas rojas secretas." },
+    mariokartsnes: { titulo: "MARIO KART (SNES)", img: "SuperMarioKartsnes.jpg", enlace: "Supermariokartsnes.html", historia: "El origen de una leyenda de las carreras en 1992.", manual: "🎯 <strong>Objetivo:</strong> Conseguir la copa de Oro.<br><br>🕹️ <strong>Controles:</strong> Acelerar y objetos.<br><br>💡 <strong>Truco:</strong> Acelera en el verde para el Turbo." },
+    esmeralda: { titulo: "P. ESMERALDA (GBA)", img: "pokemonesme.jpg", enlace: "Pokemonesme.html", historia: "La edición definitiva en Hoenn. Detén a Groudon y Kyogre.", manual: "🎯 <strong>Objetivo:</strong> Superar a la Liga Pokémon.<br><br>🕹️ <strong>Controles:</strong> Cruceta y A.<br><br>💡 <strong>Truco:</strong> Guarda partida antes de un Legendario." },
+    rubi: { titulo: "POKÉMON RUBÍ (GBA)", img: "pokemonrubi.jpg", enlace: "PokemonRubi.html", historia: "Enfréntate a los planes magmáticos del Team Magma.", manual: "🎯 <strong>Objetivo:</strong> Conseguir 8 medallas.<br><br>🕹️ <strong>Controles:</strong> Cruceta y A.<br><br>💡 <strong>Truco:</strong> Presta atención a las naturalezas." }
 };
 
 let enlaceDestino = "";
