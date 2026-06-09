@@ -162,7 +162,7 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 </div>
 
 <div class="main-container">
-    <div class="stats">🕹️ 12 Juegos | 🏆 Colección Premium</div>
+    <div class="stats">🕹️ 13 Juegos | 🏆 Colección Premium</div>
 
     <h1 id="nes" class="section-title">🎮 NES</h1>
     <img src="nes.jpg" class="banner-console" alt="NES">
@@ -177,6 +177,14 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
             </div>
         </div>
 
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('miketyson')">
+            <div class="card">
+                <img src="miketyson.jpg" alt="Punch Out">
+                <h2>🥊 Punch-Out!!</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">VER FICHA Y JUGAR</span>
+            </div>
+        </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('ghostngoblin')">
             <div class="card">
                 <img src="ghostngoblin.jpg" alt="Ghosts n Goblins">
@@ -492,6 +500,9 @@ const coloresConsola = {
 
 // --- BASE DE DATOS OPTIMIZADA ---
 const infoJuegos = {
+    // NUEVO: PUNCH-OUT!!
+    miketyson: { consola: "nes", titulo: "PUNCH-OUT!! (NES)", img: "miketyson.jpg", enlace: "miketyson.html", valoracion: "⭐⭐⭐⭐⭐ 9.4/10 (Clásico de Culto)", historia: "Lanzado en 1987, este aclamado juego de boxeo te pone en la piel de Little Mac. Más que un juego de deportes, es un rompecabezas de reflejos donde debes memorizar los patrones de rivales icónicos como King Hippo hasta llegar al mismísimo Mike Tyson.", manual: "🎯 <strong>Objetivo:</strong> Escalar en el ranking de la WVBA derrotando a todos los boxeadores hasta ganar el cinturón.<br><br>🕹️ <strong>Controles:</strong> Esquiva a los lados, bloquea y usa los botones para dar ganchos. Pulsa 'Start' para el gancho estrella.<br><br>💡 <strong>Truco Retro:</strong> Presta atención al público. En la pelea contra Bald Bull, cuando un espectador con barba asienta con la cabeza o parpadee, es el momento exacto para darle un golpe al cuerpo y noquearlo." },
+    
     ghostngoblin: { consola: "nes", titulo: "GHOSTS 'N GOBLINS (NES)", img: "ghostngoblin.jpg", enlace: "ghostngoblin.html", valoracion: "⭐⭐⭐⭐ 8.5/10 (Clásico Desafiante)", historia: "Lanzado por Capcom en 1986, es famoso por ser uno de los juegos más difíciles de la historia. Controlas al caballero Sir Arthur, que pierde su armadura al primer golpe, quedando en calzoncillos. Su brutal dificultad lo hizo una leyenda retro.", manual: "🎯 <strong>Objetivo:</strong> Cruzar el reino de los demonios para rescatar a la princesa Prin-Prin.<br><br>🕹️ <strong>Controles:</strong> Botón para saltar y botón para lanzar armas. Cuidado con los saltos, no se pueden corregir en el aire.<br><br>💡 <strong>Truco Retro:</strong> La trampa final: para ver el verdadero desenlace, el juego te obligará a completarlo dos veces seguidas de principio a fin." },
     mariobros3: { consola: "nes", titulo: "SUPER MARIO BROS 3 (NES)", img: "supermariobros3.jpg", enlace: "supermariobros3.html", valoracion: "⭐⭐⭐⭐⭐ 9.8/10 (Obra Maestra)", historia: "Lanzado en 1988, revolucionó los plataformas con su mapa navegable, minijuegos y el icónico traje de mapache para volar. Su diseño de niveles y secretos marcaron el futuro de la industria.", manual: "🎯 <strong>Objetivo:</strong> Derrotar a Bowser y a sus Koopalings para salvar a los 7 reyes caídos.<br><br>🕹️ <strong>Controles:</strong> Botón de salto y botón para correr/volar. En el mapa, flechas para moverte.<br><br>💡 <strong>Truco Retro:</strong> En el Mundo 1, busca las flautas mágicas (en el nivel 3 y en la fortaleza) para viajar al instante al Mundo 8." },
     pacman: { consola: "arcade", titulo: "PAC-MAN (ARCADE)", img: "pacman.jpg", enlace: "Pacman.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10 (Clásico Atemporal)", historia: "El comecocos original de 1980 que desató la locura en los recreativos. Fue pionero en usar 'power-ups' y dotar a cada fantasma de una inteligencia artificial única.", manual: "🎯 <strong>Objetivo:</strong> Comer todos los puntos del laberinto sin que te atrapen los fantasmas. Come las pastillas grandes para poder devorarlos.<br><br>🕹️ <strong>Controles:</strong> Flechas de dirección para girar por las esquinas.<br><br>💡 <strong>Truco Retro:</strong> Usa los túneles laterales para escapar rápidamente; los fantasmas reducen enormemente su velocidad al cruzar por ellos." },
