@@ -6,18 +6,18 @@
 <title>OLEA3D Retro Hub</title>
 
 <style>
-/* 1. VARIABLES CAMALEÓNICAS (Se actualizan por código según la consola) */
+/* 1. VARIABLES CAMALEÓNICAS */
 :root {
     --modal-border: #d4af37;
     --modal-title: #ffd700;
     --modal-tab: #9dff3d;
 }
 
-/* 2. ESTILOS BASE Y FILTRO CRT (RETRO TV) */
+/* 2. ESTILOS BASE Y FILTRO CRT */
 body { margin: 0; font-family: Arial, sans-serif; background: #0d0d0d; color: white; text-align: center; overflow-x: hidden; position: relative; min-height: 100vh; }
 body::before { content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); z-index: 999; background-size: 100% 2px, 3px 100%; pointer-events: none; opacity: 0.6; }
 
-/* 3. FONDO ANIMADO 3D (REJILLA RETRO) */
+/* 3. FONDO ANIMADO 3D */
 .bg-grid { position: fixed; bottom: 0; left: -50%; width: 200%; height: 60vh; background: linear-gradient(transparent 10%, rgba(157,255,61,0.3) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(157,255,61,0.5) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(157,255,61,0.5) 21px); transform-origin: bottom; transform: perspective(500px) rotateX(60deg); animation: gridMove 2s linear infinite; z-index: -1; opacity: 0.4; }
 @keyframes gridMove { 0% { transform: perspective(500px) rotateX(60deg) translateY(0); } 100% { transform: perspective(500px) rotateX(60deg) translateY(21px); } }
 
@@ -26,16 +26,22 @@ header { padding: 20px; background: linear-gradient(180deg, rgba(26,26,26,0.9), 
 h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
 .sub { color: #9acd32; font-size: 16px; margin-bottom: 20px; }
 
-/* 4. BOTÓN DE MÚSICA */
-.btn-musica { background: #eee; color: #111; padding: 10px 20px; border-radius: 8px; font-weight: bold; border: 2px solid #ccc; cursor: pointer; margin: 10px auto 20px auto; font-size: 14px; transition: 0.3s; display: inline-block; position: relative; z-index: 10; }
+/* BOTÓN DE MÚSICA */
+.btn-musica { background: #eee; color: #111; padding: 10px 20px; border-radius: 8px; font-weight: bold; border: 2px solid #ccc; cursor: pointer; margin: 10px auto; font-size: 14px; transition: 0.3s; display: inline-block; position: relative; z-index: 10; }
 .btn-musica:hover { transform: scale(1.05); }
 
-/* 5. MENÚ SUPERIOR DE CONSOLAS */
-.menu { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin: 10px auto; padding: 10px; max-width: 95%; position: relative; z-index: 10; }
+/* NUEVO: BUSCADOR DE JUEGOS */
+.buscador-container { margin: 25px auto 10px auto; max-width: 400px; padding: 0 15px; position: relative; z-index: 10; }
+#buscadorJuegos { width: 100%; padding: 12px 20px; border-radius: 25px; border: 2px solid #d4af37; background: rgba(18, 18, 18, 0.8); color: white; font-size: 16px; outline: none; box-shadow: 0 0 15px rgba(212,175,55,0.3); transition: 0.3s; font-family: inherit; box-sizing: border-box; text-align: center; }
+#buscadorJuegos::placeholder { color: #aaa; }
+#buscadorJuegos:focus { box-shadow: 0 0 25px rgba(157,255,61,0.6); border-color: #9dff3d; background: rgba(0, 0, 0, 0.9); }
+
+/* 4. MENÚ SUPERIOR DE CONSOLAS */
+.menu { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin: 15px auto; padding: 10px; max-width: 95%; position: relative; z-index: 10; }
 .menu a { color: white; text-decoration: none; background: #222; padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; border: 1px solid #d4af37; transition: 0.3s; }
 .menu a:hover { background: #d4af37; color: #111; box-shadow: 0 0 10px #d4af37; }
 
-/* 6. CONTENEDORES */
+/* 5. CONTENEDORES */
 .main-container { max-width: 1200px; margin: auto; padding: 10px; position: relative; z-index: 10; }
 .section-title { color: #ffd700; margin: 30px 0 15px 0; font-size: 22px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
 .banner-console { width: 100%; max-width: 320px; height: auto; border-radius: 15px; box-shadow: 0 0 20px rgba(247,210,74,0.4); margin-bottom: 15px; }
@@ -43,8 +49,8 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 .container { display: flex; gap: 20px; overflow-x: auto; padding: 20px 10px; scroll-behavior: smooth; perspective: 1000px; }
 .container::-webkit-scrollbar { display: none; }
 
-/* 7. EFECTO 3D Y BORDE ANIMADO TIPO FILAMENTO */
-.card-wrapper { position: relative; min-width: 220px; height: 290px; flex-shrink: 0; cursor: pointer; z-index: 1; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+/* 6. EFECTO 3D Y BORDE ANIMADO */
+.card-wrapper { position: relative; min-width: 220px; height: 290px; flex-shrink: 0; cursor: pointer; z-index: 1; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), display 0.3s; }
 .card-wrapper:hover { transform: translateY(-10px) rotateX(8deg) rotateY(-5deg) scale(1.05); z-index: 100; }
 .card-wrapper::before { content: ''; position: absolute; top: -3px; left: -3px; right: -3px; bottom: -3px; background: linear-gradient(45deg, #d4af37, #f8f9fa, #9acd32, #d4af37); background-size: 300%; border-radius: 23px; z-index: -1; animation: brilloSeda 4s linear infinite; box-shadow: 0 0 15px rgba(212,175,55,0.3); }
 @keyframes brilloSeda { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
@@ -54,12 +60,12 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 .card img { max-height: 110px; object-fit: contain; border-radius: 8px; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.8)); transition: 0.3s; }
 .card-wrapper:hover .card img { transform: scale(1.1); }
 
-/* 8. BOTONES Y BADGES */
+/* 7. BOTONES Y BADGES */
 .btn-ver { display: inline-block; padding: 10px 15px; background: #6b8e23; color: white; border-radius: 6px; font-weight: bold; font-size: 12px; border: 1px solid #88aa33; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
 .stats { margin: 10px 0; font-size: 16px; font-weight: bold; color: #9dff3d; text-shadow: 0 0 5px rgba(157,255,61,0.5); }
 .nfc-badge { display: inline-block; background: #9dff3d; color: #111; font-weight: bold; padding: 3px 10px; border-radius: 20px; margin: 2px; font-size: 11px; box-shadow: 0 0 8px rgba(157,255,61,0.6); }  
 
-/* 9. MODAL (FICHA FLOTANTE CAMALEÓNICA) */
+/* 8. MODAL (FICHA FLOTANTE CAMALEÓNICA) */
 .modal-ficha { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 99999; justify-content: center; align-items: center; padding: 15px; box-sizing: border-box; backdrop-filter: blur(5px); }
 .ficha-content { background: #121212; border: 3px solid var(--modal-border); border-radius: 20px; max-width: 420px; width: 100%; padding: 20px; position: relative; box-shadow: 0 0 40px var(--modal-border); max-height: 90vh; overflow-y: auto; text-align: left; box-sizing: border-box; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); transition: border-color 0.4s, box-shadow 0.4s; }
 @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -81,13 +87,12 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 
 footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-size: 14px; border-top: 2px solid #222; position: relative; z-index: 10; }
 
-/* 10. PANTALLA TRANSICIÓN INSERT COIN */
+/* 9. PANTALLAS DE TRANSICIÓN Y ESCANEO */
 .transition-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
 .transition-screen.active { opacity: 1; pointer-events: all; }
 .insert-coin-text { color: #ffd700; font-size: 28px; font-family: 'Courier New', Courier, monospace; font-weight: bold; text-shadow: 0 0 20px #ffd700, 0 0 40px #ff0000; animation: blink 0.5s infinite alternate; }
 @keyframes blink { from { opacity: 1; transform: scale(1); } to { opacity: 0.2; transform: scale(1.05); } }
 
-/* 11. PANTALLA ESCANEO NFC */
 .nfc-scanner { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,15,0,0.95); z-index: 99999999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(10px); }
 .nfc-scanner.active { opacity: 1; pointer-events: all; }
 .nfc-laser-container { position: relative; width: 80%; max-width: 300px; height: 200px; border: 2px dashed rgba(157,255,61,0.4); border-radius: 15px; overflow: hidden; display: flex; justify-content: center; align-items: center; }
@@ -125,7 +130,12 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
     <h1>OLEA3D Hub Retro</h1>
     <div class="nfc-badge">📡 Colección NFC</div> 
     <p class="sub">Escanea tu llavero y todo estará listo para jugar</p>
+    
     <button id="btnMusica" class="btn-musica" onclick="reproducirClic(); toggleMusica();">🎵 Música Retro ON/OFF</button>
+
+    <div class="buscador-container">
+        <input type="text" id="buscadorJuegos" placeholder="🔍 Buscar juego (ej: Mario, Zelda...)" onkeyup="filtrarJuegos()">
+    </div>
 </header>
 
 <div class="menu">
@@ -271,6 +281,21 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 </div>
 
 <script>
+// --- NUEVO: FUNCIÓN PARA EL BUSCADOR ---
+function filtrarJuegos() {
+    let input = document.getElementById("buscadorJuegos").value.toLowerCase();
+    let tarjetas = document.querySelectorAll(".card-wrapper");
+
+    tarjetas.forEach(tarjeta => {
+        let titulo = tarjeta.querySelector("h2").innerText.toLowerCase();
+        if (titulo.includes(input)) {
+            tarjeta.style.display = "block";
+        } else {
+            tarjeta.style.display = "none";
+        }
+    });
+}
+
 // --- SISTEMA DE AUDIO (MÚSICA Y SFX) ---
 let musica = document.getElementById("musicaFondo");
 let musicaSonando = false;
@@ -352,7 +377,7 @@ const coloresConsola = {
     gba:  { border: '#5a429b', title: '#5a429b', tab: '#d3d3d3' }
 };
 
-// Base de datos de juegos (Añadido el campo 'consola')
+// Base de datos de juegos
 const infoJuegos = {
     tetris: { consola: "nes", titulo: "TETRIS (NES)", img: "TetrisNes.png", enlace: "TetrisFicha.html", historia: "Diseñado por Alekséi Pázhitnov en 1984, se convirtió en un fenómeno mundial.", manual: "🎯 <strong>Objetivo:</strong> Encajar las piezas.<br><br>🕹️ <strong>Controles:</strong> Flechas de dirección.<br><br>💡 <strong>Truco:</strong> Deja una columna libre a la derecha." },
     mariobros: { consola: "nes", titulo: "SUPER MARIO BROS (NES)", img: "SuperMarioBros.jpg", enlace: "SuperMarioBros.html", historia: "Lanzado en 1985 por Shigeru Miyamoto, redefinió la industria.", manual: "🎯 <strong>Objetivo:</strong> Rescatar a la Princesa Peach.<br><br>🕹️ <strong>Controles:</strong> Z/X para saltar y correr.<br><br>💡 <strong>Truco:</strong> En el Mundo 1-2, camina por el techo." },
@@ -369,7 +394,7 @@ const infoJuegos = {
 let enlaceDestino = "";
 
 function actualizarColoresModal(idConsola) {
-    const colores = coloresConsola[idConsola] || coloresConsola['nes']; // Por defecto NES
+    const colores = coloresConsola[idConsola] || coloresConsola['nes']; 
     document.documentElement.style.setProperty('--modal-border', colores.border);
     document.documentElement.style.setProperty('--modal-title', colores.title);
     document.documentElement.style.setProperty('--modal-tab', colores.tab);
@@ -380,7 +405,6 @@ function verFicha(idJuego) {
     if (juego) {
         enlaceDestino = juego.enlace;
         
-        // Cambiar colores camaleónicos de la ventana
         actualizarColoresModal(juego.consola);
         
         document.getElementById("fichaTitulo").innerText = juego.titulo;
@@ -429,25 +453,20 @@ function cerrarFicha() {
 function revisarLlaveroNFC() {
     const hash = window.location.hash.toLowerCase().replace('#', '');
     if (hash && infoJuegos[hash]) {
-        // En lugar de abrir la ficha de golpe, lanzamos el escáner visual
         const scannerScreen = document.getElementById("nfcScannerScreen");
         scannerScreen.classList.add("active");
         reproducirSonidoEscaner();
         
-        // Tras 1.2 segundos de escanear, quitamos el láser y abrimos la ficha
         setTimeout(() => { 
             scannerScreen.classList.remove("active");
             setTimeout(() => {
                 verFicha(hash); 
-            }, 300); // Pequeña pausa para que quede limpio
+            }, 300); 
         }, 1200);
     }
 }
 
-// Detectar el paso del llavero (cambio en la URL)
 window.addEventListener('hashchange', revisarLlaveroNFC);
-
-// Detectar si la web se abre por primera vez ya con un juego escaneado
 window.addEventListener('DOMContentLoaded', revisarLlaveroNFC);
 window.addEventListener('load', revisarLlaveroNFC);
 
