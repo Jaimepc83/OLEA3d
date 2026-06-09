@@ -40,4 +40,197 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; }
 
 /* MODAL (VENTANA FLOTANTE DE LA FICHA Y MANUAL) */
 .modal-ficha { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; justify-content: center; align-items: center; padding: 15px; box-sizing: border-box; }
-.ficha-content { background: #121212; border: 3px solid #ffd700; border-radius: 20px
+.ficha-content { background: #121212; border: 3px solid #ffd700; border-radius: 20px; max-width: 420px; width: 100%; padding: 20px; position: relative; box-shadow: 0 0 30px rgba(254,215,0,0.5); max-height: 90vh; overflow-y: auto; text-align: left; box-sizing: border-box; }
+.close-ficha { position: absolute; top: 12px; right: 12px; background: #ff4444; color: white; border: none; width: 35px; height: 35px; font-weight: bold; border-radius: 50%; cursor: pointer; font-size: 14px; display: flex; justify-content: center; align-items: center; z-index: 10; }
+.ficha-header { display: flex; gap: 15px; align-items: center; margin-bottom: 15px; padding-right: 40px; }
+.ficha-header img { width: 70px; height: auto; border-radius: 8px; object-fit: contain; }
+.ficha-header h2 { color: #ffd700; margin: 0; font-size: 18px; }
+
+/* PESTAÑAS DE MANUAL E HISTORIA */
+.tabs { display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 2px solid #333; padding-bottom: 10px; }
+.tab-btn { background: transparent; color: #aaa; border: none; font-size: 14px; font-weight: bold; cursor: pointer; padding: 5px 10px; border-radius: 5px; transition: 0.3s; }
+.tab-btn.active { background: #333; color: #ffd700; }
+
+.texto-panel { font-size: 14px; line-height: 1.6; color: #eee; margin-bottom: 20px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 12px; border-left: 4px solid #9dff3d; min-height: 120px; }
+.texto-panel strong { color: #ffd700; }
+
+/* BOTÓN DE JUGAR LISTO */
+.btn-jugar-modal { display: block; width: 100%; text-align: center; padding: 14px 0; background: #6b8e23; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 16px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(107,142,35,0.4); box-sizing: border-box; }
+.btn-jugar-modal:hover { background: #88aa33; }
+
+footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-size: 14px; border-top: 2px solid #222; }
+</style>
+</head>
+
+<body>
+
+<header>
+    <img src="logo.png" class="logo" alt="OLEA3D Logo">
+    <h1>OLEA3D Hub Retro</h1>
+    <div class="nfc-badge">📡 Colección NFC</div> 
+    <p class="sub">Escanea tu llavero o toca una tarjeta para jugar</p>
+</header>
+
+<div class="menu">
+    <a href="#nes">🎮 NES</a>
+    <a href="#n64">🕹️ N64</a>
+    <a href="#megadrive">⚡ MD</a>
+    <a href="#snes">⭐ SNES</a>
+    <a href="#gba">📱 GBA</a>
+</div>
+
+<div class="main-container">
+    <div class="stats">🕹️ 10 Juegos Listos | 🏆 Colección Premium</div>
+
+    <h1 id="nes" class="section-title">🎮 NES</h1>
+    <img src="nes.jpg" class="banner-console" alt="NES">
+    <div class="container"> 
+        <div class="card" onclick="verFicha('tetris')">
+            <img src="TetrisNes.png" alt="Tetris">
+            <h2>🎮 Tetris</h2>
+            <div class="nfc-badge">LLAVERO NFC</div>
+            <span class="btn-ver">VER FICHA Y JUGAR</span>
+        </div>
+        <div class="card" onclick="verFicha('mariobros')">
+            <img src="SuperMarioBros.jpg" alt="Mario Bros">
+            <h2>🍄 Mario Bros</h2>
+            <div class="nfc-badge">LLAVERO NFC</div>
+            <span class="btn-ver">VER FICHA Y JUGAR</span>
+        </div>
+    </div>
+ 
+    <h1 id="n64" class="section-title">🕹️ NINTENDO 64</h1>
+    <img src="n64.jpg" class="banner-console" alt="N64">
+    <div class="container"> 
+        <div class="card" onclick="verFicha('zeldaocarina')">
+            <img src="zeldaocarina.jpg" alt="Zelda">
+            <h2>⚔️ Zelda OOT</h2>
+            <div class="nfc-badge">LLAVERO NFC</div>
+            <span class="btn-ver">VER FICHA Y JUGAR</span>
+        </div>
+        <div class="card" onclick="verFicha('mariotennis')">
+            <img src="MarioTennis.jpg" alt="Mario Tennis">
+            <h2>🎾 Mario Tennis</h2>
+            <div class="nfc-badge">LLAVERO NFC</div>
+            <span class="btn-ver">VER FICHA Y JUGAR</span>
+        </div> 
+    </div>
+
+    <h1 id="megadrive" class="section-title">⚡ MEGA DRIVE</h1>
+    <img src="megadrive.jpg" class="banner-console" alt="Mega Drive">
+    <div class="container">
+        <div class="card" onclick="verFicha('sonic')">
+            <img src="sonicthehedgehog.jpg" alt="Sonic">
+            <h2>🦔 Sonic</h2>
+            <div class="nfc-badge">LLAVERO NFC</div>
+            <span class="btn-ver">VER FICHA Y JUGAR</span>
+        </div>
+        <div class="card" onclick="verFicha('aladdin')">
+            <img src="aladdin.jpg" alt="Aladdin">
+            <h2>🧞 Aladdin</h2>
+            <div class="nfc-badge">LLAVERO NFC</div>
+            <span class="btn-ver">VER FICHA Y JUGAR</span>
+        </div>
+    </div>
+ 
+    <h1 id="snes" class="section-title">⭐ SNES</h1>
+    <img src="snes.jpg" class="banner-console" alt="SNES">
+    <div class="container">
+        <div class="card" onclick="verFicha('marioworld')">
+            <img src="SuperMarioWorld.jpg" alt="Mario World">
+            <h2>🍄 Mario World</h2>
+            <div class="nfc-badge">LLAVERO NFC</div>
+            <span class="btn-ver">VER FICHA Y JUGAR</span>
+        </div>
+        <div class="card" onclick="verFicha('mariokartsnes')">
+            <img src="SuperMarioKartsnes.jpg" alt="Mario Kart">
+            <h2>🏎️ Mario Kart</h2>
+            <div class="nfc-badge">LLAVERO NFC</div>
+            <span class="btn-ver">VER FICHA Y JUGAR</span>
+        </div>
+    </div> 
+
+    <h1 id="gba" class="section-title">📱 GAME BOY ADVANCE</h1>
+    <img src="gba.jpg" class="banner-console" alt="GBA">
+    <div class="container">
+        <div class="card" onclick="verFicha('esmeralda')">
+            <img src="pokemonesme.jpg" alt="Pokemon Esmeralda">
+            <h2>⚡ P. Esmeralda</h2>
+            <div class="nfc-badge">LLAVERO NFC</div>
+            <span class="btn-ver">VER FICHA Y JUGAR</span>
+        </div>
+        <div class="card" onclick="verFicha('rubi')">
+            <img src="pokemonrubi.jpg" alt="Pokemon Rubi">
+            <h2>🔴 P. Rubí</h2>
+            <div class="nfc-badge">LLAVERO NFC</div>
+            <span class="btn-ver">VER FICHA Y JUGAR</span>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p><strong>@olea3d</strong></p>
+    <p>Adquiere tu llavero personalizado NFC y vive la experiencia retro al instante.</p>
+</footer>
+
+<div id="modalFicha" class="modal-ficha">
+    <div class="ficha-content">
+        <button class="close-ficha" onclick="cerrarFicha()">❌</button>
+        <div class="ficha-header">
+            <img id="fichaImg" src="">
+            <h2 id="fichaTitulo">Título del Juego</h2>
+        </div>
+        
+        <div class="tabs">
+            <button id="tabHistoria" class="tab-btn active" onclick="cambiarPestana('historia')">📖 HISTORIA</button>
+            <button id="tabManual" class="tab-btn" onclick="cambiarPestana('manual')">📜 MANUAL</button>
+        </div>
+
+        <div id="contenidoHistoria" class="texto-panel">Cargando sinopsis...</div>
+        <div id="contenidoManual" class="texto-panel" style="display:none;">Cargando manual...</div>
+
+        <button id="btnIniciarJuego" class="btn-jugar-modal" onclick="irAlJuego()">🚀 EMPEZAR PARTIDA</button>
+    </div>
+</div>
+
+<script>
+const infoJuegos = {
+    tetris: { 
+        titulo: "TETRIS (NES)", img: "TetrisNes.png", enlace: "TetrisFicha.html", 
+        historia: "Diseñado originalmente por el ingeniero soviético Alekséi Pázhitnov en 1984, Tetris se convirtió en un fenómeno mundial absoluto al llegar a la NES.",
+        manual: "🎯 <strong>Objetivo:</strong> Encajar las piezas geométricas para limpiar líneas y sumar puntos.<br><br>🕹️ <strong>Controles:</strong> Usa las flechas para mover y rotar las piezas.<br><br>💡 <strong>Truco Retro:</strong> Intenta dejar siempre una columna vacía en el lateral derecho para meter la pieza alargada (el 'palo') y conseguir un 'Tetris' de 4 líneas de golpe." 
+    },
+    mariobros: { 
+        titulo: "SUPER MARIO BROS (NES)", img: "SuperMarioBros.jpg", enlace: "SuperMarioBros.html", 
+        historia: "Lanzado en 1985 por Shigeru Miyamoto, este título redefinió la industria entera del videojuego. Acompaña a Mario a través del Reino Champiñón.",
+        manual: "🎯 <strong>Objetivo:</strong> Rescatar a la Princesa Peach de las garras de Bowser cruzando el Reino Champiñón.<br><br>🕹️ <strong>Controles:</strong> Z/X para saltar y correr. En móvil, botones táctiles.<br><br>💡 <strong>Truco Retro:</strong> En el Mundo 1-2, puedes caminar por encima del techo casi al final del nivel para encontrar las famosas tuberías secretas (Warp Zone) y saltarte mundos." 
+    },
+    zeldaocarina: { 
+        titulo: "ZELDA: OOT (N64)", img: "zeldaocarina.jpg", enlace: "zeldaocarina.html", 
+        historia: "Considerada una de las obras maestras absolutas de la historia. Sigue el viaje épico de Link a través del tiempo en el Reino de Hyrule.",
+        manual: "🎯 <strong>Objetivo:</strong> Reunir las piedras espirituales, despertar a los sabios y derrotar al Rey del Mal, Ganondorf.<br><br>🕹️ <strong>Controles:</strong> Stick para moverse, A para atacar, Z para fijar enemigos.<br><br>💡 <strong>Truco Retro:</strong> Busca tarros vacíos (Botellas). Son el objeto más útil del juego, puedes guardar hadas en ellos para revivir automáticamente si te quedas sin corazones." 
+    },
+    mariotennis: { 
+        titulo: "MARIO TENNIS (N64)", img: "MarioTennis.jpg", enlace: "MarioTennis.html", 
+        historia: "La diversión deportiva arcade definitiva llegó a la Nintendo 64. Los personajes del Reino Champiñón se reúnen en la pista de tenis.",
+        manual: "🎯 <strong>Objetivo:</strong> Ganar copas y torneos superando a tus rivales en la pista.<br><br>🕹️ <strong>Controles:</strong> Usa los botones A y B para golpear.<br><br>💡 <strong>Truco Retro:</strong> Pulsa el botón A dos veces justo cuando la pelota va a botar para hacer un 'Top Spin' potente, o B para un golpe cortado." 
+    },
+    sonic: { 
+        titulo: "SONIC THE HEDGEHOG (MD)", img: "sonicthehedgehog.jpg", enlace: "SONIC 1 - Shadow The Hedgehog.html", 
+        historia: "SEGA necesitó un héroe capaz de competir con Nintendo en 1991, y lo encontró en un erizo azul ultrarrápido.",
+        manual: "🎯 <strong>Objetivo:</strong> Frenar los malvados planes del Dr. Eggman y liberar a los animales del bosque.<br><br>🕹️ <strong>Controles:</strong> Flechas para moverse, botón de salto para rodar.<br><br>💡 <strong>Truco Retro:</strong> Recuerda que mientras tengas al menos UN anillo dorado en tu contador, serás inmortal ante los golpes enemigos." 
+    },
+    aladdin: { 
+        titulo: "ALADDIN (MEGA DRIVE)", img: "aladin.jpg", enlace: "Aladin.html", 
+        historia: "Con animaciones dibujadas a mano por los artistas de Disney en 1993, este título es una joya visual de los 16 bits.",
+        manual: "🎯 <strong>Objetivo:</strong> Recorrer Agrabah para salvar a la princesa Jasmine del malvado hechicero Jafar.<br><br>🕹️ <strong>Controles:</strong> Saltar, lanzar manzanas y blandir espada.<br><br>💡 <strong>Truco Retro:</strong> Las manzanas son tu mejor arma a distancia. Guárdalas siempre para los combates contra los jefes finales." 
+    },
+    marioworld: { 
+        titulo: "MARIO WORLD (SNES)", img: "SuperMarioWorld.jpg", enlace: "SuperMarioorld.html", 
+        historia: "La cumbre de los plataformas en 2D estrenó el cerebro de la bestia (SNES) en 1990. ¡Yoshi hace su primera aparición!",
+        manual: "🎯 <strong>Objetivo:</strong> Salvar Dinosaur Land y expulsar a Bowser de la región.<br><br>🕹️ <strong>Controles:</strong> Botones de salto y ataque giratorio.<br><br>💡 <strong>Truco Retro:</strong> Muchos niveles tienen salidas secretas (normalmente indicadas en color rojo en el mapa). Encuéntralas para desbloquear el mítico 'Star Road'." 
+    },
+    mariokartsnes: { 
+        titulo: "MARIO KART (SNES)", img: "SuperMarioKartsnes.jpg", enlace: "Supermariokartsnes.html", 
+        historia: "El origen de una leyenda de las carreras multijugador en 1992 que revolucionó el Modo 7 gráfico.",
+        manual: "🎯 <strong>Objetivo:</strong> Conseguir la copa de Oro quedando primero en todas las pistas del circuito.<br><br>🕹️ <strong>Controles:</strong> Acelerar, frenar y botón para usar objetos.<br><br>💡 <strong>Truco Retro:</strong> Acelera justo en el momento exacto en el que el semáforo cambia a verde para conseguir un pequeño Turbo inicial."
