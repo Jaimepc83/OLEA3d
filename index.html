@@ -222,4 +222,346 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariotennis')">
             <div class="card">
                 <img src="MarioTennis.jpg" alt="Mario Tennis">
-                <h2>🎾
+                <h2>🎾 Mario Tennis</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">VER FICHA Y JUGAR</span>
+            </div>
+        </div> 
+    </div>
+
+    <h1 id="megadrive" class="section-title">⚡ MEGA DRIVE</h1>
+    <img src="megadrive.jpg" class="banner-console" alt="Mega Drive">
+    <div class="container">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('sonic')">
+            <div class="card">
+                <img src="sonicthehedgehog.jpg" alt="Sonic">
+                <h2>🦔 Sonic</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">VER FICHA Y JUGAR</span>
+            </div>
+        </div>
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('aladdin')">
+            <div class="card">
+                <img src="aladin.jpg" alt="Aladdin">
+                <h2>🧞 Aladdin</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">VER FICHA Y JUGAR</span>
+            </div>
+        </div>
+    </div>
+ 
+    <h1 id="snes" class="section-title">⭐ SNES</h1>
+    <img src="snes.jpg" class="banner-console" alt="SNES">
+    <div class="container">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('marioworld')">
+            <div class="card">
+                <img src="SuperMarioWorld.jpg" alt="Mario World">
+                <h2>🍄 Mario World</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">VER FICHA Y JUGAR</span>
+            </div>
+        </div>
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariokartsnes')">
+            <div class="card">
+                <img src="SuperMarioKartsnes.jpg" alt="Mario Kart">
+                <h2>🏎️ Mario Kart</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">VER FICHA Y JUGAR</span>
+            </div>
+        </div>
+    </div> 
+
+    <h1 id="gba" class="section-title">📱 GAME BOY ADVANCE</h1>
+    <img src="gba.jpg" class="banner-console" alt="GBA">
+    <div class="container">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('esmeralda')">
+            <div class="card">
+                <img src="pokemonesme.jpg" alt="Pokemon Esmeralda">
+                <h2>⚡ P. Esmeralda</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">VER FICHA Y JUGAR</span>
+            </div>
+        </div>
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('rubi')">
+            <div class="card">
+                <img src="pokemonrubi.jpg" alt="Pokemon Rubi">
+                <h2>🔴 P. Rubí</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">VER FICHA Y JUGAR</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p><strong>@olea3d</strong></p>
+    <p>Adquiere tu llavero personalizado NFC. Todo está listo para jugar.</p>
+</footer>
+
+<div id="modalFicha" class="modal-ficha">
+    <div class="ficha-content">
+        <button class="close-ficha" onclick="reproducirClic(); cerrarFicha();">❌</button>
+        
+        <div class="ficha-header">
+            <img id="fichaImg" src="">
+            <div class="ficha-titulos">
+                <h2 id="fichaTitulo">Título del Juego</h2>
+                <div id="fichaValoracion" class="valoracion-box">⭐ Valoración</div>
+            </div>
+        </div>
+        
+        <div class="tabs">
+            <button id="tabHistoria" class="tab-btn active" onclick="reproducirClic(); cambiarPestana('historia');">📖 HISTORIA</button>
+            <button id="tabManual" class="tab-btn" onclick="reproducirClic(); cambiarPestana('manual');">📜 MANUAL</button>
+        </div>
+
+        <div id="contenidoHistoria" class="texto-panel">Cargando sinopsis...</div>
+        <div id="contenidoManual" class="texto-panel" style="display:none;">Cargando manual...</div>
+
+        <button id="btnIniciarJuego" class="btn-jugar-modal" onclick="irAlJuego();">🚀 EMPEZAR PARTIDA</button>
+    </div>
+</div>
+
+<script>
+// --- MOTOR DE INSTALACIÓN DE LA APLICACIÓN (PWA) ---
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').then(registration => {
+            console.log('App lista para instalar');
+        }).catch(err => {
+            console.log('Error en la instalación: ', err);
+        });
+    });
+}
+
+// --- SISTEMA DEL EASTER EGG ---
+let toquesLogo = 0;
+let tiempoToques;
+
+function toqueSecreto() {
+    toquesLogo++;
+    clearTimeout(tiempoToques);
+    if (toquesLogo === 3) {
+        desbloquearSecreto();
+        toquesLogo = 0;
+    } else {
+        tiempoToques = setTimeout(() => { toquesLogo = 0; }, 1000); 
+    }
+}
+
+function desbloquearSecreto() {
+    const flash = document.createElement("div");
+    flash.style.position = "fixed"; flash.style.top = "0"; flash.style.left = "0"; flash.style.width = "100%"; flash.style.height = "100%";
+    flash.style.backgroundColor = "white"; flash.style.zIndex = "999999999"; flash.style.transition = "opacity 0.8s ease-out";
+    document.body.appendChild(flash);
+    
+    reproducirSonido1UP();
+
+    const tarjeta = document.getElementById("tarjetaSecreta");
+    if (tarjeta) {
+        tarjeta.style.display = "block";
+        setTimeout(() => { tarjeta.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 500);
+    }
+
+    setTimeout(() => {
+        flash.style.opacity = "0";
+        setTimeout(() => flash.remove(), 800);
+    }, 100);
+}
+
+function reproducirSonido1UP() {
+    try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'square';
+        const now = audioCtx.currentTime;
+        osc.frequency.setValueAtTime(1318.51, now); 
+        osc.frequency.setValueAtTime(1567.98, now + 0.1); 
+        osc.frequency.setValueAtTime(2093.00, now + 0.2); 
+        osc.frequency.setValueAtTime(2637.02, now + 0.3); 
+        osc.frequency.setValueAtTime(3135.96, now + 0.4); 
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.linearRampToValueAtTime(0, now + 0.6);
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.start(now); osc.stop(now + 0.6);
+    } catch(e) {}
+}
+
+// --- BUSCADOR ---
+function filtrarJuegos() {
+    let input = document.getElementById("buscadorJuegos").value.toLowerCase();
+    let tarjetas = document.querySelectorAll(".card-wrapper");
+    tarjetas.forEach(tarjeta => {
+        let titulo = tarjeta.querySelector("h2").innerText.toLowerCase();
+        if (titulo.includes(input)) { tarjeta.style.display = "block"; } else { tarjeta.style.display = "none"; }
+    });
+}
+
+// --- AUDIO Y CONTROLES GENERALES ---
+let musica = document.getElementById("musicaFondo");
+let musicaSonando = false;
+
+function reproducirClic() {
+    try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        oscillator.type = 'square';
+        oscillator.frequency.setValueAtTime(440, audioCtx.currentTime); 
+        oscillator.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1); 
+        gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); 
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1); 
+        oscillator.connect(gainNode); gainNode.connect(audioCtx.destination);
+        oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.1);
+    } catch (e) {}
+}
+
+function reproducirSonidoCoin() {
+    try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(987.77, audioCtx.currentTime); 
+        osc.frequency.setValueAtTime(1318.51, audioCtx.currentTime + 0.1); 
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.start(); osc.stop(audioCtx.currentTime + 0.4);
+    } catch (e) {}
+}
+
+function reproducirSonidoEscaner() {
+    try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(200, audioCtx.currentTime);
+        osc.frequency.linearRampToValueAtTime(800, audioCtx.currentTime + 0.5);
+        gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1);
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.start(); osc.stop(audioCtx.currentTime + 1);
+    } catch (e) {}
+}
+
+function toggleMusica() {
+    let btn = document.getElementById("btnMusica");
+    if (musicaSonando) {
+        musica.pause(); musicaSonando = false;
+        btn.style.background = "#eee"; btn.style.color = "#111"; btn.style.borderColor = "#ccc";
+    } else {
+        musica.play(); musicaSonando = true;
+        btn.style.background = "#6b8e23"; btn.style.color = "white"; btn.style.borderColor = "#88aa33";
+    }
+}
+
+const coloresConsola = {
+    nes: { border: '#e60012', title: '#e60012', tab: '#aaaaaa' },
+    n64: { border: '#00b140', title: '#00b140', tab: '#005b9f' },
+    md:  { border: '#e00000', title: '#e00000', tab: '#d4af37' },
+    snes: { border: '#005b9f', title: '#005b9f', tab: '#e60012' },
+    gba:  { border: '#5a429b', title: '#5a429b', tab: '#d3d3d3' },
+    arcade: { border: '#ff00ff', title: '#ff00ff', tab: '#00ffff' }
+};
+
+// --- BASE DE DATOS OPTIMIZADA ---
+const infoJuegos = {
+    // NUEVO: GHOSTS 'N GOBLINS
+    ghostngoblin: { consola: "nes", titulo: "GHOSTS 'N GOBLINS (NES)", img: "ghostngoblin.jpg", enlace: "ghostngoblin.html", valoracion: "⭐⭐⭐⭐ 8.5/10 (Clásico Desafiante)", historia: "Lanzado por Capcom en 1986, es famoso por ser uno de los juegos más difíciles de la historia. Controlas al caballero Sir Arthur, que pierde su armadura al primer golpe, quedando en calzoncillos. Su brutal dificultad lo hizo una leyenda retro.", manual: "🎯 <strong>Objetivo:</strong> Cruzar el reino de los demonios para rescatar a la princesa Prin-Prin.<br><br>🕹️ <strong>Controles:</strong> Botón para saltar y botón para lanzar armas. Cuidado con los saltos, no se pueden corregir en el aire.<br><br>💡 <strong>Truco Retro:</strong> La trampa final: para ver el verdadero desenlace, el juego te obligará a completarlo dos veces seguidas de principio a fin." },
+    
+    mariobros3: { consola: "nes", titulo: "SUPER MARIO BROS 3 (NES)", img: "supermariobros3.jpg", enlace: "supermariobros3.html", valoracion: "⭐⭐⭐⭐⭐ 9.8/10 (Obra Maestra)", historia: "Lanzado en 1988, revolucionó los plataformas con su mapa navegable, minijuegos y el icónico traje de mapache para volar. Su diseño de niveles y secretos marcaron el futuro de la industria.", manual: "🎯 <strong>Objetivo:</strong> Derrotar a Bowser y a sus Koopalings para salvar a los 7 reyes caídos.<br><br>🕹️ <strong>Controles:</strong> Botón de salto y botón para correr/volar. En el mapa, flechas para moverte.<br><br>💡 <strong>Truco Retro:</strong> En el Mundo 1, busca las flautas mágicas (en el nivel 3 y en la fortaleza) para viajar al instante al Mundo 8." },
+    pacman: { consola: "arcade", titulo: "PAC-MAN (ARCADE)", img: "pacman.jpg", enlace: "Pacman.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10 (Clásico Atemporal)", historia: "El comecocos original de 1980 que desató la locura en los recreativos. Fue pionero en usar 'power-ups' y dotar a cada fantasma de una inteligencia artificial única.", manual: "🎯 <strong>Objetivo:</strong> Comer todos los puntos del laberinto sin que te atrapen los fantasmas. Come las pastillas grandes para poder devorarlos.<br><br>🕹️ <strong>Controles:</strong> Flechas de dirección para girar por las esquinas.<br><br>💡 <strong>Truco Retro:</strong> Usa los túneles laterales para escapar rápidamente; los fantasmas reducen enormemente su velocidad al cruzar por ellos." },
+    tetris: { consola: "nes", titulo: "TETRIS (NES)", img: "TetrisNes.png", enlace: "TetrisFicha.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10 (Imprescindible)", historia: "Creado en 1984, este rompecabezas soviético es un fenómeno mundial. Su desafío de encajar piezas y su mítica banda sonora rusa ofrecen una adicción infinita.", manual: "🎯 <strong>Objetivo:</strong> Encajar las piezas geométricas para crear líneas completas, hacerlas desaparecer y evitar que la pantalla se llene.<br><br>🕹️ <strong>Controles:</strong> Flechas izquierda/derecha para mover, y botones de acción para rotar la pieza.<br><br>💡 <strong>Truco Retro:</strong> Intenta dejar siempre una sola columna vacía en el lateral derecho para introducir la pieza alargada y conseguir un 'Tetris'." },
+    mariobros: { consola: "nes", titulo: "SUPER MARIO BROS (NES)", img: "SuperMarioBros.jpg", enlace: "SuperMarioBros.html", valoracion: "⭐⭐⭐⭐⭐ 9.7/10 (Leyenda)", historia: "La genialidad de 1985 que salvó la industria del videojuego. Estableció el estándar de los plataformas con físicas perfectas y secretos a lo largo de 8 mundos inolvidables.", manual: "🎯 <strong>Objetivo:</strong> Cruzar el peligroso Reino Champiñón para rescatar a la Princesa Peach de las garras del Rey Koopa, Bowser.<br><br>🕹️ <strong>Controles:</strong> Botón Z/X para saltar y mantener presionado para correr y coger impulso.<br><br>💡 <strong>Truco Retro:</strong> En el Mundo 1-2, súbete a los bloques del techo casi al final del nivel y corre sin parar; encontrarás la mítica 'Warp Zone'." },
+    zeldaocarina: { consola: "n64", titulo: "ZELDA: OOT (N64)", img: "zeldaocarina.jpg", enlace: "zeldaocarina.html", valoracion: "⭐⭐⭐⭐⭐ 9.9/10 (Obra Maestra)", historia: "La obra maestra de 1998 que llevó la saga a las 3D. Revolucionó el medio con el fijado de objetivos (Z-targeting) y su emocionante mecánica de viaje en el tiempo.", manual: "🎯 <strong>Objetivo:</strong> Guiar al Héroe del Tiempo para reunir las piedras espirituales, despertar a los Sabios y derrotar a Ganondorf.<br><br>🕹️ <strong>Controles:</strong> Stick analógico para moverse, botón A para acción y espada, botón Z para fijar enemigos.<br><br>💡 <strong>Truco Retro:</strong> Lleva siempre contigo frascos de cristal vacíos. Puedes atrapar hadas curativas en ellos para que te revivan automáticamente." },
+    mariotennis: { consola: "n64", titulo: "MARIO TENNIS (N64)", img: "MarioTennis.jpg", enlace: "MarioTennis.html", valoracion: "⭐⭐⭐⭐½ 8.8/10 (Excelente)", historia: "Este clásico del año 2000 llevó la diversión deportiva a otro nivel en N64. Destacó por sus efectos de raqueta y por ser el debut mundial de Waluigi.", manual: "🎯 <strong>Objetivo:</strong> Superar a todos tus rivales en la pista de tenis, ganar las diferentes copas y desbloquear personajes ocultos.<br><br>🕹️ <strong>Controles:</strong> Usa los botones A y B para golpear. Combínalos para hacer efectos diferentes en la bola.<br><br>💡 <strong>Truco Retro:</strong> Pulsa el botón A dos veces justo cuando la pelota va a botar en tu campo para realizar un potentísimo 'Top Spin'." },
+    sonic: { consola: "md", titulo: "SONIC THE HEDGEHOG (MD)", img: "sonicthehedgehog.jpg", enlace: "SONIC 1 - Shadow The Hedgehog.html", valoracion: "⭐⭐⭐⭐½ 9.2/10 (Sobresaliente)", historia: "El erizo de SEGA nació en 1991 para desafiar a Nintendo. Rompió moldes con su vertiginosa velocidad, loopings y actitud rebelde, liberando animales de carcasas robóticas.", manual: "🎯 <strong>Objetivo:</strong> Recorrer las zonas a toda velocidad para arruinar los malvados planes industriales del Dr. Robotnik.<br><br>🕹️ <strong>Controles:</strong> Flechas para moverse, y cualquier botón de acción para saltar o rodar.<br><br>💡 <strong>Truco Retro:</strong> Mientras tengas al menos UN solo anillo dorado en tu contador, serás completamente inmortal ante el impacto de enemigos." },
+    aladdin: { consola: "md", titulo: "ALADDIN (MEGA DRIVE)", img: "aladin.jpg", enlace: "Aladin.html", valoracion: "⭐⭐⭐⭐½ 9.0/10 (Sobresaliente)", historia: "Una joya de 1993 animada a mano por los estudios Disney. Su animación impecable y acción fluida lo coronan como uno de los mejores juegos de 16 bits.", manual: "🎯 <strong>Objetivo:</strong> Recorrer Agrabah y la cueva de las maravillas para salvar a la princesa Jasmine de Jafar.<br><br>🕹️ <strong>Controles:</strong> Botones independientes para saltar, lanzar manzanas y blandir la cimitarra.<br><br>💡 <strong>Truco Retro:</strong> Las manzanas son tu recurso a distancia más valioso. Guárdalas siempre para tener ventaja contra los jefes finales." },
+    marioworld: { consola: "snes", titulo: "MARIO WORLD (SNES)", img: "SuperMarioWorld.jpg", enlace: "SuperMarioorld.html", valoracion: "⭐⭐⭐⭐⭐ 9.8/10 (Obra Maestra)", historia: "El estreno triunfal en Super Nintendo (1990). Con 96 niveles llenos de rutas secretas, introdujo al querido dinosaurio Yoshi y sus habilidades especiales.", manual: "🎯 <strong>Objetivo:</strong> Explorar la región de Dinosaur Land para rescatar a Yoshi, a la Princesa Peach y expulsar a Bowser.<br><br>🕹️ <strong>Controles:</strong> Botones de salto normal y salto con ataque giratorio.<br><br>💡 <strong>Truco Retro:</strong> Los niveles en el mapa marcados con un punto rojo tienen dos salidas diferentes; encuéntralas para descubrir caminos secretos." },
+    mariokartsnes: { consola: "snes", titulo: "MARIO KART (SNES)", img: "SuperMarioKartsnes.jpg", enlace: "Supermariokartsnes.html", valoracion: "⭐⭐⭐⭐½ 9.3/10 (Sobresaliente)", historia: "El origen de las carreras multijugador (1992). Aprovechó el 'Modo 7' para pistas 3D e introdujo la genial locura de usar objetos para sabotear rivales.", manual: "🎯 <strong>Objetivo:</strong> Dominar el derrape y levantar la copa de Oro quedando en primera posición en los circuitos.<br><br>🕹️ <strong>Controles:</strong> Botón para acelerar, frenar/saltar, y un botón dedicado para usar objetos.<br><br>💡 <strong>Truco Retro:</strong> Acelera manteniendo pulsado el botón justo cuando el semáforo cambie a verde para conseguir un enorme empujón inicial." },
+    esmeralda: { consola: "gba", titulo: "P. ESMERALDA (GBA)", img: "pokemonesme.jpg", enlace: "Pokemonesme.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10 (Imprescindible)", historia: "La versión definitiva de Hoenn en GBA (2004). Mejoró la historia y añadió el durísimo Frente de Batalla, un desafío espectacular para los más tácticos.", manual: "🎯 <strong>Objetivo:</strong> Derrotar a los líderes de gimnasio y alzarte como el Campeón de la Liga Pokémon.<br><br>🕹️ <strong>Controles:</strong> Cruceta para moverte y navegar los menús, botón A para interactuar y atacar.<br><br>💡 <strong>Truco Retro:</strong> Guarda siempre la partida manualmente antes de iniciar un encuentro contra un Pokémon Legendario." },
+    rubi: { consola: "gba", titulo: "POKÉMON RUBÍ (GBA)", img: "pokemonrubi.jpg", enlace: "PokemonRubi.html", valoracion: "⭐⭐⭐⭐½ 9.2/10 (Sobresaliente)", historia: "El gran salto a la tercera generación (2002). Introdujo paisajes vibrantes, habilidades pasivas y el sistema de naturalezas, sentando las bases del competitivo.", manual: "🎯 <strong>Objetivo:</strong> Conseguir las 8 medallas de gimnasio y detener los apocalípticos planes del Team Magma.<br><br>🕹️ <strong>Controles:</strong> Uso de la cruceta de movimiento y el botón A principal.<br><br>💡 <strong>Truco Retro:</strong> Presta atención a las naturalezas de tus Pokémon, ya que cada una aumenta permanentemente un 10% una estadística y reduce otra." }
+};
+
+let enlaceDestino = "";
+
+function actualizarColoresModal(idConsola) {
+    const colores = coloresConsola[idConsola] || coloresConsola['nes']; 
+    document.documentElement.style.setProperty('--modal-border', colores.border);
+    document.documentElement.style.setProperty('--modal-title', colores.title);
+    document.documentElement.style.setProperty('--modal-tab', colores.tab);
+}
+
+function verFicha(idJuego) {
+    const juego = infoJuegos[idJuego];
+    if (juego) {
+        enlaceDestino = juego.enlace;
+        actualizarColoresModal(juego.consola);
+        
+        document.getElementById("fichaTitulo").innerText = juego.titulo;
+        document.getElementById("fichaValoracion").innerText = juego.valoracion;
+        
+        document.getElementById("fichaImg").src = juego.img;
+        document.getElementById("contenidoHistoria").innerHTML = juego.historia;
+        document.getElementById("contenidoManual").innerHTML = juego.manual;
+        
+        cambiarPestana('historia');
+        document.getElementById("modalFicha").style.display = "flex";
+    }
+}
+
+function cambiarPestana(pestana) {
+    if (pestana === 'historia') {
+        document.getElementById("contenidoHistoria").style.display = "block";
+        document.getElementById("contenidoManual").style.display = "none";
+        document.getElementById("tabHistoria").classList.add("active");
+        document.getElementById("tabManual").classList.remove("active");
+    } else {
+        document.getElementById("contenidoHistoria").style.display = "none";
+        document.getElementById("contenidoManual").style.display = "block";
+        document.getElementById("tabHistoria").classList.remove("active");
+        document.getElementById("tabManual").classList.add("active");
+    }
+}
+
+function irAlJuego() {
+    if (enlaceDestino) {
+        reproducirSonidoCoin();
+        const pantallaTransicion = document.getElementById("transitionScreen");
+        pantallaTransicion.classList.add("active");
+        setTimeout(() => {
+            window.location.href = enlaceDestino;
+            setTimeout(() => pantallaTransicion.classList.remove("active"), 500);
+        }, 1500); 
+    }
+}
+
+function cerrarFicha() {
+    document.getElementById("modalFicha").style.display = "none";
+    window.history.replaceState(null, null, window.location.pathname);
+}
+
+function revisarLlaveroNFC() {
+    const hash = window.location.hash.toLowerCase().replace('#', '');
+    if (hash && infoJuegos[hash]) {
+        if (hash === 'pacman') { document.getElementById("tarjetaSecreta").style.display = "block"; }
+        const scannerScreen = document.getElementById("nfcScannerScreen");
+        scannerScreen.classList.add("active");
+        reproducirSonidoEscaner();
+        setTimeout(() => { 
+            scannerScreen.classList.remove("active");
+            setTimeout(() => { verFicha(hash); }, 300); 
+        }, 1200);
+    }
+}
+
+window.addEventListener('hashchange', revisarLlaveroNFC);
+window.addEventListener('DOMContentLoaded', revisarLlaveroNFC);
+window.addEventListener('load', revisarLlaveroNFC);
+</script>
+
+</body>
+</html>
