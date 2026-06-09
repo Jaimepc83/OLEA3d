@@ -6,34 +6,178 @@
 <title>OLEA3D Retro Hub</title>
 
 <style>
-:root {
-    --color-glow: #f7d24a;
-    --color-badge: #9dff3d;
-}
+/* 1. RESET Y ESTILOS BASE */
+body{margin:0;font-family:Arial,sans-serif;background:#0d0d0d;color:white;text-align:center;overflow-x:hidden;}
+header{padding:20px;background:linear-gradient(180deg,#1a1a1a,#0d0d0d);}
+.logo{width:120px;border-radius:50%;box-shadow:0 0 20px gold;}
+h1{color:#d4af37;margin-top:10px;font-size:24px;}
+.sub{color:#9acd32;font-size:16px;margin-bottom:20px;}
 
-body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #0d0d0d;
-    color: white;
-    text-align: center;
-    transition: background 0.5s ease;
-}
+/* 2. MENÚ ADAPTABLE (RESPONSIVE) - CORREGIDO */
+.menu{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:10px auto;padding:10px;max-width:95%;}
+.menu a{color:white;text-decoration:none;background:#222;padding:8px 14px;border-radius:20px;font-size:12px;font-weight:bold;border:1px solid #d4af37;transition:0.3s;}
+.menu a:hover{background:#d4af37;color:#111;box-shadow:0 0 10px #d4af37;}
 
-header {
-    padding: 30px;
-    background: linear-gradient(180deg, #1a1a1a, #0d0d0d);
-}
+/* 3. CONTENEDORES Y SECCIONES - CORREGIDO */
+.main-container{max-width:1200px;margin:auto;padding:10px;}
+.section-title{color:#ffd700;margin:30px 0 15px 0;font-size:22px;}
+.banner-console{width:100%;max-width:320px;height:auto;border-radius:15px;box-shadow:0 0 20px rgba(247,210,74,0.6);}
 
-.logo {
-    width: 180px;
-    border-radius: 50%;
-    box-shadow: 0 0 25px gold;
-    transition: transform 0.3s ease;
-}
-.logo:hover {
-    transform: rotate(360deg);
-}
+/* 4. TARJETAS DE JUEGO (CARDS) - CORREGIDO */
+.container{display:flex;gap:15px;overflow-x:auto;padding:15px 5px;scroll-behavior:smooth;}
+.container::-webkit-scrollbar{display:none;}
+.card{background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border:2px solid #f7d24a;border-radius:20px;padding:15px;transition:0.3s;box-shadow:0 0 10px rgba(247,210,74,0.2);cursor:pointer;min-width:220px;height:280px;flex-shrink:0;display:flex;flex-direction:column;justify-content:space-between;align-items:center;}
+.card:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(157,255,61,0.7);}
+.card h2{color:#fff;font-size:16px;margin:8px 0;}
+.card img{max-height:120px;object-fit:contain;border-radius:8px;}
+
+/* 5. BOTONES Y BADGES - CORREGIDO */
+.btn-ver{display:inline-block;padding:10px 18px;background:#6b8e23;color:white;text-decoration:none;border-radius:8px;font-weight:bold;margin-top:5px;font-size:13px;}
+.btn-ver:hover{background:#88aa33;}
+.stats{margin:10px 0;font-size:16px;font-weight:bold;color:#9dff3d;}
+.nfc-badge{display:inline-block;background:#9dff3d;color:#111;font-weight:bold;padding:3px 10px;border-radius:20px;margin:2px;font-size:11px;}  
+
+/* 6. MODAL (FICHA) - CORREGIDO PARA MÓVIL */
+.modal-ficha{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:1000;justify-content:center;align-items:center;padding:15px;}
+.ficha-content{background:#151515;border:3px solid #ffd700;border-radius:25px;max-width:400px;width:100%;padding:20px;position:relative;box-shadow:0 0 30px rgba(254,215,0,0.4);max-height:85vh;overflow-y:auto;text-align:left;}
+.close-ficha{position:absolute;top:10px;right:10px;background:#ff4444;color:white;border:none;padding:5px 10px;font-weight:bold;border-radius:5px;cursor:pointer;font-size:12px;}
+.ficha-header{display:flex;gap:15px;align-items:center;margin-bottom:15px;padding-right:30px;}
+.ficha-header img{width:80px;height:auto;border-radius:10px;}
+.ficha-header h2{color:#ffd700;margin:0;font-size:20px;}
+.ficha-historia{font-size:14px;line-height:1.5;color:#ddd;margin-bottom:15px;background:rgba(255,255,255,0.03);padding:10px;border-radius:10px;border-left:3px solid #9dff3d;}
+.ficha-controles{background:#222;padding:10px;border-radius:8px;margin-bottom:15px;font-size:12px;}
+.ficha-controles strong{color:#9dff3d;}
+
+/* Estilo forzado para el botón de jugar en el modal */
+.btn-jugar-modal{display:block;width:100%;text-align:center;padding:12px;background:#6b8e23 !important;color:white !important;text-decoration:none !important;border-radius:8px;font-weight:bold;font-size:16px;box-shadow:0 0 10px rgba(107,142,35,0.4);box-sizing:border-box;}
+.btn-jugar-modal:hover{background:#88aa33 !important;}
+
+footer{margin-top:40px;padding:20px;background:#111;color:#aaa;font-size:14px;}
+</style>
+</head>
+
+<body>
+
+<header>
+    <img src="logo.png" class="logo">
+    <h1>OLEA3D Hub Retro</h1>
+    <div class="nfc-badge">📡 Colección NFC</div> 
+    <p class="sub">Juega con tus llaveros NFC</p>
+</header>
+
+<div class="menu">
+    <a href="#nes">🎮 NES</a>
+    <a href="#n64">🕹️ N64</a>
+    <a href="#megadrive">⚡ MD</a>
+    <a href="#snes">⭐ SNES</a>
+    <a href="#gba">📱 GBA</a>
+</div>
+
+<div class="main-container">
+    <div class="stats">🕹️ 12 Juegos Listos | 🏆 15 Total</div>
+
+    <h1 id="nes" class="section-title">🎮 NES</h1>
+    <img src="nes.jpg" class="banner-console">
+    <div class="container"> 
+        <div class="card" onclick="verFicha('tetris')">
+            <img src="TetrisNes.png" width="150">
+            <h2>🎮 TETRIS</h2>
+            <div class="nfc-badge">NFC</div>
+            <span class="btn-ver">VER HISTORIA</span>
+        </div>
+        <div class="card" onclick="verFicha('mariobros')">
+            <img src="SuperMarioBros.jpg" width="150">
+            <h2>🍄 MARIO BROS</h2>
+            <div class="nfc-badge">NFC</div>
+            <span class="btn-ver">VER HISTORIA</span>
+        </div>
+    </div>
+ 
+    <h1 id="n64" class="section-title">🕹️ NINTENDO 64</h1>
+    <img src="n64.jpg" class="banner-console">
+    <div class="container"> 
+        <div class="card" onclick="verFicha('zeldaocarina')">
+            <img src="zeldaocarina.jpg" width="150">
+            <h2>⚔️ ZELDA OOT</h2>
+            <div class="nfc-badge">NFC</div>
+            <span class="btn-ver">VER HISTORIA</span>
+        </div>
+        <div class="card" onclick="verFicha('mariotennis')">
+            <img src="MarioTennis.jpg" width="150">
+            <h2>🎾 MARIO TENNIS</h2>
+            <div class="nfc-badge">NFC</div>
+            <span class="btn-ver">VER HISTORIA</span>
+        </div> 
+    </div>
+
+    <h1 id="megadrive" class="section-title">⚡ MEGA DRIVE</h1>
+    <img src="megadrive.jpg" class="banner-console">
+    <div class="container">
+        <div class="card" onclick="verFicha('sonic')">
+            <img src="sonicthehedgehog.jpg" width="150">
+            <h2>🦔 SONIC</h2>
+            <div class="nfc-badge">NFC</div>
+            <span class="btn-ver">VER HISTORIA</span>
+        </div>
+        <div class="card" onclick="verFicha('aladdin')">
+            <img src="aladin.jpg" width="150">
+            <h2>🧞 ALADDIN</h2>
+            <div class="nfc-badge">NFC</div>
+            <span class="btn-ver">VER HISTORIA</span>
+        </div>
+    </div>
+ 
+    <h1 id="snes" class="section-title">⭐ SNES</h1>
+    <img src="snes.jpg" class="banner-console">
+    <div class="container">
+        <div class="card" onclick="verFicha('marioworld')">
+            <img src="SuperMarioWorld.jpg" width="150">
+            <h2>🍄 MARIO WORLD</h2>
+            <div class="nfc-badge">NFC</div>
+            <span class="btn-ver">VER HISTORIA</span>
+        </div>
+        <div class="card" onclick="verFicha('mariokartsnes')">
+            <img src="SuperMarioKartsnes.jpg" width="150">
+            <h2>🏎️ MARIO KART</h2>
+            <div class="nfc-badge">NFC</div>
+            <span class="btn-ver">VER HISTORIA</span>
+        </div>
+    </div> 
+
+    <h1 id="gba" class="section-title">📱 GBA</h1>
+    <img src="gba.jpg" class="banner-console">
+    <div class="container">
+        <div class="card" onclick="verFicha('esmeralda')">
+            <img src="pokemonesme.jpg" width="150">
+            <h2>⚡ POKÉMON ESME.</h2>
+            <div class="nfc-badge">NFC</div>
+            <span class="btn-ver">VER HISTORIA</span>
+        </div>
+        <div class="card" onclick="verFicha('rubi')">
+            <img src="pokemonrubi.jpg" width="150">
+            <h2>🔴 POKÉMON RUBÍ</h2>
+            <div class="nfc-badge">NFC</div>
+            <span class="btn-ver">VER HISTORIA</span>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p><strong>@olea3d</strong></p>
+    <p>Escanea tu llavero NFC y juega.</p>
+</footer>
+
+<div id="modalFicha" class="modal-ficha">
+    <div class="ficha-content">
+        <button class="close-ficha" onclick="cerrarFicha()">CERRAR ❌</button>
+        <div class="ficha-header">
+            <img id="fichaImg" src="">
+            <h2 id="fichaTitulo">Título</h2>
+        </div>
+        <div id="fichaHistoria" class="ficha-historia">Historia...</div>
+        <div class="ficha-controles">
+            🎮 <strong>Móvil:</strong> Botones táctiles.<br>
+            ⌨️
 
 h1 {
     color: #d4af37;
