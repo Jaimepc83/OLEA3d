@@ -13,16 +13,16 @@
     --modal-tab: #9dff3d;
 }
 
-/* 2. ESTILOS BASE Y FILTRO CRT */
+/* 2. ESTILOS BASE (Filtro CRT Eliminado) */
 body { margin: 0; font-family: Arial, sans-serif; background: #0d0d0d; color: white; text-align: center; overflow-x: hidden; position: relative; min-height: 100vh; }
-body::before { content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); z-index: 999; background-size: 100% 2px, 3px 100%; pointer-events: none; opacity: 0.6; }
 
 /* 3. FONDO ANIMADO 3D */
 .bg-grid { position: fixed; bottom: 0; left: -50%; width: 200%; height: 60vh; background: linear-gradient(transparent 10%, rgba(157,255,61,0.3) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(157,255,61,0.5) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(157,255,61,0.5) 21px); transform-origin: bottom; transform: perspective(500px) rotateX(60deg); animation: gridMove 2s linear infinite; z-index: -1; opacity: 0.4; }
 @keyframes gridMove { 0% { transform: perspective(500px) rotateX(60deg) translateY(0); } 100% { transform: perspective(500px) rotateX(60deg) translateY(21px); } }
 
 header { padding: 20px; background: linear-gradient(180deg, rgba(26,26,26,0.9), rgba(13,13,13,0)); position: relative; z-index: 10; }
-.logo { width: 120px; border-radius: 50%; box-shadow: 0 0 20px #d4af37; }
+.logo { width: 120px; border-radius: 50%; box-shadow: 0 0 20px #d4af37; cursor: pointer; transition: 0.1s; }
+.logo:active { transform: scale(0.9); } /* Pequeño efecto al pulsar el logo */
 h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
 .sub { color: #9acd32; font-size: 16px; margin-bottom: 20px; }
 
@@ -30,7 +30,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 .btn-musica { background: #eee; color: #111; padding: 10px 20px; border-radius: 8px; font-weight: bold; border: 2px solid #ccc; cursor: pointer; margin: 10px auto; font-size: 14px; transition: 0.3s; display: inline-block; position: relative; z-index: 10; }
 .btn-musica:hover { transform: scale(1.05); }
 
-/* NUEVO: BUSCADOR DE JUEGOS */
+/* BUSCADOR DE JUEGOS */
 .buscador-container { margin: 25px auto 10px auto; max-width: 400px; padding: 0 15px; position: relative; z-index: 10; }
 #buscadorJuegos { width: 100%; padding: 12px 20px; border-radius: 25px; border: 2px solid #d4af37; background: rgba(18, 18, 18, 0.8); color: white; font-size: 16px; outline: none; box-shadow: 0 0 15px rgba(212,175,55,0.3); transition: 0.3s; font-family: inherit; box-sizing: border-box; text-align: center; }
 #buscadorJuegos::placeholder { color: #aaa; }
@@ -102,6 +102,9 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 @keyframes scanLaser { 0% { transform: translateY(0); } 100% { transform: translateY(200px); } }
 @keyframes pulseIcon { 0% { text-shadow: 0 0 10px #9dff3d; } 50% { text-shadow: 0 0 30px #9dff3d; } 100% { text-shadow: 0 0 10px #9dff3d; } }
 @keyframes blinkText { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
+/* ESTILO DEL JUEGO SECRETO (Borde y resplandor especial) */
+.secreto::before { background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff) !important; animation: brilloSeda 2s linear infinite !important; }
 </style>
 </head>
 
@@ -126,7 +129,7 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 </audio>
 
 <header>
-    <img src="logo.png" class="logo" alt="OLEA3D Logo">
+    <img src="logo.png" class="logo" alt="OLEA3D Logo" onclick="toqueSecreto()">
     <h1>OLEA3D Hub Retro</h1>
     <div class="nfc-badge">📡 Colección NFC</div> 
     <p class="sub">Escanea tu llavero y todo estará listo para jugar</p>
@@ -152,6 +155,15 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
     <h1 id="nes" class="section-title">🎮 NES</h1>
     <img src="nes.jpg" class="banner-console" alt="NES">
     <div class="container"> 
+        
+        <div class="card-wrapper secreto" id="tarjetaSecreta" onclick="reproducirClic(); verFicha('pacman')" style="display: none;">
+            <div class="card" style="border-color: #ff00ff; box-shadow: inset 0 0 15px rgba(255,0,255,0.2);">
+                <img src="pacman.jpg" alt="Pac-Man" onerror="this.src='https://upload.wikimedia.org/wikipedia/en/5/59/Pac-man.png'">
+                <h2 style="color: #ff00ff; text-shadow: 0 0 5px #ff00ff;">👻 PAC-MAN</h2>
+                <div class="nfc-badge" style="background: #ff00ff; color: white;">SECRETO 1-UP</div>
+                <span class="btn-ver" style="background: #990099; border-color: #ff00ff;">VER FICHA Y JUGAR</span>
+            </div>
+        </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('tetris')">
             <div class="card">
                 <img src="TetrisNes.png" alt="Tetris">
@@ -281,7 +293,82 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 </div>
 
 <script>
-// --- NUEVO: FUNCIÓN PARA EL BUSCADOR ---
+// --- EL CEREBRO DEL EASTER EGG ---
+let toquesLogo = 0;
+let tiempoToques;
+
+function toqueSecreto() {
+    toquesLogo++;
+    clearTimeout(tiempoToques);
+    
+    // Si se pulsa 3 veces...
+    if (toquesLogo === 3) {
+        desbloquearSecreto();
+        toquesLogo = 0;
+    } else {
+        // Si tarda más de 1 segundo en dar el siguiente toque, se resetea
+        tiempoToques = setTimeout(() => {
+            toquesLogo = 0;
+        }, 1000); 
+    }
+}
+
+function desbloquearSecreto() {
+    // 1. Pantallazo blanco
+    const flash = document.createElement("div");
+    flash.style.position = "fixed";
+    flash.style.top = "0"; flash.style.left = "0"; flash.style.width = "100%"; flash.style.height = "100%";
+    flash.style.backgroundColor = "white"; flash.style.zIndex = "999999999";
+    flash.style.transition = "opacity 0.8s ease-out";
+    document.body.appendChild(flash);
+    
+    // 2. Sonido 1-UP Mítico
+    reproducirSonido1UP();
+
+    // 3. Mostrar la tarjeta de Pac-Man
+    const tarjeta = document.getElementById("tarjetaSecreta");
+    if (tarjeta) {
+        tarjeta.style.display = "block";
+        // Bajar la pantalla automáticamente hasta donde está el juego
+        setTimeout(() => {
+            tarjeta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 500);
+    }
+
+    // Desaparecer el flash
+    setTimeout(() => {
+        flash.style.opacity = "0";
+        setTimeout(() => flash.remove(), 800);
+    }, 100);
+}
+
+// Sonido de "Vida Extra"
+function reproducirSonido1UP() {
+    try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'square';
+        
+        const now = audioCtx.currentTime;
+        osc.frequency.setValueAtTime(1318.51, now); // E6
+        osc.frequency.setValueAtTime(1567.98, now + 0.1); // G6
+        osc.frequency.setValueAtTime(2093.00, now + 0.2); // C7
+        osc.frequency.setValueAtTime(2637.02, now + 0.3); // E7
+        osc.frequency.setValueAtTime(3135.96, now + 0.4); // G7
+        
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.linearRampToValueAtTime(0, now + 0.6);
+        
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.6);
+    } catch(e) {}
+}
+
+
+// --- BUSCADOR ---
 function filtrarJuegos() {
     let input = document.getElementById("buscadorJuegos").value.toLowerCase();
     let tarjetas = document.querySelectorAll(".card-wrapper");
@@ -296,7 +383,7 @@ function filtrarJuegos() {
     });
 }
 
-// --- SISTEMA DE AUDIO (MÚSICA Y SFX) ---
+// --- SISTEMA DE AUDIO NORMAL ---
 let musica = document.getElementById("musicaFondo");
 let musicaSonando = false;
 
@@ -374,11 +461,13 @@ const coloresConsola = {
     n64: { border: '#00b140', title: '#00b140', tab: '#005b9f' },
     md:  { border: '#e00000', title: '#e00000', tab: '#d4af37' },
     snes: { border: '#005b9f', title: '#005b9f', tab: '#e60012' },
-    gba:  { border: '#5a429b', title: '#5a429b', tab: '#d3d3d3' }
+    gba:  { border: '#5a429b', title: '#5a429b', tab: '#d3d3d3' },
+    arcade: { border: '#ff00ff', title: '#ff00ff', tab: '#00ffff' } // Color de neón para Pac-Man
 };
 
-// Base de datos de juegos
+// Base de datos de juegos (Se incluye PAC-MAN como juego oculto)
 const infoJuegos = {
+    pacman: { consola: "arcade", titulo: "PAC-MAN (ARCADE)", img: "pacman.jpg", enlace: "Pacman.html", historia: "El comecocos original que revolucionó las máquinas recreativas en 1980.", manual: "🎯 <strong>Objetivo:</strong> Comer todos los puntos del laberinto sin que te atrapen los fantasmas.<br><br>🕹️ <strong>Controles:</strong> Flechas de dirección.<br><br>💡 <strong>Truco:</strong> Los fantasmas tienen patrones fijos, apréndelos." },
     tetris: { consola: "nes", titulo: "TETRIS (NES)", img: "TetrisNes.png", enlace: "TetrisFicha.html", historia: "Diseñado por Alekséi Pázhitnov en 1984, se convirtió en un fenómeno mundial.", manual: "🎯 <strong>Objetivo:</strong> Encajar las piezas.<br><br>🕹️ <strong>Controles:</strong> Flechas de dirección.<br><br>💡 <strong>Truco:</strong> Deja una columna libre a la derecha." },
     mariobros: { consola: "nes", titulo: "SUPER MARIO BROS (NES)", img: "SuperMarioBros.jpg", enlace: "SuperMarioBros.html", historia: "Lanzado en 1985 por Shigeru Miyamoto, redefinió la industria.", manual: "🎯 <strong>Objetivo:</strong> Rescatar a la Princesa Peach.<br><br>🕹️ <strong>Controles:</strong> Z/X para saltar y correr.<br><br>💡 <strong>Truco:</strong> En el Mundo 1-2, camina por el techo." },
     zeldaocarina: { consola: "n64", titulo: "ZELDA: OOT (N64)", img: "zeldaocarina.jpg", enlace: "zeldaocarina.html", historia: "Una de las obras maestras de la historia. Viaja por Hyrule.", manual: "🎯 <strong>Objetivo:</strong> Detener a Ganondorf.<br><br>🕹️ <strong>Controles:</strong> Stick y botón A.<br><br>💡 <strong>Truco:</strong> Busca tarros vacíos para guardar hadas." },
@@ -453,6 +542,11 @@ function cerrarFicha() {
 function revisarLlaveroNFC() {
     const hash = window.location.hash.toLowerCase().replace('#', '');
     if (hash && infoJuegos[hash]) {
+        // Si escanean el NFC de un juego secreto, lo desbloqueamos automáticamente
+        if (hash === 'pacman') {
+            document.getElementById("tarjetaSecreta").style.display = "block";
+        }
+
         const scannerScreen = document.getElementById("nfcScannerScreen");
         scannerScreen.classList.add("active");
         reproducirSonidoEscaner();
