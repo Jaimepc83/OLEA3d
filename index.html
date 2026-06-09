@@ -158,7 +158,7 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 </div>
 
 <div class="main-container">
-    <div class="stats">🕹️ 13 Juegos | 🏆 Colección Premium</div>
+    <div class="stats">🕹️ 14 Juegos | 🏆 Colección Premium</div>
 
     <h1 id="nes" class="section-title">🎮 NES</h1>
     <img src="nes.jpg" class="banner-console" alt="NES">
@@ -242,6 +242,15 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
     <h1 id="megadrive" class="section-title">⚡ MEGA DRIVE</h1>
     <img src="megadrive.jpg" class="banner-console" alt="Mega Drive">
     <div class="container">
+
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('rambo3')">
+            <div class="card">
+                <img src="Rambo3.jpg" alt="Rambo III">
+                <h2>💥 Rambo III</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">VER FICHA Y JUGAR</span>
+            </div>
+        </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('sonic')">
             <div class="card">
                 <img src="sonicthehedgehog.jpg" alt="Sonic">
@@ -479,6 +488,9 @@ const coloresConsola = {
 
 // --- BASE DE DATOS OPTIMIZADA ---
 const infoJuegos = {
+    // NUEVO: RAMBO III
+    rambo3: { consola: "md", titulo: "RAMBO III (MEGA DRIVE)", img: "Rambo3.jpg", enlace: "Rambo3.html", valoracion: "⭐⭐⭐⭐ 8.0/10 (Acción Explosiva)", historia: "Lanzado por SEGA en 1989, este vibrante arcade de vista cenital te pone en la piel de Sylvester Stallone. Famoso por su acción táctica y por permitirte destruir tanques y helicópteros usando arcos con flechas explosivas.", manual: "🎯 <strong>Objetivo:</strong> Infiltrarte solo en la fortaleza soviética en Afganistán para rescatar al coronel Trautman.<br><br>🕹️ <strong>Controles:</strong> Cruceta para moverte, un botón para la ametralladora y otro para armas secundarias (flechas, bombas).<br><br>💡 <strong>Truco Retro:</strong> Las flechas explosivas son vitales pero escasas. Guárdalas exclusivamente para destruir los tanques y helicópteros jefe." },
+
     miketyson: { consola: "nes", titulo: "PUNCH-OUT!! (NES)", img: "miketyson.jpg", enlace: "miketyson.html", valoracion: "⭐⭐⭐⭐⭐ 9.4/10 (Clásico de Culto)", historia: "Lanzado en 1987, este aclamado juego de boxeo te pone en la piel de Little Mac. Más que un juego de deportes, es un rompecabezas de reflejos donde debes memorizar los patrones de rivales icónicos como King Hippo hasta llegar al mismísimo Mike Tyson.", manual: "🎯 <strong>Objetivo:</strong> Escalar en el ranking de la WVBA derrotando a todos los boxeadores hasta ganar el cinturón.<br><br>🕹️ <strong>Controles:</strong> Esquiva a los lados, bloquea y usa los botones para dar ganchos. Pulsa 'Start' para el gancho estrella.<br><br>💡 <strong>Truco Retro:</strong> Presta atención al público. En la pelea contra Bald Bull, cuando un espectador con barba asienta con la cabeza o parpadee, es el momento exacto para darle un golpe al cuerpo y noquearlo." },
     ghostngoblin: { consola: "nes", titulo: "GHOSTS 'N GOBLINS (NES)", img: "ghostngoblin.jpg", enlace: "ghostngoblin.html", valoracion: "⭐⭐⭐⭐ 8.5/10 (Clásico Desafiante)", historia: "Lanzado por Capcom en 1986, es famoso por ser uno de los juegos más difíciles de la historia. Controlas al caballero Sir Arthur, que pierde su armadura al primer golpe, quedando en calzoncillos. Su brutal dificultad lo hizo una leyenda retro.", manual: "🎯 <strong>Objetivo:</strong> Cruzar el reino de los demonios para rescatar a la princesa Prin-Prin.<br><br>🕹️ <strong>Controles:</strong> Botón para saltar y botón para lanzar armas. Cuidado con los saltos, no se pueden corregir en el aire.<br><br>💡 <strong>Truco Retro:</strong> La trampa final: para ver el verdadero desenlace, el juego te obligará a completarlo dos veces seguidas de principio a fin." },
     mariobros3: { consola: "nes", titulo: "SUPER MARIO BROS 3 (NES)", img: "supermariobros3.jpg", enlace: "supermariobros3.html", valoracion: "⭐⭐⭐⭐⭐ 9.8/10 (Obra Maestra)", historia: "Lanzado en 1988, revolucionó los plataformas con su mapa navegable, minijuegos y el icónico traje de mapache para volar. Su diseño de niveles y secretos marcaron el futuro de la industria.", manual: "🎯 <strong>Objetivo:</strong> Derrotar a Bowser y a sus Koopalings para salvar a los 7 reyes caídos.<br><br>🕹️ <strong>Controles:</strong> Botón de salto y botón para correr/volar. En el mapa, flechas para moverte.<br><br>💡 <strong>Truco Retro:</strong> En el Mundo 1, busca las flautas mágicas (en el nivel 3 y en la fortaleza) para viajar al instante al Mundo 8." },
