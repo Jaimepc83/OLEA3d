@@ -86,10 +86,6 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 .texto-panel { font-size: 14.5px; line-height: 1.6; color: #eee; margin-bottom: 20px; background: rgba(255,255,255,0.03); padding: 18px; border-radius: 12px; border-left: 4px solid var(--modal-tab); min-height: 100px; transition: border-color 0.4s; text-align: justify; }
 .texto-panel strong { color: var(--modal-title); transition: color 0.4s; font-size: 15px; }
 
-/* NUEVO BOTÓN DE PANTALLA COMPLETA */
-.btn-fullscreen-modal { display: block; width: 100%; text-align: center; padding: 12px 0; background: #333; color: #ddd; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 14px; border: 1px solid #555; cursor: pointer; margin-bottom: 10px; transition: 0.3s; }
-.btn-fullscreen-modal:hover { background: #444; color: white; border-color: #777; }
-
 .btn-jugar-modal { display: block; width: 100%; text-align: center; padding: 14px 0; background: #6b8e23; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 16px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(107,142,35,0.6); box-sizing: border-box; transition: 0.3s; }
 .btn-jugar-modal:hover { background: #88aa33; transform: translateY(-2px); }
 
@@ -185,6 +181,7 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
                 <span class="btn-ver">VER FICHA Y JUGAR</span>
             </div>
         </div>
+
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('ghostngoblin')">
             <div class="card">
                 <img src="ghostngoblin.jpg" alt="Ghosts n Goblins">
@@ -331,7 +328,6 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
         <div id="contenidoHistoria" class="texto-panel">Cargando sinopsis...</div>
         <div id="contenidoManual" class="texto-panel" style="display:none;">Cargando manual...</div>
 
-        <button id="btnFullscreen" class="btn-fullscreen-modal" onclick="toggleFullScreen();">📺 PANTALLA COMPLETA</button>
         <button id="btnIniciarJuego" class="btn-jugar-modal" onclick="irAlJuego();">🚀 EMPEZAR PARTIDA</button>
     </div>
 </div>
@@ -346,23 +342,6 @@ if ('serviceWorker' in navigator) {
             console.log('Error en la instalación: ', err);
         });
     });
-}
-
-// --- SISTEMA DE PANTALLA COMPLETA (FULLSCREEN) ---
-function toggleFullScreen() {
-    reproducirClic();
-    let doc = window.document;
-    let docEl = doc.documentElement;
-
-    let requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-    let cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
-
-    if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
-        requestFullScreen.call(docEl);
-    }
-    else {
-        cancelFullScreen.call(doc);
-    }
 }
 
 // --- SISTEMA DEL EASTER EGG ---
@@ -500,9 +479,7 @@ const coloresConsola = {
 
 // --- BASE DE DATOS OPTIMIZADA ---
 const infoJuegos = {
-    // NUEVO: PUNCH-OUT!!
     miketyson: { consola: "nes", titulo: "PUNCH-OUT!! (NES)", img: "miketyson.jpg", enlace: "miketyson.html", valoracion: "⭐⭐⭐⭐⭐ 9.4/10 (Clásico de Culto)", historia: "Lanzado en 1987, este aclamado juego de boxeo te pone en la piel de Little Mac. Más que un juego de deportes, es un rompecabezas de reflejos donde debes memorizar los patrones de rivales icónicos como King Hippo hasta llegar al mismísimo Mike Tyson.", manual: "🎯 <strong>Objetivo:</strong> Escalar en el ranking de la WVBA derrotando a todos los boxeadores hasta ganar el cinturón.<br><br>🕹️ <strong>Controles:</strong> Esquiva a los lados, bloquea y usa los botones para dar ganchos. Pulsa 'Start' para el gancho estrella.<br><br>💡 <strong>Truco Retro:</strong> Presta atención al público. En la pelea contra Bald Bull, cuando un espectador con barba asienta con la cabeza o parpadee, es el momento exacto para darle un golpe al cuerpo y noquearlo." },
-    
     ghostngoblin: { consola: "nes", titulo: "GHOSTS 'N GOBLINS (NES)", img: "ghostngoblin.jpg", enlace: "ghostngoblin.html", valoracion: "⭐⭐⭐⭐ 8.5/10 (Clásico Desafiante)", historia: "Lanzado por Capcom en 1986, es famoso por ser uno de los juegos más difíciles de la historia. Controlas al caballero Sir Arthur, que pierde su armadura al primer golpe, quedando en calzoncillos. Su brutal dificultad lo hizo una leyenda retro.", manual: "🎯 <strong>Objetivo:</strong> Cruzar el reino de los demonios para rescatar a la princesa Prin-Prin.<br><br>🕹️ <strong>Controles:</strong> Botón para saltar y botón para lanzar armas. Cuidado con los saltos, no se pueden corregir en el aire.<br><br>💡 <strong>Truco Retro:</strong> La trampa final: para ver el verdadero desenlace, el juego te obligará a completarlo dos veces seguidas de principio a fin." },
     mariobros3: { consola: "nes", titulo: "SUPER MARIO BROS 3 (NES)", img: "supermariobros3.jpg", enlace: "supermariobros3.html", valoracion: "⭐⭐⭐⭐⭐ 9.8/10 (Obra Maestra)", historia: "Lanzado en 1988, revolucionó los plataformas con su mapa navegable, minijuegos y el icónico traje de mapache para volar. Su diseño de niveles y secretos marcaron el futuro de la industria.", manual: "🎯 <strong>Objetivo:</strong> Derrotar a Bowser y a sus Koopalings para salvar a los 7 reyes caídos.<br><br>🕹️ <strong>Controles:</strong> Botón de salto y botón para correr/volar. En el mapa, flechas para moverte.<br><br>💡 <strong>Truco Retro:</strong> En el Mundo 1, busca las flautas mágicas (en el nivel 3 y en la fortaleza) para viajar al instante al Mundo 8." },
     pacman: { consola: "arcade", titulo: "PAC-MAN (ARCADE)", img: "pacman.jpg", enlace: "Pacman.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10 (Clásico Atemporal)", historia: "El comecocos original de 1980 que desató la locura en los recreativos. Fue pionero en usar 'power-ups' y dotar a cada fantasma de una inteligencia artificial única.", manual: "🎯 <strong>Objetivo:</strong> Comer todos los puntos del laberinto sin que te atrapen los fantasmas. Come las pastillas grandes para poder devorarlos.<br><br>🕹️ <strong>Controles:</strong> Flechas de dirección para girar por las esquinas.<br><br>💡 <strong>Truco Retro:</strong> Usa los túneles laterales para escapar rápidamente; los fantasmas reducen enormemente su velocidad al cruzar por ellos." },
