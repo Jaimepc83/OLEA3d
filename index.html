@@ -13,7 +13,7 @@
     --modal-tab: #9dff3d;
 }
 
-/* 2. ESTILOS BASE (Filtro CRT Eliminado) */
+/* 2. ESTILOS BASE */
 body { margin: 0; font-family: Arial, sans-serif; background: #0d0d0d; color: white; text-align: center; overflow-x: hidden; position: relative; min-height: 100vh; }
 
 /* 3. FONDO ANIMADO 3D */
@@ -22,7 +22,7 @@ body { margin: 0; font-family: Arial, sans-serif; background: #0d0d0d; color: wh
 
 header { padding: 20px; background: linear-gradient(180deg, rgba(26,26,26,0.9), rgba(13,13,13,0)); position: relative; z-index: 10; }
 .logo { width: 120px; border-radius: 50%; box-shadow: 0 0 20px #d4af37; cursor: pointer; transition: 0.1s; }
-.logo:active { transform: scale(0.9); } /* Pequeño efecto al pulsar el logo */
+.logo:active { transform: scale(0.9); }
 h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
 .sub { color: #9acd32; font-size: 16px; margin-bottom: 20px; }
 
@@ -103,8 +103,12 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 @keyframes pulseIcon { 0% { text-shadow: 0 0 10px #9dff3d; } 50% { text-shadow: 0 0 30px #9dff3d; } 100% { text-shadow: 0 0 10px #9dff3d; } }
 @keyframes blinkText { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
-/* ESTILO DEL JUEGO SECRETO (Borde y resplandor especial) */
 .secreto::before { background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff) !important; animation: brilloSeda 2s linear infinite !important; }
+
+/* Enlaces de conexión para la instalación PWA */
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#d4af37">
+<link rel="apple-touch-icon" href="logo.png">
 </style>
 </head>
 
@@ -164,6 +168,7 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
                 <span class="btn-ver" style="background: #990099; border-color: #ff00ff;">VER FICHA Y JUGAR</span>
             </div>
         </div>
+
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('tetris')">
             <div class="card">
                 <img src="TetrisNes.png" alt="Tetris">
@@ -293,97 +298,82 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 </div>
 
 <script>
-// --- EL CEREBRO DEL EASTER EGG ---
+// --- MOTOR DE INSTALACIÓN DE LA APLICACIÓN (PWA) ---
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').then(registration => {
+            console.log('App lista para instalar');
+        }).catch(err => {
+            console.log('Error en la instalación: ', err);
+        });
+    });
+}
+
+// --- SISTEMA DEL EASTER EGG ---
 let toquesLogo = 0;
 let tiempoToques;
 
 function toqueSecreto() {
     toquesLogo++;
     clearTimeout(tiempoToques);
-    
-    // Si se pulsa 3 veces...
     if (toquesLogo === 3) {
         desbloquearSecreto();
         toquesLogo = 0;
     } else {
-        // Si tarda más de 1 segundo en dar el siguiente toque, se resetea
-        tiempoToques = setTimeout(() => {
-            toquesLogo = 0;
-        }, 1000); 
+        tiempoToques = setTimeout(() => { toquesLogo = 0; }, 1000); 
     }
 }
 
 function desbloquearSecreto() {
-    // 1. Pantallazo blanco
     const flash = document.createElement("div");
-    flash.style.position = "fixed";
-    flash.style.top = "0"; flash.style.left = "0"; flash.style.width = "100%"; flash.style.height = "100%";
-    flash.style.backgroundColor = "white"; flash.style.zIndex = "999999999";
-    flash.style.transition = "opacity 0.8s ease-out";
+    flash.style.position = "fixed"; flash.style.top = "0"; flash.style.left = "0"; flash.style.width = "100%"; flash.style.height = "100%";
+    flash.style.backgroundColor = "white"; flash.style.zIndex = "999999999"; flash.style.transition = "opacity 0.8s ease-out";
     document.body.appendChild(flash);
     
-    // 2. Sonido 1-UP Mítico
     reproducirSonido1UP();
 
-    // 3. Mostrar la tarjeta de Pac-Man
     const tarjeta = document.getElementById("tarjetaSecreta");
     if (tarjeta) {
         tarjeta.style.display = "block";
-        // Bajar la pantalla automáticamente hasta donde está el juego
-        setTimeout(() => {
-            tarjeta.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 500);
+        setTimeout(() => { tarjeta.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 500);
     }
 
-    // Desaparecer el flash
     setTimeout(() => {
         flash.style.opacity = "0";
         setTimeout(() => flash.remove(), 800);
     }, 100);
 }
 
-// Sonido de "Vida Extra"
 function reproducirSonido1UP() {
     try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
         osc.type = 'square';
-        
         const now = audioCtx.currentTime;
-        osc.frequency.setValueAtTime(1318.51, now); // E6
-        osc.frequency.setValueAtTime(1567.98, now + 0.1); // G6
-        osc.frequency.setValueAtTime(2093.00, now + 0.2); // C7
-        osc.frequency.setValueAtTime(2637.02, now + 0.3); // E7
-        osc.frequency.setValueAtTime(3135.96, now + 0.4); // G7
-        
+        osc.frequency.setValueAtTime(1318.51, now); 
+        osc.frequency.setValueAtTime(1567.98, now + 0.1); 
+        osc.frequency.setValueAtTime(2093.00, now + 0.2); 
+        osc.frequency.setValueAtTime(2637.02, now + 0.3); 
+        osc.frequency.setValueAtTime(3135.96, now + 0.4); 
         gain.gain.setValueAtTime(0.1, now);
         gain.gain.linearRampToValueAtTime(0, now + 0.6);
-        
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start(now);
-        osc.stop(now + 0.6);
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.start(now); osc.stop(now + 0.6);
     } catch(e) {}
 }
-
 
 // --- BUSCADOR ---
 function filtrarJuegos() {
     let input = document.getElementById("buscadorJuegos").value.toLowerCase();
     let tarjetas = document.querySelectorAll(".card-wrapper");
-
     tarjetas.forEach(tarjeta => {
         let titulo = tarjeta.querySelector("h2").innerText.toLowerCase();
-        if (titulo.includes(input)) {
-            tarjeta.style.display = "block";
-        } else {
-            tarjeta.style.display = "none";
-        }
+        if (titulo.includes(input)) { tarjeta.style.display = "block"; } else { tarjeta.style.display = "none"; }
     });
 }
 
-// --- SISTEMA DE AUDIO NORMAL ---
+// --- AUDIO Y CONTROLES GENERALES ---
 let musica = document.getElementById("musicaFondo");
 let musicaSonando = false;
 
@@ -397,10 +387,8 @@ function reproducirClic() {
         oscillator.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1); 
         gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); 
         gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1); 
-        oscillator.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-        oscillator.start();
-        oscillator.stop(audioCtx.currentTime + 0.1);
+        oscillator.connect(gainNode); gainNode.connect(audioCtx.destination);
+        oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.1);
     } catch (e) {}
 }
 
@@ -414,10 +402,8 @@ function reproducirSonidoCoin() {
         osc.frequency.setValueAtTime(1318.51, audioCtx.currentTime + 0.1); 
         gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.4);
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.start(); osc.stop(audioCtx.currentTime + 0.4);
     } catch (e) {}
 }
 
@@ -431,41 +417,31 @@ function reproducirSonidoEscaner() {
         osc.frequency.linearRampToValueAtTime(800, audioCtx.currentTime + 0.5);
         gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 1);
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.start(); osc.stop(audioCtx.currentTime + 1);
     } catch (e) {}
 }
 
 function toggleMusica() {
     let btn = document.getElementById("btnMusica");
     if (musicaSonando) {
-        musica.pause();
-        musicaSonando = false;
-        btn.style.background = "#eee";
-        btn.style.color = "#111";
-        btn.style.borderColor = "#ccc";
+        musica.pause(); musicaSonando = false;
+        btn.style.background = "#eee"; btn.style.color = "#111"; btn.style.borderColor = "#ccc";
     } else {
-        musica.play();
-        musicaSonando = true;
-        btn.style.background = "#6b8e23";
-        btn.style.color = "white";
-        btn.style.borderColor = "#88aa33";
+        musica.play(); musicaSonando = true;
+        btn.style.background = "#6b8e23"; btn.style.color = "white"; btn.style.borderColor = "#88aa33";
     }
 }
 
-// Configuración de Paletas de Color por Consola
 const coloresConsola = {
     nes: { border: '#e60012', title: '#e60012', tab: '#aaaaaa' },
     n64: { border: '#00b140', title: '#00b140', tab: '#005b9f' },
     md:  { border: '#e00000', title: '#e00000', tab: '#d4af37' },
     snes: { border: '#005b9f', title: '#005b9f', tab: '#e60012' },
     gba:  { border: '#5a429b', title: '#5a429b', tab: '#d3d3d3' },
-    arcade: { border: '#ff00ff', title: '#ff00ff', tab: '#00ffff' } // Color de neón para Pac-Man
+    arcade: { border: '#ff00ff', title: '#ff00ff', tab: '#00ffff' }
 };
 
-// Base de datos de juegos (Se incluye PAC-MAN como juego oculto)
 const infoJuegos = {
     pacman: { consola: "arcade", titulo: "PAC-MAN (ARCADE)", img: "pacman.jpg", enlace: "Pacman.html", historia: "El comecocos original que revolucionó las máquinas recreativas en 1980.", manual: "🎯 <strong>Objetivo:</strong> Comer todos los puntos del laberinto sin que te atrapen los fantasmas.<br><br>🕹️ <strong>Controles:</strong> Flechas de dirección.<br><br>💡 <strong>Truco:</strong> Los fantasmas tienen patrones fijos, apréndelos." },
     tetris: { consola: "nes", titulo: "TETRIS (NES)", img: "TetrisNes.png", enlace: "TetrisFicha.html", historia: "Diseñado por Alekséi Pázhitnov en 1984, se convirtió en un fenómeno mundial.", manual: "🎯 <strong>Objetivo:</strong> Encajar las piezas.<br><br>🕹️ <strong>Controles:</strong> Flechas de dirección.<br><br>💡 <strong>Truco:</strong> Deja una columna libre a la derecha." },
@@ -493,14 +469,11 @@ function verFicha(idJuego) {
     const juego = infoJuegos[idJuego];
     if (juego) {
         enlaceDestino = juego.enlace;
-        
         actualizarColoresModal(juego.consola);
-        
         document.getElementById("fichaTitulo").innerText = juego.titulo;
         document.getElementById("fichaImg").src = juego.img;
         document.getElementById("contenidoHistoria").innerHTML = juego.historia;
         document.getElementById("contenidoManual").innerHTML = juego.manual;
-        
         cambiarPestana('historia');
         document.getElementById("modalFicha").style.display = "flex";
     }
@@ -525,7 +498,6 @@ function irAlJuego() {
         reproducirSonidoCoin();
         const pantallaTransicion = document.getElementById("transitionScreen");
         pantallaTransicion.classList.add("active");
-        
         setTimeout(() => {
             window.location.href = enlaceDestino;
             setTimeout(() => pantallaTransicion.classList.remove("active"), 500);
@@ -538,24 +510,16 @@ function cerrarFicha() {
     window.history.replaceState(null, null, window.location.pathname);
 }
 
-// --- DETECCIÓN DEL LLAVERO NFC Y ANIMACIÓN LÁSER ---
 function revisarLlaveroNFC() {
     const hash = window.location.hash.toLowerCase().replace('#', '');
     if (hash && infoJuegos[hash]) {
-        // Si escanean el NFC de un juego secreto, lo desbloqueamos automáticamente
-        if (hash === 'pacman') {
-            document.getElementById("tarjetaSecreta").style.display = "block";
-        }
-
+        if (hash === 'pacman') { document.getElementById("tarjetaSecreta").style.display = "block"; }
         const scannerScreen = document.getElementById("nfcScannerScreen");
         scannerScreen.classList.add("active");
         reproducirSonidoEscaner();
-        
         setTimeout(() => { 
             scannerScreen.classList.remove("active");
-            setTimeout(() => {
-                verFicha(hash); 
-            }, 300); 
+            setTimeout(() => { verFicha(hash); }, 300); 
         }, 1200);
     }
 }
@@ -563,7 +527,6 @@ function revisarLlaveroNFC() {
 window.addEventListener('hashchange', revisarLlaveroNFC);
 window.addEventListener('DOMContentLoaded', revisarLlaveroNFC);
 window.addEventListener('load', revisarLlaveroNFC);
-
 </script>
 
 </body>
