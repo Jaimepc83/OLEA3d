@@ -154,7 +154,7 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 </div>
 
 <div class="main-container">
-    <div class="stats">🕹️ 10 Juegos | 🏆 Colección Premium</div>
+    <div class="stats">🕹️ 11 Juegos | 🏆 Colección Premium</div>
 
     <h1 id="nes" class="section-title">🎮 NES</h1>
     <img src="nes.jpg" class="banner-console" alt="NES">
@@ -169,6 +169,14 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
             </div>
         </div>
 
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariobros3')">
+            <div class="card">
+                <img src="supermariobros3.jpg" alt="Mario Bros 3">
+                <h2>🍄 Mario Bros 3</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">VER FICHA Y JUGAR</span>
+            </div>
+        </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('tetris')">
             <div class="card">
                 <img src="TetrisNes.png" alt="Tetris">
@@ -443,6 +451,9 @@ const coloresConsola = {
 };
 
 const infoJuegos = {
+    // NUEVO: SUPER MARIO BROS 3
+    mariobros3: { consola: "nes", titulo: "SUPER MARIO BROS 3 (NES)", img: "supermariobros3.jpg", enlace: "supermariobros3.html", historia: "Lanzado en 1988, es considerado uno de los mejores videojuegos de todos los tiempos. Introdujo el famoso traje de mapache y el mapa de mundos.", manual: "🎯 <strong>Objetivo:</strong> Derrotar a Bowser y a sus Koopalings para salvar a los 7 reyes.<br><br>🕹️ <strong>Controles:</strong> Botón de salto y botón para correr/volar con el traje.<br><br>💡 <strong>Truco:</strong> En el Mundo 1, busca las flautas mágicas (en el nivel 3 y en la primera fortaleza) para viajar directamente al Mundo 8." },
+    
     pacman: { consola: "arcade", titulo: "PAC-MAN (ARCADE)", img: "pacman.jpg", enlace: "Pacman.html", historia: "El comecocos original que revolucionó las máquinas recreativas en 1980.", manual: "🎯 <strong>Objetivo:</strong> Comer todos los puntos del laberinto sin que te atrapen los fantasmas.<br><br>🕹️ <strong>Controles:</strong> Flechas de dirección.<br><br>💡 <strong>Truco:</strong> Los fantasmas tienen patrones fijos, apréndelos." },
     tetris: { consola: "nes", titulo: "TETRIS (NES)", img: "TetrisNes.png", enlace: "TetrisFicha.html", historia: "Diseñado por Alekséi Pázhitnov en 1984, se convirtió en un fenómeno mundial.", manual: "🎯 <strong>Objetivo:</strong> Encajar las piezas.<br><br>🕹️ <strong>Controles:</strong> Flechas de dirección.<br><br>💡 <strong>Truco:</strong> Deja una columna libre a la derecha." },
     mariobros: { consola: "nes", titulo: "SUPER MARIO BROS (NES)", img: "SuperMarioBros.jpg", enlace: "SuperMarioBros.html", historia: "Lanzado en 1985 por Shigeru Miyamoto, redefinió la industria.", manual: "🎯 <strong>Objetivo:</strong> Rescatar a la Princesa Peach.<br><br>🕹️ <strong>Controles:</strong> Z/X para saltar y correr.<br><br>💡 <strong>Truco:</strong> En el Mundo 1-2, camina por el techo." },
