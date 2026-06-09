@@ -13,6 +13,10 @@ header { padding: 20px; background: linear-gradient(180deg, #1a1a1a, #0d0d0d); }
 h1 { color: #d4af37; margin-top: 10px; font-size: 24px; }
 .sub { color: #9acd32; font-size: 16px; margin-bottom: 20px; }
 
+/* BOTÓN DE MÚSICA */
+.btn-musica { background: #eee; color: #111; padding: 10px 20px; border-radius: 8px; font-weight: bold; border: 2px solid #ccc; cursor: pointer; margin: 10px auto 20px auto; font-size: 14px; transition: 0.3s; display: inline-block; }
+.btn-musica:hover { transform: scale(1.05); }
+
 /* MENÚ SUPERIOR DE CONSOLAS */
 .menu { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin: 10px auto; padding: 10px; max-width: 95%; }
 .menu a { color: white; text-decoration: none; background: #222; padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; border: 1px solid #d4af37; transition: 0.3s; }
@@ -64,11 +68,17 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 
 <body>
 
+<audio id="musicaFondo" loop>
+    <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
 <header>
     <img src="logo.png" class="logo" alt="OLEA3D Logo">
     <h1>OLEA3D Hub Retro</h1>
     <div class="nfc-badge">📡 Colección NFC</div> 
     <p class="sub">Escanea tu llavero o toca una tarjeta para jugar</p>
+    
+    <button id="btnMusica" class="btn-musica" onclick="toggleMusica()">🎵 Música Retro ON/OFF</button>
 </header>
 
 <div class="menu">
@@ -126,7 +136,7 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
             <span class="btn-ver">VER FICHA Y JUGAR</span>
         </div>
         <div class="card" onclick="verFicha('aladdin')">
-            <img src="aladdin.jpg" alt="Aladdin">
+            <img src="aladin.jpg" alt="Aladdin">
             <h2>🧞 Aladdin</h2>
             <div class="nfc-badge">LLAVERO NFC</div>
             <span class="btn-ver">VER FICHA Y JUGAR</span>
@@ -194,122 +204,35 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 </div>
 
 <script>
+// --- SISTEMA DE AUDIO ---
+let musica = document.getElementById("musicaFondo");
+let musicaSonando = false;
+
+function toggleMusica() {
+    let btn = document.getElementById("btnMusica");
+    if (musicaSonando) {
+        musica.pause();
+        musicaSonando = false;
+        btn.style.background = "#eee";
+        btn.style.color = "#111";
+        btn.style.borderColor = "#ccc";
+    } else {
+        musica.play();
+        musicaSonando = true;
+        btn.style.background = "#6b8e23";
+        btn.style.color = "white";
+        btn.style.borderColor = "#88aa33";
+    }
+}
+
 // Base de datos de juegos con Historia y Manual de Instrucciones
 const infoJuegos = {
     tetris: { 
-        titulo: "TETRIS (NES)", img: "TetrisNes.png", enlace: "TetrisFicha.html", 
+        titulo: "TETRIS (NES)", img: "TetrisNes.png", enlace: "Tetris.html", 
         historia: "Diseñado originalmente por el ingeniero soviético Alekséi Pázhitnov en 1984, Tetris se convirtió en un fenómeno mundial absoluto al llegar a la NES.",
         manual: "🎯 <strong>Objetivo:</strong> Encajar las piezas geométricas para limpiar líneas y sumar puntos.<br><br>🕹️ <strong>Controles:</strong> Usa las flechas para mover y rotar las piezas.<br><br>💡 <strong>Truco Retro:</strong> Intenta dejar siempre una columna vacía en el lateral derecho para meter la pieza alargada (el 'palo') y conseguir un 'Tetris' de 4 líneas de golpe." 
     },
     mariobros: { 
         titulo: "SUPER MARIO BROS (NES)", img: "SuperMarioBros.jpg", enlace: "SuperMarioBros.html", 
         historia: "Lanzado en 1985 por Shigeru Miyamoto, este título redefinió la industria entera del videojuego. Acompaña a Mario a través del Reino Champiñón.",
-        manual: "🎯 <strong>Objetivo:</strong> Rescatar a la Princesa Peach de las garras de Bowser cruzando el Reino Champiñón.<br><br>🕹️ <strong>Controles:</strong> Z/X para saltar y correr. En móvil, botones táctiles.<br><br>💡 <strong>Truco Retro:</strong> En el Mundo 1-2, puedes caminar por encima del techo casi al final del nivel para encontrar las famous tuberías secretas (Warp Zone) y saltarte mundos." 
-    },
-    zeldaocarina: { 
-        titulo: "ZELDA: OOT (N64)", img: "zeldaocarina.jpg", enlace: "zeldaocarina.html", 
-        historia: "Considerada una de las obras maestras absolutas de la historia. Sigue el viaje épico de Link a través del tiempo en el Reino de Hyrule.",
-        manual: "🎯 <strong>Objetivo:</strong> Reunir las piedras espirituales, despertar a los sabios y derrotar al Rey del Mal, Ganondorf.<br><br>🕹️ <strong>Controles:</strong> Stick para moverse, A para atacar, Z para fijar enemigos.<br><br>💡 <strong>Truco Retro:</strong> Busca tarros vacíos (Botellas). Son el objeto más útil del juego, puedes guardar hadas en ellos para revivir automáticamente si te quedas sin corazones." 
-    },
-    mariotennis: { 
-        titulo: "MARIO TENNIS (N64)", img: "MarioTennis.jpg", enlace: "MarioTennis.html", 
-        historia: "La diversión deportiva arcade definitiva llegó a la Nintendo 64 en el año 2000. Los personajes del Reino Champiñón se reunieron en la pista de tenis.",
-        manual: "🎯 <strong>Objetivo:</strong> Ganar copas y torneos superando a tus rivales en la pista.<br><br>🕹️ <strong>Controles:</strong> Usa los botones A y B para golpear.<br><br>💡 <strong>Truco Retro:</strong> Pulsa el botón A dos veces justo cuando la pelota va a botar para hacer un 'Top Spin' potente, o B para un golpe cortado." 
-    },
-    sonic: { 
-        titulo: "SONIC THE HEDGEHOG (MD)", img: "sonicthehedgehog.jpg", enlace: "SONIC 1 - Shadow The Hedgehog.html", 
-        historia: "SEGA necesitó un héroe capaz de competir con Nintendo en 1991, y lo encontró en un erizo azul ultrarrápido.",
-        manual: "🎯 <strong>Objetivo:</strong> Frenar los malvados planes del Dr. Eggman y liberar a los animales del bosque.<br><br>🕹️ <strong>Controles:</strong> Flechas para moverse, botón de salto para rodar.<br><br>💡 <strong>Truco Retro:</strong> Recuerda que mientras tengas al menos UN anillo dorado en tu contador, serás inmortal ante los golpes enemigos." 
-    },
-    aladdin: { 
-        titulo: "ALADDIN (MEGA DRIVE)", img: "aladin.jpg", enlace: "Aladin.html", 
-        historia: "Con animaciones dibujadas a mano por los artistas de Disney en 1993, este título es una joya visual de los 16 bits.",
-        manual: "🎯 <strong>Objetivo:</strong> Recorrer Agrabah para salvar a la princesa Jasmine del malvado hechicero Jafar.<br><br>🕹️ <strong>Controles:</strong> Saltar, lanzar manzanas y blandir espada.<br><br>💡 <strong>Truco Retro:</strong> Las manzanas son tu mejor arma a distancia. Guárdalas siempre para los combates contra los jefes finales." 
-    },
-    marioworld: { 
-        titulo: "MARIO WORLD (SNES)", img: "SuperMarioWorld.jpg", enlace: "SuperMarioorld.html", 
-        historia: "La cumbre de los plataformas en 2D estrenó el cerebro de la bestia (SNES) en 1990. ¡Yoshi hace su primera aparición!",
-        manual: "🎯 <strong>Objetivo:</strong> Salvar Dinosaur Land y expulsar a Bowser de la región.<br><br>🕹️ <strong>Controles:</strong> Botones de salto y ataque giratorio.<br><br>💡 <strong>Truco Retro:</strong> Muchos niveles tienen salidas secretas (normalmente indicadas en color rojo en el mapa). Encuéntralas para desbloquear el místico 'Star Road'." 
-    },
-    mariokartsnes: { 
-        titulo: "MARIO KART (SNES)", img: "SuperMarioKartsnes.jpg", enlace: "Supermariokartsnes.html", 
-        historia: "El origen de una leyenda de las carreras multijugador en 1992 que revolucionó el Modo 7 gráfico.",
-        manual: "🎯 <strong>Objetivo:</strong> Conseguir la copa de Oro quedando primero en todas las pistas del circuito.<br><br>🕹️ <strong>Controles:</strong> Acelerar, frenar y botón para usar objetos.<br><br>💡 <strong>Truco Retro:</strong> Acelera justo en el momento exacto en el que el semáforo cambia a verde para conseguir un pequeño Turbo inicial." 
-    },
-    esmeralda: { 
-        titulo: "P. ESMERALDA (GBA)", img: "pokemonesme.jpg", enlace: "Pokemonesme.html", 
-        historia: "La edición definitiva de la tercera generación. Detén el choque apocalíptico entre los legendarios Groudon y Kyogre.",
-        manual: "🎯 <strong>Objetivo:</strong> Completar la Pokédex de Hoenn y superar a la Liga Pokémon.<br><br>🕹️ <strong>Controles:</strong> Cruceta para moverte, botón A para interactuar.<br><br>💡 <strong>Truco Retro:</strong> Guarda siempre la partida en tu consola antes de enfrentarte a cualquier Pokémon Legendario por si te quedas sin Pokéballs." 
-    },
-    rubi: { 
-        titulo: "POKÉMON RUBÍ (GBA)", img: "pokemonrubi.jpg", enlace: "PokemonRubi.html", 
-        historia: "Explora Hoenn, enfréntate a los planes magmáticos del Team Magma y hazte con el control del titán de la tierra.",
-        manual: "🎯 <strong>Objetivo:</strong> Conseguir las 8 medallas de gimnasio y detener al Team Magma.<br><br>🕹️ <strong>Controles:</strong> Cruceta de movimiento y botón A.<br><br>💡 <strong>Truco Retro:</strong> Presta atención a las naturalezas de tus Pokémon, ya que aumentan unas estadísticas y reducen otras." 
-    }
-};
-
-let enlaceDestino = "";
-
-// Función para abrir la ficha
-function verFicha(idJuego) {
-    const juego = infoJuegos[idJuego];
-    if (juego) {
-        enlaceDestino = juego.enlace;
-        document.getElementById("fichaTitulo").innerText = juego.titulo;
-        document.getElementById("fichaImg").src = juego.img;
-        document.getElementById("contenidoHistoria").innerHTML = juego.historia;
-        document.getElementById("contenidoManual").innerHTML = juego.manual;
-        
-        cambiarPestana('historia');
-        document.getElementById("modalFicha").style.display = "flex";
-    }
-}
-
-// Función para alternar pestañas
-function cambiarPestana(pestana) {
-    if (pestana === 'historia') {
-        document.getElementById("contenidoHistoria").style.display = "block";
-        document.getElementById("contenidoManual").style.display = "none";
-        document.getElementById("tabHistoria").classList.add("active");
-        document.getElementById("tabManual").classList.remove("active");
-    } else {
-        document.getElementById("contenidoHistoria").style.display = "none";
-        document.getElementById("contenidoManual").style.display = "block";
-        document.getElementById("tabHistoria").classList.remove("active");
-        document.getElementById("tabManual").classList.add("active");
-    }
-}
-
-// Iniciar juego
-function irAlJuego() {
-    if (enlaceDestino) {
-        window.location.href = enlaceDestino; 
-    }
-}
-
-// Cerrar ficha limpiando el hash de forma segura
-function cerrarFicha() {
-    document.getElementById("modalFicha").style.display = "none";
-    if (window.location.hash) {
-        window.history.replaceState(null, null, window.location.pathname);
-    }
-}
-
-// --- DETECCIÓN AUTOMÁTICA DEL LLAVERO NFC ---
-function revisarLlaveroNFC() {
-    const hash = window.location.hash.toLowerCase().replace('#', '');
-    if (hash && infoJuegos[hash]) {
-        setTimeout(() => { 
-            verFicha(hash); 
-        }, 150);
-    }
-}
-
-window.addEventListener('DOMContentLoaded', revisarLlaveroNFC);
-window.addEventListener('load', revisarLlaveroNFC);
-window.addEventListener('hashchange', revisarLlaveroNFC);
-
-</script>
-
-</body>
-</html>
+        manual: "🎯 <strong>Objetivo:</strong> Rescatar a la Princesa Peach de las garras de Bowser cruzando el Reino Champiñón.<br><br>🕹️ <strong>Controles:</strong> Z/X para saltar y correr. En móvil, botones táctiles
