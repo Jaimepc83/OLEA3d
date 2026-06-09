@@ -3,92 +3,397 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>OLEA3D Retro Hub</title>
 
 <style>
-
-body{
-margin:0;
-font-family:Arial,Helvetica,sans-serif;
-background:#0d0d0d;
-color:white;
-text-align:center;
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #0d0d0d;
+    color: white;
+    text-align: center;
 }
 
-header{
-
-padding:30px;
-background:linear-gradient(180deg,#1a1a1a,#0d0d0d);
+header {
+    padding: 30px;
+    background: linear-gradient(180deg, #1a1a1a, #0d0d0d);
 }
 
-.logo{
-width:180px;
-border-radius:50%;
-box-shadow:0 0 25px gold;
+.logo {
+    width: 180px;
+    border-radius: 50%;
+    box-shadow: 0 0 25px gold;
 }
 
-h1{
-color:#d4af37;
-margin-top:15px;
+h1 {
+    color: #d4af37;
+    margin-top: 15px;
 }
 
-.sub{
-color:#9acd32;
-font-size:18px;
+.sub {
+    color: #9acd32;
+    font-size: 18px;
 }
 
-
-.container{
-display:flex;
-gap:20px;
-overflow-x:auto;
-padding:20px;
-scroll-behavior:smooth;
-align-items:stretch;
-}
-.container::-webkit-scrollbar{
-display:none;
+/* Estilos del Menú Superior */
+.menu {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin: 20px auto;
+    padding: 10px;
+    max-width: 800px;
 }
 
-.container{
--ms-overflow-style:none;
-scrollbar-width:none;
+.menu a {
+    color: white;
+    text-decoration: none;
+    background: #222;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid #d4af37;
+    transition: 0.3s;
+}
+
+.menu a:hover {
+    background: #d4af37;
+    color: #111;
+    box-shadow: 0 0 10px #d4af37;
+}
+
+/* Contenedores de scroll horizontal */
+.container {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 20px;
+    scroll-behavior: smooth;
+    align-items: stretch;
+}
+
+.container::-webkit-scrollbar {
+    display: none;
+}
+
+.container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 } 
 
-.card{
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(10px);
-border:2px solid #f7d24a;
-border-radius:20px;
-padding:20px;
-transition:0.3s;
-box-shadow:0 0 15px rgba(247,210,74,0.3);
-cursor:pointer;
-min-width:300px;
-height:320px;
-flex-shrink:0;
+.card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 2px solid #f7d24a;
+    border-radius: 20px;
+    padding: 20px;
+    transition: 0.3s;
+    box-shadow: 0 0 15px rgba(247, 210, 74, 0.3);
+    cursor: pointer;
+    min-width: 260px;
+    height: 340px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.card:hover{
-transform:scale(1.12);
-z-index:10;
-box-shadow:
-0 0 25px rgba(157,255,61,0.8),
-0 0 50px rgba(157,255,61,0.9);
-}
- @keyframes flotar {
-0% { transform: translateY(0px); }
-50% { transform: translateY(-8px); }
-100% { transform: translateY(0px); }
-} 
-.card h2{
-
-color:#d4af37;
+.card:hover {
+    transform: scale(1.08);
+    z-index: 10;
+    box-shadow: 0 0 25px rgba(157, 255, 61, 0.8), 0 0 50px rgba(157, 255, 61, 0.9);
 }
 
-.btn{
-display:inline-block;
+.card h2 {
+    color: #d4af37;
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.card img {
+    max-height: 140px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 20px;
+    background: #6b8e23;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #88aa33;
+}
+
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    background: #111;
+    color: #aaa;
+}
+
+.stats {
+    margin: 15px 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #9dff3d;
+    text-shadow: 0 0 10px #9dff3d;
+}
+
+.nfc-badge {
+    display: inline-block;
+    background: #9dff3d;
+    color: #111;
+    font-weight: bold;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin: 2px;
+    font-size: 12px;
+    box-shadow: 0 0 8px #9dff3d;
+}  
+
+.music {
+    margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <img src="logo.png" class="logo">
+    <h1>OLEA3D RETRO HUB</h1>
+    <div class="nfc-badge">📡 NFC RETRO COLLECTION</div> 
+    <div class="stats">
+        🎮 Juegos disponibles: 12<br>
+        🏆 Total colección: 15
+    </div>
+
+    <p class="sub">Colección Retro NFC · Juega desde tu móvil</p>
+
+    <div class="music">
+        <button onclick="toggleMusic()" class="btn">🎵 Música Retro ON/OFF</button>
+    </div>
+</header>
+
+<div class="menu">
+    <a href="#nes">🎮 NES</a>
+    <a href="#n64">🕹️ N64</a>
+    <a href="#megadrive">⚡ Mega Drive</a>
+    <a href="#snes">⭐ SNES</a>
+    <a href="#gba">📱 GBA</a>
+</div>
+
+<div style="max-width:1200px;margin:auto;">
+
+    <h1 id="nes" style="color:#ffd700;margin:40px 0 20px 0;">🎮 NES</h1>
+    <div style="text-align:center;margin-bottom:20px;">
+        <img src="nes.jpg" width="320" style="border-radius:15px;box-shadow:0 0 25px rgba(247,210,74,0.8);">
+    </div>
+    <div class="container"> 
+        <div class="card">
+            <img src="TetrisNes.png" width="150">
+            <div style="margin-top:10px;">
+                <div class="nfc-badge">NFC</div>
+                <div class="nfc-badge">⭐ LEGENDARIO</div>
+            </div>
+            <h2>🎮 TETRIS</h2>
+            <p>Ya disponible</p>
+            <a class="btn" href="TetrisFicha.html">JUGAR</a>
+        </div>
+        <div class="card">
+            <img src="SuperMarioBros.jpg" width="150">
+            <div style="margin-top:10px;">
+                <div class="nfc-badge">NFC</div>
+            </div>
+            <h2>🍄 SUPER MARIO BROS</h2>
+            <p>Ya disponible</p>
+            <a href="SuperMarioFicha.html" class="btn">JUGAR</a>
+        </div>
+    </div>
+ 
+    <h1 id="n64" style="color:#ffd700;margin:40px 0 20px 0;">🕹️ NINTENDO 64</h1>
+    <div style="text-align:center;margin-bottom:20px;">
+        <img src="n64.jpg" width="320" style="border-radius:15px;box-shadow:0 0 25px rgba(247,210,74,0.8);">
+    </div>
+    <div class="container"> 
+        <div class="card">
+            <img src="DonkeyKong64.jpg" width="150" onerror="this.style.display='none'">
+            <h2>🦍 DONKEY KONG 64</h2>
+            <p>Ya disponible</p>
+            <a href="DonkeyKong64.html" class="btn">JUGAR</a>
+        </div>
+        <div class="card">
+            <img src="zeldaocarina.jpg" width="150">
+            <div style="margin-top:10px;">
+                <div class="nfc-badge">NFC</div>
+                <div class="nfc-badge">⭐ LEGENDARIO</div>
+            </div>
+            <h2>⚔️ ZELDA OCARINA OF TIME</h2>
+            <p>Ya disponible</p>
+            <a href="zeldaocarina.html" class="btn">JUGAR</a>
+        </div>
+        <div class="card">
+            <img src="MarioTennis.jpg" width="150">
+            <div style="margin-top:10px;">
+                <div class="nfc-badge">NFC</div>
+                <div class="nfc-badge">⭐ LEGENDARIO</div>
+            </div>
+            <h2>🎾 MARIO TENNIS</h2>
+            <p>Ya disponible</p>
+            <a href="MarioTennis.html" class="btn">JUGAR</a>
+        </div> 
+    </div>
+
+    <h1 id="megadrive" style="color:#ffd700;margin:40px 0 20px 0;">⚡ SEGA MEGA DRIVE</h1>
+    <div style="text-align:center;margin-bottom:20px;">
+        <img src="megadrive.jpg" width="320" style="border-radius:15px;box-shadow:0 0 25px rgba(247,210,74,0.8);">
+    </div>
+    <div class="container">
+        <div class="card">
+            <img src="sonicthehedgehog.jpg" width="150">
+            <div style="margin-top:10px;">
+                <div class="nfc-badge">NFC</div>
+                <div class="nfc-badge">⭐ LEGENDARIO</div>
+            </div>
+            <h2>🦔 SONIC THE HEDGEHOG</h2>
+            <p>Ya disponible</p>
+            <a href="SONIC 1 - Shadow The Hedgehog.html" class="btn">JUGAR</a>
+        </div>
+        <div class="card">
+            <img src="GoldenAxe.jpg" width="150">
+            <div style="margin-top:10px;">
+                <div class="nfc-badge">NFC</div>
+                <div class="nfc-badge">⭐ LEGENDARIO</div>
+            </div>
+            <h2>⚔️ GOLDEN AXE</h2>
+            <p>Ya disponible</p>
+            <a href="GoldenAxe.html" class="btn">JUGAR</a>
+        </div>
+        <div class="card">
+            <img src="aladin.jpg" width="150">
+            <div style="margin-top:10px;">
+                <div class="nfc-badge">NFC</div>
+                <div class="nfc-badge">⭐ LEGENDARIO</div>
+            </div>
+            <h2>🧞 ALADDIN</h2>
+            <p>Ya disponible</p>
+            <a href="Aladin.html" class="btn">JUGAR</a>
+        </div>
+    </div>
+ 
+    <h1 id="snes" style="color:#ffd700;margin:40px 0 20px 0;">⭐ SUPER NINTENDO (SNES)</h1>
+    <div style="text-align:center;margin-bottom:20px;">
+        <img src="snes.jpg" width="320" style="border-radius:15px;box-shadow:0 0 25px rgba(247,210,74,0.8);">
+    </div>
+    <div class="container">
+        <div class="card">
+            <img src="SuperMarioWorld.jpg" width="150">
+            <div style="margin-top:10px;">
+                <div class="nfc-badge">NFC</div>
+            </div>
+            <h2>🍄🦖 SUPER MARIO WORLD</h2>
+            <p>Ya disponible</p>
+            <a href="SuperMarioorld.html" class="btn">JUGAR</a>
+        </div>
+        <div class="card">
+            <img src="SuperMarioKartsnes.jpg" width="150">
+            <div style="margin-top:10px;">
+                <div class="nfc-badge">NFC</div>
+            </div>
+            <h2>🏎️ SUPER MARIO KART</h2>
+            <p>Ya disponible</p>
+            <a href="Supermariokartsnes.html" class="btn">JUGAR</a>
+        </div>
+    </div> 
+
+    <h1 id="gba" style="color:#ffd700;margin:40px 0 20px 0;">📱 GAME BOY ADVANCE</h1>
+    <div style="text-align:center;margin-bottom:20px;">
+        <img src="gba.jpg" width="320" style="border-radius:15px;box-shadow:0 0 25px rgba(247,210,74,0.8);">
+    </div>
+    <div class="container">
+        <div class="card">
+            <img src="ZeldaMinishCap.jpg" width="150" onerror="this.style.display='none'">
+            <h2>⚔️ THE LEGEND OF ZELDA: MINISH CAP</h2>
+            <p>Ya disponible</p>
+            <a href="ZeldaMinishCap.html" class="btn">JUGAR</a>
+        </div>
+        <div class="card">
+            <img src="MarioKartSuperCircuit.jpg" width="150" onerror="this.style.display='none'">
+            <h2>🏎️ MARIO KART SUPER CIRCUIT</h2>
+            <p>Ya disponible</p>
+            <a href="MarioKartSuperCircuit.html" class="btn">JUGAR</a>
+        </div>
+        <div class="card">
+            <img src="pokemonesme.jpg" width="150">
+            <div style="margin-top:10px;">
+                <div class="nfc-badge">NFC</div>
+                <div class="nfc-badge">⭐ LEGENDARIO</div>
+            </div>
+            <h2>⚡ POKÉMON ESMERALDA</h2>
+            <p>Ya disponible</p>
+            <a href="Pokemonesme.html" class="btn">JUGAR</a>
+        </div>
+        <div class="card">
+            <img src="pokemonrubi.jpg" width="150">
+            <div style="margin-top:10px;">
+                <div class="nfc-badge">NFC</div>
+            </div>
+            <h2>🔴 POKÉMON RUBÍ</h2>
+            <p>Ya disponible</p>
+            <a href="PokemonRubi.html" class="btn">JUGAR</a>
+        </div>
+        <div class="card">
+            <img src="Pokeonsaphi.jpg" width="150">
+            <div style="margin-top:10px;">
+                <div class="nfc-badge">NFC</div>
+            </div>
+            <h2>🔷 POKÉMON ZAFIRO</h2>
+            <p>Ya disponible</p>
+            <a href="Pokemonsaphi.html" class="btn">JUGAR</a>
+        </div>
+        <div class="card">
+            <img src="MetroidFusion.jpg" width="150" onerror="this.style.display='none'">
+            <h2>👾 METROID FUSION</h2>
+            <p>Ya disponible</p>
+            <a href="MetroidFusion.html" class="btn">JUGAR</a>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p><strong>@olea3d</strong></p>
+    <p>Acerca tu llavero NFC y disfruta de la experiencia retro.</p>
+</footer>
+
+<audio id="retroMusic" loop>
+    <source src="retro.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+function toggleMusic(){
+    const audio = document.getElementById("retroMusic");
+    if(audio.paused){
+        audio.play().catch(e => console.log("Esperando interacción del usuario para audio"));
+    }else{
+        audio.pause();
+    }
+}
+</script>
+
+</body>
+</html>
 padding:12px 20px;
 background:#6b8e23;
 color:white;
