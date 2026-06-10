@@ -27,7 +27,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 .sub { color: #9acd32; font-size: 16px; margin-bottom: 20px; }
 
 /* BOTÓN DE MÚSICA */
-.btn-musica { background: #eee; color: #111; padding: 10px 20px; border-radius: 8px; font-weight: bold; border: 2px solid #ccc; cursor: pointer; margin: 10px auto; font-size: 14px; transition: 0.3s; display: inline-block; position: relative; z-index: 10; }
+.btn-musica { background: #eee; color: #111; padding: 10px 20px; border-radius: 8px; font-weight: bold; border: 2px solid #ccc; cursor: margin: 10px auto; font-size: 14px; transition: 0.3s; display: inline-block; position: relative; z-index: 10; }
 .btn-musica:hover { transform: scale(1.05); }
 
 /* BUSCADOR DE JUEGOS */
@@ -170,7 +170,7 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 </div>
 
 <div class="main-container">
-    <div class="stats">🕹️ 18 Juegos | 🏆 Colección Premium</div>
+    <div class="stats">🕹️ 21 Juegos | 🏆 Colección Premium</div>
 
     <h1 id="nes" class="section-title">🎮 NES</h1>
     <img src="nes.jpg" class="banner-console" alt="NES">
@@ -234,6 +234,16 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
     <h1 id="n64" class="section-title">🕹️ NINTENDO 64</h1>
     <img src="n64.jpg" class="banner-console" alt="N64">
     <div class="container"> 
+        
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariokart64')">
+            <div class="card">
+                <img src="Mariokart64.jpg" alt="Mario Kart 64" onerror="this.src='n64.jpg'">
+                <h2>🏎️ Mario Kart 64</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">VER FICHA Y JUGAR</span>
+            </div>
+        </div>
+        
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('zeldaocarina')">
             <div class="card">
                 <img src="zeldaocarina.jpg" alt="Zelda" onerror="this.src='n64.jpg'">
@@ -242,6 +252,25 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
                 <span class="btn-ver">VER FICHA Y JUGAR</span>
             </div>
         </div>
+
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('castlegacy')">
+            <div class="card">
+                <img src="castlegacy.jpg" alt="Castlevania Legacy" onerror="this.src='n64.jpg'">
+                <h2>🦇 Castlevania</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">VER FICHA Y JUGAR</span>
+            </div>
+        </div>
+
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('mortalkomleg64')">
+            <div class="card">
+                <img src="mortalkom64.png" alt="Mortal Kombat" onerror="this.src='n64.jpg'">
+                <h2>🩸 Mortal Kombat</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">VER FICHA Y JUGAR</span>
+            </div>
+        </div>
+
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariotennis')">
             <div class="card">
                 <img src="MarioTennis.jpg" alt="Mario Tennis" onerror="this.src='n64.jpg'">
@@ -356,7 +385,7 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 
 <footer>
     <p><strong>@olea3d</strong></p>
-    <p>Adquiere tu llavero personalizado NFC. Todo estará listo para jugar.</p>
+    <p>Adquiere tu llavero personalizado NFC. Todo está listo para jugar.</p>
 </footer>
 
 <div id="modalFicha" class="modal-ficha">
@@ -543,6 +572,9 @@ const infoJuegos = {
     rambo3: { consola: "md", titulo: "RAMBO III (MD)", img: "Rambo3.jpg", enlace: "Rambo3.html", valoracion: "⭐⭐⭐⭐ 8.0/10 (Acción Explosiva)", historia: "Lanzado por SEGA en 1989, este vibrante arcade te pone en la piel de Sylvester Stallone. Famoso por su acción táctica y por destruir tanques con flechas explosivas.", manual: "🎯 <strong>Objetivo:</strong> Infiltrarte en la fortaleza para rescatar al coronel Trautman.<br><br>🕹️ <strong>Controles:</strong> Cruceta para moverte, botón para ametralladora y armas secundarias.<br><br>💡 <strong>Truco Retro:</strong> Guarda las flechas explosivas exclusivamente para los helicópteros y tanques finales." },
     batman: { consola: "md", titulo: "BATMAN (MD)", img: "batman.jpg", enlace: "batman.html", valoracion: "⭐⭐⭐⭐ 8.8/10 (Acción)", historia: "Controla al Caballero Oscuro en este brutal y desafiante clásico de plataformas de Sunsoft con una de las mejores bandas sonoras de la Mega Drive.", manual: "🎯 <strong>Objetivo:</strong> Derrotar al Joker y salvar Gotham.<br><br>🕹️ <strong>Controles:</strong> Cruz direccional para moverte, saltar, golpear y usar el batarang.<br><br>💡 <strong>Truco Retro:</strong> Domina el salto apoyándote en las paredes para esquivar ataques rápidos." },
     streetf2: { consola: "md", titulo: "STREET FIGHTER II (MD)", img: "streetf2.jpg", enlace: "streetf2.html", valoracion: "⭐⭐⭐⭐⭐ 9.6/10 (Lucha Arcade)", historia: "El rey indiscutible de los juegos de lucha de los 90. Elige a tu guerrero mundial favorito y viaja por el globo para enfrentarte a M. Bison en esta mítica adaptación para la 16 bits de SEGA.", manual: "🎯 <strong>Objetivo:</strong> Derrotar a todos los luchadores en combates al mejor de tres asaltos.<br><br>🕹️ <strong>Controles:</strong> Usa la cruceta para moverte y saltar. Combina movimientos para ataques especiales (ej: Abajo, Diagonal, Adelante + Puñetazo para el Hadouken de Ryu).<br><br>💡 <strong>Truco Retro:</strong> Acórrale a tu rival en la esquina de la pantalla para encadenar combos y no dejarle respirar." },
+    castlegacy: { consola: "n64", titulo: "CASTLEVANIA LEGACY", img: "castlegacy.jpg", enlace: "Castlegacy.html", valoracion: "⭐⭐⭐⭐ 8.2/10 (Aventura 3D)", historia: "El salto a las 3D de la mítica saga vampírica. Regresa a Transilvania y enfréntate a las criaturas de la noche en el castillo de Drácula antes de que el mal resurja por completo.", manual: "🎯 <strong>Objetivo:</strong> Recorrer el castillo, conseguir mejoras y derrotar a los jefes de cada zona.<br><br>🕹️ <strong>Controles:</strong> Usa el stick para moverte libremente y prepárate para un combate cuerpo a cuerpo y a distancia.<br><br>💡 <strong>Truco Retro:</strong> Rompe antorchas y candelabros para encontrar corazones y objetos clave para la aventura." },
+    mortalkomleg64: { consola: "n64", titulo: "MORTAL KOMBAT", img: "mortalkom64.png", enlace: "mortalkomleg64.html", valoracion: "⭐⭐⭐⭐ 8.7/10 (Lucha Brutal)", historia: "La franquicia más sangrienta de la historia de la lucha llega con todos sus clásicos Fatalities y un elenco de luchadores implacables dispuestos a todo por la victoria.", manual: "🎯 <strong>Objetivo:</strong> Vencer a tus rivales en combates 1v1 y ejecutar un Fatality final para humillarlos.<br><br>🕹️ <strong>Controles:</strong> Puñetazos y patadas altas y bajas. Usa la cruceta y botones para combinaciones mortales.<br><br>💡 <strong>Truco Retro:</strong> Memoriza el Fatality de tu personaje favorito, tienes muy poco tiempo para hacerlo cuando la pantalla dice 'FINISH HIM!'." },
+    mariokart64: { consola: "n64", titulo: "MARIO KART 64", img: "Mariokart64.jpg", enlace: "Mariokart64.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10 (Carreras Arcade)", historia: "La revolución de las carreras multijugador con escenarios en 3D. Un clásico absoluto de Nintendo que introdujo pistas legendarias y piques interminables con amigos.", manual: "🎯 <strong>Objetivo:</strong> Llegar primero a la meta en circuitos de tres vueltas superando los obstáculos y a los rivales.<br><br>🕹️ <strong>Controles:</strong> Acelera, frena, derrapa con los gatillos y usa los objetos para entorpecer a los demás.<br><br>💡 <strong>Truco Retro:</strong> Acelera justo en el momento en el que el semáforo cambia al verde para salir disparado con un miniturbo." },
     miketyson: { consola: "nes", titulo: "PUNCH-OUT!! (NES)", img: "miketyson.jpg", enlace: "miketyson.html", valoracion: "⭐⭐⭐⭐⭐ 9.4/10 (Clásico de Culto)", historia: "Aclamado juego de boxeo de 1987. Un rompecabezas de reflejos donde memorizas patrones de rivales icónicos como King Hippo hasta llegar a Mike Tyson.", manual: "🎯 <strong>Objetivo:</strong> Escalar en el ranking de la WVBA hasta ganar el cinturón.<br><br>🕹️ <strong>Controles:</strong> Esquiva a los lados, bloquea y ganchos. Pulsa 'Start' para el golpe estrella.<br><br>💡 <strong>Truco Retro:</strong> En Bald Bull, golpea su cuerpo justo cuando el espectador barbudo de la grada parpadee." },
     ghostngoblin: { consola: "nes", titulo: "GHOSTS 'N GOBLINS (NES)", img: "ghostngoblin.jpg", enlace: "ghostngoblin.html", valoracion: "⭐⭐⭐⭐ 8.5/10 (Desafiante)", historia: "Lanzado en 1986, es famoso por ser uno de los juegos más difíciles. Sir Arthur pierde su armadura al primer golpe, quedando en calzoncillos.", manual: "🎯 <strong>Objetivo:</strong> Rescatar a la princesa Prin-Prin.<br><br>🕹️ <strong>Controles:</strong> Botón de salto y ataque. Los saltos no se pueden corregir en el aire.<br><br>💡 <strong>Truco Retro:</strong> Debes pasarte el juego dos veces seguidas para ver el verdadero final." },
     mariobros3: { consola: "nes", titulo: "SUPER MARIO BROS 3 (NES)", img: "supermariobros3.jpg", enlace: "supermariobros3.html", valoracion: "⭐⭐⭐⭐⭐ 9.8/10 (Obra Maestra)", historia: "Lanzado en 1988, revolucionó los plataformas con su mapa navegable, minijuegos y el icónico traje de mapache para volar.", manual: "🎯 <strong>Objetivo:</strong> Derrotar a Bowser y salvar a los 7 reyes caídos.<br><br>🕹️ <strong>Controles:</strong> Botón de salto y correr/volar.<br><br>💡 <strong>Truco Retro:</strong> Busca las flautas mágicas en el Mundo 1 para viajar al instante al Mundo 8." },
