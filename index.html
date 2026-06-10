@@ -97,6 +97,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 .btn-anadir { background: var(--modal-tab); color: #000; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; transition: 0.3s; }
 .btn-anadir:hover { transform: scale(1.02); filter: brightness(1.2); }
 
+/* BOTÓN DE JUGAR */
 .btn-jugar-modal { display: block; width: 100%; text-align: center; padding: 14px 0; background: #6b8e23; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 16px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(107,142,35,0.6); box-sizing: border-box; transition: 0.3s; }
 .btn-jugar-modal:hover { background: #88aa33; transform: translateY(-2px); }
 
@@ -120,6 +121,7 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 
 .secreto::before { background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff) !important; animation: brilloSeda 2s linear infinite !important; }
 
+/* Enlaces de conexión para la instalación PWA */
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#d4af37">
 <link rel="apple-touch-icon" href="logo.png">
@@ -218,6 +220,7 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
                 <span class="btn-ver">VER FICHA Y JUGAR</span>
             </div>
         </div>
+        
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariobros')">
             <div class="card">
                 <img src="SuperMarioBros.jpg" alt="Mario Bros">
@@ -255,7 +258,7 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('goldenaxe2')">
             <div class="card">
-                <img src="goldenaxe2.jpg" alt="Golden Axe 2">
+                <img src="goldenaxe2.jpg" alt="Golden Axe 2" onerror="this.src='megadrive.jpg'">
                 <h2>🪓 Golden Axe II</h2>
                 <div class="nfc-badge">LLAVERO NFC</div>
                 <span class="btn-ver">VER FICHA Y JUGAR</span>
@@ -264,7 +267,7 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('rambo3')">
             <div class="card">
-                <img src="Rambo3.jpg" alt="Rambo III">
+                <img src="Rambo3.jpg" alt="Rambo III" onerror="this.src='megadrive.jpg'">
                 <h2>💥 Rambo III</h2>
                 <div class="nfc-badge">LLAVERO NFC</div>
                 <span class="btn-ver">VER FICHA Y JUGAR</span>
@@ -279,6 +282,7 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
                 <span class="btn-ver">VER FICHA Y JUGAR</span>
             </div>
         </div>
+        
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('aladdin')">
             <div class="card">
                 <img src="aladin.jpg" alt="Aladdin">
@@ -374,16 +378,27 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 // --- MOTOR DE INSTALACIÓN PWA ---
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').then(r => console.log('App lista')).catch(e => console.log('Error PWA: ', e));
+        navigator.serviceWorker.register('sw.js').then(registration => {
+            console.log('App lista para instalar');
+        }).catch(err => {
+            console.log('Error en la instalación: ', err);
+        });
     });
 }
 
 // --- SISTEMA DEL EASTER EGG ---
-let toquesLogo = 0; let tiempoToques;
+let toquesLogo = 0;
+let tiempoToques;
+
 function toqueSecreto() {
-    toquesLogo++; clearTimeout(tiempoToques);
-    if (toquesLogo === 3) { desbloquearSecreto(); toquesLogo = 0; } 
-    else { tiempoToques = setTimeout(() => { toquesLogo = 0; }, 1000); }
+    toquesLogo++;
+    clearTimeout(tiempoToques);
+    if (toquesLogo === 3) {
+        desbloquearSecreto();
+        toquesLogo = 0;
+    } else {
+        tiempoToques = setTimeout(() => { toquesLogo = 0; }, 1000); 
+    }
 }
 
 function desbloquearSecreto() {
@@ -391,55 +406,123 @@ function desbloquearSecreto() {
     flash.style.position = "fixed"; flash.style.top = "0"; flash.style.left = "0"; flash.style.width = "100%"; flash.style.height = "100%";
     flash.style.backgroundColor = "white"; flash.style.zIndex = "999999999"; flash.style.transition = "opacity 0.8s ease-out";
     document.body.appendChild(flash);
+    
     reproducirSonido1UP();
+
     const tarjeta = document.getElementById("tarjetaSecreta");
-    if (tarjeta) { tarjeta.style.display = "block"; setTimeout(() => { tarjeta.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 500); }
-    setTimeout(() => { flash.style.opacity = "0"; setTimeout(() => flash.remove(), 800); }, 100);
+    if (tarjeta) {
+        tarjeta.style.display = "block";
+        setTimeout(() => { tarjeta.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 500);
+    }
+
+    setTimeout(() => {
+        flash.style.opacity = "0";
+        setTimeout(() => flash.remove(), 800);
+    }, 100);
 }
 
-// --- AUDIO Y CONTROLES ---
-let musica = document.getElementById("musicaFondo"); let musicaSonando = false;
+// --- AUDIO Y CONTROLES GENERALES (CÓDIGO COMPLETO SIN RECORTES) ---
+function reproducirSonido1UP() {
+    try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'square';
+        const now = audioCtx.currentTime;
+        osc.frequency.setValueAtTime(1318.51, now); 
+        osc.frequency.setValueAtTime(1567.98, now + 0.1); 
+        osc.frequency.setValueAtTime(2093.00, now + 0.2); 
+        osc.frequency.setValueAtTime(2637.02, now + 0.3); 
+        osc.frequency.setValueAtTime(3135.96, now + 0.4); 
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.linearRampToValueAtTime(0, now + 0.6);
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.start(now); osc.stop(now + 0.6);
+    } catch(e) {}
+}
 
 function reproducirClic() {
     try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
-        osc.type = 'square'; osc.frequency.setValueAtTime(440, audioCtx.currentTime); 
-        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1); 
-        gain.gain.setValueAtTime(0.1, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1); 
-        osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        oscillator.type = 'square';
+        oscillator.frequency.setValueAtTime(440, audioCtx.currentTime); 
+        oscillator.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1); 
+        gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); 
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1); 
+        oscillator.connect(gainNode); gainNode.connect(audioCtx.destination);
+        oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.1);
     } catch (e) {}
 }
 
-function reproducirSonido1UP() { /* Simplificado para espacio, funciona igual */ }
-function reproducirSonidoCoin() { /* ... */ }
-function reproducirSonidoEscaner() { /* ... */ }
+function reproducirSonidoCoin() {
+    try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(987.77, audioCtx.currentTime); 
+        osc.frequency.setValueAtTime(1318.51, audioCtx.currentTime + 0.1); 
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.start(); osc.stop(audioCtx.currentTime + 0.4);
+    } catch (e) {}
+}
+
+function reproducirSonidoEscaner() {
+    try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(200, audioCtx.currentTime);
+        osc.frequency.linearRampToValueAtTime(800, audioCtx.currentTime + 0.5);
+        gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1);
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.start(); osc.stop(audioCtx.currentTime + 1);
+    } catch (e) {}
+}
+
+let musica = document.getElementById("musicaFondo");
+let musicaSonando = false;
 
 function toggleMusica() {
     let btn = document.getElementById("btnMusica");
-    if (musicaSonando) { musica.pause(); musicaSonando = false; btn.style.background = "#eee"; btn.style.color = "#111"; btn.style.borderColor = "#ccc"; } 
-    else { musica.play(); musicaSonando = true; btn.style.background = "#6b8e23"; btn.style.color = "white"; btn.style.borderColor = "#88aa33"; }
+    if (musicaSonando) {
+        musica.pause(); musicaSonando = false;
+        btn.style.background = "#eee"; btn.style.color = "#111"; btn.style.borderColor = "#ccc";
+    } else {
+        musica.play(); musicaSonando = true;
+        btn.style.background = "#6b8e23"; btn.style.color = "white"; btn.style.borderColor = "#88aa33";
+    }
 }
 
+// --- BUSCADOR ---
 function filtrarJuegos() {
     let input = document.getElementById("buscadorJuegos").value.toLowerCase();
     let tarjetas = document.querySelectorAll(".card-wrapper");
     tarjetas.forEach(tarjeta => {
         let titulo = tarjeta.querySelector("h2").innerText.toLowerCase();
-        tarjeta.style.display = titulo.includes(input) ? "block" : "none";
+        if (titulo.includes(input)) { tarjeta.style.display = "block"; } else { tarjeta.style.display = "none"; }
     });
 }
 
 const coloresConsola = {
-    nes: { border: '#e60012', title: '#e60012', tab: '#aaaaaa' }, n64: { border: '#00b140', title: '#00b140', tab: '#005b9f' },
-    md:  { border: '#e00000', title: '#e00000', tab: '#d4af37' }, snes: { border: '#005b9f', title: '#005b9f', tab: '#e60012' },
-    gba:  { border: '#5a429b', title: '#5a429b', tab: '#d3d3d3' }, arcade: { border: '#ff00ff', title: '#ff00ff', tab: '#00ffff' }
+    nes: { border: '#e60012', title: '#e60012', tab: '#aaaaaa' },
+    n64: { border: '#00b140', title: '#00b140', tab: '#005b9f' },
+    md:  { border: '#e00000', title: '#e00000', tab: '#d4af37' },
+    snes: { border: '#005b9f', title: '#005b9f', tab: '#e60012' },
+    gba:  { border: '#5a429b', title: '#5a429b', tab: '#d3d3d3' },
+    arcade: { border: '#ff00ff', title: '#ff00ff', tab: '#00ffff' }
 };
 
-// --- BASE DE DATOS COMPLETA ---
+// --- BASE DE DATOS COMPLETA DE 16 JUEGOS ---
 const infoJuegos = {
     goldenaxe2: { consola: "md", titulo: "GOLDEN AXE II (MD)", img: "goldenaxe2.jpg", enlace: "goldenaxe2.html", valoracion: "⭐⭐⭐⭐ 8.5/10 (Acción Clásica)", historia: "La secuela del gran clásico de SEGA lanzado en 1991. Ármate con tu hacha, espada o magia y rescata al mundo de las garras de Dark Guld en este icónico 'beat 'em up' cooperativo.", manual: "🎯 <strong>Objetivo:</strong> Avanzar por los niveles derrotando a las hordas enemigas.<br><br>🕹️ <strong>Controles:</strong> A para magia, B para atacar, C para saltar.<br><br>💡 <strong>Truco Retro:</strong> Conserva tus pociones azules para los jefes finales, la magia de nivel máximo barre la pantalla entera." },
-    rambo3: { consola: "md", titulo: "RAMBO III (MD)", img: "Rambo3.jpg", enlace: "Rambo3.html", valoracion: "⭐⭐⭐⭐ 8.0/10 (Acción Explosiva)", historia: "Lanzado por SEGA en 1989, este vibrante arcade te pone en la piel de Sylvester Stallone. Famoso por su acción táctica y por destruir tanques con flechas explosivas.", manual: "🎯 <strong>Objetivo:</strong> Infiltrarte en la fortaleza para rescatar al coronel Trautman.<br><br>🕹️ <strong>Controles:</strong> Cruceta para moverte, botón para ametralladora y armas secundarias.<br><br>💡 <strong>Truco Retro:</strong> Guarda las flechas explosivas exclusivamente para los helicópteros." },
+    rambo3: { consola: "md", titulo: "RAMBO III (MD)", img: "Rambo3.jpg", enlace: "Rambo3.html", valoracion: "⭐⭐⭐⭐ 8.0/10 (Acción Explosiva)", historia: "Lanzado por SEGA en 1989, este vibrante arcade te pone en la piel de Sylvester Stallone. Famoso por su acción táctica y por destruir tanques con flechas explosivas.", manual: "🎯 <strong>Objetivo:</strong> Infiltrarte en la fortaleza para rescatar al coronel Trautman.<br><br>🕹️ <strong>Controles:</strong> Cruceta para moverte, botón para ametralladora y armas secundarias.<br><br>💡 <strong>Truco Retro:</strong> Guarda las flechas explosivas exclusivamente para los helicópteros y tanques finales." },
     miketyson: { consola: "nes", titulo: "PUNCH-OUT!! (NES)", img: "miketyson.jpg", enlace: "miketyson.html", valoracion: "⭐⭐⭐⭐⭐ 9.4/10 (Clásico de Culto)", historia: "Aclamado juego de boxeo de 1987. Un rompecabezas de reflejos donde memorizas patrones de rivales icónicos como King Hippo hasta llegar a Mike Tyson.", manual: "🎯 <strong>Objetivo:</strong> Escalar en el ranking de la WVBA hasta ganar el cinturón.<br><br>🕹️ <strong>Controles:</strong> Esquiva a los lados, bloquea y ganchos. Pulsa 'Start' para el golpe estrella.<br><br>💡 <strong>Truco Retro:</strong> En Bald Bull, golpea su cuerpo justo cuando el espectador barbudo de la grada parpadee." },
     ghostngoblin: { consola: "nes", titulo: "GHOSTS 'N GOBLINS (NES)", img: "ghostngoblin.jpg", enlace: "ghostngoblin.html", valoracion: "⭐⭐⭐⭐ 8.5/10 (Desafiante)", historia: "Lanzado en 1986, es famoso por ser uno de los juegos más difíciles. Sir Arthur pierde su armadura al primer golpe, quedando en calzoncillos.", manual: "🎯 <strong>Objetivo:</strong> Rescatar a la princesa Prin-Prin.<br><br>🕹️ <strong>Controles:</strong> Botón de salto y ataque. Los saltos no se pueden corregir en el aire.<br><br>💡 <strong>Truco Retro:</strong> Debes pasarte el juego dos veces seguidas para ver el verdadero final." },
     mariobros3: { consola: "nes", titulo: "SUPER MARIO BROS 3 (NES)", img: "supermariobros3.jpg", enlace: "supermariobros3.html", valoracion: "⭐⭐⭐⭐⭐ 9.8/10 (Obra Maestra)", historia: "Lanzado en 1988, revolucionó los plataformas con su mapa navegable, minijuegos y el icónico traje de mapache para volar.", manual: "🎯 <strong>Objetivo:</strong> Derrotar a Bowser y salvar a los 7 reyes caídos.<br><br>🕹️ <strong>Controles:</strong> Botón de salto y correr/volar.<br><br>💡 <strong>Truco Retro:</strong> Busca las flautas mágicas en el Mundo 1 para viajar al instante al Mundo 8." },
@@ -456,7 +539,8 @@ const infoJuegos = {
     rubi: { consola: "gba", titulo: "POKÉMON RUBÍ (GBA)", img: "pokemonrubi.jpg", enlace: "PokemonRubi.html", valoracion: "⭐⭐⭐⭐½ 9.2/10 (Sobresaliente)", historia: "El salto a la tercera generación. Sentó las bases del competitivo con naturalezas y habilidades pasivas.", manual: "🎯 <strong>Objetivo:</strong> Conseguir 8 medallas y detener al Team Magma.<br><br>🕹️ <strong>Controles:</strong> Moverse y atacar.<br><br>💡 <strong>Truco Retro:</strong> Revisa las naturalezas de tus Pokémon para ver qué estadística potencian." }
 };
 
-let enlaceDestino = ""; let juegoActual = "";
+let enlaceDestino = ""; 
+let juegoActual = "";
 
 function actualizarColoresModal(idConsola) {
     const colores = coloresConsola[idConsola] || coloresConsola['nes']; 
@@ -524,7 +608,7 @@ function renderizarRecords() {
 
 function irAlJuego() {
     if (enlaceDestino) {
-        reproducirSonidoCoin(); // O un sonido al empezar
+        reproducirSonidoCoin(); 
         const pantallaTransicion = document.getElementById("transitionScreen");
         pantallaTransicion.classList.add("active");
         setTimeout(() => {
@@ -545,6 +629,7 @@ function revisarLlaveroNFC() {
         if (hash === 'pacman') { document.getElementById("tarjetaSecreta").style.display = "block"; }
         const scannerScreen = document.getElementById("nfcScannerScreen");
         scannerScreen.classList.add("active");
+        reproducirSonidoEscaner();
         setTimeout(() => { 
             scannerScreen.classList.remove("active");
             setTimeout(() => { verFicha(hash); }, 300); 
