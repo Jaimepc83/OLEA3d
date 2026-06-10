@@ -2,13 +2,27 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mario Bros 3 - OLEA3D</title>
-    <style>body { margin: 0; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; } .juego-caja { width: 100%; max-width: 800px; height: 75vh; border: 3px solid #e60012; border-radius: 10px; overflow: hidden; background: #111; } iframe { width: 100%; height: 100%; border: none; } .btn-volver { margin-top: 20px; padding: 12px 25px; background: #e60012; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-family: sans-serif; }</style>
+    <style>
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background-color: #000; color: white; display: flex; flex-direction: column; align-items: center; font-family: sans-serif; }
+        #game-container { width: 100%; max-width: 900px; height: 80vh; margin-top: 10px; border: 3px solid #e60012; border-radius: 10px; overflow: hidden; box-shadow: 0 0 20px rgba(230,0,18,0.5); }
+        .btn-volver { margin-top: 15px; padding: 12px 25px; background: #e60012; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; text-transform: uppercase; }
+    </style>
 </head>
 <body>
-    <div class="juego-caja">
-        <iframe src="https://nesbox.com/?rom=mario3.nes" allowfullscreen></iframe>
-    </div>
+
+    <div id="game-container"></div>
+
     <a href="index.html" class="btn-volver">⬅ Volver al Menú OLEA3D</a>
+
+    <script>
+        EJS_player = '#game-container';
+        EJS_core = 'nes'; // Motor de Nintendo NES
+        EJS_gameUrl = 'mario3.nes'; // TU ARCHIVO LOCAL
+        EJS_pathtodata = 'https://cdn.emulatorjs.org/stable/data/';
+    </script>
+    <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
+
 </body>
 </html>
