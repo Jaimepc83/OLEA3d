@@ -116,7 +116,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 .btn-anadir:hover { transform: scale(1.02); filter: brightness(1.2); }
 
 /* BOTÓN DE JUGAR */
-.btn-jugar-modal { display: block; width: 100%; text-align: center; padding: 14px 0; background: #6b8e23; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 16px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(107,142,35,0.6); box-sizing: border-box; transition: 0.3s; }
+.btn-jugar-modal { display: block; width: 100%; text-align: center; padding: 14px 0; background: #6b8e23; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 16px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(107,142,35,0.6); box-shadow: border-box; transition: 0.3s; }
 .btn-jugar-modal:hover { background: #88aa33; transform: translateY(-2px); }
 
 footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-size: 14px; border-top: 2px solid #222; position: relative; z-index: 10; }
@@ -132,9 +132,11 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 .nfc-scanner.active { opacity: 1; pointer-events: all; }
 .nfc-laser-container { position: relative; width: 80%; max-width: 300px; height: 200px; border: 2px dashed rgba(157,255,61,0.4); border-radius: 15px; overflow: hidden; display: flex; justify-content: center; align-items: center; }
 .nfc-laser { position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: #9dff3d; box-shadow: 0 0 20px 8px rgba(157,255,61,0.6); animation: scanLaser 1.2s ease-in-out infinite alternate; }
+.nfc-logo-scan { width: 110px; height: auto; border-radius: 50%; box-shadow: 0 0 20px #d4af37; animation: pulseLogo 1.5s infinite; position: relative; z-index: 5; }
 .nfc-icon { font-size: 50px; opacity: 0.5; animation: pulseIcon 1.2s infinite; }
 .nfc-text { color: #9dff3d; font-family: 'Courier New', monospace; margin-top: 25px; font-size: 18px; letter-spacing: 3px; font-weight: bold; animation: blinkText 0.8s infinite; text-shadow: 0 0 10px #9dff3d; }
 @keyframes scanLaser { 0% { transform: translateY(0); } 100% { transform: translateY(200px); } }
+@keyframes pulseLogo { 0% { transform: scale(1); box-shadow: 0 0 10px #d4af37; } 50% { transform: scale(1.1); box-shadow: 0 0 35px #9dff3d; } 100% { transform: scale(1); box-shadow: 0 0 10px #d4af37; } }
 @keyframes pulseIcon { 0% { text-shadow: 0 0 10px #9dff3d; } 50% { text-shadow: 0 0 30px #9dff3d; } 100% { text-shadow: 0 0 10px #9dff3d; } }
 @keyframes blinkText { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
@@ -151,7 +153,7 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 
 <div id="nfcScannerScreen" class="nfc-scanner">
     <div class="nfc-laser-container">
-        <div class="nfc-icon">📡</div>
+        <img src="logo.png" class="nfc-logo-scan" alt="Cargando OLEA3D..." onerror="this.src='https://via.placeholder.com/110x110/333/9dff3d?text=OLEA3D'">
         <div class="nfc-laser"></div>
     </div>
     <div class="nfc-text">SISTEMA OLEA3D...</div>
@@ -197,7 +199,7 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 </div>
 
 <div class="main-container">
-    <div class="stats">🕹️ 21 Juegos | 🏆 Colección Premium</div>
+    <div class="stats">🕹️ 19 Juegos | 🏆 Colección Premium</div>
 
     <h1 id="nes" class="section-title">🎮 NES</h1>
     <img src="nes.jpg" class="banner-console" alt="NES">
@@ -270,15 +272,6 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
                 <span class="btn-ver">VER FICHA Y JUGAR</span>
             </div>
         </div>
-        
-        <div class="card-wrapper" onclick="reproducirClic(); verFicha('zeldaocarina')">
-            <div class="card">
-                <img src="zeldaocarina.jpg" alt="Zelda" onerror="this.src='n64.jpg'">
-                <h2>⚔️ Zelda OOT</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">VER FICHA Y JUGAR</span>
-            </div>
-        </div>
 
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('castlegacy')">
             <div class="card">
@@ -316,15 +309,6 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
             <div class="card">
                 <img src="batman.jpg" alt="Batman" onerror="this.src='megadrive.jpg'">
                 <h2>🦇 Batman</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">VER FICHA Y JUGAR</span>
-            </div>
-        </div>
-
-        <div class="card-wrapper" onclick="reproducirClic(); verFicha('streetf2')">
-            <div class="card">
-                <img src="streetf2.jpg" alt="Street Fighter 2" onerror="this.src='megadrive.jpg'">
-                <h2>🥋 Street F. II</h2>
                 <div class="nfc-badge">LLAVERO NFC</div>
                 <span class="btn-ver">VER FICHA Y JUGAR</span>
             </div>
@@ -586,7 +570,6 @@ const infoJuegos = {
     goldenaxe2: { consola: "md", titulo: "GOLDEN AXE II (MD)", img: "goldenaxe2.jpg", enlace: "goldenaxe2.html", valoracion: "⭐⭐⭐⭐ 8.5/10 (Acción Clásica)", historia: "La secuela del gran clásico de SEGA lanzado en 1991. Ármate con tu hacha, espada o magia y rescata al mundo de las garras de Dark Guld en este icónico 'beat 'em up' cooperativo.", manual: "🎯 <strong>Objetivo:</strong> Avanzar por los niveles derrotando a las hordas enemigas.<br><br>🕹️ <strong>Controles:</strong> A para magia, B para atacar, C para saltar.<br><br>💡 <strong>Truco Retro:</strong> Conserva tus pociones azules para los jefes finales, la magia de nivel máximo barre la pantalla entera." },
     rambo3: { consola: "md", titulo: "RAMBO III (MD)", img: "Rambo3.jpg", enlace: "Rambo3.html", valoracion: "⭐⭐⭐⭐ 8.0/10 (Acción Explosiva)", historia: "Lanzado por SEGA en 1989, este vibrante arcade te pone en la piel de Sylvester Stallone. Famoso por su acción táctica y por destruir tanques con flechas explosivas.", manual: "🎯 <strong>Objetivo:</strong> Infiltrarte en la fortaleza para rescatar al coronel Trautman.<br><br>🕹️ <strong>Controles:</strong> Cruceta para moverte, botón para ametralladora y armas secundarias.<br><br>💡 <strong>Truco Retro:</strong> Guarda las flechas explosivas exclusivamente para los helicópteros y tanques finales." },
     batman: { consola: "md", titulo: "BATMAN (MD)", img: "batman.jpg", enlace: "batman.html", valoracion: "⭐⭐⭐⭐ 8.8/10 (Acción)", historia: "Controla al Caballero Oscuro en este brutal y desafiante clásico de plataformas de Sunsoft con una de las mejores bandas sonoras de la Mega Drive.", manual: "🎯 <strong>Objetivo:</strong> Derrotar al Joker y salvar Gotham.<br><br>🕹️ <strong>Controles:</strong> Cruz direccional para moverte, saltar, golpear y usar el batarang.<br><br>💡 <strong>Truco Retro:</strong> Domina el salto apoyándote en las paredes para esquivar ataques rápidos." },
-    streetf2: { consola: "md", titulo: "STREET FIGHTER II (MD)", img: "streetf2.jpg", enlace: "streetf2.html", valoracion: "⭐⭐⭐⭐⭐ 9.6/10 (Lucha Arcade)", historia: "El rey indiscutible de los juegos de lucha de los 90. Elige a tu guerrero mundial favorito y viaja por el globo para enfrentarte a M. Bison en esta mítica adaptación para la 16 bits de SEGA.", manual: "🎯 <strong>Objetivo:</strong> Derrotar a todos los luchadores en combates al mejor de tres asaltos.<br><br>🕹️ <strong>Controles:</strong> Usa la cruceta para moverte y saltar. Combina movimientos para ataques especiales (ej: Abajo, Diagonal, Adelante + Puñetazo para el Hadouken de Ryu).<br><br>💡 <strong>Truco Retro:</strong> Acórrale a tu rival en la esquina de la pantalla para encadenar combos y no dejarle respirar." },
     castlegacy: { consola: "n64", titulo: "CASTLEVANIA LEGACY", img: "castlegacy.jpg", enlace: "Castlegacy.html", valoracion: "⭐⭐⭐⭐ 8.2/10 (Aventura 3D)", historia: "El salto a las 3D de la mítica saga vampírica. Regresa a Transilvania y enfréntate a las criaturas de la noche en el castillo de Drácula antes de que el mal resurja por completo.", manual: "🎯 <strong>Objetivo:</strong> Recorrer el castillo, conseguir mejoras y derrotar a los jefes de cada zona.<br><br>🕹️ <strong>Controles:</strong> Usa el stick para moverte libremente y prepárate para un combate cuerpo a cuerpo y a distancia.<br><br>💡 <strong>Truco Retro:</strong> Rompe antorchas y candelabros para encontrar corazones y objetos clave para la aventura." },
     mortalkomleg64: { consola: "n64", titulo: "MORTAL KOMBAT", img: "mortalkom64.png", enlace: "mortalkomleg64.html", valoracion: "⭐⭐⭐⭐ 8.7/10 (Lucha Brutal)", historia: "La franquicia más sangrienta de la historia de la lucha llega con todos sus clásicos Fatalities y un elenco de luchadores implacables dispuestos a todo por la victoria.", manual: "🎯 <strong>Objetivo:</strong> Vencer a tus rivales en combates 1v1 y ejecutar un Fatality final para humillarlos.<br><br>🕹️ <strong>Controles:</strong> Puñetazos y patadas altas y bajas. Usa la cruceta y botones para combinaciones mortales.<br><br>💡 <strong>Truco Retro:</strong> Memoriza el Fatality de tu personaje favorito, tienes muy poco tiempo para hacerlo cuando la pantalla dice 'FINISH HIM!'." },
     mariokart64: { consola: "n64", titulo: "MARIO KART 64", img: "Mariokart64.jpg", enlace: "Mariokart64.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10 (Carreras Arcade)", historia: "La revolución de las carreras multijugador con escenarios en 3D. Un clásico absoluto de Nintendo que introdujo pistas legendarias y piques interminables con amigos.", manual: "🎯 <strong>Objetivo:</strong> Llegar primero a la meta en circuitos de tres vueltas superando los obstáculos y a los rivales.<br><br>🕹️ <strong>Controles:</strong> Acelera, frena, derrapa con los gatillos y usa los objetos para entorpecer a los demás.<br><br>💡 <strong>Truco Retro:</strong> Acelera justo en el momento en el que el semáforo cambia al verde para salir disparado con un miniturbo." },
@@ -596,7 +579,6 @@ const infoJuegos = {
     pacman: { consola: "arcade", titulo: "PAC-MAN (ARCADE)", img: "pacman.jpg", enlace: "Pacman.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10 (Clásico)", historia: "El original de 1980. Fue pionero en usar 'power-ups' y dotar a cada fantasma de una inteligencia artificial única.", manual: "🎯 <strong>Objetivo:</strong> Comer todos los puntos del laberinto.<br><br>🕹️ <strong>Controles:</strong> Flechas de dirección.<br><br>💡 <strong>Truco Retro:</strong> Los fantasmas reducen mucho su velocidad al cruzar por los túneles laterales." },
     tetris: { consola: "nes", titulo: "TETRIS (NES)", img: "TetrisNes.png", enlace: "TetrisFicha.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10 (Imprescindible)", historia: "Rompecabezas soviético de 1984. Su desafío de encajar piezas y su mítica banda sonora rusa ofrecen adicción infinita.", manual: "🎯 <strong>Objetivo:</strong> Encajar las piezas para crear líneas completas.<br><br>🕹️ <strong>Controles:</strong> Mover y rotar pieza.<br><br>💡 <strong>Truco Retro:</strong> Deja la columna derecha libre para introducir la pieza alargada y conseguir un Tetris." },
     mariobros: { consola: "nes", titulo: "SUPER MARIO BROS (NES)", img: "SuperMarioBros.jpg", enlace: "SuperMarioBros.html", valoracion: "⭐⭐⭐⭐⭐ 9.7/10 (Leyenda)", historia: "La genialidad de 1985 que salvó la industria. Estableció el estándar de físicas perfectas en 8 mundos.", manual: "🎯 <strong>Objetivo:</strong> Rescatar a la Princesa Peach.<br><br>🕹️ <strong>Controles:</strong> Saltar y correr.<br><br>💡 <strong>Truco Retro:</strong> Súbete al techo en el nivel 1-2 para llegar a la Warp Zone." },
-    zeldaocarina: { consola: "n64", titulo: "ZELDA: OOT (N64)", img: "zeldaocarina.jpg", enlace: "zeldaocarina.html", valoracion: "⭐⭐⭐⭐⭐ 9.9/10 (Obra Maestra)", historia: "El salto a las 3D de 1998. Revolucionó el medio con el Z-targeting y su mecánica de viaje en el tiempo.", manual: "🎯 <strong>Objetivo:</strong> Reunir las piedras espirituales y derrotar a Ganondorf.<br><br>🕹️ <strong>Controles:</strong> Stick, botón A para acción y Z para fijar.<br><br>💡 <strong>Truco Retro:</strong> Atrapa hadas curativas en botellas vacías para que te revivan automáticamente." },
     mariotennis: { consola: "n64", titulo: "MARIO TENNIS (N64)", img: "MarioTennis.jpg", enlace: "MarioTennis.html", valoracion: "⭐⭐⭐⭐½ 8.8/10 (Excelente)", historia: "La diversión deportiva en N64 (2000). Destacó por sus efectos y por el debut mundial de Waluigi.", manual: "🎯 <strong>Objetivo:</strong> Ganar todas las copas.<br><br>🕹️ <strong>Controles:</strong> Botones A y B para golpear.<br><br>💡 <strong>Truco Retro:</strong> Pulsa el botón A dos veces al botar la bola para un Top Spin." },
     sonic: { consola: "md", titulo: "SONIC THE HEDGEHOG (MD)", img: "sonicthehedgehog.jpg", enlace: "SONIC 1 - Shadow The Hedgehog.html", valoracion: "⭐⭐⭐⭐½ 9.2/10 (Sobresaliente)", historia: "El erizo de 1991. Rompió moldes con su vertiginosa velocidad y actitud rebelde.", manual: "🎯 <strong>Objetivo:</strong> Arruinar los planes del Dr. Robotnik.<br><br>🕹️ <strong>Controles:</strong> Flechas y salto/rodar.<br><br>💡 <strong>Truco Retro:</strong> Mientras tengas un anillo dorado eres inmortal." },
     aladdin: { consola: "md", titulo: "ALADDIN (MD)", img: "aladin.jpg", enlace: "aladin.html", valoracion: "⭐⭐⭐⭐½ 9.0/10 (Sobresaliente)", historia: "Joya de 1993 animada a mano por los estudios Disney. Acción fluida de 16 bits.", manual: "🎯 <strong>Objetivo:</strong> Recorrer Agrabah y salvar a Jasmine.<br><br>🕹️ <strong>Controles:</strong> Saltar, lanzar manzanas y cimitarra.<br><br>💡 <strong>Truco Retro:</strong> Guarda tus manzanas para atacar de lejos a los jefes." },
@@ -718,11 +700,11 @@ function revisarLlaveroNFC() {
         scannerScreen.classList.add("active");
         reproducirSonidoEscaner();
         
-        // ANIMACIÓN DE 2 SEGUNDOS
+        // ¡ANIMACIÓN DE 3 SEGUNDOS EXACTOS (3000ms)!
         setTimeout(() => { 
             scannerScreen.classList.remove("active");
             setTimeout(() => { verFicha(hash); }, 300); 
-        }, 2000);
+        }, 3000);
     }
 }
 
