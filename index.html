@@ -112,7 +112,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 .stats { margin: 10px 0; font-size: 16px; font-weight: bold; color: #9dff3d; text-shadow: 0 0 5px rgba(157,255,61,0.5); }
 .nfc-badge { display: inline-block; background: #9dff3d; color: #111; font-weight: bold; padding: 3px 10px; border-radius: 20px; margin: 2px; font-size: 11px; box-shadow: 0 0 8px rgba(157,255,61,0.6); }  
 
-/* 8. MODAL FICHA FLOTANTE */
+/* 8. MODALES Y FICHAS */
 .modal-ficha { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 99999; justify-content: center; align-items: center; padding: 15px; box-sizing: border-box; backdrop-filter: blur(5px); }
 .ficha-content { background: #121212; border: 3px solid var(--modal-border); border-radius: 20px; max-width: 450px; width: 100%; padding: 25px; position: relative; box-shadow: 0 0 40px var(--modal-border); max-height: 90vh; overflow-y: auto; text-align: left; box-sizing: border-box; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -357,7 +357,35 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
     </div>
 </div>
 
+<div id="modalPaywall" class="modal-ficha">
+    <div class="ficha-content" style="text-align: center; border-color: #e60012; box-shadow: 0 0 40px #e60012; max-width: 400px;">
+        <button class="close-btn" onclick="cerrarPaywall();">❌</button>
+        <h2 style="color: #e60012; text-shadow: 0 2px 4px rgba(0,0,0,0.8); font-size: 24px; margin-top: 0;">🛑 TIEMPO AGOTADO 🛑</h2>
+        <p style="color: #fff; font-size: 16px; margin-bottom: 20px;">Has agotado tus <strong>2 partidas</strong> de prueba.</p>
+        <p style="color: #ccc; font-size: 14px; margin-bottom: 20px;">Para desbloquear el catálogo Premium y jugar sin límites, <strong>acerca</strong> tu Llavero NFC oficial al móvil.</p>
+        
+        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #d4af37;">
+            <p style="color: #ffd700; margin-top: 0; font-weight: bold; font-size: 16px;">¿Aún no tienes el tuyo?</p>
+            <p style="font-size: 14px; color: #ddd; margin-bottom: 10px;">Consíguelo físicamente en el <strong>Pub La Beltraneja</strong> o en la <strong>Cafetería Garden</strong>.</p>
+            <p style="font-size: 13px; color: #aaa; margin-bottom: 0;">O encárgalo directamente a OLEA3D:</p>
+        </div>
+        
+        <button class="btn-tienda-principal" style="width: 100%; font-size: 15px; margin-top: 0; display: block;" onclick="abrirTiendaGeneral()">💬 ENCARGAR POR WHATSAPP</button>
+    </div>
+</div>
+
 <script>
+// --- VERIFICACIÓN DE LLAVE VIP POR NFC ---
+window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    if(params.get('llave') === 'oleaVIP') {
+        localStorage.setItem('olea3d_vip', 'true');
+        // Limpiamos la URL para que no la copien fácilmente y respetamos la almohadilla (juego directo)
+        window.history.replaceState(null, null, window.location.pathname + window.location.hash);
+        setTimeout(() => alert("🔓 ¡SISTEMA DESBLOQUEADO!\nCatálogo Premium activado para siempre en este dispositivo."), 500);
+    }
+});
+
 // --- MOTOR PWA ---
 if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(()=>{}); }); }
 
@@ -371,6 +399,7 @@ function getAudioCtx() {
 function reproducirSonido1UP() { try { const ctx=getAudioCtx(); const osc=ctx.createOscillator(); const gain=ctx.createGain(); osc.type='square'; const now=ctx.currentTime; osc.frequency.setValueAtTime(1318.51,now); osc.frequency.setValueAtTime(1567.98,now+0.1); osc.frequency.setValueAtTime(2093.00,now+0.2); osc.frequency.setValueAtTime(2637.02,now+0.3); osc.frequency.setValueAtTime(3135.96,now+0.4); gain.gain.setValueAtTime(0.1,now); gain.gain.linearRampToValueAtTime(0,now+0.6); osc.connect(gain); gain.connect(ctx.destination); osc.start(now); osc.stop(now+0.6); } catch(e){} }
 function reproducirClic() { try { const ctx=getAudioCtx(); const osc=ctx.createOscillator(); const gain=ctx.createGain(); osc.type='square'; osc.frequency.setValueAtTime(440,ctx.currentTime); osc.frequency.exponentialRampToValueAtTime(880,ctx.currentTime+0.1); gain.gain.setValueAtTime(0.1,ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.1); osc.connect(gain); gain.connect(ctx.destination); osc.start(); osc.stop(ctx.currentTime+0.1); } catch(e){} }
 function reproducirSonidoCoin() { try { const ctx=getAudioCtx(); const osc=ctx.createOscillator(); const gain=ctx.createGain(); osc.type='square'; osc.frequency.setValueAtTime(987.77,ctx.currentTime); osc.frequency.setValueAtTime(1318.51,ctx.currentTime+0.1); gain.gain.setValueAtTime(0.1,ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.4); osc.connect(gain); gain.connect(ctx.destination); osc.start(); osc.stop(ctx.currentTime+0.4); } catch(e){} }
+function reproducirSonidoError() { try { const ctx=getAudioCtx(); const osc=ctx.createOscillator(); const gain=ctx.createGain(); osc.type='sawtooth'; osc.frequency.setValueAtTime(150,ctx.currentTime); osc.frequency.exponentialRampToValueAtTime(50,ctx.currentTime+0.3); gain.gain.setValueAtTime(0.2,ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.3); osc.connect(gain); gain.connect(ctx.destination); osc.start(); osc.stop(ctx.currentTime+0.3); } catch(e){} }
 function reproducirSonidoEscaner() { try { const ctx=getAudioCtx(); const osc=ctx.createOscillator(); const gain=ctx.createGain(); osc.type='sawtooth'; osc.frequency.setValueAtTime(200,ctx.currentTime); osc.frequency.linearRampToValueAtTime(800,ctx.currentTime+0.5); gain.gain.setValueAtTime(0.05,ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+1); osc.connect(gain); gain.connect(ctx.destination); osc.start(); osc.stop(ctx.currentTime+1); } catch(e){} }
 
 // --- EASTER EGGS ---
@@ -448,8 +477,39 @@ function renderizarRecords() {
     else body.innerHTML = records.map((r, i) => `<tr><td>#${i+1}</td><td>${r.nombre}</td><td>${r.puntos}</td></tr>`).join('');
 }
 
-// --- RESTO DE FUNCIONES ---
-function irAlJuego() { if(enlaceDestino){ reproducirSonidoCoin(); document.getElementById("transitionScreen").classList.add("active"); setTimeout(()=>{window.location.href=enlaceDestino; setTimeout(()=>document.getElementById("transitionScreen").classList.remove("active"),500);},1500); } }
+// --- LÓGICA DE BLOQUEO Y LANZAMIENTO (2 INTENTOS) ---
+function irAlJuego() { 
+    if(!enlaceDestino) return;
+    
+    let esVip = localStorage.getItem('olea3d_vip') === 'true';
+    let intentos = parseInt(localStorage.getItem('olea3d_intentos') || '0');
+
+    if (esVip) {
+        lanzarJuegoFisico();
+    } else {
+        if (intentos < 2) {
+            intentos++;
+            localStorage.setItem('olea3d_intentos', intentos);
+            lanzarJuegoFisico();
+        } else {
+            reproducirSonidoError();
+            document.getElementById("modalFicha").style.display = "none";
+            document.getElementById("modalPaywall").style.display = "flex";
+        }
+    }
+}
+
+function lanzarJuegoFisico() {
+    reproducirSonidoCoin(); 
+    document.getElementById("transitionScreen").classList.add("active"); 
+    setTimeout(()=>{
+        window.location.href = enlaceDestino; 
+        setTimeout(()=>document.getElementById("transitionScreen").classList.remove("active"),500);
+    },1500); 
+}
+
+function cerrarPaywall() { reproducirClic(); document.getElementById("modalPaywall").style.display = "none"; }
+
 function abrirTiendaGeneral() { reproducirClic(); window.open(`https://wa.me/34600000000?text=${encodeURIComponent("¡Hola OLEA3D! He visto el Retro Hub y quiero un llavero NFC.")}`, '_blank'); }
 function encargarLlaveroEspecifico() { reproducirClic(); window.open(`https://wa.me/34600000000?text=${encodeURIComponent("¡Hola! Me gustaría encargar el llavero NFC para: *"+infoJuegos[juegoActual].titulo+"*.")}`, '_blank'); }
 
