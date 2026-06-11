@@ -539,8 +539,8 @@ let toquesBeltraneja = 0;
 let tiempoBeltraneja;
 
 function toqueBeltraneja() {
-    // Al tocar una vez, suena el bramido del ciervo sintético
-    reproducirSonidoCiervo();
+    // Restaurado a clic estándar a petición tuya
+    reproducirClic();
     
     toquesBeltraneja++;
     clearTimeout(tiempoBeltraneja);
@@ -548,7 +548,6 @@ function toqueBeltraneja() {
         desbloquearCiervo();
         toquesBeltraneja = 0;
     } else {
-        // Medio segundo para hacer el doble click
         tiempoBeltraneja = setTimeout(() => { toquesBeltraneja = 0; }, 500); 
     }
 }
@@ -636,23 +635,6 @@ function reproducirSonidoEscaner() {
         osc.connect(gain); gain.connect(audioCtx.destination);
         osc.start(); osc.stop(audioCtx.currentTime + 1);
     } catch (e) {}
-}
-
-// BRAMIDO DEL CIERVO (Efecto de onda de baja frecuencia)
-function reproducirSonidoCiervo() {
-    try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'sawtooth'; // Onda más ronca
-        const now = audioCtx.currentTime;
-        osc.frequency.setValueAtTime(100, now); // Empieza grave
-        osc.frequency.exponentialRampToValueAtTime(40, now + 0.8); // Cae a muy grave (bramido)
-        gain.gain.setValueAtTime(0.2, now);
-        gain.gain.linearRampToValueAtTime(0, now + 0.8);
-        osc.connect(gain); gain.connect(audioCtx.destination);
-        osc.start(now); osc.stop(now + 0.8);
-    } catch(e) {}
 }
 
 // --- BUSCADOR ---
