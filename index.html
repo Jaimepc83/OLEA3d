@@ -91,22 +91,12 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 .tab-btn { background: transparent; color: #aaa; border: none; font-size: 14px; font-weight: bold; cursor: pointer; padding: 5px 10px; border-radius: 5px; transition: 0.3s; }
 .tab-btn.active { background: #333; color: var(--modal-tab); }
 
-/* ESTILOS DEL FLIPBOOK (MOTOR 3D REPARADO) */
+/* ESTILOS DEL FLIPBOOK */
 #flipbookWrapper { display: block; }
 .flipbook-container { background: #e8dcc4; border-radius: 5px 15px 15px 5px; padding: 20px; margin-bottom: 15px; min-height: 240px; position: relative; box-shadow: inset 10px 0 20px rgba(0,0,0,0.2), 0 5px 15px rgba(0,0,0,0.5); perspective: 1000px; border-left: 8px solid #8b4513; }
-
-.flipbook-page { 
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-    padding: 20px; box-sizing: border-box; background: #f4ecd8; border-radius: 0 15px 15px 0; 
-    transform-origin: left center; transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1); 
-    opacity: 0; z-index: 1; pointer-events: none; overflow-y: auto; color: #222; font-size: 14.5px; line-height: 1.6;
-    backface-visibility: hidden; /* Esto arregla el efecto hacia delante */
-    box-shadow: inset 5px 0 15px rgba(0,0,0,0.05); 
-}
-
+.flipbook-page { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 20px; box-sizing: border-box; background: #f4ecd8; border-radius: 0 15px 15px 0; transform-origin: left center; transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1); opacity: 0; z-index: 1; pointer-events: none; overflow-y: auto; color: #222; font-size: 14.5px; line-height: 1.6; backface-visibility: hidden; box-shadow: inset 5px 0 15px rgba(0,0,0,0.05); }
 .flipbook-page.active { opacity: 1; z-index: 5; transform: rotateY(0deg); pointer-events: all; }
 .flipbook-page.flipped { opacity: 1; transform: rotateY(-180deg); z-index: 10; pointer-events: none; }
-
 .flipbook-page h3 { color: #8b0000; font-size: 18px; margin-top: 0; border-bottom: 2px dashed #ccc; padding-bottom: 5px; font-family: 'Courier New', monospace; font-weight: bold; }
 .flipbook-page p { margin-top: 10px; margin-bottom: 10px; text-align: justify; }
 
@@ -129,6 +119,30 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 /* MODAL PAYWALL */
 #modalPaywall .ficha-content { text-align: center; border-color: #e60012; box-shadow: 0 0 40px #e60012; max-width: 400px; }
 
+/* NUEVO: NOTIFICACIÓN TOAST DESBLOQUEO PREMIUM */
+.toast-notification {
+    position: fixed;
+    top: -100px; 
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(18, 18, 18, 0.95);
+    border: 2px solid #d4af37;
+    color: #ffd700;
+    padding: 15px 25px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 5px 20px rgba(212,175,55,0.5);
+    z-index: 9999999999;
+    transition: top 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    backdrop-filter: blur(5px);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+.toast-notification.active { top: 25px; }
+
 /* TRANSICIONES Y NFC */
 .transition-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
 .transition-screen.active { opacity: 1; pointer-events: all; }
@@ -147,6 +161,10 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 </head>
 
 <body>
+<div id="toastDesbloqueo" class="toast-notification">
+    🔓 ¡SISTEMA DESBLOQUEADO! Catálogo Premium activado.
+</div>
+
 <div id="nfcScannerScreen" class="nfc-scanner"><div class="nfc-laser-container"><img src="logo.png" class="nfc-logo-scan"><div class="nfc-laser"></div></div><div class="nfc-text">SISTEMA OLEA3D...</div></div>
 <div id="transitionScreen" class="transition-screen"><div class="insert-coin-text">> INSERT COIN <</div></div>
 <div class="bg-grid"></div>
@@ -345,13 +363,30 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 </div>
 
 <script>
-// --- VERIFICACIÓN DE LLAVE VIP ---
+// --- AUDIO Y EFECTOS ---
+let globalAudioCtx = null;
+function getAudioCtx() {
+    if (!globalAudioCtx) { globalAudioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+    if (globalAudioCtx.state === 'suspended') { globalAudioCtx.resume(); }
+    return globalAudioCtx;
+}
+function reproducirSonido1UP() { try { const ctx=getAudioCtx(); const osc=ctx.createOscillator(); const gain=ctx.createGain(); osc.type='square'; const now=ctx.currentTime; osc.frequency.setValueAtTime(1318.51,now); osc.frequency.setValueAtTime(1567.98,now+0.1); osc.frequency.setValueAtTime(2093.00,now+0.2); osc.frequency.setValueAtTime(2637.02,now+0.3); osc.frequency.setValueAtTime(3135.96,now+0.4); gain.gain.setValueAtTime(0.1,now); gain.gain.linearRampToValueAtTime(0,now+0.6); osc.connect(gain); gain.connect(ctx.destination); osc.start(now); osc.stop(now+0.6); } catch(e){} }
+
+// --- VERIFICACIÓN DE LLAVE VIP (AHORA CON TOAST ELEGANTE) ---
 window.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     if(params.get('llave') === 'oleaVIP') {
         localStorage.setItem('olea3d_vip', 'true');
         window.history.replaceState(null, null, window.location.pathname + window.location.hash);
-        setTimeout(() => alert("🔓 ¡SISTEMA DESBLOQUEADO!\nCatálogo Premium activado para siempre."), 500);
+        
+        // Retrasamos un poco el cartel para que la pantalla de inicio cargue
+        setTimeout(() => {
+            const toast = document.getElementById("toastDesbloqueo");
+            toast.classList.add("active");
+            reproducirSonido1UP();
+            // Lo ocultamos a los 4 segundos
+            setTimeout(() => toast.classList.remove("active"), 4000);
+        }, 500);
     }
 });
 
