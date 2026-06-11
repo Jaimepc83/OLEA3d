@@ -127,7 +127,7 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 .insert-coin-text { color: #ffd700; font-size: 28px; font-family: 'Courier New', Courier, monospace; font-weight: bold; text-shadow: 0 0 20px #ffd700, 0 0 40px #ff0000; animation: blink 0.5s infinite alternate; }
 @keyframes blink { from { opacity: 1; transform: scale(1); } to { opacity: 0.2; transform: scale(1.05); } }
 
-/* --- CAPA DE ESCANEO NFC CON LOGO, ANTENA Y TEXTO OLEA3D --- */
+/* --- ESTILOS DE LA ANTENA NFC RETRO --- */
 .nfc-scanner { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,15,0,0.95); z-index: 99999999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(10px); }
 .nfc-scanner.active { opacity: 1; pointer-events: all; }
 .nfc-laser-container { position: relative; width: 80%; max-width: 300px; height: 200px; border: 2px dashed rgba(157,255,61,0.4); border-radius: 15px; overflow: hidden; display: flex; justify-content: center; align-items: center; }
@@ -531,6 +531,7 @@ function reproducirSonidoCoin() {
     } catch (e) {}
 }
 
+// Sonido sintético por defecto (mientras subes tu laser.mp3 si lo deseas)
 function reproducirSonidoEscaner() {
     try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -712,7 +713,7 @@ window.addEventListener('hashchange', revisarLlaveroNFC);
 window.addEventListener('DOMContentLoaded', revisarLlaveroNFC);
 window.addEventListener('load', revisarLlaveroNFC);
 
-// --- 7. AGITAR PARA BARAJAR (SHAKE TO SHUFFLE) ---
+// --- 7. AGITAR PARA BARAJAR (SHAKE TO SHUFFLE) CON SENSIBILIDAD REDUCIDA ---
 let ultimaVezAgitado = 0;
 
 if (window.DeviceMotionEvent) {
@@ -723,7 +724,8 @@ if (window.DeviceMotionEvent) {
         
         let aceleracion = Math.sqrt(x*x + y*y + z*z);
         
-        if (aceleracion > 25) {
+        // Calibrado a 35 (antes 25) para que no salte solo con caminar o mover suave el móvil
+        if (aceleracion > 35) {
             let ahora = new Date().getTime();
             
             if ((ahora - ultimaVezAgitado) > 2000) {
