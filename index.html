@@ -76,7 +76,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 .stats { margin: 10px 0; font-size: 16px; font-weight: bold; color: #9dff3d; }
 .nfc-badge { display: inline-block; background: #9dff3d; color: #111; font-weight: bold; padding: 3px 10px; border-radius: 20px; margin: 2px; font-size: 11px; }  
 
-/* MODAL FICHA */
+/* MODAL FICHA GENERAL */
 .modal-ficha { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 99999; justify-content: center; align-items: center; padding: 15px; box-sizing: border-box; backdrop-filter: blur(5px); }
 .ficha-content { background: #121212; border: 3px solid var(--modal-border); border-radius: 20px; max-width: 450px; width: 100%; padding: 25px; position: relative; max-height: 90vh; overflow-y: auto; text-align: left; box-sizing: border-box; animation: popIn 0.3s; }
 @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -91,12 +91,22 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 .tab-btn { background: transparent; color: #aaa; border: none; font-size: 14px; font-weight: bold; cursor: pointer; padding: 5px 10px; border-radius: 5px; transition: 0.3s; }
 .tab-btn.active { background: #333; color: var(--modal-tab); }
 
-/* ESTILOS DEL FLIPBOOK DENTRO DE LAS PESTAÑAS */
+/* ESTILOS DEL FLIPBOOK (MOTOR 3D REPARADO) */
 #flipbookWrapper { display: block; }
 .flipbook-container { background: #e8dcc4; border-radius: 5px 15px 15px 5px; padding: 20px; margin-bottom: 15px; min-height: 240px; position: relative; box-shadow: inset 10px 0 20px rgba(0,0,0,0.2), 0 5px 15px rgba(0,0,0,0.5); perspective: 1000px; border-left: 8px solid #8b4513; }
-.flipbook-page { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 20px; box-sizing: border-box; background: #f4ecd8; border-radius: 0 15px 15px 0; backface-visibility: hidden; transform-origin: left center; transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1); opacity: 0; z-index: 1; box-shadow: inset 5px 0 15px rgba(0,0,0,0.05); color: #222; font-size: 14.5px; line-height: 1.6; overflow-y: auto; }
-.flipbook-page.active { opacity: 1; z-index: 5; transform: rotateY(0deg); }
-.flipbook-page.flipped { transform: rotateY(-180deg); opacity: 0; z-index: 1; }
+
+.flipbook-page { 
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+    padding: 20px; box-sizing: border-box; background: #f4ecd8; border-radius: 0 15px 15px 0; 
+    transform-origin: left center; transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1); 
+    opacity: 0; z-index: 1; pointer-events: none; overflow-y: auto; color: #222; font-size: 14.5px; line-height: 1.6;
+    backface-visibility: hidden; /* Esto arregla el efecto hacia delante */
+    box-shadow: inset 5px 0 15px rgba(0,0,0,0.05); 
+}
+
+.flipbook-page.active { opacity: 1; z-index: 5; transform: rotateY(0deg); pointer-events: all; }
+.flipbook-page.flipped { opacity: 1; transform: rotateY(-180deg); z-index: 10; pointer-events: none; }
+
 .flipbook-page h3 { color: #8b0000; font-size: 18px; margin-top: 0; border-bottom: 2px dashed #ccc; padding-bottom: 5px; font-family: 'Courier New', monospace; font-weight: bold; }
 .flipbook-page p { margin-top: 10px; margin-bottom: 10px; text-align: justify; }
 
@@ -354,73 +364,120 @@ let toquesBeltraneja = 0, tiempoBeltraneja;
 function toqueBeltraneja() { toquesBeltraneja++; clearTimeout(tiempoBeltraneja); if(toquesBeltraneja===2){ desbloquearCiervo(); toquesBeltraneja=0; } else { tiempoBeltraneja=setTimeout(()=>{toquesBeltraneja=0;},500); } }
 function desbloquearCiervo() { const tarjeta=document.getElementById("tarjetaCiervo"); if(tarjeta){ tarjeta.style.display="block"; tarjeta.scrollIntoView({behavior:'smooth',block:'center'}); } }
 
-// --- BUSCADOR ---
 function filtrarJuegos() { let input=document.getElementById("buscadorJuegos").value.toLowerCase(); document.querySelectorAll(".card-wrapper").forEach(t => { let h=t.querySelector("h2").innerText.toLowerCase(); t.style.display = h.includes(input) ? "block" : "none"; }); }
 
-// --- BASE DE DATOS DE JUEGOS (HISTORIA Y MANUAL SEPARADOS) ---
+// --- BASE DE DATOS MASIVA (HISTORIA Y MANUALES) ---
 const infoJuegos = {
     mariobros: { 
         consola: "nes", titulo: "SUPER MARIO BROS", img: "SuperMarioBros.jpg", enlace: "SuperMarioBros.html", valoracion: "⭐⭐⭐⭐⭐ 9.7/10",
-        historia: [
-            "<h3>📖 EL ORIGEN DE UN MITO</h3><p>Corría el año 1985. La industria de los videojuegos estaba prácticamente muerta tras el desastroso lanzamiento de E.T. por parte de Atari. La gente pensaba que las consolas eran una moda pasajera.</p><p>Entonces, un joven diseñador japonés llamado Shigeru Miyamoto decidió crear un héroe improbable para intentar salvar los muebles: un fontanero italiano, rechoncho y con bigote.</p>",
-            "<h3>🖌️ LIMITACIONES TÉCNICAS</h3><p>¿Por qué tiene ese diseño tan raro? Pura supervivencia técnica.</p><p>El hardware de la NES era tan limitado que dibujar una boca en movimiento en tan pocos píxeles era casi imposible, así que le plantaron un gran bigote para disimular. Le pusieron una gorra roja para no tener que animar el pelo cuando saltaba, y un peto de color sólido para que se vieran bien los movimientos de los brazos.</p>",
-            "<h3>🌍 EL LORE OSCURO</h3><p>Agárrate, porque la historia oficial del Reino Champiñón es bastante tétrica.</p><p>Según el manual original japonés, los Koopas son una tribu de tortugas expertas en magia oscura. Cuando invadieron el reino, convirtieron a todos sus ciudadanos inocentes en bloques de ladrillo.</p><p>Sí... cada vez que rompes un ladrillo con la cabeza para conseguir 50 puntos miserables, estás asesinando a un habitante del reino. Piénsalo la próxima vez que juegues.</p>"
-        ],
-        manual: [
-            "<h3>📜 GUÍA DE SUPERVIVENCIA</h3><p>🎯 <strong>Tu Misión:</strong> Cruzar 8 mundos infernales para rescatar a la Princesa Peach. Spoiler: Prepárate psicológicamente para que un hongo con chaleco te diga continuamente <em>'Thank you Mario, but our princess is in another castle'</em>.</p>",
-            "<h3>🕹️ CONTROLES BÁSICOS</h3><p>La cruceta te mueve hacia los lados.<br><br><strong>El Botón A:</strong> Sirve para saltar. Cuanto más tiempo lo dejes calcado, más alto llegarás.<br><strong>El Botón B:</strong> El botón del pánico. Mantenlo pulsado para correr como si debieras dinero a Hacienda. También sirve para disparar bolas de fuego si vas 'dopado'.</p>",
-            "<h3>💡 CONSEJOS DE EXPERTO</h3><p>🍄 <strong>Champiñón:</strong> Te hace el doble de grande (totalmente legal). Te permite recibir un golpe extra sin morir.</p><p>⭐ <strong>La Estrella:</strong> Te conviertes en un Dios invencible con música tecno de fondo durante 10 segundos. Aprovéchalo.</p><p>🐢 <strong>Aviso Importante:</strong> Las tortugas no son tus amigas. Si pisas a una y se esconde en su caparazón, dale una patada rápido o se levantará muy cabreada buscando venganza.</p>"
-        ]
+        historia: ["<h3>📖 EL ORIGEN DE UN MITO</h3><p>En 1985 la industria de las consolas estaba muerta tras el fiasco de E.T. de Atari. Shigeru Miyamoto decidió crear un héroe improbable para intentar salvarla: un fontanero italiano, rechoncho y con bigote.</p>", "<h3>🖌️ LIMITACIONES TÉCNICAS</h3><p>El hardware de la NES era tan limitado que dibujar una boca en movimiento era imposible. Le plantaron un gran bigote para disimular, una gorra para no animar el pelo al saltar y un peto de color sólido.</p>", "<h3>🌍 EL LORE OSCURO</h3><p>Los Koopas invadieron el Reino Champiñón y convirtieron a todos sus ciudadanos inocentes en bloques de ladrillo. Sí, cada vez que rompes un ladrillo con la cabeza, estás asesinando a un habitante. Piénsalo la próxima vez.</p>"],
+        manual: ["<h3>📜 GUÍA DE SUPERVIVENCIA</h3><p>🎯 <strong>Misión:</strong> Cruzar 8 mundos para rescatar a la Princesa Peach. Prepárate para escuchar <em>'nuestra princesa está en otro castillo'</em> demasiadas veces.</p>", "<h3>🕹️ CONTROLES BÁSICOS</h3><p><strong>Botón A:</strong> Saltar.<br><strong>Botón B:</strong> El botón del pánico. Mantenlo pulsado para correr como si debieras dinero a Hacienda o para escupir bolas de fuego.</p>", "<h3>💡 CONSEJOS</h3><p>🍄 <strong>Champiñón:</strong> Te hace el doble de grande.<br>⭐ <strong>Estrella:</strong> Te vuelves invencible con música tecno de fondo.<br>🐢 <strong>Aviso:</strong> Las tortugas no son amigas. Si pisas una, pégale una patada rápido o se levantará cabreada.</p>"]
     },
     tetris: { 
-        consola: "nes", titulo: "TETRIS (NES)", img: "TetrisNes.png", enlace: "TetrisFicha.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10",
-        historia: [
-            "<h3>📖 UN NACIMIENTO FRÍO</h3><p>Tetris no se creó en un estudio moderno de Silicon Valley con máquinas de café caras. Nació en 1984 en plena Unión Soviética, durante la Guerra Fría.</p><p>Su creador, Alexey Pajitnov, trabajaba en el Centro de Computación de la Academia de Ciencias de Moscú. Lo programó en sus ratos libres en un ordenador Electronika 60 que ni siquiera tenía interfaz gráfica. Los primeros bloques estaban dibujados uniendo corchetes en la pantalla de texto: [ ] [ ].</p>",
-            "<h3>🕵️‍♂️ CONTRABANDO Y JUICIOS</h3><p>El juego era tan adictivo que paralizó la productividad de todos los ministerios soviéticos donde se instaló.</p><p>Pronto, fue sacado de contrabando de Rusia hacia occidente. Esto desató una guerra legal sin precedentes por los derechos de autor a nivel mundial, enfrentando a gigantes como Nintendo y Atari. Al final, Nintendo se llevó el gato al agua y lo incluyó en el lanzamiento de la primera Game Boy, haciendo historia.</p>"
-        ],
-        manual: [
-            "<h3>📜 MANUAL DEL EMPLEADO</h3><p>🎯 <strong>Tu Misión:</strong> Sobrevivir a un ataque de ansiedad inducido por píxeles. Tienes que encajar las piezas que caen (Tetrominós) para formar líneas horizontales completas. Cuando una línea se llena, desaparece y ganas puntos. Si la montaña de bloques toca el techo... estás despedido (Game Over).</p>",
-            "<h3>🕹️ CONTROLES</h3><p><strong>Cruceta Izq/Der:</strong> Mueve la pieza hacia los lados.<br><strong>Botón A / B:</strong> Rota la pieza (piensa rápido o la encajarás mal).<br><strong>Cruceta Abajo:</strong> Acelera la caída de la pieza. Solo recomendado para valientes o gente con prisa.</p>",
-            "<h3>💡 ESTRATEGIA MAESTRA</h3><p>🧊 <strong>La Regla de Oro:</strong> Construye siempre una pared sólida a la izquierda y deja la columna de la extrema derecha completamente vacía.</p><p>Cuando la torre esté alta, reza para que caiga la ansiada pieza alargada (el 'Palo Largo') y métela por ese hueco. Eliminarás 4 líneas de golpe, consiguiendo un codiciado 'TETRIS'.</p><p>😭 <strong>Nota del programador:</strong> El juego tiene un algoritmo que sabe perfectamente qué pieza necesitas, y hará todo lo posible por NO dártela.</p>"
-        ]
+        consola: "nes", titulo: "TETRIS", img: "TetrisNes.png", enlace: "TetrisFicha.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10",
+        historia: ["<h3>📖 UN NACIMIENTO FRÍO</h3><p>Nació en 1984 en la Unión Soviética, durante la Guerra Fría. Alexey Pajitnov lo programó en un ordenador que ni siquiera tenía gráficos. Los primeros bloques eran simples corchetes [ ] unidos en la pantalla.</p>", "<h3>🕵️‍♂️ CONTRABANDO</h3><p>El juego paralizó la productividad en Rusia y fue sacado de contrabando hacia occidente. Esto desató una guerra legal brutal entre Nintendo y Atari. Nintendo ganó e hizo historia incluyéndolo en su Game Boy.</p>"],
+        manual: ["<h3>📜 MANUAL DEL EMPLEADO</h3><p>🎯 <strong>Misión:</strong> Sobrevivir a un ataque de ansiedad. Encaja las piezas (Tetrominós) para formar líneas completas. Si la montaña toca el techo, estás despedido (Game Over).</p>", "<h3>💡 ESTRATEGIA MAESTRA</h3><p>🧊 <strong>La Regla de Oro:</strong> Construye un muro sólido y deja la columna derecha vacía. Espera a que caiga el codiciado 'Palo Largo' para hacer un Tetris de 4 líneas.<br><br>😭 <strong>Nota:</strong> El juego sabe qué pieza necesitas y hará lo posible por NO dártela.</p>"]
     },
     pacman: { 
         consola: "arcade", titulo: "PAC-MAN", img: "pacman.jpg", enlace: "Pacman.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10",
-        historia: [
-            "<h3>📖 EL REY DE LOS SALONES</h3><p>Lanzado en 1980 por Namco, Pac-Man fue una revolución. Hasta ese momento, los juegos de recreativas iban de disparar a naves alienígenas (Space Invaders). Toru Iwatani quería crear un juego que atrajera a todo el mundo, inspirado, según la leyenda, en una pizza a la que le faltaba una porción.</p>",
-            "<h3>👻 LA INTELIGENCIA ARTIFICIAL</h3><p>Lo que hizo grande a Pac-Man no fue el comecocos, sino los fantasmas. Por primera vez en la historia, los enemigos tenían personalidades distintas:</p><p>Blinky (Rojo) te persigue directamente. Pinky (Rosa) intenta adelantarse a tus movimientos para emboscarte. Inky (Azul) es impredecible, y Clyde (Naranja) hace lo que le da la gana.</p>"
-        ],
-        manual: [
-            "<h3>📜 MANUAL DE SUPERVIVENCIA</h3><p>🎯 <strong>Objetivo:</strong> Limpiar el laberinto comiendo todos los puntos pequeños mientras huyes de cuatro fantasmas con problemas de gestión de la ira.</p>",
-            "<h3>🕹️ CÓMO JUGAR</h3><p>Usa la cruceta para girar en las esquinas. <br><br>🍋 <strong>Las Bolas Grandes:</strong> Son las píldoras de poder. Al comerte una, los fantasmas se vuelven azules y huyen. ¡Es tu turno de cazar! Cómetelos para conseguir puntos extra antes de que parpadeen y vuelvan a la normalidad.</p><p>💡 <strong>Truco Pro:</strong> Usa el túnel lateral que conecta los dos extremos de la pantalla. Pac-Man pasa a toda velocidad, pero los fantasmas se frenan al cruzarlo. ¡Úsalo para escapar!</p>"
-        ]
+        historia: ["<h3>📖 EL REY DEL ARCADE</h3><p>Lanzado en 1980 por Namco. Antes todo era disparar a marcianitos, pero Toru Iwatani quería atraer a todo el mundo inspirándose en una pizza a la que le faltaba una porción.</p>", "<h3>👻 LOS FANTASMAS</h3><p>Tienen IA propia: Blinky (Rojo) te persigue. Pinky (Rosa) se adelanta para emboscarte. Inky (Azul) es impredecible y Clyde (Naranja) directamente hace lo que le da la gana.</p>"],
+        manual: ["<h3>📜 SUPERVIVENCIA</h3><p>🎯 <strong>Objetivo:</strong> Comer todos los puntos del laberinto mientras huyes de cuatro fantasmas con problemas de gestión de la ira.</p>", "<h3>💡 TRUCOS DE EXPERTO</h3><p>🍋 <strong>Bolas Grandes:</strong> Los vuelve vulnerables. Cómetelos antes de que parpadeen.<br>💨 <strong>El Túnel:</strong> Usa los laterales. Tú vas rápido, pero los fantasmas frenan al cruzarlo. Úsalo para huir.</p>"]
+    },
+    miketyson: { 
+        consola: "nes", titulo: "PUNCH-OUT!!", img: "miketyson.jpg", enlace: "miketyson.html", valoracion: "⭐⭐⭐⭐⭐ 9.4/10",
+        historia: ["<h3>📖 EL NEGOCIO DEL SIGLO</h3><p>Nintendo pagó a Mike Tyson 50.000 dólares en 1986 por usar su imagen, meses antes de que se convirtiera en campeón mundial indiscutible de los pesos pesados. Les salió barato. Hoy en día los personajes causarían decenas de demandas por ser puros estereotipos.</p>"],
+        manual: ["<h3>📜 MANUAL DE RING</h3><p>🎯 <strong>Misión:</strong> No acabar en el hospital. Eres Little Mac, un tipo de metro y medio zurrándose con bestias.<br>🕹️ <strong>Controles:</strong> Esquiva hacia los lados y busca el tic visual de cada rival antes de que te arranquen la cabeza para contraatacar con un gancho.</p>"]
+    },
+    ghostngoblin: { 
+        consola: "nes", titulo: "GHOSTS 'N GOBLINS", img: "ghostngoblin.jpg", enlace: "ghostngoblin.html", valoracion: "⭐⭐⭐⭐ 8.5/10",
+        historia: ["<h3>📖 ODIO AL JUGADOR</h3><p>Su creador, Tokuro Fujiwara, diseñó deliberadamente el juego más frustrante y difícil del mundo. Como si la dificultad no fuera suficiente, cuando consigues matar al jefe final, el juego te dice que todo era una ilusión y te obliga a pasarte el juego entero otra vez desde el principio para ver el final real.</p>"],
+        manual: ["<h3>📜 CÓMO SUFRIR</h3><p>🎯 <strong>Misión:</strong> Rescatar a tu novia de las garras de los demonios.<br>🕹️ <strong>Consejo Vital:</strong> Acostúmbrate a ver a Sir Arthur correr en calzoncillos estampados con corazones, porque vas a perder tu armadura cada 5 segundos.</p>"]
+    },
+    mariobros3: { 
+        consola: "nes", titulo: "SUPER MARIO BROS 3", img: "supermariobros3.jpg", enlace: "supermariobros3.html", valoracion: "⭐⭐⭐⭐⭐ 9.8/10",
+        historia: ["<h3>📖 TODO ES UNA MENTIRA</h3><p>¿Te has fijado en que la pantalla de título es un telón levantándose? Los bloques tienen tornillos, las plataformas cuelgan de cuerdas y al final de los niveles sales por unas bambalinas negras. Toda la aventura de Mario Bros 3 es, en realidad, una obra de teatro.</p>"],
+        manual: ["<h3>📜 MANUAL DE VUELO</h3><p>🎯 <strong>La Novedad:</strong> Ahora puedes volar.<br>🕹️ <strong>Controles:</strong> Consigue la hoja mágica. Corre sin parar hasta que se rellene la barra 'P' de la parte inferior y salta para surcar los cielos moviendo tu adorable cola de mapache.</p>"]
+    },
+    mariokart64: { 
+        consola: "n64", titulo: "MARIO KART 64", img: "Mariokart64.jpg", enlace: "Mariokart64.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10",
+        historia: ["<h3>📖 DESTRUCTOR DE AMISTADES</h3><p>El juego que arruinó las tardes de miles de niños en los 90. ¿Sabías que Wario no estaba originalmente en los planes? Entró a robarle el puesto (y el kart) al pobre Koopa Troopa, que fue eliminado de la versión final de Nintendo 64.</p>"],
+        manual: ["<h3>📜 REGLAS DEL CAOS</h3><p>🎯 <strong>Misión:</strong> Llegar el primero y reírte en la cara de tus amigos.<br>🐢 <strong>El Caparazón Azul:</strong> Es el castigo divino reservado para el listillo que va en primera posición. No intentes esquivarlo, acepta tu destino.</p>"]
+    },
+    castlegacy: { 
+        consola: "n64", titulo: "CASTLEVANIA", img: "castlegacy.jpg", enlace: "Castlegacy.html", valoracion: "⭐⭐⭐⭐ 8.2/10",
+        historia: ["<h3>📖 VAMPIROS POLIGONALES</h3><p>El primer salto de la legendaria familia Belmont a las 3 dimensiones. Todo el mundo le echaba la culpa a Drácula de su dificultad, pero seamos sinceros: el verdadero y peor enemigo del juego era el control de la cámara.</p>"],
+        manual: ["<h3>📜 MANUAL DEL CAZADOR</h3><p>🎯 <strong>Misión:</strong> Purificar el castillo a latigazos.<br>🍗 <strong>Nutrición dudosa:</strong> Rompe los candelabros del castillo antiguo para encontrar pollos asados perfectamente conservados dentro de la pared. No hagas preguntas, solo cómetelos para curarte.</p>"]
+    },
+    mortalkomleg64: { 
+        consola: "n64", titulo: "MORTAL KOMBAT", img: "mortalkom64.png", enlace: "mortalkomleg64.html", valoracion: "⭐⭐⭐⭐ 8.7/10",
+        historia: ["<h3>🩸 EL PADRE DE LA CENSURA</h3><p>Sub-Zero arrancándole la columna vertebral a sus rivales con un reguero de píxeles rojos alarmó tanto a los padres y senadores de los años 90 que provocó la creación oficial de la ESRB: el sistema que pone las edades (+18) en las cajas de los videojuegos.</p>"],
+        manual: ["<h3>📜 ARTES MARCIALES EXTREMAS</h3><p>🎯 <strong>Misión:</strong> Ganar el torneo a base de ganchos (uppercuts).<br>💀 <strong>Fatality:</strong> Cuando escuches la mítica voz de 'FINISH HIM!', tienes 3 segundos para pulsar la combinación secreta y humillar a tu rival.</p>"]
+    },
+    mariotennis: { 
+        consola: "n64", titulo: "MARIO TENNIS", img: "MarioTennis.jpg", enlace: "MarioTennis.html", valoracion: "⭐⭐⭐⭐ 8.8/10",
+        historia: ["<h3>🎾 EL ORIGEN DEL MAL</h3><p>Para este juego de tenis querían hacer partidos de dobles, pero el malvado Wario no tenía a nadie con quien hacer pareja. En lugar de coger a otro villano, se inventaron de la nada a un tipo larguirucho con L invertida. Así nació el mismísimo Waluigi.</p>"],
+        manual: ["<h3>📜 REGLAMENTO EN PISTA</h3><p>🎯 <strong>Controles:</strong> El Botón A es un golpe seco. El Botón B aplica efecto de corte a la pelota para volver locos a tus oponentes. Si aprietas los dos a la vez harás un globo. Cuidado con los derechazos de Bowser.</p>"]
+    },
+    batman: { 
+        consola: "md", titulo: "BATMAN", img: "batman.jpg", enlace: "batman.html", valoracion: "⭐⭐⭐⭐ 8.8/10",
+        historia: ["<h3>🦇 LA NOCHE DE LOS 16 BITS</h3><p>Basado directamente en la película de Tim Burton. El estudio Sunsoft lo programó tan oscuro y fiel que a veces no veías dónde caías en los saltos. Hoy es reverenciado por tener, indiscutiblemente, la mejor banda sonora que jamás salió del chip de Mega Drive.</p>"],
+        manual: ["<h3>📜 MANUAL DE VIGILANTE</h3><p>🎯 <strong>Misión:</strong> Limpiar las calles de Gotham a puñetazo limpio.<br>🪃 <strong>Controles:</strong> Eres el Caballero Oscuro. Lanza Batarangs a los payasos del Joker y usa tu gancho para subir a los tejados cuando las cosas se pongan feas.</p>"]
+    },
+    goldenaxe2: { 
+        consola: "md", titulo: "GOLDEN AXE II", img: "goldenaxe2.jpg", enlace: "goldenaxe2.html", valoracion: "⭐⭐⭐⭐ 8.5/10",
+        historia: ["<h3>🪓 MÁS MAGIA, MÁS GOLPES</h3><p>Salió tan rápido después del primer juego que muchos decían que era una expansión glorificada. Pero a nadie le importó: la magia era espectacular y los esqueletos inmortales seguían persiguiéndote por las noches en tus pesadillas.</p>"],
+        manual: ["<h3>📜 GUÍA BÁRBARA</h3><p>🎯 <strong>Misión:</strong> Avanzar destrozando monstruos en cooperativo.<br>🧪 <strong>Economía Mágica:</strong> Cuando llegues al campamento a dormir, aparecerán unos duendes robándote. Levántate rápido y dales de patadas en la cabeza para recuperar tus pociones mágicas antes de que huyan.</p>"]
+    },
+    rambo3: { 
+        consola: "md", titulo: "RAMBO III", img: "Rambo3.jpg", enlace: "Rambo3.html", valoracion: "⭐⭐⭐⭐ 8.0/10",
+        historia: ["<h3>💥 EJÉRCITO DE UN SOLO HOMBRE</h3><p>¿Qué puede hacer un hombre sin camiseta en 16 bits contra tanques y helicópteros blindados? Exacto: reventarlos usando flechas con dinamita atada en la punta. Pura lógica de Sylvester Stallone.</p>"],
+        manual: ["<h3>📜 TÁCTICA MILITAR</h3><p>🎯 <strong>Misión:</strong> Rescatar al Coronel Trautman.<br>🔫 <strong>Regla de oro:</strong> Si se mueve en la pantalla, dispárale. Si no se mueve, dispárale también por si las moscas. Guarda los explosivos gordos para los vehículos blindados al final de la fase.</p>"]
+    },
+    sonic: { 
+        consola: "md", titulo: "SONIC THE HEDGEHOG", img: "sonicthehedgehog.jpg", enlace: "SONIC 1 - Shadow The Hedgehog.html", valoracion: "⭐⭐⭐⭐½ 9.2/10",
+        historia: ["<h3>🦔 LA MASCOTA CON ACTITUD</h3><p>SEGA necesitaba destruir a Mario con algo rápido y rebelde. Crearon a Sonic, un erizo que no sabe nadar porque los japoneses (erróneamente) creían que los erizos de verdad se hundían en el agua.</p>"],
+        manual: ["<h3>📜 LEYES DE LA VELOCIDAD</h3><p>🎯 <strong>Misión:</strong> Romper la barrera del sonido y salvar a los animales de Robotnik.<br>💍 <strong>Defensa:</strong> Mientras lleves al menos 1 anillo, eres inmortal ante los golpes.<br>💧 <strong>Estrés:</strong> Si estás bajo el agua y la música se acelera... encuentra una burbuja gigante rápido o ahógate en la desesperación.</p>"]
+    },
+    aladdin: { 
+        consola: "md", titulo: "ALADDIN", img: "aladin.jpg", enlace: "aladin.html", valoracion: "⭐⭐⭐⭐½ 9.0/10",
+        historia: ["<h3>🧞 LA GUERRA DE LAS CONSOLAS</h3><p>Los propios animadores de Disney dibujaron a mano a los personajes de este juego. Generó la mayor discusión en los patios de colegio: la versión de SNES no tenía espada, pero la de Mega Drive sí (y era infinitamente más macarra). SEGA ganó esa batalla.</p>"],
+        manual: ["<h3>📜 MAGIA CALLEJERA</h3><p>🎯 <strong>Armamento:</strong> Lánzale manzanas a la cara a los guardias del palacio para mantenerlos a raya, y desenvaina la cimitarra para el combate cuerpo a cuerpo. Aléjate de los mercaderes con cuchillos.</p>"]
+    },
+    marioworld: { 
+        consola: "snes", titulo: "SUPER MARIO WORLD", img: "SuperMarioWorld.jpg", enlace: "SuperMarioorld.html", valoracion: "⭐⭐⭐⭐⭐ 9.8/10",
+        historia: ["<h3>🦕 EL SUEÑO FRUSTRADO</h3><p>Miyamoto quería que Mario montara un dinosaurio desde el primer juego de la NES, pero los programadores le dijeron que los microchips se freirían. Tuvieron que esperar al Cerebro de la Bestia (Super Nintendo) para hacer realidad al adorable Yoshi.</p>"],
+        manual: ["<h3>📜 ENTRENAMIENTO JURÁSICO</h3><p>🎯 <strong>Controles:</strong> Nuevo Salto Giratorio. Úsalo para destruir bloques amarillos desde arriba.<br>👅 <strong>Yoshi:</strong> Trágate caparazones. Si te tragas uno rojo, el dinosaurio escupirá fuego. Si te tragas uno azul, le saldrán alas.</p>"]
+    },
+    mariokartsnes: { 
+        consola: "snes", titulo: "SUPER MARIO KART", img: "SuperMarioKartsnes.jpg", enlace: "Supermariokartsnes.html", valoracion: "⭐⭐⭐⭐½ 9.3/10",
+        historia: ["<h3>🏎️ EL ENGAÑO VISUAL</h3><p>El juego que inventó un género en 1992 no es en 3D. Usa el revolucionario 'Modo 7' de SNES, que coge una imagen plana de la pista y la tumba y gira a tanta velocidad que engaña a tu cerebro haciéndole creer que hay profundidad.</p>"],
+        manual: ["<h3>📜 REGLAMENTO SUCIO</h3><p>🎯 <strong>Misión:</strong> Levantar la copa de oro a toda costa.<br>🍌 <strong>Táctica:</strong> Si ves que el plátano de delante no se mueve, tíralo hacia atrás pulsando cruceta abajo para frenar a tus perseguidores y ganar tiempo en las curvas cerradas.</p>"]
+    },
+    esmeralda: { 
+        consola: "gba", titulo: "POKÉMON ESMERALDA", img: "pokemonesme.jpg", enlace: "Pokemonesme.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10",
+        historia: ["<h3>⚡ CRÍTICAS PASADAS POR AGUA</h3><p>La culminación de la región de Hoenn. Pasará a la historia de los memes porque la prestigiosa revista IGN le bajó la nota en su análisis quejándose de que 'tenía demasiada agua' (7.8/10 - Too much water). Todo el mundo se rió de ellos.</p>"],
+        manual: ["<h3>📜 ENTRENADOR AVANZADO</h3><p>🎯 <strong>Misión:</strong> Lidiar con un equipo de villanos que quiere inundar el planeta y otro que quiere secarlo por completo. <br>⭐ <strong>Frente Batalla:</strong> Solo para jugadores hardcore con Pokémon perfectos. Prepárate para sudar tinta.</p>"]
+    },
+    rubi: { 
+        consola: "gba", titulo: "POKÉMON RUBÍ", img: "pokemonrubi.jpg", enlace: "PokemonRubi.html", valoracion: "⭐⭐⭐⭐½ 9.2/10",
+        historia: ["<h3>🔴 CABLES ROTOS</h3><p>La llegada a Game Boy Advance supuso romper la compatibilidad con los juegos antiguos de Game Boy Color. Los fans montaron en cólera en su día porque no podían pasar sus equipos viejos, pero instauró las mecánicas de Naturalezas que hoy sostienen el competitivo mundial.</p>"],
+        manual: ["<h3>📜 PRIMEROS PASOS</h3><p>🎯 <strong>Consejo Básico:</strong> Elige bien tu inicial (coge a Mudkip, hazme caso) y guarda siempre la partida manualmente antes de plantarte frente a un Pokémon legendario. Si lo debilitas sin querer, apaga y vuelve a encender.</p>"]
+    },
+    deerhunter: { 
+        consola: "gba", titulo: "DEER HUNTER", img: "deerhunter.jpg", enlace: "deerhunter.html", valoracion: "⭐⭐⭐⭐ 8.0/10",
+        historia: ["<h3>🎯 DE LOS CIBERCAFÉS A GBA</h3><p>Un simulador de cazadores del bosque de PC metido a la fuerza en una pantalla minúscula de consola portátil. Cazar agrupaciones de píxeles marrones entre píxeles verdes nunca fue un deporte de riesgo tan intenso.</p>"],
+        manual: ["<h3>📜 ARTE DE PACIENCIA</h3><p>🎯 <strong>Controles:</strong> No hagas nada. Literalmente. Quédate quieto. Si te mueves rápido por el bosque, el ciervo te olerá desde lejos y saldrá corriendo. Usa el reclamo y confía en el pulso de tus dedos pulgares.</p>"]
     }
 };
 
-// --- FUNCIÓN PARA GENERAR ARRAYS VACÍOS EN LOS DEMÁS JUEGOS ---
-// (Esto evita errores al abrir juegos a los que aún no les has escrito historia)
-const todosLosIds = ['miketyson', 'ghostngoblin', 'mariobros3', 'mariokart64', 'castlegacy', 'mortalkomleg64', 'mariotennis', 'batman', 'goldenaxe2', 'rambo3', 'sonic', 'aladdin', 'marioworld', 'mariokartsnes', 'esmeralda', 'rubi', 'deerhunter'];
-todosLosIds.forEach(id => {
-    if(!infoJuegos[id]) {
-        infoJuegos[id] = { 
-            consola: "nes", titulo: "JUEGO EN DESARROLLO", img: "logo.png", enlace: "#", valoracion: "⭐⭐⭐⭐ 8/10",
-            historia: ["<h3>📖 HISTORIA</h3><p>Estamos redactando los archivos secretos de este clásico. ¡Vuelve pronto para leer su historia completa!</p>"],
-            manual: ["<h3>📜 MANUAL</h3><p>Aún estamos buscando el manual original en la caja del trastero. Mientras tanto... ¡Apreta todos los botones a ver qué pasa!</p>"]
-        };
-    }
-});
-
-
 let enlaceDestino = ""; let juegoActual = ""; 
 let paginaActual = 0; let totalPaginas = 0;
-let modoFlipbookActual = 'historia';
 
 function verFicha(idJuego) {
     const juego = infoJuegos[idJuego];
     if (juego) {
         juegoActual = idJuego; enlaceDestino = juego.enlace;
         
-        // Colores por consola
         const col = {nes:'#e60012',n64:'#00b140',md:'#e00000',snes:'#005b9f',gba:'#5a429b',arcade:'#ff00ff'}[juego.consola] || '#d4af37';
         document.documentElement.style.setProperty('--modal-border', col); document.documentElement.style.setProperty('--modal-title', col);
         
@@ -428,21 +485,18 @@ function verFicha(idJuego) {
         document.getElementById("fichaValoracion").innerText = juego.valoracion; 
         document.getElementById("fichaImg").src = juego.img; 
         
-        // Por defecto, abrir en pestaña Historia
         cambiarPestana('historia');
         document.getElementById("modalFicha").style.display = "flex";
     }
 }
 
 function cambiarPestana(p) {
-    // Quitar clase active a todos los botones y ponérsela al pulsado
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('tab' + p.charAt(0).toUpperCase() + p.slice(1)).classList.add('active');
 
     if (p === 'historia' || p === 'manual') {
         document.getElementById('flipbookWrapper').style.display = 'block';
         document.getElementById('contenidoFama').style.display = 'none';
-        modoFlipbookActual = p;
         cargarFlipbook(juegoActual, p);
     } else if (p === 'fama') {
         document.getElementById('flipbookWrapper').style.display = 'none';
@@ -454,12 +508,9 @@ function cambiarPestana(p) {
 function cargarFlipbook(idJuego, tipo) {
     const juego = infoJuegos[idJuego];
     const datosArray = juego[tipo] || ["<p>Contenido en desarrollo...</p>"];
+    const cont = document.getElementById("flipbookContainer"); cont.innerHTML = "";
     
-    const cont = document.getElementById("flipbookContainer"); 
-    cont.innerHTML = "";
-    
-    totalPaginas = datosArray.length; 
-    paginaActual = 0;
+    totalPaginas = datosArray.length; paginaActual = 0;
     
     datosArray.forEach((html, index) => {
         let pag = document.createElement("div");
@@ -474,29 +525,18 @@ function cargarFlipbook(idJuego, tipo) {
 function pasarPagina(dir) {
     const pags = document.getElementById("flipbookContainer").querySelectorAll(".flipbook-page");
     if (dir === 1 && paginaActual < totalPaginas - 1) {
-        pags[paginaActual].classList.remove("active"); 
-        pags[paginaActual].classList.add("flipped");
-        paginaActual++; 
-        pags[paginaActual].classList.add("active");
+        pags[paginaActual].classList.remove("active"); pags[paginaActual].classList.add("flipped");
+        paginaActual++; pags[paginaActual].classList.add("active");
     } else if (dir === -1 && paginaActual > 0) {
-        pags[paginaActual].classList.remove("active"); 
-        paginaActual--;
-        pags[paginaActual].classList.remove("flipped"); 
-        pags[paginaActual].classList.add("active");
+        pags[paginaActual].classList.remove("active"); paginaActual--;
+        pags[paginaActual].classList.remove("flipped"); pags[paginaActual].classList.add("active");
     }
     actualizarIndicador();
 }
 
-function actualizarIndicador() { 
-    document.getElementById("pageIndicator").innerText = `Pág ${paginaActual + 1}/${totalPaginas}`; 
-}
+function actualizarIndicador() { document.getElementById("pageIndicator").innerText = `Pág ${paginaActual + 1}/${totalPaginas}`; }
+function cerrarFicha() { document.getElementById("modalFicha").style.display = "none"; window.history.replaceState(null,null,window.location.pathname + window.location.hash); }
 
-function cerrarFicha() { 
-    document.getElementById("modalFicha").style.display = "none"; 
-    window.history.replaceState(null,null,window.location.pathname + window.location.hash); 
-}
-
-// --- SALÓN DE LA FAMA ---
 function anadirRecord() {
     let nombre = prompt("Introduce tus 3 iniciales:", "AAA"); if (!nombre) return;
     nombre = nombre.toUpperCase().substring(0, 3);
@@ -517,7 +557,6 @@ function renderizarRecords() {
     else body.innerHTML = records.map((r, i) => `<tr><td>#${i+1}</td><td>${r.nombre}</td><td>${r.puntos}</td></tr>`).join('');
 }
 
-// --- LÓGICA DE BLOQUEO (2 INTENTOS) ---
 function irAlJuego() { 
     if(!enlaceDestino) return;
     let esVip = localStorage.getItem('olea3d_vip') === 'true';
@@ -546,7 +585,6 @@ function revisarLlavero() {
     }
 }
 
-// FONDOS DINÁMICOS
 document.addEventListener("DOMContentLoaded", () => {
     const ob = new IntersectionObserver(es => {
         es.forEach(e => { if(e.isIntersecting){ document.body.className=''; if(e.target.id) document.body.classList.add('theme-'+e.target.id.replace('megadrive','md')); } });
