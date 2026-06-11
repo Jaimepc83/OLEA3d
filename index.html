@@ -15,6 +15,10 @@
 
 /* 2. ESTILOS BASE Y FONDO DINÁMICO */
 body { margin: 0; font-family: Arial, sans-serif; background-color: #0d0d0d; color: white; text-align: center; overflow-x: hidden; position: relative; min-height: 100vh; transition: background-color 0.8s ease; }
+
+/* TEMAS DINÁMICOS POR CONSOLA */
+body.theme-arcade { background-color: #1a001a; } 
+body.theme-arcade .bg-grid { background: linear-gradient(transparent 10%, rgba(255,0,255,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(255,0,255,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(255,0,255,0.3) 21px); }
 body.theme-nes { background-color: #1a0000; } 
 body.theme-nes .bg-grid { background: linear-gradient(transparent 10%, rgba(230,0,18,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(230,0,18,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(230,0,18,0.3) 21px); }
 body.theme-n64 { background-color: #001a08; } 
@@ -91,12 +95,22 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 .tab-btn { background: transparent; color: #aaa; border: none; font-size: 14px; font-weight: bold; cursor: pointer; padding: 5px 10px; border-radius: 5px; transition: 0.3s; }
 .tab-btn.active { background: #333; color: var(--modal-tab); }
 
-/* ESTILOS DEL FLIPBOOK */
+/* ESTILOS DEL FLIPBOOK (MOTOR 3D REPARADO) */
 #flipbookWrapper { display: block; }
 .flipbook-container { background: #e8dcc4; border-radius: 5px 15px 15px 5px; padding: 20px; margin-bottom: 15px; min-height: 240px; position: relative; box-shadow: inset 10px 0 20px rgba(0,0,0,0.2), 0 5px 15px rgba(0,0,0,0.5); perspective: 1000px; border-left: 8px solid #8b4513; }
-.flipbook-page { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 20px; box-sizing: border-box; background: #f4ecd8; border-radius: 0 15px 15px 0; transform-origin: left center; transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1); opacity: 0; z-index: 1; pointer-events: none; overflow-y: auto; color: #222; font-size: 14.5px; line-height: 1.6; backface-visibility: hidden; box-shadow: inset 5px 0 15px rgba(0,0,0,0.05); }
+
+.flipbook-page { 
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+    padding: 20px; box-sizing: border-box; background: #f4ecd8; border-radius: 0 15px 15px 0; 
+    transform-origin: left center; transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1); 
+    opacity: 0; z-index: 1; pointer-events: none; overflow-y: auto; color: #222; font-size: 14.5px; line-height: 1.6;
+    backface-visibility: hidden; 
+    box-shadow: inset 5px 0 15px rgba(0,0,0,0.05); 
+}
+
 .flipbook-page.active { opacity: 1; z-index: 5; transform: rotateY(0deg); pointer-events: all; }
 .flipbook-page.flipped { opacity: 1; transform: rotateY(-180deg); z-index: 10; pointer-events: none; }
+
 .flipbook-page h3 { color: #8b0000; font-size: 18px; margin-top: 0; border-bottom: 2px dashed #ccc; padding-bottom: 5px; font-family: 'Courier New', monospace; font-weight: bold; }
 .flipbook-page p { margin-top: 10px; margin-bottom: 10px; text-align: justify; }
 
@@ -119,28 +133,8 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 /* MODAL PAYWALL */
 #modalPaywall .ficha-content { text-align: center; border-color: #e60012; box-shadow: 0 0 40px #e60012; max-width: 400px; }
 
-/* NUEVO: NOTIFICACIÓN TOAST DESBLOQUEO PREMIUM */
-.toast-notification {
-    position: fixed;
-    top: -100px; 
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(18, 18, 18, 0.95);
-    border: 2px solid #d4af37;
-    color: #ffd700;
-    padding: 15px 25px;
-    border-radius: 30px;
-    font-size: 16px;
-    font-weight: bold;
-    box-shadow: 0 5px 20px rgba(212,175,55,0.5);
-    z-index: 9999999999;
-    transition: top 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    backdrop-filter: blur(5px);
-    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-}
+/* NOTIFICACIÓN TOAST DESBLOQUEO PREMIUM */
+.toast-notification { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: rgba(18, 18, 18, 0.95); border: 2px solid #d4af37; color: #ffd700; padding: 15px 25px; border-radius: 30px; font-size: 16px; font-weight: bold; box-shadow: 0 5px 20px rgba(212,175,55,0.5); z-index: 9999999999; transition: top 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); display: flex; align-items: center; gap: 10px; backdrop-filter: blur(5px); text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
 .toast-notification.active { top: 25px; }
 
 /* TRANSICIONES Y NFC */
@@ -161,9 +155,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 </head>
 
 <body>
-<div id="toastDesbloqueo" class="toast-notification">
-    🔓 ¡SISTEMA DESBLOQUEADO! Catálogo Premium activado.
-</div>
+<div id="toastDesbloqueo" class="toast-notification">🔓 ¡SISTEMA DESBLOQUEADO! Catálogo Premium activado.</div>
 
 <div id="nfcScannerScreen" class="nfc-scanner"><div class="nfc-laser-container"><img src="logo.png" class="nfc-logo-scan"><div class="nfc-laser"></div></div><div class="nfc-text">SISTEMA OLEA3D...</div></div>
 <div id="transitionScreen" class="transition-screen"><div class="insert-coin-text">> INSERT COIN <</div></div>
@@ -196,6 +188,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 </div>
 
 <div class="menu">
+    <a href="#arcade">🕹️ ARCADE</a>
     <a href="#nes">🎮 NES</a>
     <a href="#n64">🕹️ N64</a>
     <a href="#megadrive">⚡ MD</a>
@@ -204,11 +197,19 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 </div>
 
 <div class="main-container">
-    <div class="stats">🕹️ 19 Juegos | 🏆 Colección Premium</div>
+    <div class="stats">🕹️ 20 Juegos | 🏆 Colección Premium</div>
 
-    <h1 id="nes" class="section-title">🎮 NES</h1>
-    <img src="nes.jpg" class="banner-console" alt="NES">
+    <h1 id="arcade" class="section-title">🕹️ SALÓN ARCADE (RECREATIVAS)</h1>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Arcade_Machine_Vector.svg/200px-Arcade_Machine_Vector.svg.png" class="banner-console" alt="Arcade" onerror="this.style.display='none'">
     <div class="container"> 
+        <div class="card-wrapper" onclick="verFicha('cadillacs')">
+            <div class="card" style="border-color: #ff00ff; box-shadow: inset 0 0 15px rgba(255,0,255,0.2);">
+                <img src="https://upload.wikimedia.org/wikipedia/en/b/b5/Cadillacs_and_Dinosaurs_arcade_flyer.jpg" alt="Cadillacs and Dinosaurs" onerror="this.src='logo.png'">
+                <h2 style="color: #ff00ff;">🦖 CADILLACS & DINOS</h2>
+                <div class="nfc-badge" style="background: #ff00ff; color: white;">LLAVERO NFC</div>
+                <span class="btn-ver" style="background: #990099; border-color: #ff00ff;">ABRIR FICHA</span>
+            </div>
+        </div>
         <div class="card-wrapper secreto" id="tarjetaSecreta" onclick="verFicha('pacman')" style="display: none;">
             <div class="card" style="border-color: #ff00ff; box-shadow: inset 0 0 15px rgba(255,0,255,0.2);">
                 <img src="pacman.jpg" alt="Pac-Man" onerror="this.src='https://upload.wikimedia.org/wikipedia/en/5/59/Pac-man.png'">
@@ -217,6 +218,11 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
                 <span class="btn-ver" style="background: #990099; border-color: #ff00ff;">ABRIR FICHA</span>
             </div>
         </div>
+    </div>
+
+    <h1 id="nes" class="section-title">🎮 NES</h1>
+    <img src="nes.jpg" class="banner-console" alt="NES">
+    <div class="container"> 
         <div class="card-wrapper" onclick="verFicha('miketyson')">
             <div class="card"><img src="miketyson.jpg" alt="Punch Out" onerror="this.src='nes.jpg'"><h2>🥊 Punch-Out!!</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">ABRIR FICHA</span></div>
         </div>
@@ -352,7 +358,6 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
         <h2 style="color: #e60012; font-size: 24px; margin-top: 0;">🛑 TIEMPO AGOTADO 🛑</h2>
         <p style="color: #fff; font-size: 16px;">Has agotado tus <strong>2 partidas</strong> de prueba.</p>
         <p style="color: #ccc; font-size: 14px;">Para desbloquear el catálogo Premium y jugar sin límites, <strong>acerca</strong> tu Llavero NFC oficial al móvil.</p>
-        
         <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #d4af37;">
             <p style="color: #ffd700; margin-top: 0; font-weight: bold; font-size: 16px;">¿Aún no tienes el tuyo?</p>
             <p style="font-size: 14px; color: #ddd; margin-bottom: 10px;">Consíguelo físicamente en el <strong>Pub La Beltraneja</strong> o en la <strong>Cafetería Garden</strong>.</p>
@@ -363,34 +368,23 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 </div>
 
 <script>
-// --- AUDIO Y EFECTOS ---
 let globalAudioCtx = null;
-function getAudioCtx() {
-    if (!globalAudioCtx) { globalAudioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
-    if (globalAudioCtx.state === 'suspended') { globalAudioCtx.resume(); }
-    return globalAudioCtx;
-}
+function getAudioCtx() { if (!globalAudioCtx) { globalAudioCtx = new (window.AudioContext || window.webkitAudioContext)(); } if (globalAudioCtx.state === 'suspended') { globalAudioCtx.resume(); } return globalAudioCtx; }
 function reproducirSonido1UP() { try { const ctx=getAudioCtx(); const osc=ctx.createOscillator(); const gain=ctx.createGain(); osc.type='square'; const now=ctx.currentTime; osc.frequency.setValueAtTime(1318.51,now); osc.frequency.setValueAtTime(1567.98,now+0.1); osc.frequency.setValueAtTime(2093.00,now+0.2); osc.frequency.setValueAtTime(2637.02,now+0.3); osc.frequency.setValueAtTime(3135.96,now+0.4); gain.gain.setValueAtTime(0.1,now); gain.gain.linearRampToValueAtTime(0,now+0.6); osc.connect(gain); gain.connect(ctx.destination); osc.start(now); osc.stop(now+0.6); } catch(e){} }
 
-// --- VERIFICACIÓN DE LLAVE VIP (AHORA CON TOAST ELEGANTE) ---
 window.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     if(params.get('llave') === 'oleaVIP') {
         localStorage.setItem('olea3d_vip', 'true');
         window.history.replaceState(null, null, window.location.pathname + window.location.hash);
-        
-        // Retrasamos un poco el cartel para que la pantalla de inicio cargue
         setTimeout(() => {
             const toast = document.getElementById("toastDesbloqueo");
-            toast.classList.add("active");
-            reproducirSonido1UP();
-            // Lo ocultamos a los 4 segundos
+            toast.classList.add("active"); reproducirSonido1UP();
             setTimeout(() => toast.classList.remove("active"), 4000);
         }, 500);
     }
 });
 
-// --- EASTER EGGS ---
 let toquesLogo = 0, tiempoToques;
 function toqueSecreto() { toquesLogo++; clearTimeout(tiempoToques); if(toquesLogo===3){ desbloquearSecreto(); toquesLogo=0; } else { tiempoToques=setTimeout(()=>{toquesLogo=0;},1000); } }
 function desbloquearSecreto() { const tarjeta=document.getElementById("tarjetaSecreta"); if(tarjeta){ tarjeta.style.display="block"; tarjeta.scrollIntoView({behavior:'smooth',block:'center'}); } }
@@ -401,8 +395,13 @@ function desbloquearCiervo() { const tarjeta=document.getElementById("tarjetaCie
 
 function filtrarJuegos() { let input=document.getElementById("buscadorJuegos").value.toLowerCase(); document.querySelectorAll(".card-wrapper").forEach(t => { let h=t.querySelector("h2").innerText.toLowerCase(); t.style.display = h.includes(input) ? "block" : "none"; }); }
 
-// --- BASE DE DATOS MASIVA (HISTORIA Y MANUALES) ---
+// --- BASE DE DATOS MASIVA ACTUALIZADA CON CADILLACS ---
 const infoJuegos = {
+    cadillacs: { 
+        consola: "arcade", titulo: "CADILLACS & DINOSAURS", img: "https://upload.wikimedia.org/wikipedia/en/b/b5/Cadillacs_and_Dinosaurs_arcade_flyer.jpg", enlace: "dino.html", valoracion: "⭐⭐⭐⭐⭐ 9.8/10",
+        historia: ["<h3>📖 LA LOCURA DE LOS 90</h3><p>En 1993, a Capcom se le ocurrió mezclar las tres cosas que más molaban en la época: tíos duros, coches clásicos y dinosaurios. Basado en el cómic Xenozoic Tales, este juego arrasó en los salones recreativos.</p>", "<h3>🌍 EL LORE DE LA CALLE</h3><p>El planeta se ha ido al traste y los humanos conviven (a base de guantazos) con dinosaurios resucitados. Una banda de furtivos está cazando a los dinos y tu misión es reventarlos a golpes para mantener la paz ecológica.</p>"],
+        manual: ["<h3>📜 MANUAL DEL RECREATIVO</h3><p>🎯 <strong>Nutrición:</strong> En este juego, la sanidad no importa. Si ves un pollo asado entero o una pizza intacta escondidos dentro de un bidón de metal oxidado... cómetelo, te curará la barra de vida.</p>", "<h3>🕹️ CONSEJOS CLÁSICOS</h3><p>🚗 <strong>El Coche:</strong> En el nivel 3 podrás subirte al mismísimo Cadillac. Acelera y atropella a todo el mundo sin piedad, es la mejor parte del juego.</p>"]
+    },
     mariobros: { 
         consola: "nes", titulo: "SUPER MARIO BROS", img: "SuperMarioBros.jpg", enlace: "SuperMarioBros.html", valoracion: "⭐⭐⭐⭐⭐ 9.7/10",
         historia: ["<h3>📖 EL ORIGEN DE UN MITO</h3><p>En 1985 la industria de las consolas estaba muerta tras el fiasco de E.T. de Atari. Shigeru Miyamoto decidió crear un héroe improbable para intentar salvarla: un fontanero italiano, rechoncho y con bigote.</p>", "<h3>🖌️ LIMITACIONES TÉCNICAS</h3><p>El hardware de la NES era tan limitado que dibujar una boca en movimiento era imposible. Le plantaron un gran bigote para disimular, una gorra para no animar el pelo al saltar y un peto de color sólido.</p>", "<h3>🌍 EL LORE OSCURO</h3><p>Los Koopas invadieron el Reino Champiñón y convirtieron a todos sus ciudadanos inocentes en bloques de ladrillo. Sí, cada vez que rompes un ladrillo con la cabeza, estás asesinando a un habitante. Piénsalo la próxima vez.</p>"],
