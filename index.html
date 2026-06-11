@@ -20,18 +20,32 @@ body { margin: 0; font-family: Arial, sans-serif; background: #0d0d0d; color: wh
 .bg-grid { position: fixed; bottom: 0; left: -50%; width: 200%; height: 60vh; background: linear-gradient(transparent 10%, rgba(157,255,61,0.3) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(157,255,61,0.5) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(157,255,61,0.5) 21px); transform-origin: bottom; transform: perspective(500px) rotateX(60deg); animation: gridMove 2s linear infinite; z-index: -1; opacity: 0.4; }
 @keyframes gridMove { 0% { transform: perspective(500px) rotateX(60deg) translateY(0); } 100% { transform: perspective(500px) rotateX(60deg) translateY(21px); } }
 
-header { padding: 20px; background: linear-gradient(180deg, rgba(26,26,26,0.9), rgba(13,13,13,0)); position: relative; z-index: 10; }
+header { padding: 20px 20px 5px 20px; background: linear-gradient(180deg, rgba(26,26,26,0.9), rgba(13,13,13,0)); position: relative; z-index: 10; }
 .logo { width: 120px; border-radius: 50%; box-shadow: 0 0 20px #d4af37; cursor: pointer; transition: 0.1s; }
 .logo:active { transform: scale(0.9); }
 h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
-.sub { color: #9acd32; font-size: 16px; margin-bottom: 20px; }
+.sub { color: #9acd32; font-size: 16px; margin-bottom: 10px; }
 
 /* BOTÓN DE MÚSICA */
 .btn-musica { background: #eee; color: #111; padding: 10px 20px; border-radius: 8px; font-weight: bold; border: 2px solid #ccc; cursor: pointer; margin: 10px auto; font-size: 14px; transition: 0.3s; display: inline-block; position: relative; z-index: 10; }
 .btn-musica:hover { transform: scale(1.05); }
 
+/* --- NUEVA SECCIÓN ESCAPARATE Y GALERÍA --- */
+.tienda-banner { background: rgba(20,20,20,0.85); border: 2px solid #d4af37; border-radius: 15px; margin: 10px auto 25px auto; padding: 20px; max-width: 90%; position: relative; z-index: 10; box-shadow: 0 0 20px rgba(212,175,55,0.25); backdrop-filter: blur(5px); }
+.tienda-titulo { color: #ffd700; margin: 0 0 8px 0; font-size: 20px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+.tienda-desc { color: #ddd; font-size: 14px; margin-bottom: 15px; }
+
+.galeria-llaveros { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; justify-content: center; }
+.galeria-llaveros::-webkit-scrollbar { height: 6px; }
+.galeria-llaveros::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 10px; }
+.galeria-llaveros img { width: 85px; height: 85px; object-fit: cover; border-radius: 12px; border: 2px solid #9acd32; box-shadow: 0 4px 8px rgba(0,0,0,0.6); transition: transform 0.3s; }
+.galeria-llaveros img:hover { transform: scale(1.1); border-color: #9dff3d; z-index: 2; position: relative; }
+
+.btn-tienda-principal { background: #25D366; color: white; border: none; padding: 12px 25px; border-radius: 25px; font-weight: bold; font-size: 15px; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 10px rgba(37,211,102,0.4); margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
+.btn-tienda-principal:hover { background: #128C7E; transform: translateY(-3px); box-shadow: 0 6px 15px rgba(37,211,102,0.6); }
+
 /* BUSCADOR DE JUEGOS */
-.buscador-container { margin: 25px auto 10px auto; max-width: 400px; padding: 0 15px; position: relative; z-index: 10; }
+.buscador-container { margin: 15px auto 10px auto; max-width: 400px; padding: 0 15px; position: relative; z-index: 10; }
 #buscadorJuegos { width: 100%; padding: 12px 20px; border-radius: 25px; border: 2px solid #d4af37; background: rgba(18, 18, 18, 0.8); color: white; font-size: 16px; outline: none; box-shadow: 0 0 15px rgba(212,175,55,0.3); transition: 0.3s; font-family: inherit; box-sizing: border-box; text-align: center; }
 #buscadorJuegos::placeholder { color: #aaa; }
 #buscadorJuegos:focus { box-shadow: 0 0 25px rgba(157,255,61,0.6); border-color: #9dff3d; background: rgba(0, 0, 0, 0.9); }
@@ -73,28 +87,8 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 .close-ficha { position: absolute; top: 12px; right: 12px; background: #ff4444; color: white; border: none; width: 35px; height: 35px; font-weight: bold; border-radius: 50%; cursor: pointer; font-size: 14px; display: flex; justify-content: center; align-items: center; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.5); }
 
 /* BOTÓN DE LA TIENDA EN EL MODAL */
-.btn-tienda-modal { 
-    display: block; 
-    width: 100%; 
-    text-align: center; 
-    padding: 14px 0; 
-    background: #d4af37; 
-    color: #000; 
-    text-decoration: none; 
-    border-radius: 10px; 
-    font-weight: bold; 
-    font-size: 16px; 
-    border: none; 
-    cursor: pointer; 
-    box-shadow: 0 4px 12px rgba(212,175,55,0.4); 
-    box-sizing: border-box; 
-    transition: 0.3s;
-    margin-bottom: 12px;
-}
-.btn-tienda-modal:hover { 
-    background: #ffd700; 
-    transform: translateY(-2px); 
-}
+.btn-tienda-modal { display: block; width: 100%; text-align: center; padding: 14px 0; background: #d4af37; color: #000; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 16px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(212,175,55,0.4); box-sizing: border-box; transition: 0.3s; margin-bottom: 12px; }
+.btn-tienda-modal:hover { background: #ffd700; transform: translateY(-2px); }
 
 /* ESTILO DEL HEADER Y LA VALORACIÓN */
 .ficha-header { display: flex; gap: 15px; align-items: center; margin-bottom: 20px; padding-right: 40px; }
@@ -122,7 +116,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 .btn-anadir:hover { transform: scale(1.02); filter: brightness(1.2); }
 
 /* BOTÓN DE JUGAR */
-.btn-jugar-modal { display: block; width: 100%; text-align: center; padding: 14px 0; background: #6b8e23; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 16px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(107,142,35,0.6); box-shadow: border-box; transition: 0.3s; }
+.btn-jugar-modal { display: block; width: 100%; text-align: center; padding: 14px 0; background: #6b8e23; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 16px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(107,142,35,0.6); box-sizing: border-box; transition: 0.3s; }
 .btn-jugar-modal:hover { background: #88aa33; transform: translateY(-2px); }
 
 footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-size: 14px; border-top: 2px solid #222; position: relative; z-index: 10; }
@@ -176,14 +170,26 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
     <img src="logo.png" class="logo" alt="OLEA3D Logo" onclick="toqueSecreto()">
     <h1>OLEA3D Hub Retro</h1>
     <div class="nfc-badge">📡 Colección NFC</div> 
-    <p class="sub">Acerca tu llavero y todo estará listo para jugar</p>
     
     <button id="btnMusica" class="btn-musica" onclick="reproducirClic(); toggleMusica();">🎵 Música Retro ON/OFF</button>
-
-    <div class="buscador-container">
-        <input type="text" id="buscadorJuegos" placeholder="🔍 Buscar juego (ej: Mario, Zelda...)" onkeyup="filtrarJuegos()">
-    </div>
 </header>
+
+<div class="tienda-banner">
+    <h2 class="tienda-titulo">🛒 Tu propio Llavero NFC</h2>
+    <p class="tienda-desc">Elige tu juego favorito, acércalo al móvil y ¡a jugar! Mira cómo quedan:</p>
+    
+    <div class="galeria-llaveros">
+        <img src="llavero1.jpg" alt="Llavero NFC de muestra" onerror="this.src='logo.png'">
+        <img src="llavero2.jpg" alt="Llavero NFC de muestra" onerror="this.src='logo.png'">
+        <img src="llavero3.jpg" alt="Llavero NFC de muestra" onerror="this.src='logo.png'">
+    </div>
+
+    <button class="btn-tienda-principal" onclick="abrirTiendaGeneral()">💬 ¡QUIERO ENCARGAR UNO!</button>
+</div>
+
+<div class="buscador-container">
+    <input type="text" id="buscadorJuegos" placeholder="🔍 Buscar juego (ej: Mario, Zelda...)" onkeyup="filtrarJuegos()">
+</div>
 
 <div class="menu">
     <a href="#nes" onclick="reproducirClic()">🎮 NES</a>
@@ -409,7 +415,7 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 
 <footer>
     <p><strong>@olea3d</strong></p>
-    <p>Adquiere tu llavero personalizado NFC. Todo estará listo para jugar.</p>
+    <p>Adquiere tu llavero personalizado NFC. Todo está listo para jugar.</p>
 </footer>
 
 <div id="modalFicha" class="modal-ficha">
@@ -441,7 +447,7 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
             <button class="btn-anadir" onclick="anadirRecord()">➕ AÑADIR RÉCORD</button>
         </div>
 
-        <button id="btnTiendaJuego" class="btn-tienda-modal" onclick="encargarLlavero();">🛒 ENCARGAR LLAVERO FÍSICO</button>
+        <button id="btnTiendaJuego" class="btn-tienda-modal" onclick="encargarLlaveroEspecifico();">🛒 ENCARGAR ESTE LLAVERO</button>
 
         <button id="btnIniciarJuego" class="btn-jugar-modal" onclick="irAlJuego();">🚀 EMPEZAR PARTIDA</button>
     </div>
@@ -604,7 +610,7 @@ const infoJuegos = {
     miketyson: { consola: "nes", titulo: "PUNCH-OUT!! (NES)", img: "miketyson.jpg", enlace: "miketyson.html", valoracion: "⭐⭐⭐⭐⭐ 9.4/10 (Clásico de Culto)", historia: "Aclamado juego de boxeo de 1987. Un rompecabezas de reflejos donde memorizas patrones de rivales icónicos como King Hippo hasta llegar a Mike Tyson.", manual: "🎯 <strong>Objetivo:</strong> Escalar en el ranking de la WVBA hasta ganar el cinturón.<br><br>🕹️ <strong>Controles:</strong> Esquiva a los lados, bloquea y ganchos. Pulsa 'Start' para el golpe estrella.<br><br>💡 <strong>Truco Retro:</strong> En Bald Bull, golpea su cuerpo justo cuando el espectador barbudo de la grada parpadee." },
     ghostngoblin: { consola: "nes", titulo: "GHOSTS 'N GOBLINS (NES)", img: "ghostngoblin.jpg", enlace: "ghostngoblin.html", valoracion: "⭐⭐⭐⭐ 8.5/10 (Desafiante)", historia: "Lanzado en 1986, es famoso por ser uno de los juegos más difíciles. Sir Arthur pierde su armadura al primer golpe, quedando en calzoncillos.", manual: "🎯 <strong>Objetivo:</strong> Rescatar a la princesa Prin-Prin.<br><br>🕹️ <strong>Controles:</strong> Botón de salto y ataque. Los saltos no se pueden corregir en el aire.<br><br>💡 <strong>Truco Retro:</strong> Debes pasarte el juego dos veces seguidas para ver el verdadero final." },
     mariobros3: { consola: "nes", titulo: "SUPER MARIO BROS 3 (NES)", img: "supermariobros3.jpg", enlace: "supermariobros3.html", valoracion: "⭐⭐⭐⭐⭐ 9.8/10 (Obra Maestra)", historia: "Lanzado en 1988, revolucionó los plataformas con su mapa navegable, minijuegos y el icónico traje de mapache para volar.", manual: "🎯 <strong>Objetivo:</strong> Derrotar a Bowser y salvar a los 7 reyes caídos.<br><br>🕹️ <strong>Controles:</strong> Botón de salto y correr/volar.<br><br>💡 <strong>Truco Retro:</strong> Busca las flautas mágicas en el Mundo 1 para viajar al instante al Mundo 8." },
-    pacman: { consola: "arcade", titulo: "PAC-MAN (ARCADE)", img: "pacman.jpg", enlace: "Pacman.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10 (Clásico)", historia: "El original de 1980. Fue pionero en usar 'power-ups' y dotar a cada fantasma de una inteligencia artificial única.", manual: "🎯 <strong>Objetivo:</strong> Comer todos los puntos del laberinto.<br><br>🕹️ <strong>Controles:</strong> Flechas de dirección.<br><br>💡 <strong>Truco Retro:</strong> Los fantasmas reducen mucho su velocidad al cuzad por los túneles laterales." },
+    pacman: { consola: "arcade", titulo: "PAC-MAN (ARCADE)", img: "pacman.jpg", enlace: "Pacman.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10 (Clásico)", historia: "El original de 1980. Fue pionero en usar 'power-ups' y dotar a cada fantasma de una inteligencia artificial única.", manual: "🎯 <strong>Objetivo:</strong> Comer todos los puntos del laberinto.<br><br>🕹️ <strong>Controles:</strong> Flechas de dirección.<br><br>💡 <strong>Truco Retro:</strong> Los fantasmas reducen mucho su velocidad al cruzar por los túneles laterales." },
     tetris: { consola: "nes", titulo: "TETRIS (NES)", img: "TetrisNes.png", enlace: "TetrisFicha.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10 (Imprescindible)", historia: "Rompecabezas soviético de 1984. Su desafío de encajar piezas y su mítica banda sonora rusa ofrecen adicción infinita.", manual: "🎯 <strong>Objetivo:</strong> Encajar las piezas para crear líneas completas.<br><br>🕹️ <strong>Controles:</strong> Mover y rotar pieza.<br><br>💡 <strong>Truco Retro:</strong> Deja la columna derecha libre para introducir la pieza alargada y conseguir un Tetris." },
     mariobros: { consola: "nes", titulo: "SUPER MARIO BROS (NES)", img: "SuperMarioBros.jpg", enlace: "SuperMarioBros.html", valoracion: "⭐⭐⭐⭐⭐ 9.7/10 (Leyenda)", historia: "La genialidad de 1985 que salvó la industria. Estableció el estándar de físicas perfectas en 8 mundos.", manual: "🎯 <strong>Objetivo:</strong> Rescatar a la Princesa Peach.<br><br>🕹️ <strong>Controles:</strong> Saltar y correr.<br><br>💡 <strong>Truco Retro:</strong> Súbete al techo en el nivel 1-2 para llegar a la Warp Zone." },
     zeldaocarina: { consola: "n64", titulo: "ZELDA: OOT (N64)", img: "zeldaocarina.jpg", enlace: "zeldaocarina.html", valoracion: "⭐⭐⭐⭐⭐ 9.9/10 (Obra Maestra)", historia: "El salto a las 3D de 1998. Revolucionó el medio con el Z-targeting y su mecánica de viaje en el tiempo.", manual: "🎯 <strong>Objetivo:</strong> Reunir las piedras espirituales y derrotar a Ganondorf.<br><br>🕹️ <strong>Controles:</strong> Stick, botón A para acción y Z para fijar.<br><br>💡 <strong>Truco Retro:</strong> Atrapa hadas curativas en botellas vacías para que te revivan automáticamente." },
@@ -696,12 +702,20 @@ function irAlJuego() {
     }
 }
 
-// --- LÓGICA DE ENCARGO SMART DE TIENDA (WHATSAPP) ---
-function encargarLlavero() {
+// --- LÓGICA DE WHATSAPP ---
+function abrirTiendaGeneral() {
+    reproducirClic();
+    // Pon aquí tu número real con el prefijo 34 delante
+    const telefono = "34600000000"; 
+    const texto = `¡Hola OLEA3D! He visto el Retro Hub y me gustaría informarme sobre los llaveros NFC personalizados.`;
+    const enlaceWhatsApp = `https://wa.me/${telefono}?text=${encodeURIComponent(texto)}`;
+    window.open(enlaceWhatsApp, '_blank');
+}
+
+function encargarLlaveroEspecifico() {
     reproducirClic();
     const juego = infoJuegos[juegoActual];
     if (juego) {
-        // Pon aquí tu número real con el prefijo 34 delante (ej: "34600000000")
         const telefono = "34600000000"; 
         const texto = `¡Hola! Estoy en el Retro Hub y me gustaría encargar el llavero físico personalizado con chip NFC para el juego: *${juego.titulo}*.`;
         const enlaceWhatsApp = `https://wa.me/${telefono}?text=${encodeURIComponent(texto)}`;
