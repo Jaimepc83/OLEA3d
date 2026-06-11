@@ -116,7 +116,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 .btn-anadir:hover { transform: scale(1.02); filter: brightness(1.2); }
 
 /* BOTÓN DE JUGAR */
-.btn-jugar-modal { display: block; width: 100%; text-align: center; padding: 14px 0; background: #6b8e23; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 16px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(107,142,35,0.6); box-shadow: border-box; transition: 0.3s; }
+.btn-jugar-modal { display: block; width: 100%; text-align: center; padding: 14px 0; background: #6b8e23; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 16px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(107,142,35,0.6); box-sizing: border-box; transition: 0.3s; }
 .btn-jugar-modal:hover { background: #88aa33; transform: translateY(-2px); }
 
 footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-size: 14px; border-top: 2px solid #222; position: relative; z-index: 10; }
@@ -127,7 +127,7 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 .insert-coin-text { color: #ffd700; font-size: 28px; font-family: 'Courier New', Courier, monospace; font-weight: bold; text-shadow: 0 0 20px #ffd700, 0 0 40px #ff0000; animation: blink 0.5s infinite alternate; }
 @keyframes blink { from { opacity: 1; transform: scale(1); } to { opacity: 0.2; transform: scale(1.05); } }
 
-/* --- ESTILOS DE LA ANTENA NFC RETRO RECUPERADA --- */
+/* --- CAPA DE ESCANEO NFC CON LOGO, ANTENA Y TEXTO OLEA3D --- */
 .nfc-scanner { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,15,0,0.95); z-index: 99999999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(10px); }
 .nfc-scanner.active { opacity: 1; pointer-events: all; }
 .nfc-laser-container { position: relative; width: 80%; max-width: 300px; height: 200px; border: 2px dashed rgba(157,255,61,0.4); border-radius: 15px; overflow: hidden; display: flex; justify-content: center; align-items: center; }
@@ -565,7 +565,7 @@ const coloresConsola = {
     arcade: { border: '#ff00ff', title: '#ff00ff', tab: '#00ffff' }
 };
 
-// --- BASE DE DATOS COMPLETA DE LOS JUEGOS ---
+// --- BASE DE DATOS COMPLETA DE LOS 19 JUEGOS ---
 const infoJuegos = {
     goldenaxe2: { consola: "md", titulo: "GOLDEN AXE II (MD)", img: "goldenaxe2.jpg", enlace: "goldenaxe2.html", valoracion: "⭐⭐⭐⭐ 8.5/10 (Acción Clásica)", historia: "La secuela del gran clásico de SEGA lanzado en 1991. Ármate con tu hacha, espada o magia y rescata al mundo de las garras de Dark Guld en este icónico 'beat 'em up' cooperativo.", manual: "🎯 <strong>Objetivo:</strong> Avanzar por los niveles derrotando a las hordas enemigas.<br><br>🕹️ <strong>Controles:</strong> A para magia, B para atacar, C para saltar.<br><br>💡 <strong>Truco Retro:</strong> Conserva tus pociones azules para los jefes finales, la magia de nivel máximo barre la pantalla entera." },
     rambo3: { consola: "md", titulo: "RAMBO III (MD)", img: "Rambo3.jpg", enlace: "Rambo3.html", valoracion: "⭐⭐⭐⭐ 8.0/10 (Acción Explosiva)", historia: "Lanzado por SEGA en 1989, este vibrante arcade te pone en la piel de Sylvester Stallone. Famoso por su acción táctica y por destruir tanques con flechas explosivas.", manual: "🎯 <strong>Objetivo:</strong> Infiltrarte en la fortaleza para rescatar al coronel Trautman.<br><br>🕹️ <strong>Controles:</strong> Cruceta para moverte, botón para ametralladora y armas secundarias.<br><br>💡 <strong>Truco Retro:</strong> Guarda las flechas explosivas exclusivamente para los helicópteros y tanques finales." },
@@ -670,7 +670,7 @@ function irAlJuego() {
 // --- LÓGICA DE WHATSAPP ---
 function abrirTiendaGeneral() {
     reproducirClic();
-    const telefono = "34652824867"; 
+    const telefono = "34600000000"; 
     const texto = `¡Hola OLEA3D! He visto el Retro Hub y me gustaría informarme sobre los llaveros NFC personalizados.`;
     const enlaceWhatsApp = `https://wa.me/${telefono}?text=${encodeURIComponent(texto)}`;
     window.open(enlaceWhatsApp, '_blank');
@@ -680,7 +680,7 @@ function encargarLlaveroEspecifico() {
     reproducirClic();
     const juego = infoJuegos[juegoActual];
     if (juego) {
-        const telefono = "34652824867"; 
+        const telefono = "34600000000"; 
         const texto = `¡Hola! Estoy en el Retro Hub y me gustaría encargar el llavero físico personalizado con chip NFC para el juego: *${juego.titulo}*.`;
         const enlaceWhatsApp = `https://wa.me/${telefono}?text=${encodeURIComponent(texto)}`;
         window.open(enlaceWhatsApp, '_blank');
@@ -700,7 +700,7 @@ function revisarLlaveroNFC() {
         scannerScreen.classList.add("active");
         reproducirSonidoEscaner();
         
-        // ¡ANIMACIÓN DE 3 SEGUNDOS EXACTOS (3000ms)!
+        // ANIMACIÓN LÁSER DE 3 SEGUNDOS
         setTimeout(() => { 
             scannerScreen.classList.remove("active");
             setTimeout(() => { verFicha(hash); }, 300); 
@@ -711,6 +711,33 @@ function revisarLlaveroNFC() {
 window.addEventListener('hashchange', revisarLlaveroNFC);
 window.addEventListener('DOMContentLoaded', revisarLlaveroNFC);
 window.addEventListener('load', revisarLlaveroNFC);
+
+// --- 7. AGITAR PARA BARAJAR (SHAKE TO SHUFFLE) ---
+let ultimaVezAgitado = 0;
+
+if (window.DeviceMotionEvent) {
+    window.addEventListener('devicemotion', function(event) {
+        let x = event.accelerationIncludingGravity.x;
+        let y = event.accelerationIncludingGravity.y;
+        let z = event.accelerationIncludingGravity.z;
+        
+        let aceleracion = Math.sqrt(x*x + y*y + z*z);
+        
+        if (aceleracion > 25) {
+            let ahora = new Date().getTime();
+            
+            if ((ahora - ultimaVezAgitado) > 2000) {
+                ultimaVezAgitado = ahora;
+                
+                let idsJuegos = Object.keys(infoJuegos);
+                let juegoAleatorio = idsJuegos[Math.floor(Math.random() * idsJuegos.length)];
+                
+                reproducirSonidoCoin();
+                verFicha(juegoAleatorio);
+            }
+        }
+    });
+}
 </script>
 
 </body>
