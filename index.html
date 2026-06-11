@@ -26,9 +26,9 @@ header { padding: 20px 20px 5px 20px; background: linear-gradient(180deg, rgba(2
 h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
 .sub { color: #9acd32; font-size: 16px; margin-bottom: 10px; }
 
-/* BOTÓN DE MÚSICA */
-.btn-musica { background: #eee; color: #111; padding: 10px 20px; border-radius: 8px; font-weight: bold; border: 2px solid #ccc; cursor: pointer; margin: 10px auto; font-size: 14px; transition: 0.3s; display: inline-block; position: relative; z-index: 10; }
-.btn-musica:hover { transform: scale(1.05); }
+/* BOTÓN DE INSTAGRAM */
+.btn-instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; padding: 10px 20px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; margin: 10px auto; font-size: 14px; transition: 0.3s; display: inline-block; text-decoration: none; position: relative; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+.btn-instagram:hover { transform: scale(1.05); box-shadow: 0 4px 15px rgba(220, 39, 67, 0.5); }
 
 /* --- NUEVA SECCIÓN ESCAPARATE Y GALERÍA --- */
 .tienda-banner { background: rgba(20,20,20,0.85); border: 2px solid #d4af37; border-radius: 15px; margin: 10px auto 25px auto; padding: 20px; max-width: 90%; position: relative; z-index: 10; box-shadow: 0 0 20px rgba(212,175,55,0.25); backdrop-filter: blur(5px); }
@@ -116,7 +116,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 .btn-anadir:hover { transform: scale(1.02); filter: brightness(1.2); }
 
 /* BOTÓN DE JUGAR */
-.btn-jugar-modal { display: block; width: 100%; text-align: center; padding: 14px 0; background: #6b8e23; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 16px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(107,142,35,0.6); box-sizing: border-box; transition: 0.3s; }
+.btn-jugar-modal { display: block; width: 100%; text-align: center; padding: 14px 0; background: #6b8e23; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 16px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(107,142,35,0.6); box-shadow: border-box; transition: 0.3s; }
 .btn-jugar-modal:hover { background: #88aa33; transform: translateY(-2px); }
 
 footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-size: 14px; border-top: 2px solid #222; position: relative; z-index: 10; }
@@ -162,16 +162,12 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 
 <div class="bg-grid"></div>
 
-<audio id="musicaFondo" loop>
-    <source src="musica.mp3" type="audio/mpeg">
-</audio>
-
 <header>
     <img src="logo.png" class="logo" alt="OLEA3D Logo" onclick="toqueSecreto()">
     <h1>OLEA3D Hub Retro</h1>
-    <div class="nfc-badge">📡 Colección NFC</div> 
+    <p class="sub">Acerca tu llavero y todo estará listo para jugar</p>
     
-    <button id="btnMusica" class="btn-musica" onclick="reproducirClic(); toggleMusica();">🎵 Música Retro ON/OFF</button>
+    <a href="https://www.instagram.com/olea3d/" target="_blank" class="btn-instagram" onclick="reproducirClic()">📸 Síguenos en @olea3d</a>
 </header>
 
 <div class="tienda-banner">
@@ -415,7 +411,7 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 
 <footer>
     <p><strong>@olea3d</strong></p>
-    <p>Adquiere tu llavero personalizado NFC. Todo está listo para jugar.</p>
+    <p>Adquiere tu llavero personalizado NFC. Todo estará listo para jugar.</p>
 </footer>
 
 <div id="modalFicha" class="modal-ficha">
@@ -565,20 +561,6 @@ function reproducirSonidoEscaner() {
     } catch (e) {}
 }
 
-let musica = document.getElementById("musicaFondo");
-let musicaSonando = false;
-
-function toggleMusica() {
-    let btn = document.getElementById("btnMusica");
-    if (musicaSonando) {
-        musica.pause(); musicaSonando = false;
-        btn.style.background = "#eee"; btn.style.color = "#111"; btn.style.borderColor = "#ccc";
-    } else {
-        musica.play(); musicaSonando = true;
-        btn.style.background = "#6b8e23"; btn.style.color = "white"; btn.style.borderColor = "#88aa33";
-    }
-}
-
 // --- BUSCADOR ---
 function filtrarJuegos() {
     let input = document.getElementById("buscadorJuegos").value.toLowerCase();
@@ -706,7 +688,7 @@ function irAlJuego() {
 function abrirTiendaGeneral() {
     reproducirClic();
     // Pon aquí tu número real con el prefijo 34 delante
-    const telefono = "34652824867"; 
+    const telefono = "34600000000"; 
     const texto = `¡Hola OLEA3D! He visto el Retro Hub y me gustaría informarme sobre los llaveros NFC personalizados.`;
     const enlaceWhatsApp = `https://wa.me/${telefono}?text=${encodeURIComponent(texto)}`;
     window.open(enlaceWhatsApp, '_blank');
@@ -716,7 +698,7 @@ function encargarLlaveroEspecifico() {
     reproducirClic();
     const juego = infoJuegos[juegoActual];
     if (juego) {
-        const telefono = "34652824867"; 
+        const telefono = "34600000000"; 
         const texto = `¡Hola! Estoy en el Retro Hub y me gustaría encargar el llavero físico personalizado con chip NFC para el juego: *${juego.titulo}*.`;
         const enlaceWhatsApp = `https://wa.me/${telefono}?text=${encodeURIComponent(texto)}`;
         window.open(enlaceWhatsApp, '_blank');
