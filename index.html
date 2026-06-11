@@ -531,7 +531,6 @@ function reproducirSonidoCoin() {
     } catch (e) {}
 }
 
-// Sonido sintético por defecto (mientras subes tu laser.mp3 si lo deseas)
 function reproducirSonidoEscaner() {
     try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -583,7 +582,7 @@ const infoJuegos = {
     mariotennis: { consola: "n64", titulo: "MARIO TENNIS (N64)", img: "MarioTennis.jpg", enlace: "MarioTennis.html", valoracion: "⭐⭐⭐⭐½ 8.8/10 (Excelente)", historia: "La diversión deportiva en N64 (2000). Destacó por sus efectos y por el debut mundial de Waluigi.", manual: "🎯 <strong>Objetivo:</strong> Ganar todas las copas.<br><br>🕹️ <strong>Controles:</strong> Botones A y B para golpear.<br><br>💡 <strong>Truco Retro:</strong> Pulsa el botón A dos veces al botar la bola para un Top Spin." },
     sonic: { consola: "md", titulo: "SONIC THE HEDGEHOG (MD)", img: "sonicthehedgehog.jpg", enlace: "SONIC 1 - Shadow The Hedgehog.html", valoracion: "⭐⭐⭐⭐½ 9.2/10 (Sobresaliente)", historia: "El erizo de 1991. Rompió moldes con su vertiginosa velocidad y actitud rebelde.", manual: "🎯 <strong>Objetivo:</strong> Arruinar los planes del Dr. Robotnik.<br><br>🕹️ <strong>Controles:</strong> Flechas y salto/rodar.<br><br>💡 <strong>Truco Retro:</strong> Mientras tengas un anillo dorado eres inmortal." },
     aladdin: { consola: "md", titulo: "ALADDIN (MD)", img: "aladin.jpg", enlace: "aladin.html", valoracion: "⭐⭐⭐⭐½ 9.0/10 (Sobresaliente)", historia: "Joya de 1993 animada a mano por los estudios Disney. Acción fluida de 16 bits.", manual: "🎯 <strong>Objetivo:</strong> Recorrer Agrabah y salvar a Jasmine.<br><br>🕹️ <strong>Controles:</strong> Saltar, lanzar manzanas y cimitarra.<br><br>💡 <strong>Truco Retro:</strong> Guarda tus manzanas para atacar de lejos a los jefes." },
-    marioworld: { consola: "snes", titulo: "MARIO WORLD (SNES)", img: "SuperMarioWorld.jpg", enlace: "SuperMarioorld.html", valoracion: "⭐⭐⭐⭐⭐ 9.8/10 (Obra Maestra)", historia: "El estreno triunfal en Super Nintendo. Introdujo al querido Yoshi y 96 niveles llenos de secretos.", manual: "🎯 <strong>Objetivo:</strong> Rescatar a la Princesa Peach en Dinosaur Land.<br><br>🕹️ <strong>Controles:</strong> Salto normal y salto giratorio.<br><br>💡 <strong>Truco Retro:</strong> Los niveles rojos en el mapa tienen dos salidas diferentes." },
+    marioworld: { consola: "snes", titulo: "MARIO WORLD (SNES)", img: "SuperMarioWorld.jpg", enlace: "SuperMarioorld.html", valoracion: "⭐⭐⭐⭐⭐ 9.8/10 (Obra Maestra)", historia: "El estreno triunfal en Super Nintendo. Introdujo al querido Yoshi y 96 niveles llenos de secretos.", manual: "🎯 <strong>Objetivo:</strong> Rescatar a la Princesa Peach IN Dinosaur Land.<br><br>🕹️ <strong>Controles:</strong> Salto normal y salto giratorio.<br><br>💡 <strong>Truco Retro:</strong> Los niveles rojos en el mapa tienen dos salidas diferentes." },
     mariokartsnes: { consola: "snes", titulo: "MARIO KART (SNES)", img: "SuperMarioKartsnes.jpg", enlace: "Supermariokartsnes.html", valoracion: "⭐⭐⭐⭐½ 9.3/10 (Sobresaliente)", historia: "El origen de las carreras multijugador (1992). Aprovechó el Modo 7 para pistas rotatorias 3D.", manual: "🎯 <strong>Objetivo:</strong> Levantar la copa de Oro.<br><br>🕹️ <strong>Controles:</strong> Acelerar, frenar y usar objetos.<br><br>💡 <strong>Truco Retro:</strong> Acelera en el semáforo verde para un empujón inicial." },
     esmeralda: { consola: "gba", titulo: "P. ESMERALDA (GBA)", img: "pokemonesme.jpg", enlace: "pokemonesme.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10 (Imprescindible)", historia: "Versión definitiva de Hoenn (2004). Añadió el durísimo Frente de Batalla para expertos.", manual: "🎯 <strong>Objetivo:</strong> Ser el Campeón de la Liga Pokémon.<br><br>🕹️ <strong>Controles:</strong> Moverse y atacar.<br><br>💡 <strong>Truco Retro:</strong> Guarda partida antes de luchar con los Legendarios." },
     rubi: { consola: "gba", titulo: "POKÉMON RUBÍ (GBA)", img: "pokemonrubi.jpg", enlace: "PokemonRubi.html", valoracion: "⭐⭐⭐⭐½ 9.2/10 (Sobresaliente)", historia: "El salto a la tercera generación. Sentó las bases del competitivo con naturalezas y habilidades pasivas.", manual: "🎯 <strong>Objetivo:</strong> Conseguir 8 medallas y detener al Team Magma.<br><br>🕹️ <strong>Controles:</strong> Moverse y atacar.<br><br>💡 <strong>Truco Retro:</strong> Revisa las naturalezas de tus Pokémon para ver qué estadística potencian." }
@@ -713,7 +712,7 @@ window.addEventListener('hashchange', revisarLlaveroNFC);
 window.addEventListener('DOMContentLoaded', revisarLlaveroNFC);
 window.addEventListener('load', revisarLlaveroNFC);
 
-// --- 7. AGITAR PARA BARAJAR (SHAKE TO SHUFFLE) CON SENSIBILIDAD REDUCIDA ---
+// --- 7. AGITAR PARA BARAJAR (SHAKE TO SHUFFLE) CON SENSIBILIDAD MÍNIMA ---
 let ultimaVezAgitado = 0;
 
 if (window.DeviceMotionEvent) {
@@ -724,8 +723,8 @@ if (window.DeviceMotionEvent) {
         
         let aceleracion = Math.sqrt(x*x + y*y + z*z);
         
-        // Calibrado a 35 (antes 25) para que no salte solo con caminar o mover suave el móvil
-        if (aceleracion > 35) {
+        // Calibrado a 55 (antes 35) para asegurar que haga falta un movimiento enérgico e intencionado
+        if (aceleracion > 55) {
             let ahora = new Date().getTime();
             
             if ((ahora - ultimaVezAgitado) > 2000) {
