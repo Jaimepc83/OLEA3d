@@ -617,7 +617,7 @@ let toquesBeltraneja = 0;
 let tiempoBeltraneja;
 
 function toqueBeltraneja() {
-    reproducirClic(); // Vuelve a tener el clic normal y limpio
+    reproducirClic(); 
     
     toquesBeltraneja++;
     clearTimeout(tiempoBeltraneja);
@@ -688,7 +688,7 @@ const infoJuegos = {
     aladdin: { consola: "md", titulo: "ALADDIN (MD)", img: "aladin.jpg", enlace: "aladin.html", valoracion: "⭐⭐⭐⭐½ 9.0/10 (Sobresaliente)", historia: "Joya de 1993 animada a mano por los estudios Disney. Acción fluida de 16 bits.", manual: "🎯 <strong>Objetivo:</strong> Recorrer Agrabah y salvar a Jasmine.<br><br>🕹️ <strong>Controles:</strong> Saltar, lanzar manzanas y cimitarra.<br><br>💡 <strong>Truco Retro:</strong> Guarda tus manzanas para atacar de lejos a los jefes." },
     marioworld: { consola: "snes", titulo: "MARIO WORLD (SNES)", img: "SuperMarioWorld.jpg", enlace: "SuperMarioorld.html", valoracion: "⭐⭐⭐⭐⭐ 9.8/10 (Obra Maestra)", historia: "El estreno triunfal en Super Nintendo. Introdujo al querido Yoshi y 96 niveles llenos de secretos.", manual: "🎯 <strong>Objetivo:</strong> Rescatar a la Princesa Peach en Dinosaur Land.<br><br>🕹️ <strong>Controles:</strong> Salto normal y salto giratorio.<br><br>💡 <strong>Truco Retro:</strong> Los niveles rojos en el mapa tienen dos salidas diferentes." },
     mariokartsnes: { consola: "snes", titulo: "MARIO KART (SNES)", img: "SuperMarioKartsnes.jpg", enlace: "Supermariokartsnes.html", valoracion: "⭐⭐⭐⭐½ 9.3/10 (Sobresaliente)", historia: "El origen de las carreras multijugador (1992). Aprovechó el Modo 7 para pistas rotatorias 3D.", manual: "🎯 <strong>Objetivo:</strong> Levantar la copa de Oro.<br><br>🕹️ <strong>Controles:</strong> Acelerar, frenar y usar objetos.<br><br>💡 <strong>Truco Retro:</strong> Acelera en el semáforo verde para un empujón inicial." },
-    esmeralda: { consola: "gba", titulo: "P. ESMERALDA (GBA)", img: "pokemonesme.jpg", enlace: "pokemonesme.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10 (Imprescindible)", historia: "Versión definitiva de Hoenn (2004). Añadió el durísimo Frente de Batalla para expertos.", manual: "🎯 <strong>Objetivo:</strong> Ser el Campeón de la Liga Pokémon.<br><br>🕹️ <strong>Controles:</strong> Moverse y atacar.<br><br>💡 <strong>Truco Retro:</strong> Guarda partida antes de luchar con los Legendarios." },
+    esmeralda: { consola: "gba", titulo: "P. ESMERALDA (GBA)", img: "pokemonesme.jpg", enlace: "Pokemonesme.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10 (Imprescindible)", historia: "Versión definitiva de Hoenn (2004). Añadió el durísimo Frente de Batalla para expertos.", manual: "🎯 <strong>Objetivo:</strong> Ser el Campeón de la Liga Pokémon.<br><br>🕹️ <strong>Controles:</strong> Moverse y atacar.<br><br>💡 <strong>Truco Retro:</strong> Guarda partida antes de luchar con los Legendarios." },
     rubi: { consola: "gba", titulo: "POKÉMON RUBÍ (GBA)", img: "pokemonrubi.jpg", enlace: "PokemonRubi.html", valoracion: "⭐⭐⭐⭐½ 9.2/10 (Sobresaliente)", historia: "El salto a la tercera generación. Sentó las bases del competitivo con naturalezas y habilidades pasivas.", manual: "🎯 <strong>Objetivo:</strong> Conseguir 8 medallas y detener al Team Magma.<br><br>🕹️ <strong>Controles:</strong> Moverse y atacar.<br><br>💡 <strong>Truco Retro:</strong> Revisa las naturalezas de tus Pokémon para ver qué estadística potencian." }
 };
 
@@ -774,7 +774,7 @@ function irAlJuego() {
 // --- LÓGICA DE WHATSAPP ---
 function abrirTiendaGeneral() {
     reproducirClic();
-    const telefono = "34652824867"; 
+    const telefono = "34600000000"; 
     const texto = `¡Hola OLEA3D! He visto el Retro Hub y me gustaría informarme sobre los llaveros NFC personalizados.`;
     const enlaceWhatsApp = `https://wa.me/${telefono}?text=${encodeURIComponent(texto)}`;
     window.open(enlaceWhatsApp, '_blank');
@@ -784,7 +784,7 @@ function encargarLlaveroEspecifico() {
     reproducirClic();
     const juego = infoJuegos[juegoActual];
     if (juego) {
-        const telefono = "34652824867"; 
+        const telefono = "34600000000"; 
         const texto = `¡Hola! Estoy en el Retro Hub y me gustaría encargar el llavero físico personalizado con chip NFC para el juego: *${juego.titulo}*.`;
         const enlaceWhatsApp = `https://wa.me/${telefono}?text=${encodeURIComponent(texto)}`;
         window.open(enlaceWhatsApp, '_blank');
