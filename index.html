@@ -40,9 +40,9 @@ body.theme-gba .bg-grid { background: linear-gradient(transparent 10%, rgba(90,6
 header { padding: 20px 20px 5px 20px; background: linear-gradient(180deg, rgba(26,26,26,0.9), rgba(13,13,13,0)); position: relative; z-index: 10; }
 .header-logos { display: flex; justify-content: center; align-items: center; gap: 25px; margin-bottom: 15px; }
 
-/* Estilo Base para logos laterales */
-.logo-side { width: 75px; height: 75px; object-fit: cover; border-radius: 50%; cursor: pointer; transition: 0.3s; filter: brightness(1.1) saturate(1.2); /* Extra de luz y color */ position: relative; }
-.logo-side:hover { transform: scale(1.15) rotate(5deg); filter: brightness(1.3) saturate(1.4); }
+/* Estilo Base para logos laterales - ¡GIRO ELIMINADO! */
+.logo-side { width: 75px; height: 75px; object-fit: cover; border-radius: 50%; cursor: pointer; transition: 0.3s; filter: brightness(1.1) saturate(1.2); position: relative; }
+.logo-side:hover { transform: scale(1.15); filter: brightness(1.3) saturate(1.4); }
 
 /* Neón Rojo para La Beltraneja (Pub/Ciervo) */
 #logoBeltraneja { box-shadow: 0 0 15px rgba(230,0,18,0.8), inset 0 0 5px rgba(230,0,18,0.5); border: 2px solid #e60012; animation: pulseNeonRed 2.5s infinite; }
@@ -503,6 +503,7 @@ let toquesLogo = 0;
 let tiempoToques;
 
 function toqueSecreto() {
+    reproducirClic();
     toquesLogo++;
     clearTimeout(tiempoToques);
     if (toquesLogo === 3) {
@@ -538,6 +539,9 @@ let toquesBeltraneja = 0;
 let tiempoBeltraneja;
 
 function toqueBeltraneja() {
+    // Al tocar una vez, suena el bramido del ciervo sintético
+    reproducirSonidoCiervo();
+    
     toquesBeltraneja++;
     clearTimeout(tiempoBeltraneja);
     if (toquesBeltraneja === 2) {
@@ -632,6 +636,23 @@ function reproducirSonidoEscaner() {
         osc.connect(gain); gain.connect(audioCtx.destination);
         osc.start(); osc.stop(audioCtx.currentTime + 1);
     } catch (e) {}
+}
+
+// BRAMIDO DEL CIERVO (Efecto de onda de baja frecuencia)
+function reproducirSonidoCiervo() {
+    try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sawtooth'; // Onda más ronca
+        const now = audioCtx.currentTime;
+        osc.frequency.setValueAtTime(100, now); // Empieza grave
+        osc.frequency.exponentialRampToValueAtTime(40, now + 0.8); // Cae a muy grave (bramido)
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.linearRampToValueAtTime(0, now + 0.8);
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.start(now); osc.stop(now + 0.8);
+    } catch(e) {}
 }
 
 // --- BUSCADOR ---
@@ -835,7 +856,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (entry.target.id === 'nes') document.body.classList.add('theme-nes');
                 else if (entry.target.id === 'n64') document.body.classList.add('theme-n64');
                 else if (entry.target.id === 'megadrive') document.body.classList.add('theme-md');
-                else if (entry.target.id === 'snes) document.body.classList.add('theme-snes');
+                else if (entry.target.id === 'snes') document.body.classList.add('theme-snes');
                 else if (entry.target.id === 'gba') document.body.classList.add('theme-gba');
             }
         });
