@@ -30,7 +30,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 .btn-instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; padding: 10px 20px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; margin: 10px auto; font-size: 14px; transition: 0.3s; display: inline-block; text-decoration: none; position: relative; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
 .btn-instagram:hover { transform: scale(1.05); box-shadow: 0 4px 15px rgba(220, 39, 67, 0.5); }
 
-/* --- NUEVA SECCIÓN ESCAPARATE Y GALERÍA --- */
+/* --- SECCIÓN ESCAPARATE Y GALERÍA --- */
 .tienda-banner { background: rgba(20,20,20,0.85); border: 2px solid #d4af37; border-radius: 15px; margin: 10px auto 25px auto; padding: 20px; max-width: 90%; position: relative; z-index: 10; box-shadow: 0 0 20px rgba(212,175,55,0.25); backdrop-filter: blur(5px); }
 .tienda-titulo { color: #ffd700; margin: 0 0 8px 0; font-size: 20px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
 .tienda-desc { color: #ddd; font-size: 14px; margin-bottom: 15px; }
@@ -116,7 +116,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 .btn-anadir:hover { transform: scale(1.02); filter: brightness(1.2); }
 
 /* BOTÓN DE JUGAR */
-.btn-jugar-modal { display: block; width: 100%; text-align: center; padding: 14px 0; background: #6b8e23; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 16px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(107,142,35,0.6); box-shadow: border-box; transition: 0.3s; }
+.btn-jugar-modal { display: block; width: 100%; text-align: center; padding: 14px 0; background: #6b8e23; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 16px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(107,142,35,0.6); box-sizing: border-box; transition: 0.3s; }
 .btn-jugar-modal:hover { background: #88aa33; transform: translateY(-2px); }
 
 footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-size: 14px; border-top: 2px solid #222; position: relative; z-index: 10; }
@@ -127,12 +127,13 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
 .insert-coin-text { color: #ffd700; font-size: 28px; font-family: 'Courier New', Courier, monospace; font-weight: bold; text-shadow: 0 0 20px #ffd700, 0 0 40px #ff0000; animation: blink 0.5s infinite alternate; }
 @keyframes blink { from { opacity: 1; transform: scale(1); } to { opacity: 0.2; transform: scale(1.05); } }
 
+/* --- ESTILOS DE LA ANTENA NFC RETRO RECUPERADA --- */
 .nfc-scanner { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,15,0,0.95); z-index: 99999999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(10px); }
 .nfc-scanner.active { opacity: 1; pointer-events: all; }
 .nfc-laser-container { position: relative; width: 80%; max-width: 300px; height: 200px; border: 2px dashed rgba(157,255,61,0.4); border-radius: 15px; overflow: hidden; display: flex; justify-content: center; align-items: center; }
 .nfc-laser { position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: #9dff3d; box-shadow: 0 0 20px 8px rgba(157,255,61,0.6); animation: scanLaser 1.2s ease-in-out infinite alternate; }
 .nfc-icon { font-size: 50px; opacity: 0.5; animation: pulseIcon 1.2s infinite; }
-.nfc-text { color: #9dff3d; font-family: 'Courier New', monospace; margin-top: 25px; font-size: 18px; letter-spacing: 3px; animation: blinkText 0.8s infinite; }
+.nfc-text { color: #9dff3d; font-family: 'Courier New', monospace; margin-top: 25px; font-size: 18px; letter-spacing: 3px; font-weight: bold; animation: blinkText 0.8s infinite; text-shadow: 0 0 10px #9dff3d; }
 @keyframes scanLaser { 0% { transform: translateY(0); } 100% { transform: translateY(200px); } }
 @keyframes pulseIcon { 0% { text-shadow: 0 0 10px #9dff3d; } 50% { text-shadow: 0 0 30px #9dff3d; } 100% { text-shadow: 0 0 10px #9dff3d; } }
 @keyframes blinkText { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
@@ -153,7 +154,7 @@ footer { margin-top: 40px; padding: 25px; background: #111; color: #aaa; font-si
         <div class="nfc-icon">📡</div>
         <div class="nfc-laser"></div>
     </div>
-    <div class="nfc-text">LEYENDO CHIP NFC...</div>
+    <div class="nfc-text">SISTEMA OLEA3D...</div>
 </div>
 
 <div id="transitionScreen" class="transition-screen">
@@ -687,7 +688,6 @@ function irAlJuego() {
 // --- LÓGICA DE WHATSAPP ---
 function abrirTiendaGeneral() {
     reproducirClic();
-    // Pon aquí tu número real con el prefijo 34 delante
     const telefono = "34600000000"; 
     const texto = `¡Hola OLEA3D! He visto el Retro Hub y me gustaría informarme sobre los llaveros NFC personalizados.`;
     const enlaceWhatsApp = `https://wa.me/${telefono}?text=${encodeURIComponent(texto)}`;
@@ -717,10 +717,12 @@ function revisarLlaveroNFC() {
         const scannerScreen = document.getElementById("nfcScannerScreen");
         scannerScreen.classList.add("active");
         reproducirSonidoEscaner();
+        
+        // ANIMACIÓN DE 2 SEGUNDOS
         setTimeout(() => { 
             scannerScreen.classList.remove("active");
             setTimeout(() => { verFicha(hash); }, 300); 
-        }, 1200);
+        }, 2000);
     }
 }
 
