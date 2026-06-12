@@ -50,8 +50,11 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 .galeria-llaveros { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; justify-content: center; }
 .galeria-llaveros img { width: 85px; height: 85px; object-fit: cover; border-radius: 12px; border: 2px solid #9acd32; transition: 0.3s; }
 .btn-tienda-principal { background: #25D366; color: white; border: none; padding: 12px 25px; border-radius: 25px; font-weight: bold; font-size: 15px; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 10px rgba(37,211,102,0.4); }
-.buscador-container { margin: 15px auto 10px auto; max-width: 400px; padding: 0 15px; position: relative; z-index: 10; }
-#buscadorJuegos { width: 100%; padding: 12px 20px; border-radius: 25px; border: 2px solid #d4af37; background: rgba(18, 18, 18, 0.8); color: white; font-size: 16px; text-align: center; outline: none; }
+
+/* --- BUSCADOR CORREGIDO Y COMPACTADO --- */
+.buscador-container { margin: 15px auto 10px auto; width: 90%; max-width: 320px; position: relative; z-index: 10; display: flex; justify-content: center; }
+#buscadorJuegos { width: 100%; box-sizing: border-box; padding: 10px 15px; border-radius: 25px; border: 2px solid #d4af37; background: rgba(18, 18, 18, 0.8); color: white; font-size: 14px; text-align: center; outline: none; }
+
 .menu { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin: 15px auto; padding: 10px; max-width: 95%; position: relative; z-index: 10; }
 .menu a { color: white; text-decoration: none; background: #222; padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; border: 1px solid #d4af37; }
 
@@ -125,17 +128,20 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 @keyframes blink { from { opacity: 1; } to { opacity: 0.2; } }
 .nfc-scanner { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,10,0,0.97); z-index: 999999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: 0.3s; backdrop-filter: blur(10px); }
 .nfc-scanner.active { opacity: 1; pointer-events: all; }
-.nfc-laser { width: 250px; height: 2px; background: #9dff3d; box-shadow: 0 0 15px #9dff3d; position: absolute; animation: scan 1.5s infinite alternate; }
-@keyframes scan { from { transform: translateY(-100px); } to { transform: translateY(100px); } }
+.nfc-laser-container { position: relative; width: 80%; max-width: 300px; height: 200px; border: 2px dashed rgba(157,255,61,0.4); border-radius: 15px; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+.nfc-laser { position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: #9dff3d; box-shadow: 0 0 20px 8px rgba(157,255,61,0.6); animation: scanLaser 1.2s infinite alternate; }
+.nfc-logo-scan { width: 110px; border-radius: 50%; box-shadow: 0 0 20px #d4af37; z-index: 5; }
+.nfc-text { color: #9dff3d; font-family: 'Courier New', monospace; margin-top: 25px; font-size: 18px; font-weight: bold; }
+@keyframes scanLaser { 0% { transform: translateY(0); } 100% { transform: translateY(200px); } }
 
-/* TABLA RECORDS */
-.salon-fama { background: #fff; color: #000; border-radius: 0 0 8px 8px; padding: 10px; display: none; min-height: 240px; border: 1px solid #ccc; margin-bottom: 10px;}
-.tabla-records { width: 100%; border-collapse: collapse; font-family: monospace; font-weight: bold; font-size: 13px; }
-.tabla-records th { background: #000; color: #fff; padding: 5px; }
-.tabla-records td { border-bottom: 1px dashed #ccc; padding: 5px; text-align: center; }
-
-/* MODAL PAYWALL */
-#modalPaywall .ficha-content { text-align: center; border-color: #e60012; box-shadow: 0 0 40px #e60012; max-width: 400px; background: #111; }
+/* Salón de Fama en Revista */
+.salon-fama { background: #fff; padding: 15px; border-radius: 0 0 10px 10px; margin-bottom: 15px; display: none; min-height: 240px; border: 1px solid #ccc; }
+.tabla-records { width: 100%; border-collapse: collapse; color: #111; font-family: 'Courier New', monospace; font-size: 13px; font-weight: bold; }
+.tabla-records th { background: #000; color: #fff; padding: 5px; text-align: center; border: 2px solid #000; }
+.tabla-records td { padding: 5px; text-align: center; border-bottom: 1px dashed #ccc; vertical-align: middle; }
+.tabla-records tr:nth-child(1) { font-size: 14px; }
+.btn-anadir { background: #005b9f; color: #fff; border: none; padding: 12px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; font-family: 'Impact'; font-size: 16px; text-transform: uppercase; }
+.secreto::before { background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff) !important; animation: brilloSeda 2s linear infinite !important; }
 </style>
 </head>
 
@@ -143,25 +149,26 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 <div id="toastDesbloqueo" class="toast-notification">🔓 ¡SISTEMA DESBLOQUEADO! Catálogo Premium activado.</div>
 
 <div id="nfcScannerScreen" class="nfc-scanner">
-    <div class="nfc-laser-container" style="position:relative; width: 80%; max-width: 300px; height: 200px; border: 2px dashed rgba(157,255,61,0.4); border-radius: 15px; overflow: hidden; display: flex; justify-content: center; align-items: center;">
-        <img src="logo.png" style="width:100px; border-radius:50%; position:relative; box-shadow: 0 0 20px #d4af37; z-index: 5;">
-        <div class="nfc-laser" style="position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: #9dff3d; box-shadow: 0 0 20px 8px rgba(157,255,61,0.6); animation: scanLaser 1.2s infinite alternate;"></div>
+    <div class="nfc-laser-container">
+        <img src="logo.png" class="nfc-logo-scan">
+        <div class="nfc-laser"></div>
     </div>
-    <div class="nfc-text" style="color: #9dff3d; font-family: 'Courier New', monospace; margin-top: 25px; font-size: 18px; font-weight: bold;">SISTEMA OLEA3D...</div>
+    <div class="nfc-text">SISTEMA OLEA3D...</div>
 </div>
-<style>@keyframes scanLaser { 0% { transform: translateY(0); } 100% { transform: translateY(200px); } }</style>
 
-<div id="transitionScreen" class="transition-screen"><div class="insert-coin-text">> INSERT COIN <</div></div>
+<div id="transitionScreen" class="transition-screen">
+    <div class="insert-coin-text">> INSERT COIN <</div>
+</div>
 
 <div class="bg-grid"></div>
 
 <header>
     <div class="header-logos">
         <img src="beltraneja.png" class="logo-side" id="logoBeltraneja" onclick="toqueBeltraneja()" onerror="this.style.display='none'">
-        <img src="logo.png" class="logo" onclick="toqueSecreto()">
-        <img src="garden.png" class="logo-side" id="logoGarden" onerror="this.style.display='none'">
+        <img src="logo.png" class="logo" alt="OLEA3D Logo" onclick="toqueSecreto()">
+        <img src="garden.png" class="logo-side" id="logoGarden" alt="Cafetería Garden" onerror="this.style.display='none'">
     </div>
-    <h1>OLEA3D Retro Hub</h1>
+    <h1>OLEA3D Hub Retro</h1>
     <p class="sub">Acerca tu llavero y todo estará listo para jugar</p>
     <a href="https://www.instagram.com/olea3d/" target="_blank" class="btn-instagram" onclick="reproducirClic()">📸 Síguenos en @olea3d</a>
 </header>
@@ -450,7 +457,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 
 <div id="modalFicha" class="modal-ficha">
     <div class="ficha-content">
-        <button class="close-btn" onclick="cerrarFicha()">X</button>
+        <button class="close-btn" onclick="reproducirClic(); cerrarFicha();">X</button>
         <div class="ficha-header">
             <img id="fichaImg" src="">
             <div class="ficha-titulos">
@@ -460,9 +467,9 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
         </div>
         
         <div class="tabs">
-            <button id="tabHistoria" class="tab-btn active" onclick="cambiarPestana('historia')">📰 EL ANÁLISIS</button>
-            <button id="tabManual" class="tab-btn" onclick="cambiarPestana('manual')">🎮 ZONA TRUCOS</button>
-            <button id="tabFama" class="tab-btn" onclick="cambiarPestana('fama')">🏆 HIGH SCORES</button>
+            <button id="tabHistoria" class="tab-btn active" onclick="reproducirClic(); cambiarPestana('historia');">📰 EL ANÁLISIS</button>
+            <button id="tabManual" class="tab-btn" onclick="reproducirClic(); cambiarPestana('manual');">🎮 ZONA TRUCOS</button>
+            <button id="tabFama" class="tab-btn" onclick="reproducirClic(); cambiarPestana('fama');">🏆 HIGH SCORES</button>
         </div>
 
         <div id="flipbookWrapper">
@@ -479,11 +486,11 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
                 <thead><tr><th>POS</th><th>PLAYER</th><th>PUNTOS</th></tr></thead>
                 <tbody id="bodyRecords"></tbody>
             </table>
-            <button style="background:#005b9f; color:#fff; border:none; padding:10px; width:100%; border-radius:5px; margin-top:10px; font-family:Impact;" onclick="anadirRecord()">➕ FIRMAR RÉCORD</button>
+            <button style="background:#005b9f; color:#fff; border:none; padding:10px; width:100%; border-radius:5px; margin-top:10px; font-family:Impact; font-size:16px; text-transform:uppercase; cursor:pointer;" onclick="anadirRecord()">➕ FIRMAR RÉCORD</button>
         </div>
 
         <div class="botones-row">
-            <button class="btn-nav btn-catalog" onclick="cerrarFicha()">👀 VER CATÁLOGO</button>
+            <button class="btn-nav btn-catalog" onclick="reproducirClic(); cerrarFicha();">👀 VER CATÁLOGO</button>
             <button class="btn-nav btn-shop" onclick="encargarLlaveroEspecifico()">🛒 PEDIR LLAVERO</button>
         </div>
         <button class="btn-play" onclick="irAlJuego()">🪙 INSERT COIN (JUGAR)</button>
@@ -506,28 +513,14 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 
 <script>
 // --- MOTOR DE AUDIO ---
-let audioCtx = null;
-function playSound(type) {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.connect(gain); gain.connect(audioCtx.destination);
-    const now = audioCtx.currentTime;
-    if (type === 'coin') { osc.type = 'square'; osc.frequency.setValueAtTime(987, now); osc.frequency.setValueAtTime(1318, now + 0.1); gain.gain.setValueAtTime(0.1, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4); osc.start(); osc.stop(now + 0.4); }
-    if (type === 'flip') { osc.type = 'sine'; osc.frequency.setValueAtTime(300, now); osc.frequency.exponentialRampToValueAtTime(100, now + 0.15); gain.gain.setValueAtTime(0.05, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15); osc.start(); osc.stop(now + 0.15); }
-    if (type === 'scan') { osc.type = 'sawtooth'; osc.frequency.setValueAtTime(200, now); osc.frequency.linearRampToValueAtTime(800, now + 0.5); gain.gain.setValueAtTime(0.05, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 1); osc.start(); osc.stop(now + 1); }
-    if (type === '1up') { osc.type = 'square'; osc.frequency.setValueAtTime(1318.51,now); osc.frequency.setValueAtTime(1567.98,now+0.1); osc.frequency.setValueAtTime(2093.00,now+0.2); osc.frequency.setValueAtTime(2637.02,now+0.3); osc.frequency.setValueAtTime(3135.96,now+0.4); gain.gain.setValueAtTime(0.1,now); gain.gain.linearRampToValueAtTime(0,now+0.6); osc.start(); osc.stop(now+0.6); }
-    if (type === 'error') { osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150,now); osc.frequency.exponentialRampToValueAtTime(50,now+0.3); gain.gain.setValueAtTime(0.2,now); gain.gain.exponentialRampToValueAtTime(0.001,now+0.3); osc.start(); osc.stop(now+0.3); }
-    if (type === 'clic') { osc.type = 'square'; osc.frequency.setValueAtTime(440,now); osc.frequency.exponentialRampToValueAtTime(880,now+0.1); gain.gain.setValueAtTime(0.1,now); gain.gain.exponentialRampToValueAtTime(0.001,now+0.1); osc.start(); osc.stop(now+0.1); }
-}
-
-function reproducirClic() { playSound('clic'); }
-function reproducirSonidoCoin() { playSound('coin'); }
-function reproducirSonido1UP() { playSound('1up'); }
-function reproducirSonidoError() { playSound('error'); }
-function reproducirSonidoEscaner() { playSound('scan'); }
-function reproducirSonidoFlip() { playSound('flip'); }
+let globalAudioCtx = null;
+function getAudioCtx() { if (!globalAudioCtx) { globalAudioCtx = new (window.AudioContext || window.webkitAudioContext)(); } if (globalAudioCtx.state === 'suspended') { globalAudioCtx.resume(); } return globalAudioCtx; }
+function reproducirSonido1UP() { try { const ctx=getAudioCtx(); const osc=ctx.createOscillator(); const gain=ctx.createGain(); osc.type='square'; const now=ctx.currentTime; osc.frequency.setValueAtTime(1318.51,now); osc.frequency.setValueAtTime(1567.98,now+0.1); osc.frequency.setValueAtTime(2093.00,now+0.2); osc.frequency.setValueAtTime(2637.02,now+0.3); osc.frequency.setValueAtTime(3135.96,now+0.4); gain.gain.setValueAtTime(0.1,now); gain.gain.linearRampToValueAtTime(0,now+0.6); osc.connect(gain); gain.connect(ctx.destination); osc.start(now); osc.stop(now+0.6); } catch(e){} }
+function reproducirClic() { try { const ctx=getAudioCtx(); const osc=ctx.createOscillator(); const gain=ctx.createGain(); osc.type='square'; osc.frequency.setValueAtTime(440,ctx.currentTime); osc.frequency.exponentialRampToValueAtTime(880,ctx.currentTime+0.1); gain.gain.setValueAtTime(0.1,ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.1); osc.connect(gain); gain.connect(ctx.destination); osc.start(); osc.stop(ctx.currentTime+0.1); } catch(e){} }
+function reproducirSonidoCoin() { try { const ctx=getAudioCtx(); const osc=ctx.createOscillator(); const gain=ctx.createGain(); osc.type='square'; osc.frequency.setValueAtTime(987.77,ctx.currentTime); osc.frequency.setValueAtTime(1318.51,ctx.currentTime+0.1); gain.gain.setValueAtTime(0.1,ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.4); osc.connect(gain); gain.connect(ctx.destination); osc.start(); osc.stop(ctx.currentTime+0.4); } catch(e){} }
+function reproducirSonidoError() { try { const ctx=getAudioCtx(); const osc=ctx.createOscillator(); const gain=ctx.createGain(); osc.type='sawtooth'; osc.frequency.setValueAtTime(150,ctx.currentTime); osc.frequency.exponentialRampToValueAtTime(50,ctx.currentTime+0.3); gain.gain.setValueAtTime(0.2,ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.3); osc.connect(gain); gain.connect(ctx.destination); osc.start(); osc.stop(ctx.currentTime+0.3); } catch(e){} }
+function reproducirSonidoEscaner() { try { const ctx=getAudioCtx(); const osc=ctx.createOscillator(); const gain=ctx.createGain(); osc.type='sawtooth'; osc.frequency.setValueAtTime(200,ctx.currentTime); osc.frequency.linearRampToValueAtTime(800,ctx.currentTime+0.5); gain.gain.setValueAtTime(0.05,ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+1); osc.connect(gain); gain.connect(ctx.destination); osc.start(); osc.stop(ctx.currentTime+1); } catch(e){} }
+function reproducirSonidoFlip() { try { const ctx=getAudioCtx(); const osc=ctx.createOscillator(); const gain=ctx.createGain(); osc.type='sine'; osc.frequency.setValueAtTime(300,ctx.currentTime); osc.frequency.exponentialRampToValueAtTime(100,ctx.currentTime+0.15); gain.gain.setValueAtTime(0.05,ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.15); osc.connect(gain); gain.connect(ctx.destination); osc.start(); osc.stop(ctx.currentTime+0.15); } catch(e){} }
 
 window.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
@@ -539,18 +532,20 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 let toquesLogo = 0, tiempoToques;
-function toqueSecreto() { reproducirClic(); toquesLogo++; clearTimeout(tiempoToques); if(toquesLogo===3){ const t=document.getElementById("tarjetaSecreta"); if(t){ t.style.display="block"; t.scrollIntoView({behavior:'smooth',block:'center'}); reproducirSonido1UP(); } toquesLogo=0; } else { tiempoToques=setTimeout(()=>{toquesLogo=0;},1000); } }
+function toqueSecreto() { reproducirClic(); toquesLogo++; clearTimeout(tiempoToques); if(toquesLogo===3){ desbloquearSecreto(); toquesLogo=0; } else { tiempoToques=setTimeout(()=>{toquesLogo=0;},1000); } }
+function desbloquearSecreto() { const tarjeta=document.getElementById("tarjetaSecreta"); if(tarjeta){ tarjeta.style.display="block"; tarjeta.scrollIntoView({behavior:'smooth',block:'center'}); reproducirSonido1UP(); } }
 
 let toquesBeltraneja = 0, tiempoBeltraneja;
-function toqueBeltraneja() { reproducirClic(); toquesBeltraneja++; clearTimeout(tiempoBeltraneja); if(toquesBeltraneja===2){ const t=document.getElementById("tarjetaCiervo"); if(t){ t.style.display="block"; t.scrollIntoView({behavior:'smooth',block:'center'}); reproducirSonidoCoin(); } toquesBeltraneja=0; } else { tiempoBeltraneja=setTimeout(()=>{toquesBeltraneja=0;},500); } }
+function toqueBeltraneja() { reproducirClic(); toquesBeltraneja++; clearTimeout(tiempoBeltraneja); if(toquesBeltraneja===2){ desbloquearCiervo(); toquesBeltraneja=0; } else { tiempoBeltraneja=setTimeout(()=>{toquesBeltraneja=0;},500); } }
+function desbloquearCiervo() { const tarjeta=document.getElementById("tarjetaCiervo"); if(tarjeta){ tarjeta.style.display="block"; tarjeta.scrollIntoView({behavior:'smooth',block:'center'}); reproducirSonidoCoin(); } }
 
 // --- LA BASE DE DATOS TITÁNICA AL 100% (LOS 28 JUEGOS CON TODOS LOS TEXTOS EXTENDIDOS) ---
 const infoJuegos = {
     // 🕹️ ARCADE
     cadillacs: { 
         consola: "arcade", titulo: "CADILLACS & DINOSAURS", img: "dino.jpg", enlace: "dino.html", valoracion: "NOTA: 98/100", wr: { nombre: "YOO", puntos: "9.999.900" },
-        historia: ["<h2 class='mag-titular'>MEGA HIT ARCADE</h2><p>En 1993, a los genios de Capcom se les ocurrió mezclar las tres cosas que más molaban en la época: tíos duros, coches clásicos y dinosaurios enormes. Basado en el cómic <em>Xenozoic Tales</em> de Mark Schultz, este juego arrasó literalmente en los salones recreativos.</p><div class='mag-box'><strong>EL ARGUMENTO:</strong> El planeta se ha ido al traste y la naturaleza ha reclamado la Tierra. Ahora los humanos conviven con dinosaurios resucitados. Una banda de furtivos (los Black Marketeers) está cazando a los dinos para mutarlos. Tu misión es reventarlos a golpes.</div>", "<h2 class='mag-sub'>Los Protagonistas</h2><p>Tienes a tu disposición a 4 auténticos bestias:<br><br><strong>Jack Tenrec:</strong> El mecánico equilibrado. Ideal para principiantes.<br><strong>Hannah Dundee:</strong> Es rápida como el rayo, usa objetos con maestría.<br><strong>Mustapha Cairo:</strong> El favorito de los pros. Su patada voladora es letal.<br><strong>Mess O'Bradovich:</strong> Lento, pero levanta a los enemigos por los aires como si fueran de papel.</p>"],
-        manual: ["<h2 class='mag-titular'>S.O.S. TRUCOS</h2><p>La sanidad no importa aquí. Si ves un pollo asado entero, un perrito caliente o una pizza intacta escondidos dentro de un bidón de metal oxidado o una caja de madera... <strong>cómetelo sin dudar</strong>. Curará tu barra de vida mágicamente.</p><div class='mag-truco'><span>TRUCO SECRETO: EL COCHE DE LA MUERTE</span>En el Nivel 3, podrás subirte al mismísimo Cadillac. El truco aquí es <strong>no frenar jamás</strong>. Acelera de lado a lado de la pantalla atropellando a los enemigos para conseguir una burrada de puntos extra. Si lo haces perfecto, te darán una vida extra.</div>", "<h2 class='mag-sub'>Combos de Combate</h2><p><strong>Golpe + Salto:</strong> Pulsa ambos botones a la vez para hacer tu ataque especial giratorio a 360 grados. Te salvará la vida cuando estés rodeado por los cazadores furtivos, pero ojo: <em>¡te resta un poquito de tu propia vida al impactar contra los enemigos!</em> Úsalo solo en caso de emergencia.</p><p><strong>Combo de Mustapha:</strong> Adelante, Adelante + Salto + Golpe. Verás su famosa patada voladora con destello amarillo que limpia la pantalla entera.</p>"] 
+        historia: ["<h2 class='mag-titular'>MEGA HIT ARCADE</h2><p>En 1993, a los genios de Capcom se les ocurrió mezclar las tres cosas que más molaban en la época: tíos duros, coches clásicos y dinosaurios enormes. Basado en el cómic <em>Xenozoic Tales</em> de Mark Schultz, este juego arrasó literalmente en los salones recreativos, tragándose las monedas de cinco duros de toda una generación.</p><div class='mag-box'><strong>EL ARGUMENTO:</strong> El planeta se ha ido al traste y la naturaleza ha reclamado la Tierra. Ahora los humanos conviven con dinosaurios resucitados. Una banda de furtivos (los Black Marketeers) está cazando a los dinos para mutarlos. Tu misión es reventarlos a golpes.</div>", "<h2 class='mag-sub'>Los Protagonistas</h2><p>Tienes a tu disposición a 4 auténticos bestias:<br><br><strong>Jack Tenrec:</strong> El mecánico equilibrado. Ideal para principiantes.<br><strong>Hannah Dundee:</strong> Es rápida como el rayo, usa objetos con maestría.<br><strong>Mustapha Cairo:</strong> El favorito de los pros. Su patada voladora es letal.<br><strong>Mess O'Bradovich:</strong> Lento, pero levanta a los enemigos por los aires como si fueran de papel.</p>"],
+        manual: ["<h2 class='mag-titular'>S.O.S. TRUCOS</h2><p>Apunta bien estos consejos si quieres llegar vivo al jefe final. La sanidad no importa aquí. Si ves un pollo asado entero, un perrito caliente o una pizza intacta escondidos dentro de un bidón de metal oxidado o una caja de madera... <strong>cómetelo sin dudar</strong>. Curará tu barra de vida mágicamente.</p><div class='mag-truco'><span>TRUCO SECRETO: EL COCHE DE LA MUERTE</span>En el Nivel 3, podrás subirte al mismísimo Cadillac. El truco aquí es <strong>no frenar jamás</strong>. Acelera de lado a lado de la pantalla atropellando a los enemigos para conseguir una burrada de puntos extra. Si lo haces perfecto, te darán una vida extra.</div>", "<h2 class='mag-sub'>Combos de Combate</h2><p><strong>Golpe + Salto:</strong> Pulsa ambos botones a la vez para hacer tu ataque especial giratorio a 360 grados. Te salvará la vida cuando estés rodeado por los cazadores furtivos, pero ojo: <em>¡te resta un poquito de tu propia vida al impactar contra los enemigos!</em> Úsalo solo en caso de emergencia.</p><p><strong>Combo de Mustapha:</strong> Adelante, Adelante + Salto + Golpe. Verás su famosa patada voladora con destello amarillo que limpia la pantalla entera.</p>"] 
     },
     kof94: { 
         consola: "arcade", titulo: "KOF '94", img: "thekingoffighters94.jpg", enlace: "kof94.html", valoracion: "NOTA: 90/100", wr: { nombre: "DAI", puntos: "2.350.000" },
@@ -624,7 +619,7 @@ const infoJuegos = {
     castlegacy: { 
         consola: "n64", titulo: "CASTLEVANIA", img: "castlegacy.jpg", enlace: "Castlegacy.html", valoracion: "NOTA: 82/100", wr: { nombre: "BEL", puntos: "100%" },
         historia: ["<h2 class='mag-titular'>VAMPIROS POLIGONALES</h2><p>Conocido popularmente como Castlevania 64, fue el primer y ambicioso salto de la legendaria familia de cazavampiros a las tres dimensiones de la N64. El juego es oscuro y lúgubre, pero todo el mundo le echaba la culpa de sus muertes al mismísimo Drácula, cuando en realidad, el verdadero jefe final invencible del juego era el nefasto control automático de la cámara.</p>"], 
-        manual: ["<h2 class='mag-titular'>DIARIO DEL CAZADOR</h2><p>Adéntrate en los pasillos de Transilvania, elige entre el espadachín Cornell o la portadora de anillos mágicos Carrie, y usa tus armas sagradas contra las criaturas de la noche.</p><div class='mag-truco'><span>NUTRICIÓN DUDOSA Y EXPLOSIVOS</span>Esta saga tiene una lógica aplastante. Si rompes los candelabros del techo o golpeas las paredes milenarias del castillo, mágicamente encontrarás pollos asados perfectamente conservados dentro del muro. Cómetelos para curarte sin hacer preguntas.</div>"] 
+        manual: ["<h2 class='mag-titular'>DIARIO DEL CAZADOR</h2><p>Adéntrate en el oscuro castillo de Transilvania, elige entre el espadachín Cornell o la portadora de anillos mágicos Carrie, y usa tus armas sagradas contra las criaturas de la noche.</p><div class='mag-truco'><span>NUTRICIÓN DUDOSA Y EXPLOSIVOS</span>Esta saga tiene una lógica aplastante. Si rompes los candelabros del techo o golpeas las paredes milenarias del castillo, mágicamente encontrarás pollos asados perfectamente conservados dentro del muro. Cómetelos para curarte sin hacer preguntas.</div>"] 
     },
     mortalkomleg64: { 
         consola: "n64", titulo: "MORTAL KOMBAT", img: "mortalkom64.png", enlace: "mortalkomleg64.html", valoracion: "NOTA: 87/100", wr: { nombre: "SHA", puntos: "99 Wins" },
@@ -737,7 +732,7 @@ function pasarPagina(dir) {
     updateIndicator();
 }
 
-function updateIndicator() { document.getElementById('pageIndicator').innerText = `${currentPage + 1} / ${totalPages}`; }
+function updateIndicator() { document.getElementById('pageIndicator').innerText = `Pág ${currentPage + 1} de ${totalPages}`; }
 
 function renderRecords() {
     const j = infoJuegos[currentId];
