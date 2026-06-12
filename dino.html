@@ -7,25 +7,82 @@
     <style>
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; background-color: #000; overflow: hidden; font-family: Arial, sans-serif; }
         #game-container { width: 100%; height: 100vh; display: flex; justify-content: center; align-items: center; }
-        .btn-volver { position: absolute; top: 20px; left: 20px; background: rgba(0,0,0,0.8); color: #d4af37; text-decoration: none; padding: 12px 20px; font-weight: bold; border: 2px solid #d4af37; border-radius: 8px; z-index: 10000; box-shadow: 0 0 15px rgba(212,175,55,0.5); text-transform: uppercase; transition: 0.3s; }
-        .btn-volver:hover { background: #d4af37; color: #000; }
+
+        /* Botón elegante estilo OLEA3D */
+        #btn-volver {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(18, 18, 18, 0.6);
+            color: #d4af37;
+            text-decoration: none;
+            padding: 10px 15px;
+            font-weight: bold;
+            border: 1px solid #d4af37;
+            border-radius: 25px;
+            z-index: 10000;
+            box-shadow: 0 0 10px rgba(212,175,55,0.3);
+            font-size: 13px;
+            transition: opacity 0.5s ease, transform 0.3s ease;
+            opacity: 1; 
+            backdrop-filter: blur(5px);
+            text-transform: uppercase;
+        }
+
+        /* Clase que oculta el botón sin estorbar al táctil */
+        #btn-volver.oculto {
+            opacity: 0;
+            pointer-events: none; 
+        }
+
+        #btn-volver:hover {
+            background: #d4af37;
+            color: #000;
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
-    <a href="index.html" class="btn-volver">⬅ VOLVER AL MENÚ</a>
+    <a href="index.html" id="btn-volver">⬅ Volver al Hub</a>
 
     <div id="game-container">
         <div id="game"></div>
     </div>
 
     <script>
+        // --- LÓGICA DEL BOTÓN AUTO-OCULTABLE ---
+        let temporizador;
+        const btnVolver = document.getElementById('btn-volver');
+
+        function reiniciarTemporizador() {
+            // Muestra el botón
+            btnVolver.classList.remove('oculto');
+            
+            // Limpia el temporizador anterior
+            clearTimeout(temporizador);
+            
+            // Lo vuelve a ocultar tras 3 segundos de inactividad
+            temporizador = setTimeout(() => {
+                btnVolver.classList.add('oculto');
+            }, 3000); 
+        }
+
+        // Detectar si el usuario toca la pantalla, hace clic o mueve el ratón
+        window.addEventListener('mousemove', reiniciarTemporizador);
+        window.addEventListener('touchstart', reiniciarTemporizador);
+        window.addEventListener('click', reiniciarTemporizador);
+
+        // Iniciar el contador nada más cargar
+        reiniciarTemporizador();
+
+        // --- EMULADOR ---
         EJS_player = '#game';
-        EJS_core = 'arcade'; // Núcleo de recreativas
+        EJS_core = 'arcade'; 
         EJS_gameName = 'Cadillacs and Dinosaurs';
         EJS_color = '#d4af37';
         EJS_startOnLoaded = true;
         EJS_pathtodata = 'https://cdn.jsdelivr.net/gh/ethanaobrien/emulatorjs@main/data/';
-        EJS_gameUrl = 'dino.zip'; // El archivo zip que subiste
+        EJS_gameUrl = 'dino.zip'; 
     </script>
     <script src="https://cdn.jsdelivr.net/gh/ethanaobrien/emulatorjs@main/data/loader.js"></script>
 </body>
