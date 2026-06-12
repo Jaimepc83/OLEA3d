@@ -10,8 +10,12 @@
 <title>OLEA3D Retro Hub</title>
 
 <style>
-/* 1. VARIABLES */
-:root { --modal-border: #d4af37; --modal-title: #ffd700; --modal-tab: #9dff3d; }
+/* 1. VARIABLES CAMALEÓNICAS */
+:root {
+    --modal-border: #d4af37;
+    --modal-title: #ffd700;
+    --modal-tab: #9dff3d;
+}
 
 /* 2. ESTILOS BASE Y FONDO DINÁMICO */
 body { margin: 0; font-family: Arial, sans-serif; background-color: #0d0d0d; color: white; text-align: center; overflow-x: hidden; position: relative; min-height: 100vh; transition: background-color 0.8s ease; padding-top: env(safe-area-inset-top); }
@@ -27,10 +31,11 @@ body.theme-snes { background-color: #000c1a; }
 body.theme-snes .bg-grid { background: linear-gradient(transparent 10%, rgba(0,91,159,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(0,91,159,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(0,91,159,0.3) 21px); }
 body.theme-gba { background-color: #1a001a; } 
 body.theme-gba .bg-grid { background: linear-gradient(transparent 10%, rgba(90,66,155,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(90,66,155,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(90,66,155,0.3) 21px); }
+
 .bg-grid { position: fixed; bottom: 0; left: -50%; width: 200%; height: 60vh; background: linear-gradient(transparent 10%, rgba(157,255,61,0.3) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(157,255,61,0.5) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(157,255,61,0.5) 21px); transform-origin: bottom; transform: perspective(500px) rotateX(60deg); animation: gridMove 2s linear infinite; z-index: -1; opacity: 0.6; transition: background 0.8s ease; }
 @keyframes gridMove { 0% { transform: perspective(500px) rotateX(60deg) translateY(0); } 100% { transform: perspective(500px) rotateX(60deg) translateY(21px); } }
 
-/* CABECERA Y LOGOS */
+/* CABECERA Y LOGOS NEÓN */
 header { padding: 20px 20px 5px 20px; background: linear-gradient(180deg, rgba(26,26,26,0.9), rgba(13,13,13,0)); position: relative; z-index: 10; }
 .header-logos { display: flex; justify-content: center; align-items: center; gap: 25px; margin-bottom: 15px; }
 .logo-side { width: 75px; height: 75px; object-fit: cover; border-radius: 50%; cursor: pointer; transition: 0.3s; filter: brightness(1.1) saturate(1.2); }
@@ -44,18 +49,21 @@ header { padding: 20px 20px 5px 20px; background: linear-gradient(180deg, rgba(2
 h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
 .sub { color: #9acd32; font-size: 16px; margin-bottom: 10px; }
 .btn-instagram { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); color: white; padding: 10px 20px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; display: inline-block; text-decoration: none; position: relative; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.5); transition: 0.3s; }
+.btn-instagram:hover { transform: scale(1.05); }
 
-/* TIENDA Y BÚSQUEDA */
+/* TIENDA Y BUSCADOR */
 .tienda-banner { background: rgba(20,20,20,0.85); border: 2px solid #d4af37; border-radius: 15px; margin: 10px auto 25px auto; padding: 20px; max-width: 90%; position: relative; z-index: 10; backdrop-filter: blur(5px); box-shadow: 0 0 20px rgba(212,175,55,0.25); }
 .tienda-titulo { color: #ffd700; margin: 0 0 8px 0; font-size: 20px; }
 .tienda-desc { color: #ddd; font-size: 14px; margin-bottom: 15px; }
 .galeria-llaveros { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; justify-content: center; }
 .galeria-llaveros img { width: 85px; height: 85px; object-fit: cover; border-radius: 12px; border: 2px solid #9acd32; transition: 0.3s; }
+.galeria-llaveros img:hover { transform: scale(1.1); }
 .btn-tienda-principal { background: #25D366; color: white; border: none; padding: 12px 25px; border-radius: 25px; font-weight: bold; font-size: 15px; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 10px rgba(37,211,102,0.4); }
 .buscador-container { margin: 15px auto 10px auto; max-width: 400px; padding: 0 15px; position: relative; z-index: 10; }
-#buscadorJuegos { width: 100%; padding: 12px 20px; border-radius: 25px; border: 2px solid #d4af37; background: rgba(18, 18, 18, 0.8); color: white; font-size: 16px; text-align: center; outline: none; }
+#buscadorJuegos { width: 100%; padding: 12px 20px; border-radius: 25px; border: 2px solid #d4af37; background: rgba(18, 18, 18, 0.8); color: white; font-size: 16px; text-align: center; outline: none; box-shadow: 0 0 15px rgba(212,175,55,0.3); }
 .menu { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin: 15px auto; padding: 10px; max-width: 95%; position: relative; z-index: 10; }
-.menu a { color: white; text-decoration: none; background: #222; padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; border: 1px solid #d4af37; }
+.menu a { color: white; text-decoration: none; background: #222; padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; border: 1px solid #d4af37; transition: 0.3s; }
+.menu a:hover { background: #d4af37; color: #111; }
 
 /* CONTENEDORES DE JUEGOS */
 .main-container { max-width: 1200px; margin: auto; padding: 10px; position: relative; z-index: 10; }
@@ -71,29 +79,53 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 .card h2 { color: #fff; font-size: 15px; margin: 8px 0; text-transform: uppercase; }
 .card img { max-height: 110px; object-fit: contain; border-radius: 8px; }
 .btn-ver { display: inline-block; padding: 10px 15px; background: #6b8e23; color: white; border-radius: 6px; font-weight: bold; font-size: 12px; }
+.stats { margin: 10px 0; font-size: 16px; font-weight: bold; color: #9dff3d; }
 .nfc-badge { display: inline-block; background: #9dff3d; color: #111; font-weight: bold; padding: 3px 10px; border-radius: 20px; margin: 2px; font-size: 11px; }  
 
-/* --- MODAL ESTILO REVISTA --- */
+/* --- EL NUEVO MODAL ESTILO REVISTA NOVENTERA --- */
 .modal-ficha { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 99999; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box; backdrop-filter: blur(8px); }
 .ficha-content { background: #1a1a1a; border: 4px solid var(--modal-border); border-radius: 15px; max-width: 500px; width: 100%; padding: 20px; position: relative; max-height: 95vh; overflow-y: auto; text-align: left; box-sizing: border-box; animation: popIn 0.3s; box-shadow: 0 0 30px rgba(0,0,0,0.8); }
 @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 .close-btn { position: absolute; top: -10px; right: -10px; background: #ff003c; color: white; border: 3px solid #fff; width: 40px; height: 40px; font-weight: bold; border-radius: 50%; cursor: pointer; font-size: 16px; z-index: 20; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+
+/* Cabecera Modal */
 .ficha-header { display: flex; gap: 15px; align-items: center; margin-bottom: 15px; background: #000; padding: 10px; border-radius: 10px; border-left: 5px solid var(--modal-border); }
 .ficha-header img { width: 80px; border-radius: 5px; object-fit: contain; border: 1px solid #333; }
 .ficha-titulos h2 { color: #fff; margin: 0; font-size: 22px; font-style: italic; text-transform: uppercase; font-family: 'Impact', sans-serif; letter-spacing: 1px; }
 .valoracion-box { background: #e60012; border: 2px solid #fff; color: white; padding: 4px 10px; border-radius: 5px; font-size: 14px; font-weight: bold; display: inline-block; margin-top: 5px; transform: skew(-10deg); }
+
+/* Pestañas estilo Revista */
 .tabs { display: flex; gap: 5px; margin-bottom: 10px; border-bottom: 4px solid #444; padding-bottom: 0; }
-.tab-btn { background: #333; color: #aaa; border: none; font-size: 14px; font-weight: 900; cursor: pointer; padding: 10px 15px; border-radius: 10px 10px 0 0; transition: 0.2s; text-transform: uppercase; font-family: 'Impact', sans-serif; }
+.tab-btn { background: #333; color: #aaa; border: none; font-size: 14px; font-weight: 900; cursor: pointer; padding: 10px 15px; border-radius: 10px 10px 0 0; transition: 0.2s; text-transform: uppercase; font-family: 'Impact', sans-serif; letter-spacing: 1px; }
 .tab-btn.active { background: #fff; color: #000; border-top: 4px solid var(--modal-border); border-left: 4px solid var(--modal-border); border-right: 4px solid var(--modal-border); transform: translateY(4px); }
 
-/* CONTENIDO REVISTA */
+/* --- DISEÑO INTERIOR DE LA REVISTA (FLIPBOOK) --- */
 #flipbookWrapper { display: block; }
-.flipbook-container { background: #ffffff; border-radius: 0 0 10px 10px; padding: 20px; margin-bottom: 15px; min-height: 350px; position: relative; box-shadow: inset 0 0 20px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.5); perspective: 1000px; border: 1px solid #ccc; }
-.flipbook-page { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 20px; box-sizing: border-box; background: #fff; transform-origin: left center; transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1); opacity: 0; z-index: 1; pointer-events: none; overflow-y: auto; color: #111; font-size: 15px; line-height: 1.6; font-family: 'Helvetica Neue', Helvetica, sans-serif; backface-visibility: hidden; background-image: linear-gradient(90deg, rgba(0,0,0,0.05) 0%, transparent 5%); }
+.flipbook-container { 
+    background: #ffffff; /* Papel blanco satinado */
+    border-radius: 0 0 10px 10px; 
+    padding: 20px; 
+    margin-bottom: 15px; 
+    min-height: 350px; 
+    position: relative; 
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.5); 
+    perspective: 1000px; 
+    border: 1px solid #ccc;
+}
+
+.flipbook-page { 
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+    padding: 20px; box-sizing: border-box; background: #fff; 
+    transform-origin: left center; transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1); 
+    opacity: 0; z-index: 1; pointer-events: none; overflow-y: auto; 
+    color: #111; font-size: 15px; line-height: 1.6; font-family: 'Helvetica Neue', Helvetica, sans-serif;
+    backface-visibility: hidden; 
+    background-image: linear-gradient(90deg, rgba(0,0,0,0.05) 0%, transparent 5%); /* Sombra del lomo */
+}
 .flipbook-page.active { opacity: 1; z-index: 5; transform: rotateY(0deg); pointer-events: all; }
 .flipbook-page.flipped { opacity: 1; transform: rotateY(-180deg); z-index: 10; pointer-events: none; }
 
-/* MAQUETACIÓN REVISTA */
+/* Clases CSS para maquetar los textos como una revista */
 .mag-titular { background: #000; color: #fff; padding: 5px 10px; font-family: 'Impact', sans-serif; font-size: 22px; text-transform: uppercase; transform: skew(-5deg); display: inline-block; margin-top: 0; margin-bottom: 15px; border-bottom: 4px solid var(--modal-border); }
 .mag-sub { color: #e60012; font-weight: 900; font-size: 18px; text-transform: uppercase; border-bottom: 2px solid #ccc; padding-bottom: 3px; margin-top: 20px; }
 .mag-box { background: #f0f8ff; border-left: 5px solid #005b9f; padding: 12px; margin: 15px 0; border-radius: 0 10px 10px 0; font-size: 14px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
@@ -105,15 +137,15 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 .btn-flip:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--modal-border); }
 .page-indicator { color: #fff; font-size: 14px; font-weight: bold; background: #333; padding: 5px 10px; border-radius: 15px; }
 
-/* BOTONES DE ACCIÓN */
+/* Botones de acción final */
 .btn-tienda-modal, .btn-jugar-modal { display: block; width: 100%; text-align: center; padding: 15px 0; color: #000; text-decoration: none; border-radius: 8px; font-weight: 900; font-size: 18px; border: none; cursor: pointer; margin-bottom: 12px; text-transform: uppercase; font-family: 'Impact', sans-serif; letter-spacing: 1px; }
 .btn-tienda-modal { background: #d4af37; box-shadow: 0 4px 0 #8b6508; }
 .btn-jugar-modal { background: #e60012; color: white; box-shadow: 0 4px 0 #8b0000; }
 .btn-tienda-modal:active, .btn-jugar-modal:active { transform: translateY(4px); box-shadow: 0 0 0 transparent; }
 
-/* OTROS MODALES */
-#modalPaywall .ficha-content { text-align: center; border-color: #e60012; box-shadow: 0 0 40px #e60012; max-width: 400px; }
-.toast-notification { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: rgba(18, 18, 18, 0.95); border: 2px solid #d4af37; color: #ffd700; padding: 15px 25px; border-radius: 30px; font-size: 16px; font-weight: bold; box-shadow: 0 5px 20px rgba(212,175,55,0.5); z-index: 9999999999; transition: top 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); display: flex; align-items: center; gap: 10px; backdrop-filter: blur(5px); }
+/* Otros Modales y Transiciones */
+#modalPaywall .ficha-content { text-align: center; border-color: #e60012; box-shadow: 0 0 40px #e60012; max-width: 400px; background: #111; }
+.toast-notification { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: rgba(18, 18, 18, 0.95); border: 2px solid #d4af37; color: #ffd700; padding: 15px 25px; border-radius: 30px; font-size: 16px; font-weight: bold; box-shadow: 0 5px 20px rgba(212,175,55,0.5); z-index: 9999999999; transition: top 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); display: flex; align-items: center; gap: 10px; backdrop-filter: blur(5px); text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
 .toast-notification.active { top: 25px; }
 .transition-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
 .transition-screen.active { opacity: 1; pointer-events: all; }
@@ -127,7 +159,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 .nfc-text { color: #9dff3d; font-family: 'Courier New', monospace; margin-top: 25px; font-size: 18px; font-weight: bold; }
 @keyframes scanLaser { 0% { transform: translateY(0); } 100% { transform: translateY(200px); } }
 
-/* SALÓN DE FAMA */
+/* Salón de Fama en Revista */
 .salon-fama { background: #fff; padding: 15px; border-radius: 0 0 10px 10px; margin-bottom: 15px; display: none; min-height: 350px; border: 1px solid #ccc; }
 .tabla-records { width: 100%; border-collapse: collapse; color: #111; font-family: 'Courier New', monospace; font-size: 16px; font-weight: bold; }
 .tabla-records th { background: #000; color: #fff; padding: 10px; text-align: center; border: 2px solid #000; }
@@ -140,8 +172,19 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 
 <body>
 <div id="toastDesbloqueo" class="toast-notification">🔓 ¡SISTEMA DESBLOQUEADO! Catálogo Premium activado.</div>
-<div id="nfcScannerScreen" class="nfc-scanner"><div class="nfc-laser-container"><img src="logo.png" class="nfc-logo-scan"><div class="nfc-laser"></div></div><div class="nfc-text">SISTEMA OLEA3D...</div></div>
-<div id="transitionScreen" class="transition-screen"><div class="insert-coin-text">> INSERT COIN <</div></div>
+
+<div id="nfcScannerScreen" class="nfc-scanner">
+    <div class="nfc-laser-container">
+        <img src="logo.png" class="nfc-logo-scan">
+        <div class="nfc-laser"></div>
+    </div>
+    <div class="nfc-text">SISTEMA OLEA3D...</div>
+</div>
+
+<div id="transitionScreen" class="transition-screen">
+    <div class="insert-coin-text">> INSERT COIN <</div>
+</div>
+
 <div class="bg-grid"></div>
 
 <header>
@@ -180,31 +223,66 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 </div>
 
 <div class="main-container">
-    <div class="stats">🕹️ Catálogo de 27 Juegos | 🏆 Colección Premium</div>
+    <div class="stats">🕹️ Catálogo de 28 Juegos | 🏆 Colección Premium</div>
 
-    <h1 id="arcade" class="section-title">🕹️ SALÓN ARCADE</h1>
+    <h1 id="arcade" class="section-title">🕹️ SALÓN ARCADE (RECREATIVAS)</h1>
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Arcade_Machine_Vector.svg/200px-Arcade_Machine_Vector.svg.png" class="banner-console" alt="Arcade" onerror="this.style.display='none'">
     <div class="container"> 
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('cadillacs')">
-            <div class="card" style="border-color: #ff00ff;"><img src="dino.jpg" alt="Cadillacs and Dinosaurs" onerror="this.src='logo.png'"><h2 style="color: #ff00ff;">🦖 CADILLACS & DINOS</h2><div class="nfc-badge" style="background: #ff00ff; color: white;">LLAVERO NFC</div><span class="btn-ver" style="background: #990099; border-color: #ff00ff;">LEER REVIEW</span></div>
+            <div class="card" style="border-color: #ff00ff; box-shadow: inset 0 0 15px rgba(255,0,255,0.2);">
+                <img src="dino.jpg" alt="Cadillacs and Dinosaurs" onerror="this.src='logo.png'">
+                <h2 style="color: #ff00ff;">🦖 CADILLACS & DINOS</h2>
+                <div class="nfc-badge" style="background: #ff00ff; color: white;">LLAVERO NFC</div>
+                <span class="btn-ver" style="background: #990099; border-color: #ff00ff;">LEER REVIEW</span>
+            </div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('kof94')">
-            <div class="card" style="border-color: #ff00ff;"><img src="thekingoffighters94.jpg" alt="KOF 94" onerror="this.src='logo.png'"><h2 style="color: #ff00ff;">🥋 KOF '94</h2><div class="nfc-badge" style="background: #ff00ff; color: white;">LLAVERO NFC</div><span class="btn-ver" style="background: #990099; border-color: #ff00ff;">LEER REVIEW</span></div>
+            <div class="card" style="border-color: #ff00ff; box-shadow: inset 0 0 15px rgba(255,0,255,0.2);">
+                <img src="thekingoffighters94.jpg" alt="KOF 94" onerror="this.src='logo.png'">
+                <h2 style="color: #ff00ff;">🥋 KOF '94</h2>
+                <div class="nfc-badge" style="background: #ff00ff; color: white;">LLAVERO NFC</div>
+                <span class="btn-ver" style="background: #990099; border-color: #ff00ff;">LEER REVIEW</span>
+            </div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('kof95')">
-            <div class="card" style="border-color: #ff00ff;"><img src="thekingoffighters95.jpg" alt="KOF 95" onerror="this.src='logo.png'"><h2 style="color: #ff00ff;">🥋 KOF '95</h2><div class="nfc-badge" style="background: #ff00ff; color: white;">LLAVERO NFC</div><span class="btn-ver" style="background: #990099; border-color: #ff00ff;">LEER REVIEW</span></div>
+            <div class="card" style="border-color: #ff00ff; box-shadow: inset 0 0 15px rgba(255,0,255,0.2);">
+                <img src="thekingoffighters95.jpg" alt="KOF 95" onerror="this.src='logo.png'">
+                <h2 style="color: #ff00ff;">🥋 KOF '95</h2>
+                <div class="nfc-badge" style="background: #ff00ff; color: white;">LLAVERO NFC</div>
+                <span class="btn-ver" style="background: #990099; border-color: #ff00ff;">LEER REVIEW</span>
+            </div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('neobombe')">
-            <div class="card" style="border-color: #ff00ff;"><img src="neobomberman.jpg" alt="Neo Bomberman" onerror="this.src='logo.png'"><h2 style="color: #ff00ff;">💣 N. BOMBERMAN</h2><div class="nfc-badge" style="background: #ff00ff; color: white;">LLAVERO NFC</div><span class="btn-ver" style="background: #990099; border-color: #ff00ff;">LEER REVIEW</span></div>
+            <div class="card" style="border-color: #ff00ff; box-shadow: inset 0 0 15px rgba(255,0,255,0.2);">
+                <img src="neobomberman.jpg" alt="Neo Bomberman" onerror="this.src='logo.png'">
+                <h2 style="color: #ff00ff;">💣 N. BOMBERMAN</h2>
+                <div class="nfc-badge" style="background: #ff00ff; color: white;">LLAVERO NFC</div>
+                <span class="btn-ver" style="background: #990099; border-color: #ff00ff;">LEER REVIEW</span>
+            </div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('simpsons')">
-            <div class="card" style="border-color: #ff00ff;"><img src="simpsons.jpg" alt="Simpsons" onerror="this.src='logo.png'"><h2 style="color: #ff00ff;">🍩 THE SIMPSONS</h2><div class="nfc-badge" style="background: #ff00ff; color: white;">LLAVERO NFC</div><span class="btn-ver" style="background: #990099; border-color: #ff00ff;">LEER REVIEW</span></div>
+            <div class="card" style="border-color: #ff00ff; box-shadow: inset 0 0 15px rgba(255,0,255,0.2);">
+                <img src="simpsons.jpg" alt="Simpsons" onerror="this.src='logo.png'">
+                <h2 style="color: #ff00ff;">🍩 THE SIMPSONS</h2>
+                <div class="nfc-badge" style="background: #ff00ff; color: white;">LLAVERO NFC</div>
+                <span class="btn-ver" style="background: #990099; border-color: #ff00ff;">LEER REVIEW</span>
+            </div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('tmnt')">
-            <div class="card" style="border-color: #ff00ff;"><img src="tmnt.jpg" alt="TMNT" onerror="this.src='logo.png'"><h2 style="color: #ff00ff;">🐢 TMNT ARCADE</h2><div class="nfc-badge" style="background: #ff00ff; color: white;">LLAVERO NFC</div><span class="btn-ver" style="background: #990099; border-color: #ff00ff;">LEER REVIEW</span></div>
+            <div class="card" style="border-color: #ff00ff; box-shadow: inset 0 0 15px rgba(255,0,255,0.2);">
+                <img src="tmnt.jpg" alt="TMNT" onerror="this.src='logo.png'">
+                <h2 style="color: #ff00ff;">🐢 TMNT ARCADE</h2>
+                <div class="nfc-badge" style="background: #ff00ff; color: white;">LLAVERO NFC</div>
+                <span class="btn-ver" style="background: #990099; border-color: #ff00ff;">LEER REVIEW</span>
+            </div>
         </div>
         <div class="card-wrapper secreto" id="tarjetaSecreta" onclick="reproducirClic(); verFicha('pacman')" style="display: none;">
-            <div class="card" style="border-color: #ff00ff;"><img src="pacman.jpg" alt="Pac-Man" onerror="this.src='logo.png'"><h2 style="color: #ff00ff;">👻 PAC-MAN</h2><div class="nfc-badge" style="background: #ff00ff; color: white;">SECRETO 1-UP</div><span class="btn-ver" style="background: #990099; border-color: #ff00ff;">LEER REVIEW</span></div>
+            <div class="card" style="border-color: #ff00ff; box-shadow: inset 0 0 15px rgba(255,0,255,0.2);">
+                <img src="pacman.jpg" alt="Pac-Man" onerror="this.src='logo.png'">
+                <h2 style="color: #ff00ff;">👻 PAC-MAN</h2>
+                <div class="nfc-badge" style="background: #ff00ff; color: white;">SECRETO 1-UP</div>
+                <span class="btn-ver" style="background: #990099; border-color: #ff00ff;">LEER REVIEW</span>
+            </div>
         </div>
     </div>
 
@@ -212,22 +290,52 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
     <img src="nes.jpg" class="banner-console" alt="NES">
     <div class="container"> 
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('miketyson')">
-            <div class="card"><img src="miketyson.jpg" alt="Punch Out" onerror="this.src='nes.jpg'"><h2>🥊 Punch-Out!!</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">LEER REVIEW</span></div>
+            <div class="card">
+                <img src="miketyson.jpg" alt="Punch Out" onerror="this.src='nes.jpg'">
+                <h2>🥊 Punch-Out!!</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">LEER REVIEW</span>
+            </div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('ghostngoblin')">
-            <div class="card"><img src="ghostngoblin.jpg" alt="G. n Goblins" onerror="this.src='nes.jpg'"><h2>💀 G. n Goblins</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">LEER REVIEW</span></div>
+            <div class="card">
+                <img src="ghostngoblin.jpg" alt="G. n Goblins" onerror="this.src='nes.jpg'">
+                <h2>💀 G. n Goblins</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">LEER REVIEW</span>
+            </div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariobros3')">
-            <div class="card"><img src="supermariobros3.jpg" alt="Mario Bros 3" onerror="this.src='nes.jpg'"><h2>🍄 Mario Bros 3</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">LEER REVIEW</span></div>
+            <div class="card">
+                <img src="supermariobros3.jpg" alt="Mario Bros 3" onerror="this.src='nes.jpg'">
+                <h2>🍄 Mario Bros 3</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">LEER REVIEW</span>
+            </div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('tetris')">
-            <div class="card"><img src="TetrisNes.png" alt="Tetris" onerror="this.src='nes.jpg'"><h2>🎮 Tetris</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">LEER REVIEW</span></div>
+            <div class="card">
+                <img src="TetrisNes.png" alt="Tetris" onerror="this.src='nes.jpg'">
+                <h2>🎮 Tetris</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">LEER REVIEW</span>
+            </div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariobros')">
-            <div class="card"><img src="SuperMarioBros.jpg" alt="Mario Bros" onerror="this.src='nes.jpg'"><h2>🍄 Mario Bros</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">LEER REVIEW</span></div>
+            <div class="card">
+                <img src="SuperMarioBros.jpg" alt="Mario Bros" onerror="this.src='nes.jpg'">
+                <h2>🍄 Mario Bros</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">LEER REVIEW</span>
+            </div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('tortugasnes')">
-            <div class="card"><img src="tnmnes.jpg" alt="TMNT NES" onerror="this.src='nes.jpg'"><h2>🐢 TMNT (NES)</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">LEER REVIEW</span></div>
+            <div class="card">
+                <img src="tnmnes.jpg" alt="TMNT NES" onerror="this.src='nes.jpg'">
+                <h2>🐢 TMNT (NES)</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">LEER REVIEW</span>
+            </div>
         </div>
     </div>
  
@@ -235,16 +343,36 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
     <img src="n64.jpg" class="banner-console" alt="N64">
     <div class="container"> 
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariokart64')">
-            <div class="card"><img src="Mariokart64.jpg" alt="Mario Kart 64" onerror="this.src='n64.jpg'"><h2>🏎️ Mario Kart 64</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">LEER REVIEW</span></div>
+            <div class="card">
+                <img src="Mariokart64.jpg" alt="Mario Kart 64" onerror="this.src='n64.jpg'">
+                <h2>🏎️ Mario Kart 64</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">LEER REVIEW</span>
+            </div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('castlegacy')">
-            <div class="card"><img src="castlegacy.jpg" alt="Castlevania" onerror="this.src='n64.jpg'"><h2>🦇 Castlevania</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">LEER REVIEW</span></div>
+            <div class="card">
+                <img src="castlegacy.jpg" alt="Castlevania" onerror="this.src='n64.jpg'">
+                <h2>🦇 Castlevania</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">LEER REVIEW</span>
+            </div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('mortalkomleg64')">
-            <div class="card"><img src="mortalkom64.png" alt="Mortal Kombat" onerror="this.src='n64.jpg'"><h2>🩸 Mortal Kombat</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">LEER REVIEW</span></div>
+            <div class="card">
+                <img src="mortalkom64.png" alt="Mortal Kombat" onerror="this.src='n64.jpg'">
+                <h2>🩸 Mortal Kombat</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">LEER REVIEW</span>
+            </div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariotennis')">
-            <div class="card"><img src="MarioTennis.jpg" alt="Mario Tennis" onerror="this.src='n64.jpg'"><h2>🎾 Mario Tennis</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">LEER REVIEW</span></div>
+            <div class="card">
+                <img src="MarioTennis.jpg" alt="Mario Tennis" onerror="this.src='n64.jpg'">
+                <h2>🎾 Mario Tennis</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">LEER REVIEW</span>
+            </div>
         </div> 
     </div>
 
@@ -252,19 +380,44 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
     <img src="megadrive.jpg" class="banner-console" alt="Mega Drive">
     <div class="container">
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('batman')">
-            <div class="card"><img src="batman.jpg" alt="Batman" onerror="this.src='megadrive.jpg'"><h2>🦇 Batman</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">LEER REVIEW</span></div>
+            <div class="card">
+                <img src="batman.jpg" alt="Batman" onerror="this.src='megadrive.jpg'">
+                <h2>🦇 Batman</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">LEER REVIEW</span>
+            </div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('goldenaxe2')">
-            <div class="card"><img src="goldenaxe2.jpg" alt="Golden Axe 2" onerror="this.src='megadrive.jpg'"><h2>🪓 Golden Axe II</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">LEER REVIEW</span></div>
+            <div class="card">
+                <img src="goldenaxe2.jpg" alt="Golden Axe 2" onerror="this.src='megadrive.jpg'">
+                <h2>🪓 Golden Axe II</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">LEER REVIEW</span>
+            </div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('rambo3')">
-            <div class="card"><img src="Rambo3.jpg" alt="Rambo III" onerror="this.src='megadrive.jpg'"><h2>💥 Rambo III</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">LEER REVIEW</span></div>
+            <div class="card">
+                <img src="Rambo3.jpg" alt="Rambo III" onerror="this.src='megadrive.jpg'">
+                <h2>💥 Rambo III</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">LEER REVIEW</span>
+            </div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('sonic')">
-            <div class="card"><img src="sonicthehedgehog.jpg" alt="Sonic" onerror="this.src='megadrive.jpg'"><h2>🦔 Sonic</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">LEER REVIEW</span></div>
+            <div class="card">
+                <img src="sonicthehedgehog.jpg" alt="Sonic" onerror="this.src='megadrive.jpg'">
+                <h2>🦔 Sonic</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">LEER REVIEW</span>
+            </div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('aladdin')">
-            <div class="card"><img src="aladin.jpg" alt="Aladdin" onerror="this.src='megadrive.jpg'"><h2>🧞 Aladdin</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">LEER REVIEW</span></div>
+            <div class="card">
+                <img src="aladin.jpg" alt="Aladdin" onerror="this.src='megadrive.jpg'">
+                <h2>🧞 Aladdin</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">LEER REVIEW</span>
+            </div>
         </div>
     </div>
  
@@ -272,13 +425,28 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
     <img src="snes.jpg" class="banner-console" alt="SNES">
     <div class="container">
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('marioworld')">
-            <div class="card"><img src="SuperMarioWorld.jpg" alt="Mario World" onerror="this.src='snes.jpg'"><h2>🍄 Mario World</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">LEER REVIEW</span></div>
+            <div class="card">
+                <img src="SuperMarioWorld.jpg" alt="Mario World" onerror="this.src='snes.jpg'">
+                <h2>🍄 Mario World</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">LEER REVIEW</span>
+            </div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariokartsnes')">
-            <div class="card"><img src="SuperMarioKartsnes.jpg" alt="Mario Kart" onerror="this.src='snes.jpg'"><h2>🏎️ Mario Kart</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">LEER REVIEW</span></div>
+            <div class="card">
+                <img src="SuperMarioKartsnes.jpg" alt="Mario Kart" onerror="this.src='snes.jpg'">
+                <h2>🏎️ Mario Kart</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">LEER REVIEW</span>
+            </div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('sunsetrider')">
-            <div class="card"><img src="sunsetriders.jpg" alt="Sunset Riders" onerror="this.src='snes.jpg'"><h2>🤠 SUNSET RIDERS</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">LEER REVIEW</span></div>
+            <div class="card">
+                <img src="sunsetriders.jpg" alt="Sunset Riders" onerror="this.src='snes.jpg'">
+                <h2>🤠 SUNSET RIDERS</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">LEER REVIEW</span>
+            </div>
         </div>
     </div> 
 
@@ -286,13 +454,28 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
     <img src="gba.jpg" class="banner-console" alt="GBA">
     <div class="container">
         <div class="card-wrapper secreto" id="tarjetaCiervo" onclick="reproducirClic(); verFicha('deerhunter')" style="display: none;">
-            <div class="card" style="border-color: #e60012;"><img src="deerhunter.jpg" alt="Deer Hunter" onerror="this.src='gba.jpg'"><h2 style="color: #e60012;">🦌 DEER HUNTER</h2><div class="nfc-badge" style="background: #e60012; color: white;">SECRETO BELTRANEJA</div><span class="btn-ver" style="background: #990000; border-color: #e60012;">LEER REVIEW</span></div>
+            <div class="card" style="border-color: #e60012; box-shadow: inset 0 0 15px rgba(230,0,18,0.2);">
+                <img src="deerhunter.jpg" alt="Deer Hunter" onerror="this.src='gba.jpg'">
+                <h2 style="color: #e60012;">🦌 DEER HUNTER</h2>
+                <div class="nfc-badge" style="background: #e60012; color: white;">SECRETO BELTRANEJA</div>
+                <span class="btn-ver" style="background: #990000; border-color: #e60012;">LEER REVIEW</span>
+            </div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('esmeralda')">
-            <div class="card"><img src="pokemonesme.jpg" alt="Pokemon Esmeralda" onerror="this.src='gba.jpg'"><h2>⚡ P. Esmeralda</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">LEER REVIEW</span></div>
+            <div class="card">
+                <img src="pokemonesme.jpg" alt="Pokemon Esmeralda" onerror="this.src='gba.jpg'">
+                <h2>⚡ P. Esmeralda</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">LEER REVIEW</span>
+            </div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('rubi')">
-            <div class="card"><img src="pokemonrubi.jpg" alt="Pokemon Rubi" onerror="this.src='gba.jpg'"><h2>🔴 P. Rubí</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">LEER REVIEW</span></div>
+            <div class="card">
+                <img src="pokemonrubi.jpg" alt="Pokemon Rubi" onerror="this.src='gba.jpg'">
+                <h2>🔴 P. Rubí</h2>
+                <div class="nfc-badge">LLAVERO NFC</div>
+                <span class="btn-ver">LEER REVIEW</span>
+            </div>
         </div>
     </div>
 </div>
@@ -364,7 +547,16 @@ function reproducirSonidoFlip() { try { const ctx=getAudioCtx(); const osc=ctx.c
 
 window.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
-    if(params.get('llave') === 'oleaVIP') { localStorage.setItem('olea3d_vip', 'true'); window.history.replaceState(null, null, window.location.pathname + window.location.hash); setTimeout(() => { const toast = document.getElementById("toastDesbloqueo"); toast.classList.add("active"); reproducirSonido1UP(); setTimeout(() => toast.classList.remove("active"), 4000); }, 500); }
+    if(params.get('llave') === 'oleaVIP') { 
+        localStorage.setItem('olea3d_vip', 'true'); 
+        window.history.replaceState(null, null, window.location.pathname + window.location.hash); 
+        setTimeout(() => { 
+            const toast = document.getElementById("toastDesbloqueo"); 
+            toast.classList.add("active"); 
+            reproducirSonido1UP(); 
+            setTimeout(() => toast.classList.remove("active"), 4000); 
+        }, 500); 
+    }
 });
 
 let toquesLogo = 0, tiempoToques;
@@ -377,7 +569,7 @@ function desbloquearCiervo() { const tarjeta=document.getElementById("tarjetaCie
 
 // --- LA BASE DE DATOS TITÁNICA AL 100% ---
 const infoJuegos = {
-    /* ARCADE */
+    /* ARCADE (7) */
     cadillacs: { 
         consola: "arcade", titulo: "CADILLACS & DINOSAURS", img: "dino.jpg", enlace: "dino.html", valoracion: "NOTA: 98/100",
         historia: ["<h2 class='mag-titular'>MEGA HIT ARCADE</h2><p>En 1993, a los genios de Capcom se les ocurrió mezclar las tres cosas que más molaban en la época: tíos duros, coches clásicos y dinosaurios enormes. Basado libremente en el cómic <em>Xenozoic Tales</em> de Mark Schultz, este juego arrasó literalmente en los salones recreativos, tragándose las monedas de cinco duros de toda una generación.</p><div class='mag-box'><strong>EL ARGUMENTO:</strong> El planeta se ha ido al traste y la naturaleza ha reclamado la Tierra. Ahora los humanos conviven con dinosaurios resucitados. Una banda de furtivos (los Black Marketeers) está cazando a los dinos para mutarlos. Tu misión es reventarlos a golpes.</div>", "<h2 class='mag-sub'>Los Protagonistas</h2><p>Tienes a tu disposición a 4 auténticos bestias:<br><br><strong>Jack Tenrec:</strong> El mecánico equilibrado. Ideal para principiantes.<br><strong>Hannah Dundee:</strong> Es rápida como el rayo, usa objetos con maestría.<br><strong>Mustapha Cairo:</strong> El favorito de los pros. Su patada voladora es letal.<br><strong>Mess O'Bradovich:</strong> Lento, pero levanta a los enemigos por los aires como si fueran de papel.</p>"],
@@ -414,7 +606,7 @@ const infoJuegos = {
         manual: ["<h2 class='mag-titular'>SUPERVIVENCIA LABERÍNTICA</h2><p>Come todos los puntos del laberinto mientras huyes de cuatro fantasmas con problemas de gestión de la ira. Cómete las Píldoras de Poder de las esquinas para devorarlos a ellos.</p><div class='mag-truco'><span>EL TRUCO DEL TÚNEL</span>Usa los túneles laterales que conectan la pantalla. Pac-Man los cruza a toda velocidad, pero los fantasmas sufren una penalización y se frenan al entrar.</div>"] 
     },
 
-    /* NES */
+    /* NES (6) */
     miketyson: { 
         consola: "nes", titulo: "PUNCH-OUT!!", img: "miketyson.jpg", enlace: "miketyson.html", valoracion: "NOTA: 94/100", 
         historia: ["<h2 class='mag-titular'>EL NEGOCIO DEL SIGLO</h2><p>Nintendo pagó a Mike Tyson 50.000 dólares en 1986 por usar su imagen, meses antes de que se convirtiera en el campeón mundial indiscutible de los pesos pesados. Les salió regalado.</p>"], 
@@ -446,7 +638,7 @@ const infoJuegos = {
         manual: ["<h2 class='mag-titular'>RELEVO NINJA</h2><p>Tu barra de vidas son las 4 tortugas. No mueras a lo tonto. Pulsa Start y entra al menú para cambiar a la tortuga que estás manejando. Si a Leonardo le queda poca vida, cámbialo por Raphael para mantener al equipo con vida.</p><div class='mag-truco'><span>EL PODER DE DONATELLO</span>El arma de Donatello está absurdamente 'rota' en este juego. Su palo tiene un alcance enorme y hace muchísimo daño. Guárdalo exclusivamente para pelear contra los jefes finales.</div>"] 
     },
 
-    /* N64 */
+    /* N64 (4) */
     mariokart64: { 
         consola: "n64", titulo: "MARIO KART 64", img: "Mariokart64.jpg", enlace: "Mariokart64.html", valoracion: "NOTA: 95/100", 
         historia: ["<h2 class='mag-titular'>DESTRUCTOR DE AMISTADES</h2><p>El juego que arruinó las tardes pacíficas de miles de niños en los años 90 con sus piques a cuatro mandos dividiendo la tele. ¿Sabías que Wario no estaba originalmente en los planes? Entró en el último momento para robarle la plaza al pobre Koopa Troopa.</p>"], 
@@ -468,7 +660,7 @@ const infoJuegos = {
         manual: ["<h2 class='mag-titular'>REGLAMENTO EN PISTA</h2><p>No te limites a darle a la bola. El juego esconde mucha profundidad técnica en los controles.</p><div class='mag-truco'><span>TIPOS DE GOLPE</span>Botón A: Golpe plano, potente y directo (Rojo).<br>Botón B: Golpe cortado, con efecto para romperle la cintura al rival (Azul).<br>A + B a la vez: Harás un globo altísimo, perfecto para cuando tu amigo se pegue demasiado a la red.</div>"] 
     },
 
-    /* MEGA DRIVE */
+    /* MEGA DRIVE (5) */
     batman: { 
         consola: "md", titulo: "BATMAN", img: "batman.jpg", enlace: "batman.html", valoracion: "NOTA: 88/100", 
         historia: ["<h2 class='mag-titular'>LA NOCHE DE LOS 16 BITS</h2><p>Basado directamente en la icónica película de Tim Burton de 1989. El estudio Sunsoft lo programó con una paleta de colores tan oscura y fiel al cine gótico que a veces no veías literalmente dónde tenías que saltar en los tejados de Gotham. Hoy es reverenciado por tener la mejor banda sonora de la consola.</p>"], 
@@ -495,7 +687,7 @@ const infoJuegos = {
         manual: ["<h2 class='mag-titular'>MAGIA CALLEJERA Y PARKOUR</h2><p>Misión: Recorrer las calles de Agrabah robando manzanas y esquivando a la guardia del Sultán.</p><div class='mag-box'><strong>ARMAMENTO DEL DESIERTO:</strong> No uses siempre la espada. Lánzale tus manzanas acumuladas a la cara a los guardias para mantenerlos a raya y aturdirlos antes de desenvainar tu cimitarra para el golpe final.</div>"] 
     },
 
-    /* SNES */
+    /* SNES (3) */
     marioworld: { 
         consola: "snes", titulo: "SUPER MARIO WORLD", img: "SuperMarioWorld.jpg", enlace: "SuperMarioorld.html", valoracion: "NOTA: 98/100", 
         historia: ["<h2 class='mag-titular'>EL SUEÑO FRUSTRADO DE MIYAMOTO</h2><p>Shigeru Miyamoto soñaba con que Mario montara a lomos de un dinosaurio desde el primer juego de NES. Pero el chip se freiría al intentar procesar dos personajes. Tuvieron que esperar al poder de Super Nintendo para hacer realidad al adorable Yoshi.</p>"], 
@@ -512,7 +704,7 @@ const infoJuegos = {
         manual: ["<h2 class='mag-titular'>LEY DEL REVÓLVER</h2><p>El Arte del Deslizamiento: La agilidad lo es todo. Puedes disparar en 8 direcciones distintas mientras te mueves.</p><div class='mag-truco'><span>TÁCTICA VITAL</span>Para sobrevivir a la lluvia de balas, no solo saltes: pulsa SALTO + ABAJO a la vez para deslizarte velozmente por el suelo levantando polvo. Las balas pasarán por encima de tu sombrero.</div>"] 
     },
 
-    /* GBA */
+    /* GBA (3) */
     esmeralda: { 
         consola: "gba", titulo: "POKÉMON ESMERALDA", img: "pokemonesme.jpg", enlace: "Pokemonesme.html", valoracion: "NOTA: 95/100", 
         historia: ["<h2 class='mag-titular'>CRÍTICAS PASADAS POR AGUA</h2><p>La culminación de la región de Hoenn. Este juegazo pasará a la historia porque la revista IGN le bajó la nota en su análisis quejándose literalmente de que 'tenía demasiada agua' (7.8/10). Medio internet se rió de ellos, ya que el agua es el tema central.</p>"], 
