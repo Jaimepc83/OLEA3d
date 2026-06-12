@@ -5,70 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Cadillacs and Dinosaurs - OLEA3D</title>
     <style>
-        /* SETUP DE PANTALLA DIVIDIDA (JUEGO + CONTROLES) */
-        body, html { 
-            margin: 0; padding: 0; width: 100%; height: 100%; 
-            background-color: #000; overflow: hidden; 
-            font-family: Arial, sans-serif; overscroll-behavior: none; 
-            display: flex; flex-direction: column; 
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background-color: #000; overflow: hidden; font-family: Arial, sans-serif; overscroll-behavior: none; }
+        #game-container { position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; }
+        
+        /* --- HUD FLOTANTE SUPERIOR OLEA3D --- */
+        #olea-hud {
+            position: fixed; top: -80px; left: 0; width: 100%; height: 70px;
+            background: rgba(10, 10, 10, 0.95);
+            border-bottom: 2px solid #d4af37;
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+            z-index: 2147483647; /* Máxima prioridad para salir por encima de todo */
+            transition: top 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.8); 
+            padding: 0 10px; box-sizing: border-box;
+            padding-top: env(safe-area-inset-top); /* Ajuste inteligente para iPhone */
         }
         
-        #game-container { 
-            flex: 1; /* El juego ocupa todo el espacio sobrante */
-            width: 100%; position: relative; 
+        /* Esta clase la pone el Javascript al tocar la pantalla para que baje el menú */
+        #olea-hud.visible { top: 0; }
+
+        /* Estética de los botones arcade */
+        .btn-olea {
+            flex: 1; max-width: 150px; padding: 10px 5px;
+            border-radius: 6px; font-family: 'Impact', sans-serif;
+            font-size: 14px; text-transform: uppercase; cursor: pointer;
+            border: 1px solid transparent; color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
         }
+        
+        .btn-exit { background: linear-gradient(180deg, #8b0000, #4a0000); border-color: #ff4d4d; box-shadow: 0 3px 0 #330000; text-decoration: none; text-align: center; line-height: 14px; display:flex; justify-content:center; align-items:center; height: 40px; box-sizing:border-box; }
+        .btn-save { background: linear-gradient(180deg, #005b9f, #003f73); border-color: #4da6ff; box-shadow: 0 3px 0 #00264d; height: 40px; }
+        .btn-load { background: linear-gradient(180deg, #6b8e23, #4a6318); border-color: #9acd32; box-shadow: 0 3px 0 #2d3d0e; height: 40px; }
+        .btn-olea:active { transform: translateY(3px); box-shadow: 0 0 0 transparent; }
 
-        /* BOTÓN SALIR ORIGINAL */
-        #btn-volver { 
-            position: absolute; top: 15px; left: 15px; 
-            background: rgba(0, 0, 0, 0.8); color: #d4af37; 
-            text-decoration: none; padding: 8px 12px; font-weight: bold; 
-            border: 1px solid #d4af37; border-radius: 8px; 
-            z-index: 10000; font-size: 11px; transition: opacity 0.4s ease; 
-            opacity: 0; pointer-events: none; text-transform: uppercase; 
-        }
-        #btn-volver.visible { opacity: 1; pointer-events: auto; }
-
-        /* --- NUEVA BOTONERA OLEA3D INFERIOR --- */
-        #olea-controls { 
-            height: 65px; 
-            background: #0a0a0a; 
-            border-top: 2px solid #d4af37; 
-            display: flex; justify-content: center; align-items: center; 
-            gap: 15px; padding: 0 10px; z-index: 100; 
-            box-shadow: 0 -5px 15px rgba(0,0,0,0.8); 
-            padding-bottom: env(safe-area-inset-bottom); /* Ajuste para la raya de los iPhone modernos */
-        }
-
-        .btn-olea { 
-            flex: 1; max-width: 180px; padding: 12px 0; 
-            border-radius: 8px; font-family: 'Impact', sans-serif; 
-            font-size: 15px; text-transform: uppercase; cursor: pointer; 
-            border: 2px solid transparent; color: white; 
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8); transition: 0.1s; 
-        }
-
-        .btn-save { background: linear-gradient(180deg, #005b9f, #003f73); border-color: #4da6ff; box-shadow: 0 4px 0 #00264d; }
-        .btn-load { background: linear-gradient(180deg, #6b8e23, #4a6318); border-color: #9acd32; box-shadow: 0 4px 0 #2d3d0e; }
-        .btn-olea:active { transform: translateY(4px); box-shadow: 0 0 0 transparent; }
-
-        /* --- TOAST FLOTANTE DE AVISO --- */
+        /* --- TOAST FLOTANTE DE AVISO VERDE --- */
         #save-toast { 
-            position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); 
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
             background: rgba(15,15,15,0.95); border: 2px solid #9dff3d; 
-            color: #9dff3d; padding: 10px 20px; border-radius: 20px; 
-            font-weight: bold; font-size: 14px; opacity: 0; 
-            pointer-events: none; transition: 0.3s; z-index: 9999; text-align: center; 
+            color: #9dff3d; padding: 12px 25px; border-radius: 30px; 
+            font-weight: bold; font-size: 15px; opacity: 0; 
+            pointer-events: none; transition: 0.3s; z-index: 2147483647; text-align: center; 
+            box-shadow: 0 0 20px rgba(157,255,61,0.4);
         }
-        #save-toast.show { opacity: 1; transform: translateX(-50%) translateY(-10px); }
+        #save-toast.show { opacity: 1; transform: translateX(-50%) translateY(-20px); }
     </style>
 </head>
 <body>
-    <a href="index.html" id="btn-volver">⬅ SALIR</a>
-    
     <div id="game-container"><div id="game"></div></div>
     
-    <div id="olea-controls">
+    <div id="olea-hud">
+        <a href="index.html" class="btn-olea btn-exit">⬅ SALIR</a>
         <button class="btn-olea btn-save" onclick="oleaSave()">💾 GUARDAR</button>
         <button class="btn-olea btn-load" onclick="oleaLoad()">📂 CARGAR</button>
     </div>
@@ -76,13 +62,63 @@
     <div id="save-toast">✅ Acción completada</div>
 
     <script>
-        // --- 1. Lógica del botón SALIR original ---
-        const btnVolver = document.getElementById('btn-volver'); let temporizador;
-        function mostrarBoton() { btnVolver.classList.add('visible'); clearTimeout(temporizador); temporizador = setTimeout(() => { btnVolver.classList.remove('visible'); }, 3000); }
-        window.addEventListener('touchstart', function(e) { if (e.touches[0].clientY < window.innerHeight * 0.15) { mostrarBoton(); } });
-        window.addEventListener('mousemove', function(e) { if (e.clientY < window.innerHeight * 0.15) { mostrarBoton(); } });
+        // --- 1. Lógica para bajar el Menú al tocar la pantalla ---
+        const hud = document.getElementById('olea-hud'); 
+        let temporizadorHUD;
+        
+        function mostrarHUD() { 
+            hud.classList.add('visible'); 
+            clearTimeout(temporizadorHUD); 
+            // El menú vuelve a esconderse solo a los 4 segundos
+            temporizadorHUD = setTimeout(() => { hud.classList.remove('visible'); }, 4000); 
+        }
+        
+        // Aparece al tocar CUALQUIER PARTE de la pantalla
+        window.addEventListener('touchstart', mostrarHUD);
+        window.addEventListener('mousemove', mostrarHUD);
 
-        // --- 2. Configuración del Emulador ---
+        // --- EL TRUCO MAESTRO: INYECCIÓN EN FULL SCREEN ---
+        // Esto vigila si el usuario entra en pantalla completa y arrastra los botones con él
+        document.addEventListener('fullscreenchange', () => {
+            const toast = document.getElementById('save-toast');
+            if (document.fullscreenElement) {
+                try { 
+                    document.fullscreenElement.appendChild(hud); 
+                    document.fullscreenElement.appendChild(toast); 
+                } catch(e){}
+            } else {
+                document.body.appendChild(hud);
+                document.body.appendChild(toast);
+            }
+        });
+
+        // --- 2. Lógica de Guardado Directo a la Memoria del Móvil ---
+        function oleaSave() {
+            try {
+                if (window.EJS_emulator && window.EJS_emulator.gameManager) {
+                    EJS_emulator.gameManager.quickSave(1); 
+                    mostrarToast('💾 ¡Partida guardada!');
+                } else { mostrarToast('❌ Espera a que cargue...'); }
+            } catch(e) { console.error(e); }
+        }
+
+        function oleaLoad() {
+            try {
+                if (window.EJS_emulator && window.EJS_emulator.gameManager) {
+                    EJS_emulator.gameManager.quickLoad(1); 
+                    mostrarToast('📂 Partida cargada');
+                } else { mostrarToast('❌ Espera a que cargue...'); }
+            } catch(e) { console.error(e); }
+        }
+
+        function mostrarToast(msg) {
+            const toast = document.getElementById('save-toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // --- 3. Configuración Original de tu Emulador ---
         EJS_player = '#game';
         EJS_core = 'arcade'; 
         EJS_gameName = 'Cadillacs and Dinosaurs';
@@ -90,44 +126,6 @@
         EJS_color = '#d4af37';
         EJS_startOnLoaded = true;
         EJS_pathtodata = 'https://cdn.jsdelivr.net/gh/ethanaobrien/emulatorjs@main/data/';
-
-        // --- 3. Lógica de Guardado (Save States OLEA3D) ---
-        function oleaSave() {
-            try {
-                // Comprobamos si el emulador ya ha arrancado
-                if (window.EJS_emulator && window.EJS_emulator.gameManager) {
-                    // Forzamos el guardado rápido en el bloque de memoria 1 del móvil
-                    EJS_emulator.gameManager.quickSave(1); 
-                    mostrarToast('💾 ¡Partida guardada en tu móvil!');
-                } else {
-                    mostrarToast('❌ Espera a que el juego cargue primero...');
-                }
-            } catch(e) { 
-                console.error('Error al guardar:', e); 
-            }
-        }
-
-        function oleaLoad() {
-            try {
-                if (window.EJS_emulator && window.EJS_emulator.gameManager) {
-                    // Forzamos la carga desde el bloque de memoria 1
-                    EJS_emulator.gameManager.quickLoad(1); 
-                    mostrarToast('📂 Partida cargada con éxito');
-                } else {
-                    mostrarToast('❌ Espera a que el juego cargue primero...');
-                }
-            } catch(e) { 
-                console.error('Error al cargar:', e); 
-            }
-        }
-
-        // Animación del cartel flotante
-        function mostrarToast(msg) {
-            const toast = document.getElementById('save-toast');
-            toast.innerText = msg;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3000); // Desaparece a los 3 segundos
-        }
     </script>
     <script src="https://cdn.jsdelivr.net/gh/ethanaobrien/emulatorjs@main/data/loader.js"></script>
 </body>
