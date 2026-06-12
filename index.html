@@ -113,7 +113,8 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 .flipbook-page p { margin-top: 10px; margin-bottom: 10px; text-align: justify; }
 
 .flip-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 0 10px; }
-.btn-flip { background: var(--modal-tab); color: #000; border: none; padding: 8px 15px; border-radius: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+.btn-flip { background: var(--modal-tab); color: #000; border: none; padding: 8px 15px; border-radius: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: 0.2s; }
+.btn-flip:active { transform: scale(0.9); }
 .page-indicator { color: #aaa; font-size: 13px; font-weight: bold; }
 
 /* SALÓN DE LA FAMA */
@@ -167,7 +168,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
     </div>
     <h1>OLEA3D Hub Retro</h1>
     <p class="sub">Acerca tu llavero y todo estará listo para jugar</p>
-    <a href="https://www.instagram.com/olea3d/" target="_blank" class="btn-instagram">📸 Síguenos en @olea3d</a>
+    <a href="https://www.instagram.com/olea3d/" target="_blank" class="btn-instagram" onclick="reproducirClic()">📸 Síguenos en @olea3d</a>
 </header>
 
 <div class="tienda-banner">
@@ -186,12 +187,12 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 </div>
 
 <div class="menu">
-    <a href="#arcade">🕹️ ARCADE</a>
-    <a href="#nes">🎮 NES</a>
-    <a href="#n64">🕹️ N64</a>
-    <a href="#megadrive">⚡ MD</a>
-    <a href="#snes">⭐ SNES</a>
-    <a href="#gba">📱 GBA</a>
+    <a href="#arcade" onclick="reproducirClic()">🕹️ ARCADE</a>
+    <a href="#nes" onclick="reproducirClic()">🎮 NES</a>
+    <a href="#n64" onclick="reproducirClic()">🕹️ N64</a>
+    <a href="#megadrive" onclick="reproducirClic()">⚡ MD</a>
+    <a href="#snes" onclick="reproducirClic()">⭐ SNES</a>
+    <a href="#gba" onclick="reproducirClic()">📱 GBA</a>
 </div>
 
 <div class="main-container">
@@ -200,7 +201,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
     <h1 id="arcade" class="section-title">🕹️ SALÓN ARCADE (RECREATIVAS)</h1>
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Arcade_Machine_Vector.svg/200px-Arcade_Machine_Vector.svg.png" class="banner-console" alt="Arcade" onerror="this.style.display='none'">
     <div class="container"> 
-        <div class="card-wrapper" onclick="verFicha('cadillacs')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('cadillacs')">
             <div class="card" style="border-color: #ff00ff; box-shadow: inset 0 0 15px rgba(255,0,255,0.2);">
                 <img src="https://upload.wikimedia.org/wikipedia/en/b/b5/Cadillacs_and_Dinosaurs_arcade_flyer.jpg" alt="Cadillacs and Dinosaurs" onerror="this.src='logo.png'">
                 <h2 style="color: #ff00ff;">🦖 CADILLACS & DINOS</h2>
@@ -208,7 +209,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
                 <span class="btn-ver" style="background: #990099; border-color: #ff00ff;">ABRIR FICHA</span>
             </div>
         </div>
-        <div class="card-wrapper" onclick="verFicha('kof94')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('kof94')">
             <div class="card" style="border-color: #ff00ff; box-shadow: inset 0 0 15px rgba(255,0,255,0.2);">
                 <img src="thekingoffighters94.jpg" alt="KOF 94" onerror="this.src='logo.png'">
                 <h2 style="color: #ff00ff;">🥋 KOF '94</h2>
@@ -216,7 +217,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
                 <span class="btn-ver" style="background: #990099; border-color: #ff00ff;">ABRIR FICHA</span>
             </div>
         </div>
-        <div class="card-wrapper" onclick="verFicha('kof95')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('kof95')">
             <div class="card" style="border-color: #ff00ff; box-shadow: inset 0 0 15px rgba(255,0,255,0.2);">
                 <img src="thekingoffighters95.jpg" alt="KOF 95" onerror="this.src='logo.png'">
                 <h2 style="color: #ff00ff;">🥋 KOF '95</h2>
@@ -224,7 +225,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
                 <span class="btn-ver" style="background: #990099; border-color: #ff00ff;">ABRIR FICHA</span>
             </div>
         </div>
-        <div class="card-wrapper" onclick="verFicha('neobombe')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('neobombe')">
             <div class="card" style="border-color: #ff00ff; box-shadow: inset 0 0 15px rgba(255,0,255,0.2);">
                 <img src="neobomberman.jpg" alt="Neo Bomberman" onerror="this.src='logo.png'">
                 <h2 style="color: #ff00ff;">💣 N. BOMBERMAN</h2>
@@ -232,7 +233,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
                 <span class="btn-ver" style="background: #990099; border-color: #ff00ff;">ABRIR FICHA</span>
             </div>
         </div>
-        <div class="card-wrapper" onclick="verFicha('simpsons')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('simpsons')">
             <div class="card" style="border-color: #ff00ff; box-shadow: inset 0 0 15px rgba(255,0,255,0.2);">
                 <img src="simpsons.jpg" alt="The Simpsons Arcade" onerror="this.src='logo.png'">
                 <h2 style="color: #ff00ff;">🍩 THE SIMPSONS</h2>
@@ -240,7 +241,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
                 <span class="btn-ver" style="background: #990099; border-color: #ff00ff;">ABRIR FICHA</span>
             </div>
         </div>
-        <div class="card-wrapper" onclick="verFicha('tmnt')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('tmnt')">
             <div class="card" style="border-color: #ff00ff; box-shadow: inset 0 0 15px rgba(255,0,255,0.2);">
                 <img src="tmnt.jpg" alt="TMNT Arcade" onerror="this.src='logo.png'">
                 <h2 style="color: #ff00ff;">🐢 TMNT ARCADE</h2>
@@ -248,7 +249,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
                 <span class="btn-ver" style="background: #990099; border-color: #ff00ff;">ABRIR FICHA</span>
             </div>
         </div>
-        <div class="card-wrapper secreto" id="tarjetaSecreta" onclick="verFicha('pacman')" style="display: none;">
+        <div class="card-wrapper secreto" id="tarjetaSecreta" onclick="reproducirClic(); verFicha('pacman')" style="display: none;">
             <div class="card" style="border-color: #ff00ff; box-shadow: inset 0 0 15px rgba(255,0,255,0.2);">
                 <img src="pacman.jpg" alt="Pac-Man" onerror="this.src='https://upload.wikimedia.org/wikipedia/en/5/59/Pac-man.png'">
                 <h2 style="color: #ff00ff;">👻 PAC-MAN</h2>
@@ -261,22 +262,22 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
     <h1 id="nes" class="section-title">🎮 NES</h1>
     <img src="nes.jpg" class="banner-console" alt="NES">
     <div class="container"> 
-        <div class="card-wrapper" onclick="verFicha('miketyson')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('miketyson')">
             <div class="card"><img src="miketyson.jpg" alt="Punch Out" onerror="this.src='nes.jpg'"><h2>🥊 Punch-Out!!</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">ABRIR FICHA</span></div>
         </div>
-        <div class="card-wrapper" onclick="verFicha('ghostngoblin')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('ghostngoblin')">
             <div class="card"><img src="ghostngoblin.jpg" alt="G. n Goblins" onerror="this.src='nes.jpg'"><h2>💀 G. n Goblins</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">ABRIR FICHA</span></div>
         </div>
-        <div class="card-wrapper" onclick="verFicha('mariobros3')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariobros3')">
             <div class="card"><img src="supermariobros3.jpg" alt="Mario Bros 3" onerror="this.src='nes.jpg'"><h2>🍄 Mario Bros 3</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">ABRIR FICHA</span></div>
         </div>
-        <div class="card-wrapper" onclick="verFicha('tetris')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('tetris')">
             <div class="card"><img src="TetrisNes.png" alt="Tetris" onerror="this.src='nes.jpg'"><h2>🎮 Tetris</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">ABRIR FICHA</span></div>
         </div>
-        <div class="card-wrapper" onclick="verFicha('mariobros')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariobros')">
             <div class="card"><img src="SuperMarioBros.jpg" alt="Mario Bros" onerror="this.src='nes.jpg'"><h2>🍄 Mario Bros</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">ABRIR FICHA</span></div>
         </div>
-        <div class="card-wrapper" onclick="verFicha('tortugasnes')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('tortugasnes')">
             <div class="card"><img src="tnmnes.jpg" alt="TMNT NES" onerror="this.src='nes.jpg'"><h2>🐢 TMNT (NES)</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">ABRIR FICHA</span></div>
         </div>
     </div>
@@ -284,16 +285,16 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
     <h1 id="n64" class="section-title">🕹️ NINTENDO 64</h1>
     <img src="n64.jpg" class="banner-console" alt="N64">
     <div class="container"> 
-        <div class="card-wrapper" onclick="verFicha('mariokart64')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariokart64')">
             <div class="card"><img src="Mariokart64.jpg" alt="Mario Kart 64" onerror="this.src='n64.jpg'"><h2>🏎️ Mario Kart 64</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">ABRIR FICHA</span></div>
         </div>
-        <div class="card-wrapper" onclick="verFicha('castlegacy')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('castlegacy')">
             <div class="card"><img src="castlegacy.jpg" alt="Castlevania" onerror="this.src='n64.jpg'"><h2>🦇 Castlevania</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">ABRIR FICHA</span></div>
         </div>
-        <div class="card-wrapper" onclick="verFicha('mortalkomleg64')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('mortalkomleg64')">
             <div class="card"><img src="mortalkom64.png" alt="Mortal Kombat" onerror="this.src='n64.jpg'"><h2>🩸 Mortal Kombat</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">ABRIR FICHA</span></div>
         </div>
-        <div class="card-wrapper" onclick="verFicha('mariotennis')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariotennis')">
             <div class="card"><img src="MarioTennis.jpg" alt="Mario Tennis" onerror="this.src='n64.jpg'"><h2>🎾 Mario Tennis</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">ABRIR FICHA</span></div>
         </div> 
     </div>
@@ -301,19 +302,19 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
     <h1 id="megadrive" class="section-title">⚡ MEGA DRIVE</h1>
     <img src="megadrive.jpg" class="banner-console" alt="Mega Drive">
     <div class="container">
-        <div class="card-wrapper" onclick="verFicha('batman')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('batman')">
             <div class="card"><img src="batman.jpg" alt="Batman" onerror="this.src='megadrive.jpg'"><h2>🦇 Batman</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">ABRIR FICHA</span></div>
         </div>
-        <div class="card-wrapper" onclick="verFicha('goldenaxe2')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('goldenaxe2')">
             <div class="card"><img src="goldenaxe2.jpg" alt="Golden Axe 2" onerror="this.src='megadrive.jpg'"><h2>🪓 Golden Axe II</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">ABRIR FICHA</span></div>
         </div>
-        <div class="card-wrapper" onclick="verFicha('rambo3')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('rambo3')">
             <div class="card"><img src="Rambo3.jpg" alt="Rambo III" onerror="this.src='megadrive.jpg'"><h2>💥 Rambo III</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">ABRIR FICHA</span></div>
         </div>
-        <div class="card-wrapper" onclick="verFicha('sonic')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('sonic')">
             <div class="card"><img src="sonicthehedgehog.jpg" alt="Sonic" onerror="this.src='megadrive.jpg'"><h2>🦔 Sonic</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">ABRIR FICHA</span></div>
         </div>
-        <div class="card-wrapper" onclick="verFicha('aladdin')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('aladdin')">
             <div class="card"><img src="aladin.jpg" alt="Aladdin" onerror="this.src='megadrive.jpg'"><h2>🧞 Aladdin</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">ABRIR FICHA</span></div>
         </div>
     </div>
@@ -321,13 +322,13 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
     <h1 id="snes" class="section-title">⭐ SNES</h1>
     <img src="snes.jpg" class="banner-console" alt="SNES">
     <div class="container">
-        <div class="card-wrapper" onclick="verFicha('marioworld')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('marioworld')">
             <div class="card"><img src="SuperMarioWorld.jpg" alt="Mario World" onerror="this.src='snes.jpg'"><h2>🍄 Mario World</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">ABRIR FICHA</span></div>
         </div>
-        <div class="card-wrapper" onclick="verFicha('mariokartsnes')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariokartsnes')">
             <div class="card"><img src="SuperMarioKartsnes.jpg" alt="Mario Kart" onerror="this.src='snes.jpg'"><h2>🏎️ Mario Kart</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">ABRIR FICHA</span></div>
         </div>
-        <div class="card-wrapper" onclick="verFicha('sunsetrider')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('sunsetrider')">
             <div class="card"><img src="sunsetriders.jpg" alt="Sunset Riders" onerror="this.src='snes.jpg'"><h2>🤠 SUNSET RIDERS</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">ABRIR FICHA</span></div>
         </div>
     </div> 
@@ -335,7 +336,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
     <h1 id="gba" class="section-title">📱 GAME BOY ADVANCE</h1>
     <img src="gba.jpg" class="banner-console" alt="GBA">
     <div class="container">
-        <div class="card-wrapper secreto" id="tarjetaCiervo" onclick="verFicha('deerhunter')" style="display: none;">
+        <div class="card-wrapper secreto" id="tarjetaCiervo" onclick="reproducirClic(); verFicha('deerhunter')" style="display: none;">
             <div class="card" style="border-color: #e60012; box-shadow: inset 0 0 15px rgba(230,0,18,0.2);">
                 <img src="deerhunter.jpg" alt="Deer Hunter" onerror="this.src='gba.jpg'">
                 <h2 style="color: #e60012;">🦌 DEER HUNTER</h2>
@@ -343,10 +344,10 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
                 <span class="btn-ver" style="background: #990000; border-color: #e60012;">ABRIR FICHA</span>
             </div>
         </div>
-        <div class="card-wrapper" onclick="verFicha('esmeralda')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('esmeralda')">
             <div class="card"><img src="pokemonesme.jpg" alt="Pokemon Esmeralda" onerror="this.src='gba.jpg'"><h2>⚡ P. Esmeralda</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">ABRIR FICHA</span></div>
         </div>
-        <div class="card-wrapper" onclick="verFicha('rubi')">
+        <div class="card-wrapper" onclick="reproducirClic(); verFicha('rubi')">
             <div class="card"><img src="pokemonrubi.jpg" alt="Pokemon Rubi" onerror="this.src='gba.jpg'"><h2>🔴 P. Rubí</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">ABRIR FICHA</span></div>
         </div>
     </div>
@@ -359,7 +360,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 
 <div id="modalFicha" class="modal-ficha">
     <div class="ficha-content">
-        <button class="close-btn" onclick="cerrarFicha();">❌</button>
+        <button class="close-btn" onclick="reproducirClic(); cerrarFicha();">❌</button>
         <div class="ficha-header">
             <img id="fichaImg" src="">
             <div class="ficha-titulos">
@@ -369,9 +370,9 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
         </div>
         
         <div class="tabs">
-            <button id="tabHistoria" class="tab-btn active" onclick="cambiarPestana('historia');">📖 HISTORIA</button>
-            <button id="tabManual" class="tab-btn" onclick="cambiarPestana('manual');">📜 MANUAL</button>
-            <button id="tabFama" class="tab-btn" onclick="cambiarPestana('fama');">🏆 SALÓN FAMA</button>
+            <button id="tabHistoria" class="tab-btn active" onclick="reproducirClic(); cambiarPestana('historia');">📖 HISTORIA</button>
+            <button id="tabManual" class="tab-btn" onclick="reproducirClic(); cambiarPestana('manual');">📜 MANUAL</button>
+            <button id="tabFama" class="tab-btn" onclick="reproducirClic(); cambiarPestana('fama');">🏆 SALÓN FAMA</button>
         </div>
 
         <div id="flipbookWrapper">
@@ -398,7 +399,7 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 
 <div id="modalPaywall" class="modal-ficha">
     <div class="ficha-content" style="text-align: center; border-color: #e60012; box-shadow: 0 0 40px #e60012; max-width: 400px;">
-        <button class="close-btn" onclick="cerrarPaywall();">❌</button>
+        <button class="close-btn" onclick="reproducirClic(); cerrarPaywall();">❌</button>
         <h2 style="color: #e60012; font-size: 24px; margin-top: 0;">🛑 TIEMPO AGOTADO 🛑</h2>
         <p style="color: #fff; font-size: 16px;">Has agotado tus <strong>2 partidas</strong> de prueba.</p>
         <p style="color: #ccc; font-size: 14px;">Para desbloquear el catálogo Premium y jugar sin límites, <strong>acerca</strong> tu Llavero NFC oficial al móvil.</p>
@@ -412,10 +413,17 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 </div>
 
 <script>
+// --- MOTOR DE AUDIO AVANZADO (1UP, MONEDAS, LÁSER, CLICS, ERRORES) ---
 let globalAudioCtx = null;
 function getAudioCtx() { if (!globalAudioCtx) { globalAudioCtx = new (window.AudioContext || window.webkitAudioContext)(); } if (globalAudioCtx.state === 'suspended') { globalAudioCtx.resume(); } return globalAudioCtx; }
 function reproducirSonido1UP() { try { const ctx=getAudioCtx(); const osc=ctx.createOscillator(); const gain=ctx.createGain(); osc.type='square'; const now=ctx.currentTime; osc.frequency.setValueAtTime(1318.51,now); osc.frequency.setValueAtTime(1567.98,now+0.1); osc.frequency.setValueAtTime(2093.00,now+0.2); osc.frequency.setValueAtTime(2637.02,now+0.3); osc.frequency.setValueAtTime(3135.96,now+0.4); gain.gain.setValueAtTime(0.1,now); gain.gain.linearRampToValueAtTime(0,now+0.6); osc.connect(gain); gain.connect(ctx.destination); osc.start(now); osc.stop(now+0.6); } catch(e){} }
+function reproducirClic() { try { const ctx=getAudioCtx(); const osc=ctx.createOscillator(); const gain=ctx.createGain(); osc.type='square'; osc.frequency.setValueAtTime(440,ctx.currentTime); osc.frequency.exponentialRampToValueAtTime(880,ctx.currentTime+0.1); gain.gain.setValueAtTime(0.1,ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.1); osc.connect(gain); gain.connect(ctx.destination); osc.start(); osc.stop(ctx.currentTime+0.1); } catch(e){} }
+function reproducirSonidoCoin() { try { const ctx=getAudioCtx(); const osc=ctx.createOscillator(); const gain=ctx.createGain(); osc.type='square'; osc.frequency.setValueAtTime(987.77,ctx.currentTime); osc.frequency.setValueAtTime(1318.51,ctx.currentTime+0.1); gain.gain.setValueAtTime(0.1,ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.4); osc.connect(gain); gain.connect(ctx.destination); osc.start(); osc.stop(ctx.currentTime+0.4); } catch(e){} }
+function reproducirSonidoError() { try { const ctx=getAudioCtx(); const osc=ctx.createOscillator(); const gain=ctx.createGain(); osc.type='sawtooth'; osc.frequency.setValueAtTime(150,ctx.currentTime); osc.frequency.exponentialRampToValueAtTime(50,ctx.currentTime+0.3); gain.gain.setValueAtTime(0.2,ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.3); osc.connect(gain); gain.connect(ctx.destination); osc.start(); osc.stop(ctx.currentTime+0.3); } catch(e){} }
+function reproducirSonidoEscaner() { try { const ctx=getAudioCtx(); const osc=ctx.createOscillator(); const gain=ctx.createGain(); osc.type='sawtooth'; osc.frequency.setValueAtTime(200,ctx.currentTime); osc.frequency.linearRampToValueAtTime(800,ctx.currentTime+0.5); gain.gain.setValueAtTime(0.05,ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+1); osc.connect(gain); gain.connect(ctx.destination); osc.start(); osc.stop(ctx.currentTime+1); } catch(e){} }
+function reproducirSonidoFlip() { try { const ctx=getAudioCtx(); const osc=ctx.createOscillator(); const gain=ctx.createGain(); osc.type='sine'; osc.frequency.setValueAtTime(300,ctx.currentTime); osc.frequency.exponentialRampToValueAtTime(100,ctx.currentTime+0.15); gain.gain.setValueAtTime(0.05,ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.15); osc.connect(gain); gain.connect(ctx.destination); osc.start(); osc.stop(ctx.currentTime+0.15); } catch(e){} }
 
+// --- VERIFICACIÓN DE LLAVE VIP ---
 window.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     if(params.get('llave') === 'oleaVIP') {
@@ -429,72 +437,68 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// --- EASTER EGGS ---
 let toquesLogo = 0, tiempoToques;
-function toqueSecreto() { toquesLogo++; clearTimeout(tiempoToques); if(toquesLogo===3){ desbloquearSecreto(); toquesLogo=0; } else { tiempoToques=setTimeout(()=>{toquesLogo=0;},1000); } }
-function desbloquearSecreto() { const tarjeta=document.getElementById("tarjetaSecreta"); if(tarjeta){ tarjeta.style.display="block"; tarjeta.scrollIntoView({behavior:'smooth',block:'center'}); } }
+function toqueSecreto() { reproducirClic(); toquesLogo++; clearTimeout(tiempoToques); if(toquesLogo===3){ desbloquearSecreto(); toquesLogo=0; } else { tiempoToques=setTimeout(()=>{toquesLogo=0;},1000); } }
+function desbloquearSecreto() { const tarjeta=document.getElementById("tarjetaSecreta"); if(tarjeta){ tarjeta.style.display="block"; tarjeta.scrollIntoView({behavior:'smooth',block:'center'}); reproducirSonido1UP(); } }
 
 let toquesBeltraneja = 0, tiempoBeltraneja;
-function toqueBeltraneja() { toquesBeltraneja++; clearTimeout(tiempoBeltraneja); if(toquesBeltraneja===2){ desbloquearCiervo(); toquesBeltraneja=0; } else { tiempoBeltraneja=setTimeout(()=>{toquesBeltraneja=0;},500); } }
-function desbloquearCiervo() { const tarjeta=document.getElementById("tarjetaCiervo"); if(tarjeta){ tarjeta.style.display="block"; tarjeta.scrollIntoView({behavior:'smooth',block:'center'}); } }
+function toqueBeltraneja() { reproducirClic(); toquesBeltraneja++; clearTimeout(tiempoBeltraneja); if(toquesBeltraneja===2){ desbloquearCiervo(); toquesBeltraneja=0; } else { tiempoBeltraneja=setTimeout(()=>{toquesBeltraneja=0;},500); } }
+function desbloquearCiervo() { const tarjeta=document.getElementById("tarjetaCiervo"); if(tarjeta){ tarjeta.style.display="block"; tarjeta.scrollIntoView({behavior:'smooth',block:'center'}); reproducirSonidoCoin(); } }
 
 function filtrarJuegos() { let input=document.getElementById("buscadorJuegos").value.toLowerCase(); document.querySelectorAll(".card-wrapper").forEach(t => { let h=t.querySelector("h2").innerText.toLowerCase(); t.style.display = h.includes(input) ? "block" : "none"; }); }
 
-// --- BASE DE DATOS MASIVA (INCLUYE LOS 7 JUEGOS NUEVOS) ---
+// --- BASE DE DATOS MASIVA (INCLUYE LOS 27 JUEGOS) ---
 const infoJuegos = {
-    // === NUEVOS JUEGOS ARCADE ===
     kof94: {
         consola: "arcade", titulo: "THE KING OF FIGHTERS '94", img: "thekingoffighters94.jpg", enlace: "kof94.html", valoracion: "⭐⭐⭐⭐½ 9.0/10",
-        historia: ["<h3>📖 EL CROSSOVER DEFINITIVO</h3><p>En 1994, SNK tuvo la loca idea de meter a los personajes de Fatal Fury, Art of Fighting e Ikari Warriors en un solo juego. Fue el equivalente a los Vengadores pero en los salones recreativos, con tipos musculosos dándose palizas.</p>"],
-        manual: ["<h3>📜 PELEA EN EQUIPO</h3><p>🎯 <strong>Novedad:</strong> Aquí no hay uno contra uno. Tienes que elegir un equipo de 3 luchadores (cada uno representa a un país). Si uno cae, entra el siguiente. Así hasta barrer el suelo con el equipo rival.</p>"]
+        historia: ["<h3>📖 EL CROSSOVER DEFINITIVO</h3><p>En 1994, SNK tuvo la loca idea de meter a los personajes de Fatal Fury, Art of Fighting e Ikari Warriors en un solo juego. Fue el equivalente a los Vengadores pero en los salones recreativos.</p>"],
+        manual: ["<h3>📜 PELEA EN EQUIPO</h3><p>🎯 <strong>Novedad:</strong> Aquí no hay uno contra uno. Tienes que elegir un equipo de 3 luchadores. Si uno cae, entra el siguiente. Así hasta barrer el suelo con el equipo rival.</p>"]
     },
     kof95: {
         consola: "arcade", titulo: "THE KING OF FIGHTERS '95", img: "thekingoffighters95.jpg", enlace: "kof95.html", valoracion: "⭐⭐⭐⭐⭐ 9.3/10",
-        historia: ["<h3>📖 NACE LA RIVALIDAD</h3><p>El juego que perfeccionó la fórmula y nos presentó al emo más famoso de los videojuegos: Iori Yagami, el rival eterno del prota Kyo Kusanagi. Si en tu barrio sabías hacer los combos de Iori, eras el rey indiscutible de la máquina.</p>"],
-        manual: ["<h3>📜 EDICIÓN DE EQUIPOS</h3><p>🎯 <strong>Novedad:</strong> Por fin dejaron a los jugadores mezclar los equipos a su antojo en lugar de usar los países predefinidos. Carga tu barra de energía esquivando ataques y suelta tu especial para vaciar la vida del rival.</p>"]
+        historia: ["<h3>📖 NACE LA RIVALIDAD</h3><p>El juego que perfeccionó la fórmula y nos presentó al emo más famoso de los videojuegos: Iori Yagami, el rival eterno del prota Kyo Kusanagi. Si sabías hacer los combos de Iori, eras el rey indiscutible de la máquina.</p>"],
+        manual: ["<h3>📜 EDICIÓN DE EQUIPOS</h3><p>🎯 <strong>Novedad:</strong> Por fin dejaron a los jugadores mezclar los equipos a su antojo en lugar de usar los países predefinidos.</p>"]
     },
     neobombe: {
         consola: "arcade", titulo: "NEO BOMBERMAN", img: "neobomberman.jpg", enlace: "neobombe.html", valoracion: "⭐⭐⭐⭐ 8.8/10",
-        historia: ["<h3>📖 EXPLOSIONES EN NEO GEO</h3><p>Hudson Soft llevó a su mítico muñeco pone-bombas a la todopoderosa placa arcade de SNK en 1997. El resultado es un festival de luces, colores y gritos de amigos traicionándose por acorralarse con bombas.</p>"],
-        manual: ["<h3>📜 GUÍA PIROMANÍACA</h3><p>🎯 <strong>Regla #1:</strong> Pon una bomba, y CORRE. No te quedes atrapado en tu propio fuego o harás el ridículo.<br>🔥 <strong>Power-ups:</strong> Busca los fueguitos para hacer explosiones más largas y patinetas para ir rápido.</p>"]
+        historia: ["<h3>📖 EXPLOSIONES EN NEO GEO</h3><p>Hudson Soft llevó a su mítico muñeco pone-bombas a la todopoderosa placa arcade de SNK en 1997. El resultado es un festival de traiciones entre amigos.</p>"],
+        manual: ["<h3>📜 GUÍA PIROMANÍACA</h3><p>🎯 <strong>Regla #1:</strong> Pon una bomba, y CORRE. No te quedes atrapado en tu propio fuego o harás el ridículo.<br>🔥 <strong>Power-ups:</strong> Busca los fueguitos para hacer explosiones largas.</p>"]
     },
     simpsons: {
         consola: "arcade", titulo: "THE SIMPSONS ARCADE", img: "simpsons.jpg", enlace: "simpsons.html", valoracion: "⭐⭐⭐⭐⭐ 9.6/10",
-        historia: ["<h3>📖 EL REY DE LOS RECREATIVOS</h3><p>Konami lanzó este beat 'em up en 1991 y se convirtió en la tragaperras definitiva. Cuatro amigos podían jugar a la vez repartiendo leña en Springfield para rescatar a la pequeña Maggie. Marge peleando con una aspiradora es historia de los videojuegos.</p>"],
-        manual: ["<h3>📜 CALLEJEO AMARILLO</h3><p>🎯 <strong>Misión:</strong> Aporrea botones sin piedad.<br>🤝 <strong>Ataques en equipo:</strong> Si te juntas con un amigo y os quedáis quietos, los personajes harán un ataque doble loquísimo. Cuidado con los bolos rodantes.</p>"]
+        historia: ["<h3>📖 EL REY DE LOS RECREATIVOS</h3><p>Konami lanzó este beat 'em up en 1991 y se convirtió en la tragaperras definitiva. Cuatro amigos repartiendo leña en Springfield para rescatar a la pequeña Maggie.</p>"],
+        manual: ["<h3>📜 CALLEJEO AMARILLO</h3><p>🤝 <strong>Ataques en equipo:</strong> Si te juntas con un amigo y os quedáis quietos, los personajes harán un ataque doble loquísimo. Cuidado con los bolos rodantes.</p>"]
     },
     tmnt: {
         consola: "arcade", titulo: "TMNT ARCADE", img: "tmnt.jpg", enlace: "tmnt.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10",
-        historia: ["<h3>📖 COWABUNGA</h3><p>Otro éxito monstruoso de Konami en los bares (1989). Jugar a cuatro bandas con Leonardo, Raphael, Michelangelo y Donatello era el sueño de cualquier chaval de los 90. Destruir soldados del Clan del Pie nunca fue tan divertido.</p>"],
-        manual: ["<h3>📜 NINJUTSU MUTANTE</h3><p>🎯 <strong>Controles:</strong> Botón de ataque y botón de salto. Pulsa los dos a la vez para hacer el ataque especial en salto, pero cuidado, ¡te quita un poco de tu propia vida cada vez que conectas!</p>"]
+        historia: ["<h3>📖 COWABUNGA</h3><p>Otro éxito monstruoso de Konami en los bares (1989). Jugar a cuatro bandas con las tortugas era el sueño de cualquier chaval de los 90.</p>"],
+        manual: ["<h3>📜 NINJUTSU MUTANTE</h3><p>🎯 <strong>Controles:</strong> Botón de ataque y botón de salto. Pulsa los dos a la vez para hacer el ataque especial en salto (¡te quita un poco de tu propia vida al conectar!).</p>"]
     },
-    // === NUEVO JUEGO SNES ===
     sunsetrider: {
         consola: "snes", titulo: "SUNSET RIDERS", img: "sunsetriders.jpg", enlace: "sunsetrider.html", valoracion: "⭐⭐⭐⭐⭐ 9.4/10",
-        historia: ["<h3>📖 BURY ME WITH MY MONEY</h3><p>Un clásico indiscutible que nos llevó al Salvaje Oeste. Cuatro cazarrecompensas vestidos con colores chillones repartiendo plomo. La versión de SNES es mítica y mantiene la esencia salvaje de la recreativa.</p>"],
-        manual: ["<h3>📜 LEY DEL REVÓLVER</h3><p>🎯 <strong>Esquiva y dispara:</strong> Puedes disparar en 8 direcciones. Pulsa el salto y abajo para deslizarte por el suelo y esquivar balas. Si ves una estampida de toros, corre y salta sobre sus lomos.</p>"]
+        historia: ["<h3>📖 BURY ME WITH MY MONEY</h3><p>Un clásico indiscutible que nos llevó al Salvaje Oeste. Cuatro cazarrecompensas vestidos con colores chillones repartiendo plomo. La versión de SNES es mítica.</p>"],
+        manual: ["<h3>📜 LEY DEL REVÓLVER</h3><p>🎯 <strong>Esquiva y dispara:</strong> Puedes disparar en 8 direcciones. Pulsa el salto y abajo para deslizarte por el suelo y esquivar balas.</p>"]
     },
-    // === NUEVO JUEGO NES ===
     tortugasnes: {
         consola: "nes", titulo: "TMNT (NES)", img: "tnmnes.jpg", enlace: "tortugasnes.html", valoracion: "⭐⭐⭐⭐ 8.2/10",
-        historia: ["<h3>📖 TRAUMAS DE LA INFANCIA</h3><p>Famoso por ser un juegazo y, a la vez, por destrozar los nervios de una generación entera. ¿Te suena el nivel de desactivar bombas bajo el agua con algas eléctricas? Si te lo pasaste sin llorar, eres un héroe.</p>"],
-        manual: ["<h3>📜 RELEVO NINJA</h3><p>🎯 <strong>Mecánica clave:</strong> Tienes 4 vidas (las 4 tortugas). Si una está a punto de morir, entra al menú y cámbiala por otra que esté sana.<br>🐢 <strong>Secreto:</strong> Donatello está rotísimo. Su palo llega lejísimos, úsalo contra los jefes.</p>"]
+        historia: ["<h3>📖 TRAUMAS DE LA INFANCIA</h3><p>Famoso por ser un juegazo y, a la vez, por destrozar los nervios de una generación entera. ¿Te suena el nivel de desactivar bombas bajo el agua con algas eléctricas?</p>"],
+        manual: ["<h3>📜 RELEVO NINJA</h3><p>🎯 <strong>Mecánica clave:</strong> Tienes 4 vidas (las 4 tortugas). Si una está a punto de morir, entra al menú y cámbiala por otra que esté sana.</p>"]
     },
-
-    // === JUEGOS ANTIGUOS ===
     cadillacs: { 
         consola: "arcade", titulo: "CADILLACS & DINOSAURS", img: "https://upload.wikimedia.org/wikipedia/en/b/b5/Cadillacs_and_Dinosaurs_arcade_flyer.jpg", enlace: "dino.html", valoracion: "⭐⭐⭐⭐⭐ 9.8/10",
-        historia: ["<h3>📖 LA LOCURA DE LOS 90</h3><p>En 1993, a Capcom se le ocurrió mezclar las tres cosas que más molaban en la época: tíos duros, coches clásicos y dinosaurios. Basado en el cómic Xenozoic Tales, este juego arrasó en los salones recreativos.</p>", "<h3>🌍 EL LORE DE LA CALLE</h3><p>El planeta se ha ido al traste y los humanos conviven (a base de guantazos) con dinosaurios resucitados. Una banda de furtivos está cazando a los dinos y tu misión es reventarlos a golpes para mantener la paz ecológica.</p>"],
-        manual: ["<h3>📜 MANUAL DEL RECREATIVO</h3><p>🎯 <strong>Nutrición:</strong> En este juego, la sanidad no importa. Si ves un pollo asado entero o una pizza intacta escondidos dentro de un bidón de metal oxidado... cómetelo, te curará la barra de vida.</p>", "<h3>🕹️ CONSEJOS CLÁSICOS</h3><p>🚗 <strong>El Coche:</strong> En el nivel 3 podrás subirte al mismísimo Cadillac. Acelera y atropella a todo el mundo sin piedad, es la mejor parte del juego.</p>"]
+        historia: ["<h3>📖 LA LOCURA DE LOS 90</h3><p>En 1993, a Capcom se le ocurrió mezclar las tres cosas que más molaban en la época: tíos duros, coches clásicos y dinosaurios.</p>"],
+        manual: ["<h3>📜 MANUAL DEL RECREATIVO</h3><p>🎯 <strong>Nutrición:</strong> En este juego, la sanidad no importa. Si ves un pollo asado entero dentro de un bidón de metal oxidado... cómetelo, te curará la barra de vida.</p>"]
     },
     mariobros: { 
         consola: "nes", titulo: "SUPER MARIO BROS", img: "SuperMarioBros.jpg", enlace: "SuperMarioBros.html", valoracion: "⭐⭐⭐⭐⭐ 9.7/10",
-        historia: ["<h3>📖 EL ORIGEN DE UN MITO</h3><p>En 1985 la industria de las consolas estaba muerta tras el fiasco de E.T. de Atari. Shigeru Miyamoto decidió crear un héroe improbable para intentar salvarla: un fontanero italiano, rechoncho y con bigote.</p>", "<h3>🌍 EL LORE OSCURO</h3><p>Los Koopas invadieron el Reino Champiñón y convirtieron a todos sus ciudadanos inocentes en bloques de ladrillo. Sí, cada vez que rompes un ladrillo con la cabeza, estás asesinando a un habitante.</p>"],
-        manual: ["<h3>📜 GUÍA DE SUPERVIVENCIA</h3><p>🎯 <strong>Misión:</strong> Cruzar 8 mundos para rescatar a la Princesa Peach. Prepárate para escuchar <em>'nuestra princesa está en otro castillo'</em> demasiadas veces.</p>", "<h3>💡 CONSEJOS</h3><p>🍄 <strong>Champiñón:</strong> Te hace el doble de grande.<br>⭐ <strong>Estrella:</strong> Te vuelves invencible con música tecno de fondo.<br>🐢 <strong>Aviso:</strong> Las tortugas no son amigas.</p>"]
+        historia: ["<h3>📖 EL ORIGEN DE UN MITO</h3><p>En 1985 la industria de las consolas estaba muerta. Shigeru Miyamoto decidió crear un héroe improbable para intentar salvarla: un fontanero italiano.</p>", "<h3>🌍 EL LORE OSCURO</h3><p>Los Koopas invadieron el Reino Champiñón y convirtieron a todos sus ciudadanos inocentes en bloques de ladrillo. Sí, cada vez que rompes un ladrillo con la cabeza, estás asesinando a un habitante.</p>"],
+        manual: ["<h3>📜 GUÍA DE SUPERVIVENCIA</h3><p>🎯 <strong>Misión:</strong> Cruzar 8 mundos para rescatar a la Princesa Peach. Prepárate para escuchar <em>'nuestra princesa está en otro castillo'</em> demasiadas veces.</p>"]
     },
     tetris: { 
         consola: "nes", titulo: "TETRIS", img: "TetrisNes.png", enlace: "TetrisFicha.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10",
-        historia: ["<h3>📖 UN NACIMIENTO FRÍO</h3><p>Nació en 1984 en la Unión Soviética, durante la Guerra Fría. Alexey Pajitnov lo programó en un ordenador que ni siquiera tenía gráficos. Los primeros bloques eran simples corchetes [ ] unidos en la pantalla.</p>"],
-        manual: ["<h3>📜 MANUAL DEL EMPLEADO</h3><p>🎯 <strong>Misión:</strong> Sobrevivir a un ataque de ansiedad. Encaja las piezas para formar líneas completas. Si la montaña toca el techo, estás despedido (Game Over).</p>"]
+        historia: ["<h3>📖 UN NACIMIENTO FRÍO</h3><p>Nació en 1984 en la Unión Soviética, durante la Guerra Fría. Alexey Pajitnov lo programó en un ordenador que ni siquiera tenía gráficos.</p>"],
+        manual: ["<h3>📜 MANUAL DEL EMPLEADO</h3><p>🎯 <strong>Misión:</strong> Sobrevivir a un ataque de ansiedad. Encaja las piezas para formar líneas completas. Si la montaña toca el techo, estás despedido.</p>"]
     },
     pacman: { 
         consola: "arcade", titulo: "PAC-MAN", img: "pacman.jpg", enlace: "Pacman.html", valoracion: "⭐⭐⭐⭐⭐ 9.5/10",
@@ -643,9 +647,11 @@ function cargarFlipbook(idJuego, tipo) {
 function pasarPagina(dir) {
     const pags = document.getElementById("flipbookContainer").querySelectorAll(".flipbook-page");
     if (dir === 1 && paginaActual < totalPaginas - 1) {
+        reproducirSonidoFlip();
         pags[paginaActual].classList.remove("active"); pags[paginaActual].classList.add("flipped");
         paginaActual++; pags[paginaActual].classList.add("active");
     } else if (dir === -1 && paginaActual > 0) {
+        reproducirSonidoFlip();
         pags[paginaActual].classList.remove("active"); paginaActual--;
         pags[paginaActual].classList.remove("flipped"); pags[paginaActual].classList.add("active");
     }
@@ -653,9 +659,10 @@ function pasarPagina(dir) {
 }
 
 function actualizarIndicador() { document.getElementById("pageIndicator").innerText = `Pág ${paginaActual + 1}/${totalPaginas}`; }
-function cerrarFicha() { document.getElementById("modalFicha").style.display = "none"; window.history.replaceState(null,null,window.location.pathname + window.location.hash); }
+function cerrarFicha() { reproducirClic(); document.getElementById("modalFicha").style.display = "none"; window.history.replaceState(null,null,window.location.pathname + window.location.hash); }
 
 function anadirRecord() {
+    reproducirClic();
     let nombre = prompt("Introduce tus 3 iniciales:", "AAA"); if (!nombre) return;
     nombre = nombre.toUpperCase().substring(0, 3);
     let puntos = prompt("Introduce tu puntuación o nivel:", "0");
@@ -683,15 +690,20 @@ function irAlJuego() {
         if (intentos < 2) {
             intentos++; localStorage.setItem('olea3d_intentos', intentos); lanzarJuegoFisico();
         } else {
+            reproducirSonidoError();
             document.getElementById("modalFicha").style.display = "none"; document.getElementById("modalPaywall").style.display = "flex";
         }
     }
 }
-function lanzarJuegoFisico() { document.getElementById("transitionScreen").classList.add("active"); setTimeout(()=>{ window.location.href = enlaceDestino; },1500); }
-function cerrarPaywall() { document.getElementById("modalPaywall").style.display = "none"; }
+function lanzarJuegoFisico() { 
+    reproducirSonidoCoin();
+    document.getElementById("transitionScreen").classList.add("active"); 
+    setTimeout(()=>{ window.location.href = enlaceDestino; },1500); 
+}
+function cerrarPaywall() { reproducirClic(); document.getElementById("modalPaywall").style.display = "none"; }
 
-function abrirTiendaGeneral() { window.open(`https://wa.me/34652824867?text=${encodeURIComponent("¡Hola OLEA3D! He visto el Retro Hub y quiero un llavero NFC.")}`, '_blank'); }
-function encargarLlaveroEspecifico() { window.open(`https://wa.me/34652824867?text=${encodeURIComponent("¡Hola! Me gustaría encargar el llavero NFC para: *"+infoJuegos[juegoActual].titulo+"*.")}`, '_blank'); }
+function abrirTiendaGeneral() { reproducirClic(); window.open(`https://wa.me/34652824867?text=${encodeURIComponent("¡Hola OLEA3D! He visto el Retro Hub y quiero un llavero NFC.")}`, '_blank'); }
+function encargarLlaveroEspecifico() { reproducirClic(); window.open(`https://wa.me/34652824867?text=${encodeURIComponent("¡Hola! Me gustaría encargar el llavero NFC para: *"+infoJuegos[juegoActual].titulo+"*.")}`, '_blank'); }
 
 window.addEventListener('hashchange', revisarLlavero); window.addEventListener('DOMContentLoaded', revisarLlavero); window.addEventListener('load', revisarLlavero);
 function revisarLlavero() {
@@ -699,6 +711,7 @@ function revisarLlavero() {
     if (hash && document.querySelector(`.card-wrapper[onclick*="'${hash}'"]`)) {
         if (hash === 'pacman') document.getElementById("tarjetaSecreta").style.display = "block";
         const sc = document.getElementById("nfcScannerScreen"); sc.classList.add("active");
+        reproducirSonidoEscaner();
         setTimeout(() => { sc.classList.remove("active"); setTimeout(() => verFicha(hash), 300); }, 2000);
     }
 }
