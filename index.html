@@ -10,14 +10,8 @@
 <title>OLEA3D Retro Hub</title>
 
 <style>
-/* 1. VARIABLES CAMALEÓNICAS */
-:root {
-    --modal-border: #d4af37;
-    --modal-title: #ffd700;
-    --modal-tab: #9dff3d;
-}
-
-/* 2. ESTILOS BASE Y FONDO DINÁMICO */
+/* VARIABLES Y FONDOS */
+:root { --modal-border: #d4af37; --modal-title: #ffd700; --modal-tab: #9dff3d; }
 body { margin: 0; font-family: Arial, sans-serif; background-color: #0d0d0d; color: white; text-align: center; overflow-x: hidden; position: relative; min-height: 100vh; transition: background-color 0.8s ease; padding-top: env(safe-area-inset-top); }
 body.theme-arcade { background-color: #1a001a; } 
 body.theme-arcade .bg-grid { background: linear-gradient(transparent 10%, rgba(255,0,255,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(255,0,255,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(255,0,255,0.3) 21px); }
@@ -31,11 +25,10 @@ body.theme-snes { background-color: #000c1a; }
 body.theme-snes .bg-grid { background: linear-gradient(transparent 10%, rgba(0,91,159,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(0,91,159,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(0,91,159,0.3) 21px); }
 body.theme-gba { background-color: #1a001a; } 
 body.theme-gba .bg-grid { background: linear-gradient(transparent 10%, rgba(90,66,155,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(90,66,155,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(90,66,155,0.3) 21px); }
-
 .bg-grid { position: fixed; bottom: 0; left: -50%; width: 200%; height: 60vh; background: linear-gradient(transparent 10%, rgba(157,255,61,0.3) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(157,255,61,0.5) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(157,255,61,0.5) 21px); transform-origin: bottom; transform: perspective(500px) rotateX(60deg); animation: gridMove 2s linear infinite; z-index: -1; opacity: 0.6; transition: background 0.8s ease; }
 @keyframes gridMove { 0% { transform: perspective(500px) rotateX(60deg) translateY(0); } 100% { transform: perspective(500px) rotateX(60deg) translateY(21px); } }
 
-/* CABECERA Y LOGOS NEÓN */
+/* CABECERA Y LOGOS */
 header { padding: 20px 20px 5px 20px; background: linear-gradient(180deg, rgba(26,26,26,0.9), rgba(13,13,13,0)); position: relative; z-index: 10; }
 .header-logos { display: flex; justify-content: center; align-items: center; gap: 25px; margin-bottom: 15px; }
 .logo-side { width: 75px; height: 75px; object-fit: cover; border-radius: 50%; cursor: pointer; transition: 0.3s; filter: brightness(1.1) saturate(1.2); }
@@ -49,21 +42,18 @@ header { padding: 20px 20px 5px 20px; background: linear-gradient(180deg, rgba(2
 h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
 .sub { color: #9acd32; font-size: 16px; margin-bottom: 10px; }
 .btn-instagram { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); color: white; padding: 10px 20px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; display: inline-block; text-decoration: none; position: relative; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.5); transition: 0.3s; }
-.btn-instagram:hover { transform: scale(1.05); }
 
-/* TIENDA Y BUSCADOR */
+/* TIENDA Y BÚSQUEDA */
 .tienda-banner { background: rgba(20,20,20,0.85); border: 2px solid #d4af37; border-radius: 15px; margin: 10px auto 25px auto; padding: 20px; max-width: 90%; position: relative; z-index: 10; backdrop-filter: blur(5px); box-shadow: 0 0 20px rgba(212,175,55,0.25); }
 .tienda-titulo { color: #ffd700; margin: 0 0 8px 0; font-size: 20px; }
 .tienda-desc { color: #ddd; font-size: 14px; margin-bottom: 15px; }
 .galeria-llaveros { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; justify-content: center; }
 .galeria-llaveros img { width: 85px; height: 85px; object-fit: cover; border-radius: 12px; border: 2px solid #9acd32; transition: 0.3s; }
-.galeria-llaveros img:hover { transform: scale(1.1); }
 .btn-tienda-principal { background: #25D366; color: white; border: none; padding: 12px 25px; border-radius: 25px; font-weight: bold; font-size: 15px; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 10px rgba(37,211,102,0.4); }
 .buscador-container { margin: 15px auto 10px auto; max-width: 400px; padding: 0 15px; position: relative; z-index: 10; }
-#buscadorJuegos { width: 100%; padding: 12px 20px; border-radius: 25px; border: 2px solid #d4af37; background: rgba(18, 18, 18, 0.8); color: white; font-size: 16px; text-align: center; outline: none; box-shadow: 0 0 15px rgba(212,175,55,0.3); }
+#buscadorJuegos { width: 100%; padding: 12px 20px; border-radius: 25px; border: 2px solid #d4af37; background: rgba(18, 18, 18, 0.8); color: white; font-size: 16px; text-align: center; outline: none; }
 .menu { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin: 15px auto; padding: 10px; max-width: 95%; position: relative; z-index: 10; }
-.menu a { color: white; text-decoration: none; background: #222; padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; border: 1px solid #d4af37; transition: 0.3s; }
-.menu a:hover { background: #d4af37; color: #111; }
+.menu a { color: white; text-decoration: none; background: #222; padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; border: 1px solid #d4af37; }
 
 /* CONTENEDORES DE JUEGOS */
 .main-container { max-width: 1200px; margin: auto; padding: 10px; position: relative; z-index: 10; }
@@ -82,70 +72,47 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 .stats { margin: 10px 0; font-size: 16px; font-weight: bold; color: #9dff3d; }
 .nfc-badge { display: inline-block; background: #9dff3d; color: #111; font-weight: bold; padding: 3px 10px; border-radius: 20px; margin: 2px; font-size: 11px; }  
 
-/* --- EL NUEVO MODAL ESTILO REVISTA NOVENTERA --- */
+/* --- MODAL ESTILO REVISTA COMPACTA --- */
 .modal-ficha { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 99999; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box; backdrop-filter: blur(8px); }
-.ficha-content { background: #1a1a1a; border: 4px solid var(--modal-border); border-radius: 15px; max-width: 500px; width: 100%; padding: 20px; position: relative; max-height: 95vh; overflow-y: auto; text-align: left; box-sizing: border-box; animation: popIn 0.3s; box-shadow: 0 0 30px rgba(0,0,0,0.8); }
+.ficha-content { background: #1a1a1a; border: 4px solid var(--modal-border); border-radius: 15px; max-width: 500px; width: 100%; padding: 15px; position: relative; max-height: 98vh; overflow-y: auto; text-align: left; box-sizing: border-box; animation: popIn 0.3s; box-shadow: 0 0 30px rgba(0,0,0,0.8); }
 @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
-/* 🌟 BOTÓN CERRAR MEJORADO 🌟 */
 .close-btn { position: absolute; top: 12px; right: 12px; background: #ff003c; color: white; border: 2px solid #fff; width: 35px; height: 35px; font-weight: bold; border-radius: 50%; cursor: pointer; font-size: 16px; z-index: 20; box-shadow: 0 4px 10px rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; padding: 0; }
-
-/* Cabecera Modal */
-.ficha-header { display: flex; gap: 15px; align-items: center; margin-bottom: 15px; background: #000; padding: 10px; border-radius: 10px; border-left: 5px solid var(--modal-border); margin-top: 5px; /* Espacio para que no choque con la X */ }
-.ficha-header img { width: 80px; border-radius: 5px; object-fit: contain; border: 1px solid #333; }
-.ficha-titulos h2 { color: #fff; margin: 0; font-size: 22px; font-style: italic; text-transform: uppercase; font-family: 'Impact', sans-serif; letter-spacing: 1px; padding-right: 25px; /* Espacio extra derecha */ }
-.valoracion-box { background: #e60012; border: 2px solid #fff; color: white; padding: 4px 10px; border-radius: 5px; font-size: 14px; font-weight: bold; display: inline-block; margin-top: 5px; transform: skew(-10deg); }
-
-/* Pestañas estilo Revista */
-.tabs { display: flex; gap: 5px; margin-bottom: 10px; border-bottom: 4px solid #444; padding-bottom: 0; }
-.tab-btn { background: #333; color: #aaa; border: none; font-size: 14px; font-weight: 900; cursor: pointer; padding: 10px 15px; border-radius: 10px 10px 0 0; transition: 0.2s; text-transform: uppercase; font-family: 'Impact', sans-serif; letter-spacing: 1px; }
+.ficha-header { display: flex; gap: 15px; align-items: center; margin-bottom: 10px; background: #000; padding: 8px; border-radius: 10px; border-left: 5px solid var(--modal-border); margin-top: 5px; }
+.ficha-header img { width: 70px; border-radius: 5px; object-fit: contain; border: 1px solid #333; }
+.ficha-titulos h2 { color: #fff; margin: 0; font-size: 18px; font-style: italic; text-transform: uppercase; font-family: 'Impact', sans-serif; letter-spacing: 1px; padding-right: 25px; }
+.valoracion-box { background: #e60012; border: 2px solid #fff; color: white; padding: 2px 8px; border-radius: 5px; font-size: 12px; font-weight: bold; display: inline-block; margin-top: 5px; transform: skew(-10deg); }
+.tabs { display: flex; gap: 5px; margin-bottom: 8px; border-bottom: 4px solid #444; padding-bottom: 0; }
+.tab-btn { background: #333; color: #aaa; border: none; font-size: 12px; font-weight: 900; cursor: pointer; padding: 8px 10px; border-radius: 8px 8px 0 0; transition: 0.2s; text-transform: uppercase; font-family: 'Impact', sans-serif; }
 .tab-btn.active { background: #fff; color: #000; border-top: 4px solid var(--modal-border); border-left: 4px solid var(--modal-border); border-right: 4px solid var(--modal-border); transform: translateY(4px); }
 
-/* --- DISEÑO INTERIOR DE LA REVISTA (FLIPBOOK) --- */
+/* CONTENIDO REVISTA COMPACTADO */
 #flipbookWrapper { display: block; }
-.flipbook-container { 
-    background: #ffffff; /* Papel blanco satinado */
-    border-radius: 0 0 10px 10px; 
-    padding: 20px; 
-    margin-bottom: 15px; 
-    min-height: 350px; 
-    position: relative; 
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.5); 
-    perspective: 1000px; 
-    border: 1px solid #ccc;
-}
-
-.flipbook-page { 
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-    padding: 20px; box-sizing: border-box; background: #fff; 
-    transform-origin: left center; transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1); 
-    opacity: 0; z-index: 1; pointer-events: none; overflow-y: auto; 
-    color: #111; font-size: 15px; line-height: 1.6; font-family: 'Helvetica Neue', Helvetica, sans-serif;
-    backface-visibility: hidden; 
-    background-image: linear-gradient(90deg, rgba(0,0,0,0.05) 0%, transparent 5%); /* Sombra del lomo */
-}
+.flipbook-container { background: #ffffff; border-radius: 0 0 10px 10px; padding: 12px; margin-bottom: 10px; min-height: 220px; position: relative; box-shadow: inset 0 0 20px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.5); perspective: 1000px; border: 1px solid #ccc; }
+.flipbook-page { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 15px; box-sizing: border-box; background: #fff; transform-origin: left center; transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1); opacity: 0; z-index: 1; pointer-events: none; overflow-y: auto; color: #111; font-size: 13.5px; line-height: 1.4; font-family: 'Helvetica Neue', Helvetica, sans-serif; backface-visibility: hidden; background-image: linear-gradient(90deg, rgba(0,0,0,0.05) 0%, transparent 5%); }
 .flipbook-page.active { opacity: 1; z-index: 5; transform: rotateY(0deg); pointer-events: all; }
 .flipbook-page.flipped { opacity: 1; transform: rotateY(-180deg); z-index: 10; pointer-events: none; }
 
-/* Clases CSS para maquetar los textos como una revista */
-.mag-titular { background: #000; color: #fff; padding: 5px 10px; font-family: 'Impact', sans-serif; font-size: 22px; text-transform: uppercase; transform: skew(-5deg); display: inline-block; margin-top: 0; margin-bottom: 15px; border-bottom: 4px solid var(--modal-border); }
-.mag-sub { color: #e60012; font-weight: 900; font-size: 18px; text-transform: uppercase; border-bottom: 2px solid #ccc; padding-bottom: 3px; margin-top: 20px; }
-.mag-box { background: #f0f8ff; border-left: 5px solid #005b9f; padding: 12px; margin: 15px 0; border-radius: 0 10px 10px 0; font-size: 14px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
-.mag-truco { background: #fffde6; border: 3px dashed #d4af37; padding: 15px; margin: 15px 0; font-weight: bold; text-align: center; color: #8b6508; }
-.mag-truco span { display: block; background: #d4af37; color: #000; margin: -15px -15px 10px -15px; padding: 5px; text-transform: uppercase; font-family: 'Impact'; font-size: 18px; }
+/* Maquetación Revista */
+.mag-titular { background: #000; color: #fff; padding: 4px 8px; font-family: 'Impact', sans-serif; font-size: 18px; text-transform: uppercase; transform: skew(-5deg); display: inline-block; margin-top: 0; margin-bottom: 8px; border-bottom: 4px solid var(--modal-border); }
+.mag-sub { color: #e60012; font-weight: 900; font-size: 15px; text-transform: uppercase; border-bottom: 2px solid #ccc; padding-bottom: 3px; margin-top: 15px; margin-bottom: 8px;}
+.mag-box { background: #f0f8ff; border-left: 5px solid #005b9f; padding: 10px; margin: 10px 0; border-radius: 0 10px 10px 0; font-size: 12.5px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+.mag-truco { background: #fffde6; border: 3px dashed #d4af37; padding: 12px; margin: 10px 0; font-weight: bold; text-align: center; color: #8b6508; font-size: 12.5px;}
+.mag-truco span { display: block; background: #d4af37; color: #000; margin: -12px -12px 8px -12px; padding: 4px; text-transform: uppercase; font-family: 'Impact'; font-size: 15px; }
 
-.flip-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 0 10px; }
-.btn-flip { background: #000; color: #fff; border: 2px solid var(--modal-border); padding: 8px 15px; font-family: 'Impact', sans-serif; font-size: 16px; cursor: pointer; box-shadow: 3px 3px 0 var(--modal-border); transition: 0.1s; text-transform: uppercase; }
-.btn-flip:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--modal-border); }
-.page-indicator { color: #fff; font-size: 14px; font-weight: bold; background: #333; padding: 5px 10px; border-radius: 15px; }
+/* Controles de página reducidos */
+.flip-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 0 5px; }
+.btn-flip { background: #000; color: #fff; border: 2px solid var(--modal-border); padding: 6px 10px; font-family: 'Impact', sans-serif; font-size: 12px; cursor: pointer; box-shadow: 2px 2px 0 var(--modal-border); transition: 0.1s; text-transform: uppercase; }
+.btn-flip:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0 var(--modal-border); }
+.page-indicator { color: #fff; font-size: 12px; font-weight: bold; background: #333; padding: 4px 8px; border-radius: 12px; }
 
-/* Botones de acción final */
-.btn-tienda-modal, .btn-jugar-modal { display: block; width: 100%; text-align: center; padding: 15px 0; color: #000; text-decoration: none; border-radius: 8px; font-weight: 900; font-size: 18px; border: none; cursor: pointer; margin-bottom: 12px; text-transform: uppercase; font-family: 'Impact', sans-serif; letter-spacing: 1px; }
+/* Botones de acción compactos */
+.botones-accion-row { display: flex; gap: 8px; margin-bottom: 8px; }
+.btn-tienda-modal, .btn-jugar-modal { width: 100%; text-align: center; padding: 12px 0; color: #000; text-decoration: none; border-radius: 8px; font-weight: 900; font-size: 14px; border: none; cursor: pointer; text-transform: uppercase; font-family: 'Impact', sans-serif; letter-spacing: 1px; display: block; }
 .btn-tienda-modal { background: #d4af37; box-shadow: 0 4px 0 #8b6508; }
-.btn-jugar-modal { background: #e60012; color: white; box-shadow: 0 4px 0 #8b0000; }
+.btn-jugar-modal { background: #e60012; color: white; box-shadow: 0 4px 0 #8b0000; font-size: 16px; margin-bottom: 5px; }
 .btn-tienda-modal:active, .btn-jugar-modal:active { transform: translateY(4px); box-shadow: 0 0 0 transparent; }
 
-/* Otros Modales y Transiciones */
+/* Otros Modales */
 #modalPaywall .ficha-content { text-align: center; border-color: #e60012; box-shadow: 0 0 40px #e60012; max-width: 400px; background: #111; }
 .toast-notification { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: rgba(18, 18, 18, 0.95); border: 2px solid #d4af37; color: #ffd700; padding: 15px 25px; border-radius: 30px; font-size: 16px; font-weight: bold; box-shadow: 0 5px 20px rgba(212,175,55,0.5); z-index: 9999999999; transition: top 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); display: flex; align-items: center; gap: 10px; backdrop-filter: blur(5px); text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
 .toast-notification.active { top: 25px; }
@@ -161,13 +128,13 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 .nfc-text { color: #9dff3d; font-family: 'Courier New', monospace; margin-top: 25px; font-size: 18px; font-weight: bold; }
 @keyframes scanLaser { 0% { transform: translateY(0); } 100% { transform: translateY(200px); } }
 
-/* Salón de Fama en Revista */
-.salon-fama { background: #fff; padding: 15px; border-radius: 0 0 10px 10px; margin-bottom: 15px; display: none; min-height: 350px; border: 1px solid #ccc; }
-.tabla-records { width: 100%; border-collapse: collapse; color: #111; font-family: 'Courier New', monospace; font-size: 16px; font-weight: bold; }
-.tabla-records th { background: #000; color: #fff; padding: 10px; text-align: center; border: 2px solid #000; }
-.tabla-records td { padding: 10px; text-align: center; border-bottom: 1px dashed #ccc; vertical-align: middle; }
-.tabla-records tr:nth-child(1) { background: #ffd700; color: #000; font-size: 18px; }
-.btn-anadir { background: #005b9f; color: #fff; border: none; padding: 12px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 20px; font-family: 'Impact'; font-size: 18px; text-transform: uppercase; }
+/* Salón de Fama */
+.salon-fama { background: #fff; padding: 12px; border-radius: 0 0 10px 10px; margin-bottom: 10px; display: none; min-height: 220px; border: 1px solid #ccc; }
+.tabla-records { width: 100%; border-collapse: collapse; color: #111; font-family: 'Courier New', monospace; font-size: 14px; font-weight: bold; }
+.tabla-records th { background: #000; color: #fff; padding: 8px; text-align: center; border: 2px solid #000; }
+.tabla-records td { padding: 8px; text-align: center; border-bottom: 1px dashed #ccc; vertical-align: middle; }
+.tabla-records tr:nth-child(1) { font-size: 15px; } /* El Récord Mundial será la fila 1 inyectada por JS */
+.btn-anadir { background: #005b9f; color: #fff; border: none; padding: 10px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 15px; font-family: 'Impact'; font-size: 16px; text-transform: uppercase; }
 .secreto::before { background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff) !important; animation: brilloSeda 2s linear infinite !important; }
 </style>
 </head>
@@ -176,17 +143,11 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
 <div id="toastDesbloqueo" class="toast-notification">🔓 ¡SISTEMA DESBLOQUEADO! Catálogo Premium activado.</div>
 
 <div id="nfcScannerScreen" class="nfc-scanner">
-    <div class="nfc-laser-container">
-        <img src="logo.png" class="nfc-logo-scan">
-        <div class="nfc-laser"></div>
-    </div>
+    <div class="nfc-laser-container"><img src="logo.png" class="nfc-logo-scan"><div class="nfc-laser"></div></div>
     <div class="nfc-text">SISTEMA OLEA3D...</div>
 </div>
 
-<div id="transitionScreen" class="transition-screen">
-    <div class="insert-coin-text">> INSERT COIN <</div>
-</div>
-
+<div id="transitionScreen" class="transition-screen"><div class="insert-coin-text">> INSERT COIN <</div></div>
 <div class="bg-grid"></div>
 
 <header>
@@ -292,52 +253,22 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
     <img src="nes.jpg" class="banner-console" alt="NES">
     <div class="container"> 
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('miketyson')">
-            <div class="card">
-                <img src="miketyson.jpg" alt="Punch Out" onerror="this.src='nes.jpg'">
-                <h2>🥊 Punch-Out!!</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">REVIEW Y JUGAR</span>
-            </div>
+            <div class="card"><img src="miketyson.jpg" alt="Punch Out" onerror="this.src='nes.jpg'"><h2>🥊 Punch-Out!!</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">REVIEW Y JUGAR</span></div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('ghostngoblin')">
-            <div class="card">
-                <img src="ghostngoblin.jpg" alt="G. n Goblins" onerror="this.src='nes.jpg'">
-                <h2>💀 G. n Goblins</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">REVIEW Y JUGAR</span>
-            </div>
+            <div class="card"><img src="ghostngoblin.jpg" alt="G. n Goblins" onerror="this.src='nes.jpg'"><h2>💀 G. n Goblins</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">REVIEW Y JUGAR</span></div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariobros3')">
-            <div class="card">
-                <img src="supermariobros3.jpg" alt="Mario Bros 3" onerror="this.src='nes.jpg'">
-                <h2>🍄 Mario Bros 3</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">REVIEW Y JUGAR</span>
-            </div>
+            <div class="card"><img src="supermariobros3.jpg" alt="Mario Bros 3" onerror="this.src='nes.jpg'"><h2>🍄 Mario Bros 3</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">REVIEW Y JUGAR</span></div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('tetris')">
-            <div class="card">
-                <img src="TetrisNes.png" alt="Tetris" onerror="this.src='nes.jpg'">
-                <h2>🎮 Tetris</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">REVIEW Y JUGAR</span>
-            </div>
+            <div class="card"><img src="TetrisNes.png" alt="Tetris" onerror="this.src='nes.jpg'"><h2>🎮 Tetris</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">REVIEW Y JUGAR</span></div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariobros')">
-            <div class="card">
-                <img src="SuperMarioBros.jpg" alt="Mario Bros" onerror="this.src='nes.jpg'">
-                <h2>🍄 Mario Bros</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">REVIEW Y JUGAR</span>
-            </div>
+            <div class="card"><img src="SuperMarioBros.jpg" alt="Mario Bros" onerror="this.src='nes.jpg'"><h2>🍄 Mario Bros</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">REVIEW Y JUGAR</span></div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('tortugasnes')">
-            <div class="card">
-                <img src="tnmnes.jpg" alt="TMNT NES" onerror="this.src='nes.jpg'">
-                <h2>🐢 TMNT (NES)</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">REVIEW Y JUGAR</span>
-            </div>
+            <div class="card"><img src="tnmnes.jpg" alt="TMNT NES" onerror="this.src='nes.jpg'"><h2>🐢 TMNT (NES)</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">REVIEW Y JUGAR</span></div>
         </div>
     </div>
  
@@ -345,36 +276,16 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
     <img src="n64.jpg" class="banner-console" alt="N64">
     <div class="container"> 
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariokart64')">
-            <div class="card">
-                <img src="Mariokart64.jpg" alt="Mario Kart 64" onerror="this.src='n64.jpg'">
-                <h2>🏎️ Mario Kart 64</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">REVIEW Y JUGAR</span>
-            </div>
+            <div class="card"><img src="Mariokart64.jpg" alt="Mario Kart 64" onerror="this.src='n64.jpg'"><h2>🏎️ Mario Kart 64</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">REVIEW Y JUGAR</span></div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('castlegacy')">
-            <div class="card">
-                <img src="castlegacy.jpg" alt="Castlevania" onerror="this.src='n64.jpg'">
-                <h2>🦇 Castlevania</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">REVIEW Y JUGAR</span>
-            </div>
+            <div class="card"><img src="castlegacy.jpg" alt="Castlevania" onerror="this.src='n64.jpg'"><h2>🦇 Castlevania</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">REVIEW Y JUGAR</span></div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('mortalkomleg64')">
-            <div class="card">
-                <img src="mortalkom64.png" alt="Mortal Kombat" onerror="this.src='n64.jpg'">
-                <h2>🩸 Mortal Kombat</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">REVIEW Y JUGAR</span>
-            </div>
+            <div class="card"><img src="mortalkom64.png" alt="Mortal Kombat" onerror="this.src='n64.jpg'"><h2>🩸 Mortal Kombat</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">REVIEW Y JUGAR</span></div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariotennis')">
-            <div class="card">
-                <img src="MarioTennis.jpg" alt="Mario Tennis" onerror="this.src='n64.jpg'">
-                <h2>🎾 Mario Tennis</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">REVIEW Y JUGAR</span>
-            </div>
+            <div class="card"><img src="MarioTennis.jpg" alt="Mario Tennis" onerror="this.src='n64.jpg'"><h2>🎾 Mario Tennis</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">REVIEW Y JUGAR</span></div>
         </div> 
     </div>
 
@@ -382,44 +293,19 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
     <img src="megadrive.jpg" class="banner-console" alt="Mega Drive">
     <div class="container">
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('batman')">
-            <div class="card">
-                <img src="batman.jpg" alt="Batman" onerror="this.src='megadrive.jpg'">
-                <h2>🦇 Batman</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">REVIEW Y JUGAR</span>
-            </div>
+            <div class="card"><img src="batman.jpg" alt="Batman" onerror="this.src='megadrive.jpg'"><h2>🦇 Batman</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">REVIEW Y JUGAR</span></div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('goldenaxe2')">
-            <div class="card">
-                <img src="goldenaxe2.jpg" alt="Golden Axe 2" onerror="this.src='megadrive.jpg'">
-                <h2>🪓 Golden Axe II</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">REVIEW Y JUGAR</span>
-            </div>
+            <div class="card"><img src="goldenaxe2.jpg" alt="Golden Axe 2" onerror="this.src='megadrive.jpg'"><h2>🪓 Golden Axe II</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">REVIEW Y JUGAR</span></div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('rambo3')">
-            <div class="card">
-                <img src="Rambo3.jpg" alt="Rambo III" onerror="this.src='megadrive.jpg'">
-                <h2>💥 Rambo III</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">REVIEW Y JUGAR</span>
-            </div>
+            <div class="card"><img src="Rambo3.jpg" alt="Rambo III" onerror="this.src='megadrive.jpg'"><h2>💥 Rambo III</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">REVIEW Y JUGAR</span></div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('sonic')">
-            <div class="card">
-                <img src="sonicthehedgehog.jpg" alt="Sonic" onerror="this.src='megadrive.jpg'">
-                <h2>🦔 Sonic</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">REVIEW Y JUGAR</span>
-            </div>
+            <div class="card"><img src="sonicthehedgehog.jpg" alt="Sonic" onerror="this.src='megadrive.jpg'"><h2>🦔 Sonic</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">REVIEW Y JUGAR</span></div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('aladdin')">
-            <div class="card">
-                <img src="aladin.jpg" alt="Aladdin" onerror="this.src='megadrive.jpg'">
-                <h2>🧞 Aladdin</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">REVIEW Y JUGAR</span>
-            </div>
+            <div class="card"><img src="aladin.jpg" alt="Aladdin" onerror="this.src='megadrive.jpg'"><h2>🧞 Aladdin</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">REVIEW Y JUGAR</span></div>
         </div>
     </div>
  
@@ -427,28 +313,13 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
     <img src="snes.jpg" class="banner-console" alt="SNES">
     <div class="container">
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('marioworld')">
-            <div class="card">
-                <img src="SuperMarioWorld.jpg" alt="Mario World" onerror="this.src='snes.jpg'">
-                <h2>🍄 Mario World</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">REVIEW Y JUGAR</span>
-            </div>
+            <div class="card"><img src="SuperMarioWorld.jpg" alt="Mario World" onerror="this.src='snes.jpg'"><h2>🍄 Mario World</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">REVIEW Y JUGAR</span></div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('mariokartsnes')">
-            <div class="card">
-                <img src="SuperMarioKartsnes.jpg" alt="Mario Kart" onerror="this.src='snes.jpg'">
-                <h2>🏎️ Mario Kart</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">REVIEW Y JUGAR</span>
-            </div>
+            <div class="card"><img src="SuperMarioKartsnes.jpg" alt="Mario Kart" onerror="this.src='snes.jpg'"><h2>🏎️ Mario Kart</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">REVIEW Y JUGAR</span></div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('sunsetrider')">
-            <div class="card">
-                <img src="sunsetriders.jpg" alt="Sunset Riders" onerror="this.src='snes.jpg'">
-                <h2>🤠 SUNSET RIDERS</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">REVIEW Y JUGAR</span>
-            </div>
+            <div class="card"><img src="sunsetriders.jpg" alt="Sunset Riders" onerror="this.src='snes.jpg'"><h2>🤠 SUNSET RIDERS</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">REVIEW Y JUGAR</span></div>
         </div>
     </div> 
 
@@ -456,28 +327,13 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
     <img src="gba.jpg" class="banner-console" alt="GBA">
     <div class="container">
         <div class="card-wrapper secreto" id="tarjetaCiervo" onclick="reproducirClic(); verFicha('deerhunter')" style="display: none;">
-            <div class="card" style="border-color: #e60012; box-shadow: inset 0 0 15px rgba(230,0,18,0.2);">
-                <img src="deerhunter.jpg" alt="Deer Hunter" onerror="this.src='gba.jpg'">
-                <h2 style="color: #e60012;">🦌 DEER HUNTER</h2>
-                <div class="nfc-badge" style="background: #e60012; color: white;">SECRETO BELTRANEJA</div>
-                <span class="btn-ver" style="background: #990000; border-color: #e60012;">REVIEW Y JUGAR</span>
-            </div>
+            <div class="card" style="border-color: #e60012; box-shadow: inset 0 0 15px rgba(230,0,18,0.2);"><img src="deerhunter.jpg" alt="Deer Hunter" onerror="this.src='gba.jpg'"><h2 style="color: #e60012;">🦌 DEER HUNTER</h2><div class="nfc-badge" style="background: #e60012; color: white;">SECRETO BELTRANEJA</div><span class="btn-ver" style="background: #990000; border-color: #e60012;">REVIEW Y JUGAR</span></div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('esmeralda')">
-            <div class="card">
-                <img src="pokemonesme.jpg" alt="Pokemon Esmeralda" onerror="this.src='gba.jpg'">
-                <h2>⚡ P. Esmeralda</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">REVIEW Y JUGAR</span>
-            </div>
+            <div class="card"><img src="pokemonesme.jpg" alt="Pokemon Esmeralda" onerror="this.src='gba.jpg'"><h2>⚡ P. Esmeralda</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">REVIEW Y JUGAR</span></div>
         </div>
         <div class="card-wrapper" onclick="reproducirClic(); verFicha('rubi')">
-            <div class="card">
-                <img src="pokemonrubi.jpg" alt="Pokemon Rubi" onerror="this.src='gba.jpg'">
-                <h2>🔴 P. Rubí</h2>
-                <div class="nfc-badge">LLAVERO NFC</div>
-                <span class="btn-ver">REVIEW Y JUGAR</span>
-            </div>
+            <div class="card"><img src="pokemonrubi.jpg" alt="Pokemon Rubi" onerror="this.src='gba.jpg'"><h2>🔴 P. Rubí</h2><div class="nfc-badge">LLAVERO NFC</div><span class="btn-ver">REVIEW Y JUGAR</span></div>
         </div>
     </div>
 </div>
@@ -496,16 +352,16 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
         
         <div class="tabs">
             <button id="tabHistoria" class="tab-btn active" onclick="reproducirClic(); cambiarPestana('historia');">📰 EL ANÁLISIS</button>
-            <button id="tabManual" class="tab-btn" onclick="reproducirClic(); cambiarPestana('manual');">🎮 ZONA DE TRUCOS</button>
+            <button id="tabManual" class="tab-btn" onclick="reproducirClic(); cambiarPestana('manual');">🎮 ZONA TRUCOS</button>
             <button id="tabFama" class="tab-btn" onclick="reproducirClic(); cambiarPestana('fama');">🏆 HIGH SCORES</button>
         </div>
 
         <div id="flipbookWrapper">
             <div class="flipbook-container" id="flipbookContainer"></div>
             <div class="flip-controls">
-                <button class="btn-flip" onclick="pasarPagina(-1)">◀ PÁG. ANT</button>
+                <button class="btn-flip" onclick="pasarPagina(-1)">◀ ANT.</button>
                 <span class="page-indicator" id="pageIndicator">Pág 1/1</span>
-                <button class="btn-flip" onclick="pasarPagina(1)">PÁG. SIG ▶</button>
+                <button class="btn-flip" onclick="pasarPagina(1)">SIG. ▶</button>
             </div>
         </div>
 
@@ -518,8 +374,11 @@ h1 { color: #d4af37; margin-top: 10px; font-size: 24px; text-shadow: 0 0 10px rg
             <button class="btn-anadir" onclick="anadirRecord()">➕ AÑADIR TU FIRMA</button>
         </div>
 
+        <div class="botones-accion-row">
+            <button id="btnVolverCatalogo" class="btn-jugar-modal" style="background: #333; color: #fff; box-shadow: 0 4px 0 #111;" onclick="reproducirClic(); cerrarFicha();">👀 VER CATÁLOGO</button>
+            <button id="btnTiendaJuego" class="btn-tienda-modal" onclick="encargarLlaveroEspecifico();">🛒 PEDIR LLAVERO</button>
+        </div>
         <button id="btnIniciarJuego" class="btn-jugar-modal" onclick="irAlJuego();">🚀 INSERT COIN (JUGAR)</button>
-        <button id="btnTiendaJuego" class="btn-tienda-modal" onclick="encargarLlaveroEspecifico();">🛒 PEDIR LLAVERO NFC</button>
     </div>
 </div>
 
@@ -553,12 +412,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if(params.get('llave') === 'oleaVIP') { 
         localStorage.setItem('olea3d_vip', 'true'); 
         window.history.replaceState(null, null, window.location.pathname + window.location.hash); 
-        setTimeout(() => { 
-            const toast = document.getElementById("toastDesbloqueo"); 
-            toast.classList.add("active"); 
-            reproducirSonido1UP(); 
-            setTimeout(() => toast.classList.remove("active"), 4000); 
-        }, 500); 
+        setTimeout(() => { const toast = document.getElementById("toastDesbloqueo"); toast.classList.add("active"); reproducirSonido1UP(); setTimeout(() => toast.classList.remove("active"), 4000); }, 500); 
     }
 });
 
@@ -570,156 +424,156 @@ let toquesBeltraneja = 0, tiempoBeltraneja;
 function toqueBeltraneja() { reproducirClic(); toquesBeltraneja++; clearTimeout(tiempoBeltraneja); if(toquesBeltraneja===2){ desbloquearCiervo(); toquesBeltraneja=0; } else { tiempoBeltraneja=setTimeout(()=>{toquesBeltraneja=0;},500); } }
 function desbloquearCiervo() { const tarjeta=document.getElementById("tarjetaCiervo"); if(tarjeta){ tarjeta.style.display="block"; tarjeta.scrollIntoView({behavior:'smooth',block:'center'}); reproducirSonidoCoin(); } }
 
-// --- LA BASE DE DATOS TITÁNICA AL 100% ---
+// --- LA BASE DE DATOS TITÁNICA AL 100% CON RÉCORDS MUNDIALES (WR) ---
 const infoJuegos = {
     /* ARCADE (7) */
     cadillacs: { 
-        consola: "arcade", titulo: "CADILLACS & DINOSAURS", img: "dino.jpg", enlace: "dino.html", valoracion: "NOTA: 98/100",
+        consola: "arcade", titulo: "CADILLACS & DINOSAURS", img: "dino.jpg", enlace: "dino.html", valoracion: "NOTA: 98/100", wr: { nombre: "YOO", puntos: "9.999.900" },
         historia: ["<h2 class='mag-titular'>MEGA HIT ARCADE</h2><p>En 1993, a los genios de Capcom se les ocurrió mezclar las tres cosas que más molaban en la época: tíos duros, coches clásicos y dinosaurios enormes. Basado libremente en el cómic <em>Xenozoic Tales</em> de Mark Schultz, este juego arrasó literalmente en los salones recreativos, tragándose las monedas de cinco duros de toda una generación.</p><div class='mag-box'><strong>EL ARGUMENTO:</strong> El planeta se ha ido al traste y la naturaleza ha reclamado la Tierra. Ahora los humanos conviven con dinosaurios resucitados. Una banda de furtivos (los Black Marketeers) está cazando a los dinos para mutarlos. Tu misión es reventarlos a golpes.</div>", "<h2 class='mag-sub'>Los Protagonistas</h2><p>Tienes a tu disposición a 4 auténticos bestias:<br><br><strong>Jack Tenrec:</strong> El mecánico equilibrado. Ideal para principiantes.<br><strong>Hannah Dundee:</strong> Es rápida como el rayo, usa objetos con maestría.<br><strong>Mustapha Cairo:</strong> El favorito de los pros. Su patada voladora es letal.<br><strong>Mess O'Bradovich:</strong> Lento, pero levanta a los enemigos por los aires como si fueran de papel.</p>"],
         manual: ["<h2 class='mag-titular'>S.O.S. TRUCOS</h2><p>Apunta bien estos consejos si quieres llegar vivo al jefe final. La sanidad no importa aquí. Si ves un pollo asado entero, un perrito caliente o una pizza intacta escondidos dentro de un bidón de metal oxidado o una caja de madera... <strong>cómetelo sin dudar</strong>. Curará tu barra de vida mágicamente.</p><div class='mag-truco'><span>TRUCO SECRETO: EL COCHE DE LA MUERTE</span>En el Nivel 3, podrás subirte al mismísimo Cadillac. El truco aquí es <strong>no frenar jamás</strong>. Acelera de lado a lado de la pantalla atropellando a los enemigos para conseguir una burrada de puntos extra. Si lo haces perfecto, te darán una vida extra.</div>", "<h2 class='mag-sub'>Combos de Combate</h2><p><strong>Golpe + Salto:</strong> Pulsa ambos botones a la vez para hacer tu ataque especial giratorio a 360 grados. Te salvará la vida cuando estés rodeado por los cazadores furtivos, pero ojo: <em>¡te resta un poquito de tu propia vida al impactar contra los enemigos!</em> Úsalo solo en caso de emergencia.</p>"] 
     },
     kof94: { 
-        consola: "arcade", titulo: "KOF '94", img: "thekingoffighters94.jpg", enlace: "kof94.html", valoracion: "NOTA: 90/100", 
+        consola: "arcade", titulo: "KOF '94", img: "thekingoffighters94.jpg", enlace: "kof94.html", valoracion: "NOTA: 90/100", wr: { nombre: "DAI", puntos: "2.350.000" },
         historia: ["<h2 class='mag-titular'>EL CROSSOVER MÁXIMO</h2><p>En 1994, a SNK se le ocurrió la loca idea de meter a los personajes de sus mejores franquicias (Fatal Fury, Art of Fighting, Ikari Warriors) en un solo juego. Fue el equivalente a crear Los Vengadores, pero en los salones recreativos, con tipos musculosos dándose palizas en torneos clandestinos.</p>"], 
         manual: ["<h2 class='mag-titular'>PELEA EN EQUIPO</h2><p>Aquí no hay uno contra uno. Tienes que elegir un equipo completo de 3 luchadores que representan a un país (Italia, Japón, USA...). Si uno cae en combate, entra el siguiente. Así hasta barrer el suelo con el equipo rival completo.</p><div class='mag-box'><strong>CARGAR ENERGÍA:</strong> Mantén pulsados A+B+C a la vez para cargar tu barra. Cuando parpadee, desata tu Desperation Move.</div>"] 
     },
     kof95: { 
-        consola: "arcade", titulo: "KOF '95", img: "thekingoffighters95.jpg", enlace: "kof95.html", valoracion: "NOTA: 93/100", 
+        consola: "arcade", titulo: "KOF '95", img: "thekingoffighters95.jpg", enlace: "kof95.html", valoracion: "NOTA: 93/100", wr: { nombre: "KYO", puntos: "3.100.500" },
         historia: ["<h2 class='mag-titular'>NACE LA RIVALIDAD</h2><p>El juego que perfeccionó la fórmula y nos presentó al emo más famoso de los videojuegos: Iori Yagami. Su rivalidad eterna con Kyo dividió a los jugadores en los salones arcade. Si en tu barrio sabías hacer los combos infinitos de Iori, eras el rey indiscutible de la máquina.</p>"], 
         manual: ["<h2 class='mag-titular'>EDICIÓN DE EQUIPOS</h2><p>La gran novedad: escuchando las quejas del primer juego, por fin dejaron a los jugadores crear su propio 'Dream Team', mezclando luchadores a su antojo en lugar de usar los equipos cerrados por países.</p><div class='mag-truco'><span>MAGIA DE IORI</span>Su movimiento especial requiere precisión milimétrica con el joystick: Abajo, Diagonal, Adelante, Abajo, Atrás + Puño Fuerte.</div>"] 
     },
     neobombe: { 
-        consola: "arcade", titulo: "NEO BOMBERMAN", img: "neobomberman.jpg", enlace: "neobombe.html", valoracion: "NOTA: 88/100", 
+        consola: "arcade", titulo: "NEO BOMBERMAN", img: "neobomberman.jpg", enlace: "neobombe.html", valoracion: "NOTA: 88/100", wr: { nombre: "BOM", puntos: "1.250.000" },
         historia: ["<h2 class='mag-titular'>EXPLOSIONES EN NEO GEO</h2><p>Hudson Soft llevó a su mítico muñeco pone-bombas a la todopoderosa placa arcade de SNK en 1997. El resultado es un festival de luces, colores y gritos de amigos traicionándose por acorralarse con bombas en los modos multijugador.</p>"], 
         manual: ["<h2 class='mag-titular'>GUÍA PIROMANÍACA</h2><p>Regla #1: Pon una bomba, y CORRE. No te quedes atrapado en tu propio fuego o harás el ridículo más absoluto.</p><div class='mag-box'><strong>EL GUANTELETE:</strong> Si consigues el ítem del guantelete azul, puedes coger las bombas que has puesto y lanzárselas a la cabeza a tus enemigos saltando por encima de los muros.</div>"] 
     },
     simpsons: { 
-        consola: "arcade", titulo: "THE SIMPSONS ARCADE", img: "simpsons.jpg", enlace: "simpsons.html", valoracion: "NOTA: 96/100", 
+        consola: "arcade", titulo: "THE SIMPSONS ARCADE", img: "simpsons.jpg", enlace: "simpsons.html", valoracion: "NOTA: 96/100", wr: { nombre: "B.S", puntos: "8.500.000" },
         historia: ["<h2 class='mag-titular'>EL REY DE LOS RECREATIVOS</h2><p>Konami lanzó este beat 'em up en 1991 y se convirtió en la tragaperras definitiva. La máquina física original tenía 4 joysticks para que cuatro amigos jugaran a la vez repartiendo leña en Springfield para rescatar a la pequeña Maggie del Sr. Burns.</p>"], 
         manual: ["<h2 class='mag-titular'>CALLEJEO AMARILLO</h2><p>Armamento familiar: Homer usa los puños, Bart un monopatín, Lisa salta a la comba de forma letal y Marge... Marge te revienta la cabeza con una aspiradora.</p><div class='mag-truco'><span>ATAQUES EN EQUIPO</span>Si te juntas con un amigo y os quedáis quietos, los personajes harán un ataque doble loquísimo. Homer y Bart se cogen de las manos y giran como un helicóptero arrasando la pantalla.</div>"] 
     },
     tmnt: { 
-        consola: "arcade", titulo: "TMNT ARCADE", img: "tmnt.jpg", enlace: "tmnt.html", valoracion: "NOTA: 95/100", 
+        consola: "arcade", titulo: "TMNT ARCADE", img: "tmnt.jpg", enlace: "tmnt.html", valoracion: "NOTA: 95/100", wr: { nombre: "LEO", puntos: "5.430.000" },
         historia: ["<h2 class='mag-titular'>COWABUNGA, CHICOS</h2><p>Otro éxito monstruoso de Konami en los bares (1989). Jugar a cuatro bandas con Leonardo, Raphael, Michelangelo y Donatello era el sueño de cualquier chaval de los 90. Destruir soldados del Clan del Pie por las calles de Nueva York nunca fue tan divertido.</p>"], 
         manual: ["<h2 class='mag-titular'>NINJUTSU MUTANTE</h2><p>Pulsa el botón de ataque y botón de salto a la vez para hacer el icónico ataque especial. Pero ojo al dato: ¡este movimiento te quita un poco de tu propia vida cada vez que impacta contra un enemigo!</p><div class='mag-box'><strong>LA DIETA NINJA:</strong> La única forma de recuperar salud en este juego es encontrar las cajas de pizza esparcidas por los niveles. Cógelas antes que tus amigos.</div>"] 
     },
     pacman: { 
-        consola: "arcade", titulo: "PAC-MAN", img: "pacman.jpg", enlace: "Pacman.html", valoracion: "NOTA: 95/100", 
+        consola: "arcade", titulo: "PAC-MAN", img: "pacman.jpg", enlace: "Pacman.html", valoracion: "NOTA: 95/100", wr: { nombre: "B.M", puntos: "3.333.360" },
         historia: ["<h2 class='mag-titular'>EL REY DEL ARCADE</h2><p>Lanzado en 1980 por Namco. Antes de Pac-Man, todos los juegos iban de disparar a naves alienígenas. Toru Iwatani quería crear un juego pacifista que atrajera a todo el mundo, inspirándose en una pizza a la que le faltaba una porción.</p>"], 
         manual: ["<h2 class='mag-titular'>SUPERVIVENCIA LABERÍNTICA</h2><p>Come todos los puntos del laberinto mientras huyes de cuatro fantasmas con problemas de gestión de la ira. Cómete las Píldoras de Poder de las esquinas para devorarlos a ellos.</p><div class='mag-truco'><span>EL TRUCO DEL TÚNEL</span>Usa los túneles laterales que conectan la pantalla. Pac-Man los cruza a toda velocidad, pero los fantasmas sufren una penalización y se frenan al entrar.</div>"] 
     },
 
     /* NES (6) */
     miketyson: { 
-        consola: "nes", titulo: "PUNCH-OUT!!", img: "miketyson.jpg", enlace: "miketyson.html", valoracion: "NOTA: 94/100", 
+        consola: "nes", titulo: "PUNCH-OUT!!", img: "miketyson.jpg", enlace: "miketyson.html", valoracion: "NOTA: 94/100", wr: { nombre: "MAC", puntos: "999.990" },
         historia: ["<h2 class='mag-titular'>EL NEGOCIO DEL SIGLO</h2><p>Nintendo pagó a Mike Tyson 50.000 dólares en 1986 por usar su imagen, meses antes de que se convirtiera en el campeón mundial indiscutible de los pesos pesados. Les salió regalado.</p>"], 
         manual: ["<h2 class='mag-titular'>MANUAL DE RING</h2><p>Esto no es un juego de dar puñetazos a lo loco. Es un rompecabezas rítmico. Tienes que memorizar los tics faciales y los movimientos de cada oponente antes de que te arranquen la cabeza.</p><div class='mag-box'><strong>CONTRAATAQUE:</strong> Cuando veas parpadear al rival, esquiva hacia los lados y métele un gancho. Guarda tus estrellas para lanzar el Uppercut definitivo.</div>"] 
     },
     ghostngoblin: { 
-        consola: "nes", titulo: "GHOSTS 'N GOBLINS", img: "ghostngoblin.jpg", enlace: "ghostngoblin.html", valoracion: "NOTA: 85/100", 
+        consola: "nes", titulo: "GHOSTS 'N GOBLINS", img: "ghostngoblin.jpg", enlace: "ghostngoblin.html", valoracion: "NOTA: 85/100", wr: { nombre: "ART", puntos: "1.120.000" },
         historia: ["<h2 class='mag-titular'>ODIO AL JUGADOR</h2><p>Su creador, Tokuro Fujiwara, diseñó deliberadamente el juego más frustrante y difícil del mundo. Los enemigos aparecen de la nada y no puedes cambiar la dirección de tu salto una vez estás en el aire.</p><div class='mag-box'><strong>LA GRAN TROLLEADA:</strong> Si consigues llegar sudando sangre a matar al jefe final, el juego te lanza un mensaje diciendo que 'todo era una ilusión' y te obliga a pasarte el juego entero OTRA VEZ desde el principio.</div>"], 
         manual: ["<h2 class='mag-titular'>CÓMO SUFRIR CON ESTILO</h2><p>Misión: Rescatar a la princesa Prin-Prin del demonio Astaroth.</p><div class='mag-truco'><span>MODA ÍNTIMA</span>Solo puedes recibir dos golpes. Al primer toque que te dé un zombi, perderás tu armadura medieval y te quedarás corriendo en calzoncillos de corazones rojos.</div>"] 
     },
     mariobros3: { 
-        consola: "nes", titulo: "SUPER MARIO BROS 3", img: "supermariobros3.jpg", enlace: "supermariobros3.html", valoracion: "NOTA: 98/100", 
+        consola: "nes", titulo: "SUPER MARIO BROS 3", img: "supermariobros3.jpg", enlace: "supermariobros3.html", valoracion: "NOTA: 98/100", wr: { nombre: "NIF", puntos: "9.999.990" },
         historia: ["<h2 class='mag-titular'>TODO ES UNA OBRA DE TEATRO</h2><p>¿Te has fijado bien en el juego? La pantalla de título es un telón rojo levantándose. Los bloques tienen tornillos pegados al fondo, las plataformas cuelgan de cuerdas del techo y al final de cada nivel sales por unas bambalinas negras. Shigeru Miyamoto confirmó años después que todo es una función teatral.</p>"], 
         manual: ["<h2 class='mag-titular'>MANUAL DE VUELO</h2><p>Por primera vez en la saga, Mario puede volar y explorar los niveles verticalmente con la Super Hoja, que te da orejas y cola de mapache.</p><div class='mag-truco'><span>SECRETO: LA FLAUTA MÁGICA</span>Busca detrás de los escenarios blancos en el Mundo 1 agachándote sobre ellos durante 5 segundos. Caerás 'detrás del decorado' y podrás encontrar una Flauta Mágica.</div>"] 
     },
     tetris: { 
-        consola: "nes", titulo: "TETRIS", img: "TetrisNes.png", enlace: "TetrisFicha.html", valoracion: "NOTA: 95/100", 
+        consola: "nes", titulo: "TETRIS", img: "TetrisNes.png", enlace: "TetrisFicha.html", valoracion: "NOTA: 95/100", wr: { nombre: "JON", puntos: "999.999" },
         historia: ["<h2 class='mag-titular'>UN NACIMIENTO FRÍO</h2><p>Nació en 1984 en plena Unión Soviética, durante la Guerra Fría. Alexey Pajitnov lo programó en sus ratos libres en un ordenador gubernamental que ni siquiera tenía gráficos. Los primeros bloques estaban dibujados uniendo corchetes en la pantalla de texto: [ ] [ ].</p><div class='mag-box'><strong>CONTRABANDO MUNDIAL:</strong> El juego paralizó la productividad en los ministerios rusos. Fue sacado de contrabando hacia occidente, desatando una guerra legal salvaje por los derechos. Nintendo ganó.</div>"], 
         manual: ["<h2 class='mag-titular'>MANUAL DEL ARQUITECTO</h2><p>Forma líneas horizontales completas sin huecos vacíos para que desaparezcan y ganar puntos. Si la pila de bloques toca el techo, estás despedido.</p><div class='mag-truco'><span>ESTRATEGIA MAESTRA</span>Construye un muro sólido y plano en el lado izquierdo y deja la columna de la extrema derecha completamente vacía. Espera a que caiga el codiciado 'Palo Largo' celeste y mételo por ese hueco para eliminar 4 líneas de golpe.</div>"] 
     },
     mariobros: { 
-        consola: "nes", titulo: "SUPER MARIO BROS", img: "SuperMarioBros.jpg", enlace: "SuperMarioBros.html", valoracion: "NOTA: 97/100", 
+        consola: "nes", titulo: "SUPER MARIO BROS", img: "SuperMarioBros.jpg", enlace: "SuperMarioBros.html", valoracion: "NOTA: 97/100", wr: { nombre: "NIF", puntos: "9.999.950" },
         historia: ["<h2 class='mag-titular'>EL SALVADOR DE LA INDUSTRIA</h2><p>En 1985, el mercado de las consolas estaba en ruinas. Miyamoto diseñó a Mario con bigote y gorra puramente por limitaciones técnicas (dibujar bocas y pelo animado en 8 bits era muy difícil), creando sin saberlo al icono pop más grande de la historia.</p><div class='mag-box'><strong>EL LORE OSCURO:</strong> Los Koopas usaron magia negra para convertir a los inocentes ciudadanos en bloques de ladrillo. Sí, cada vez que rompes un ladrillo con la cabeza, estás cometiendo un asesinato.</div>"], 
         manual: ["<h2 class='mag-titular'>GUÍA DEL FONTANERO</h2><p>Cruza 8 mundos para rescatar a la Princesa Peach. Prepárate mentalmente para que Toad te diga siempre que la princesa está en otro castillo.</p><div class='mag-truco'><span>FÍSICAS PERFECTAS</span>Mantén pulsado el botón B en todo momento. Mario gana inercia, lo que te permite saltar mucho más lejos. El champiñón te hace el doble de grande.</div>"] 
     },
     tortugasnes: { 
-        consola: "nes", titulo: "TMNT (NES)", img: "tnmnes.jpg", enlace: "tortugasnes.html", valoracion: "NOTA: 82/100", 
+        consola: "nes", titulo: "TMNT (NES)", img: "tnmnes.jpg", enlace: "tortugasnes.html", valoracion: "NOTA: 82/100", wr: { nombre: "DON", puntos: "2.400.000" },
         historia: ["<h2 class='mag-titular'>TRAUMAS DE LA INFANCIA</h2><p>Este juego es famoso por tener una de las fases más odiadas y estresantes de toda la historia de los 8 bits: El Nivel de la Presa. Tenías que bucear a contrarreloj para desactivar bombas rozando unas algas eléctricas rosas que te quitaban media vida con solo mirarlas. Pura ansiedad.</p>"], 
         manual: ["<h2 class='mag-titular'>RELEVO NINJA</h2><p>Tu barra de vidas son las 4 tortugas. No mueras a lo tonto. Pulsa Start y entra al menú para cambiar a la tortuga que estás manejando. Si a Leonardo le queda poca vida, cámbialo por Raphael para mantener al equipo con vida.</p><div class='mag-truco'><span>EL PODER DE DONATELLO</span>El arma de Donatello está absurdamente 'rota' en este juego. Su palo tiene un alcance enorme y hace muchísimo daño. Guárdalo exclusivamente para pelear contra los jefes finales.</div>"] 
     },
 
     /* N64 (4) */
     mariokart64: { 
-        consola: "n64", titulo: "MARIO KART 64", img: "Mariokart64.jpg", enlace: "Mariokart64.html", valoracion: "NOTA: 95/100", 
+        consola: "n64", titulo: "MARIO KART 64", img: "Mariokart64.jpg", enlace: "Mariokart64.html", valoracion: "NOTA: 95/100", wr: { nombre: "MAT", puntos: "N/A" },
         historia: ["<h2 class='mag-titular'>DESTRUCTOR DE AMISTADES</h2><p>El juego que arruinó las tardes pacíficas de miles de niños en los años 90 con sus piques a cuatro mandos dividiendo la tele. ¿Sabías que Wario no estaba originalmente en los planes? Entró en el último momento para robarle la plaza al pobre Koopa Troopa.</p>"], 
         manual: ["<h2 class='mag-titular'>LEYES DE LA CARRETERA</h2><p>Salida Turbo: No aceleres a lo loco. Pulsa y mantén el botón de acelerar exactamente cuando la segunda luz roja del semáforo de Lakitu esté a punto de apagarse para salir derrapando.</p><div class='mag-box'><strong>ARMAS DE DESTRUCCIÓN:</strong> El Caparazón Azul fue introducido por primera vez en esta entrega. Es el castigo divino, inesquivable, reservado exclusivamente para el listillo de tu amigo que va primero.</div>"] 
     },
     castlegacy: { 
-        consola: "n64", titulo: "CASTLEVANIA", img: "castlegacy.jpg", enlace: "Castlegacy.html", valoracion: "NOTA: 82/100", 
+        consola: "n64", titulo: "CASTLEVANIA", img: "castlegacy.jpg", enlace: "Castlegacy.html", valoracion: "NOTA: 82/100", wr: { nombre: "BEL", puntos: "100%" },
         historia: ["<h2 class='mag-titular'>VAMPIROS POLIGONALES</h2><p>Conocido popularmente como Castlevania 64, fue el primer salto de la legendaria familia de cazavampiros a las tres dimensiones. Todo el mundo le echaba la culpa de sus muertes al mismísimo Drácula, pero seamos sinceros: el verdadero jefe final del juego era el nefasto control de la cámara.</p>"], 
         manual: ["<h2 class='mag-titular'>DIARIO DEL CAZADOR</h2><p>Adéntrate en el oscuro castillo de Transilvania y usa tu látigo sagrado contra las criaturas de la noche.</p><div class='mag-truco'><span>NUTRICIÓN DUDOSA</span>Esta saga tiene una lógica aplastante. Si rompes los candelabros o las paredes milenarias del castillo, encontrarás pollos asados perfectamente conservados. Cómetelos para curarte.</div>"] 
     },
     mortalkomleg64: { 
-        consola: "n64", titulo: "MORTAL KOMBAT", img: "mortalkom64.png", enlace: "mortalkomleg64.html", valoracion: "NOTA: 87/100", 
+        consola: "n64", titulo: "MORTAL KOMBAT", img: "mortalkom64.png", enlace: "mortalkomleg64.html", valoracion: "NOTA: 87/100", wr: { nombre: "SHA", puntos: "99" },
         historia: ["<h2 class='mag-titular'>SANGRE Y POLÉMICA</h2><p>La franquicia Mortal Kombat fue pionera en usar actores reales digitalizados en pantalla. Ver a Sub-Zero arrancándole la columna vertebral a sus rivales alarmó tanto a los padres y senadores de EE.UU. que provocó un cambio en la industria.</p><div class='mag-box'><strong>EL DATO CURIOSO:</strong> El gobierno obligó a crear la ESRB: el sistema oficial que obliga a poner los sellos de edad (+18) en las cajas. Mortal Kombat cambió las leyes.</div>"], 
         manual: ["<h2 class='mag-titular'>MOVIMIENTOS MORTALES</h2><p>Sobrevivir al torneo a base de ganchos ascendentes (uppercuts) es solo el principio. Lo que hace grande a este juego es el arte de la humillación final.</p><div class='mag-truco'><span>CÓDIGOS FATALITY</span>Cuando escuches gritar 'FINISH HIM!', el tiempo se detiene. Sub-Zero: Adelante, Abajo, Adelante + Golpe Alto (cerca). Scorpion: Arriba, Arriba + Golpe Alto (media distancia).</div>"] 
     },
     mariotennis: { 
-        consola: "n64", titulo: "MARIO TENNIS", img: "MarioTennis.jpg", enlace: "MarioTennis.html", valoracion: "NOTA: 88/100", 
+        consola: "n64", titulo: "MARIO TENNIS", img: "MarioTennis.jpg", enlace: "MarioTennis.html", valoracion: "NOTA: 88/100", wr: { nombre: "PRO", puntos: "N/A" },
         historia: ["<h2 class='mag-titular'>EL ORIGEN DEL MAL</h2><p>Para este juego de tenis querían hacer torneos de dobles épicos, pero se dieron cuenta de que el malvado Wario no tenía a ningún compañero de fechorías para hacer equipo. En lugar de emparejarlo con Bowser, se inventaron de la nada a un tipo larguirucho, con bigote en zigzag y una gorra con una 'L' invertida. Así nació el carismático Waluigi.</p>"], 
         manual: ["<h2 class='mag-titular'>REGLAMENTO EN PISTA</h2><p>No te limites a darle a la bola. El juego esconde mucha profundidad técnica en los controles.</p><div class='mag-truco'><span>TIPOS DE GOLPE</span>Botón A: Golpe plano, potente y directo (Rojo).<br>Botón B: Golpe cortado, con efecto para romperle la cintura al rival (Azul).<br>A + B a la vez: Harás un globo altísimo, perfecto para cuando tu amigo se pegue demasiado a la red.</div>"] 
     },
 
     /* MEGA DRIVE (5) */
     batman: { 
-        consola: "md", titulo: "BATMAN", img: "batman.jpg", enlace: "batman.html", valoracion: "NOTA: 88/100", 
+        consola: "md", titulo: "BATMAN", img: "batman.jpg", enlace: "batman.html", valoracion: "NOTA: 88/100", wr: { nombre: "WAY", puntos: "1.000.000" },
         historia: ["<h2 class='mag-titular'>LA NOCHE DE LOS 16 BITS</h2><p>Basado directamente en la icónica película de Tim Burton de 1989. El estudio Sunsoft lo programó con una paleta de colores tan oscura y fiel al cine gótico que a veces no veías literalmente dónde tenías que saltar en los tejados de Gotham. Hoy es reverenciado por tener la mejor banda sonora de la consola.</p>"], 
         manual: ["<h2 class='mag-titular'>MANUAL DE VIGILANTE</h2><p>Misión: Limpiar las calles de Gotham a puñetazo limpio hasta llegar al campanario para tirar al Joker.</p><div class='mag-box'><strong>GADGETS DE WAYNE:</strong> Usa Batarangs para mantener a los payasos a distancia, y el Gancho para engancharte a las cornisas y esquivar los barriles explosivos subiéndote a las farolas.</div>"] 
     },
     goldenaxe2: { 
-        consola: "md", titulo: "GOLDEN AXE II", img: "goldenaxe2.jpg", enlace: "goldenaxe2.html", valoracion: "NOTA: 85/100", 
+        consola: "md", titulo: "GOLDEN AXE II", img: "goldenaxe2.jpg", enlace: "goldenaxe2.html", valoracion: "NOTA: 85/100", wr: { nombre: "GIL", puntos: "850.000" },
         historia: ["<h2 class='mag-titular'>MÁS MAGIA, MÁS GOLPES</h2><p>Salió al mercado tan rápido después del éxito del primer juego que muchos decían que era solo una expansión. Pero a los jugadores les dio exactamente igual: los ataques mágicos a pantalla completa eran aún más espectaculares y los dichosos esqueletos inmortales seguían persiguiéndote en tus pesadillas.</p>"], 
         manual: ["<h2 class='mag-titular'>GUÍA BÁRBARA</h2><p>Elige entre Ax Battler, Tyris Flare o Gilius Thunderhead (el enano del hacha con la magia eléctrica más letal).</p><div class='mag-truco'><span>ECONOMÍA Y LADRONES</span>La magia se gasta. Cuando llegues al campamento para descansar, aparecerán unos duendes robándote. Levántate rápido y dales patadas en la cabeza para recuperar tus valiosas pociones azules.</div>"] 
     },
     rambo3: { 
-        consola: "md", titulo: "RAMBO III", img: "Rambo3.jpg", enlace: "Rambo3.html", valoracion: "NOTA: 80/100", 
+        consola: "md", titulo: "RAMBO III", img: "Rambo3.jpg", enlace: "Rambo3.html", valoracion: "NOTA: 80/100", wr: { nombre: "SLY", puntos: "500.000" },
         historia: ["<h2 class='mag-titular'>EJÉRCITO DE UN SOLO HOMBRE</h2><p>¿Qué puede hacer un solo hombre sin camiseta y con una cinta roja en la cabeza contra tanques pesados soviéticos y helicópteros blindados? Exacto: reventarlos todos usando un arco de madera y flechas con cartuchos de dinamita atados en la punta. Pura lógica de Sylvester Stallone.</p>"], 
         manual: ["<h2 class='mag-titular'>TÁCTICA MILITAR AVANZADA</h2><p>Infiltrarte tras las líneas enemigas para rescatar al Coronel Trautman.</p><div class='mag-box'><strong>REGLA DE FUEGO:</strong> Esto es un 'Run and Gun' de vista cenital. Si ves que algo se mueve en la pantalla, dispárale. Si no se mueve... dispárale también por si acaso. Guarda la munición pesada para los jefes.</div>"] 
     },
     sonic: { 
-        consola: "md", titulo: "SONIC THE HEDGEHOG", img: "sonicthehedgehog.jpg", enlace: "SONIC 1 - Shadow The Hedgehog.html", valoracion: "NOTA: 92/100", 
+        consola: "md", titulo: "SONIC THE HEDGEHOG", img: "sonicthehedgehog.jpg", enlace: "SONIC 1 - Shadow The Hedgehog.html", valoracion: "NOTA: 92/100", wr: { nombre: "SEG", puntos: "99.999" },
         historia: ["<h2 class='mag-titular'>LA MASCOTA REBELDE DE LOS 90</h2><p>SEGA necesitaba imperiosamente destruir el monopolio de Mario con algo mucho más rápido, chulo y rebelde. Así crearon a Sonic, un erizo azul que, como curiosidad histórica, no sabe nadar en el juego porque los japoneses creían falsamente que los erizos de verdad se hundían en el agua.</p>"], 
         manual: ["<h2 class='mag-titular'>LEYES DE LA VELOCIDAD</h2><p>Misión: Romper la barrera del sonido, hacer loops imposibles y liberar a los animalitos del bosque que Robotnik ha encerrado en sus robots.</p><div class='mag-truco'><span>EL SEGURO DE VIDA</span>Los Anillos. Mientras lleves al menos 1 anillo dorado, eres virtualmente inmortal. Si te pinchas, perderás todos, dándote unos segundos para volver a agarrar al menos uno y salvarte.</div>"] 
     },
     aladdin: { 
-        consola: "md", titulo: "ALADDIN", img: "aladin.jpg", enlace: "aladin.html", valoracion: "NOTA: 90/100", 
+        consola: "md", titulo: "ALADDIN", img: "aladin.jpg", enlace: "aladin.html", valoracion: "NOTA: 90/100", wr: { nombre: "ABU", puntos: "85.000" },
         historia: ["<h2 class='mag-titular'>LA MAYOR GUERRA DE CONSOLAS</h2><p>Este juego fue histórico porque los mismísimos animadores de los estudios de Walt Disney dibujaron a mano los sprites, logrando una fluidez nunca vista. Generó discusiones en los patios de colegio: la versión de SNES no tenía espada, pero la de Mega Drive sí. Los 'Segueros' ganaron esa batalla.</p>"], 
         manual: ["<h2 class='mag-titular'>MAGIA CALLEJERA Y PARKOUR</h2><p>Misión: Recorrer las calles de Agrabah robando manzanas y esquivando a la guardia del Sultán.</p><div class='mag-box'><strong>ARMAMENTO DEL DESIERTO:</strong> No uses siempre la espada. Lánzale tus manzanas acumuladas a la cara a los guardias para mantenerlos a raya y aturdirlos antes de desenvainar tu cimitarra para el golpe final.</div>"] 
     },
 
     /* SNES (3) */
     marioworld: { 
-        consola: "snes", titulo: "SUPER MARIO WORLD", img: "SuperMarioWorld.jpg", enlace: "SuperMarioorld.html", valoracion: "NOTA: 98/100", 
+        consola: "snes", titulo: "SUPER MARIO WORLD", img: "SuperMarioWorld.jpg", enlace: "SuperMarioorld.html", valoracion: "NOTA: 98/100", wr: { nombre: "NIF", puntos: "9.999.990" },
         historia: ["<h2 class='mag-titular'>EL SUEÑO FRUSTRADO DE MIYAMOTO</h2><p>Shigeru Miyamoto soñaba con que Mario montara a lomos de un dinosaurio desde el primer juego de NES. Pero el chip se freiría al intentar procesar dos personajes. Tuvieron que esperar al poder de Super Nintendo para hacer realidad al adorable Yoshi.</p>"], 
         manual: ["<h2 class='mag-titular'>ENTRENAMIENTO JURÁSICO</h2><p>Acostúmbrate al 'Salto Giratorio'. Pulsa el botón A para romper los bloques amarillos girando como un taladro. Te salvará de muchas caídas.</p><div class='mag-truco'><span>LA DIETA DE YOSHI</span>Los caparazones tienen efectos mágicos en su estómago:<br><strong>Rojo:</strong> Escupirá fuego.<br><strong>Azul:</strong> Le saldrán alas.<br><strong>Amarillo:</strong> Provocará un terremoto al aterrizar.</div>"] 
     },
     mariokartsnes: { 
-        consola: "snes", titulo: "SUPER MARIO KART", img: "SuperMarioKartsnes.jpg", enlace: "Supermariokartsnes.html", valoracion: "NOTA: 93/100", 
+        consola: "snes", titulo: "SUPER MARIO KART", img: "SuperMarioKartsnes.jpg", enlace: "Supermariokartsnes.html", valoracion: "NOTA: 93/100", wr: { nombre: "MKP", puntos: "150cc" },
         historia: ["<h2 class='mag-titular'>EL MAYOR ENGAÑO VISUAL</h2><p>El juego que cimentó el género de las carreras de karts en 1992 no tiene ni un solo polígono en 3D. Usa el revolucionario chip 'Modo 7'. Esta técnica rotaba una imagen plana a una velocidad endiablada engañando a tu cerebro. Brujería pura.</p>"], 
         manual: ["<h2 class='mag-titular'>REGLAMENTO DE CARRERA SUCIO</h2><p>Las físicas aquí resbalan más que en los juegos modernos, así que anticípate a las curvas derrapando con los botones R y L.</p><div class='mag-truco'><span>TÁCTICA DEFENSIVA</span>Si la ruleta te da un plátano y vas primero, mantén presionada la cruceta hacia abajo y pulsa disparar para dejar caer la piel justo detrás de tus ruedas traseras y hacer trompear al rival.</div>"] 
     },
     sunsetrider: { 
-        consola: "snes", titulo: "SUNSET RIDERS", img: "sunsetriders.jpg", enlace: "sunsetrider.html", valoracion: "NOTA: 94/100", 
+        consola: "snes", titulo: "SUNSET RIDERS", img: "sunsetriders.jpg", enlace: "sunsetrider.html", valoracion: "NOTA: 94/100", wr: { nombre: "BOB", puntos: "1.250.000" },
         historia: ["<h2 class='mag-titular'>EL OESTE MÁS SALVAJE</h2><p>Un clásico arcade arrollador de Konami portado magistralmente a la consola doméstica. La pantalla inicial donde el jefe derrotado soltaba la icónica frase 'Bury me with my money...' se grabó a fuego en la mente de millones de jugadores de los 90.</p>"], 
         manual: ["<h2 class='mag-titular'>LEY DEL REVÓLVER</h2><p>El Arte del Deslizamiento: La agilidad lo es todo. Puedes disparar en 8 direcciones distintas mientras te mueves.</p><div class='mag-truco'><span>TÁCTICA VITAL</span>Para sobrevivir a la lluvia de balas, no solo saltes: pulsa SALTO + ABAJO a la vez para deslizarte velozmente por el suelo levantando polvo. Las balas pasarán por encima de tu sombrero.</div>"] 
     },
 
     /* GBA (3) */
     esmeralda: { 
-        consola: "gba", titulo: "POKÉMON ESMERALDA", img: "pokemonesme.jpg", enlace: "Pokemonesme.html", valoracion: "NOTA: 95/100", 
+        consola: "gba", titulo: "POKÉMON ESMERALDA", img: "pokemonesme.jpg", enlace: "Pokemonesme.html", valoracion: "NOTA: 95/100", wr: { nombre: "PKM", puntos: "Dex100%" },
         historia: ["<h2 class='mag-titular'>CRÍTICAS PASADAS POR AGUA</h2><p>La culminación de la región de Hoenn. Este juegazo pasará a la historia porque la revista IGN le bajó la nota en su análisis quejándose literalmente de que 'tenía demasiada agua' (7.8/10). Medio internet se rió de ellos, ya que el agua es el tema central.</p>"], 
         manual: ["<h2 class='mag-titular'>ENTRENADOR AVANZADO</h2><p>Misión: Lidiar con dos equipos de ecoterroristas chalados despertando a Rayquaza.</p><div class='mag-box'><strong>EL FRENTE BATALLA:</strong> Una isla gigantesca con instalaciones exclusivas solo para jugadores hardcore y competitivos. Te exigirán Pokémon matemáticamente perfectos para ganar.</div>"] 
     },
     rubi: { 
-        consola: "gba", titulo: "POKÉMON RUBÍ", img: "pokemonrubi.jpg", enlace: "PokemonRubi.html", valoracion: "NOTA: 92/100", 
+        consola: "gba", titulo: "POKÉMON RUBÍ", img: "pokemonrubi.jpg", enlace: "PokemonRubi.html", valoracion: "NOTA: 92/100", wr: { nombre: "PKM", puntos: "Dex100%" },
         historia: ["<h2 class='mag-titular'>CABLES ROTOS Y NUEVOS INICIOS</h2><p>La llegada a GBA supuso romper la compatibilidad de cable Link con los juegos antiguos de Game Boy Color. Los fans se cabrearon, pero a cambio se introdujo de cero la genética de los Pokémon y las Naturalezas que hoy sostienen los Campeonatos Mundiales.</p>"], 
         manual: ["<h2 class='mag-titular'>PRIMEROS PASOS EN HOENN</h2><p>Regla de oro: Antes de plantarte ante Groudon, abre el menú y GUARDA MANUALMENTE la partida a un metro del evento.</p><div class='mag-truco'><span>ELECCIÓN VITAL</span>Cuando el Profesor Abedul te dé a elegir, coge al inicial de agua, Mudkip. Evolucionará a Swampert y arrasará él solito medio juego por sus invulnerabilidades.</div>"] 
     },
     deerhunter: { 
-        consola: "gba", titulo: "DEER HUNTER", img: "deerhunter.jpg", enlace: "deerhunter.html", valoracion: "NOTA: 80/100", 
+        consola: "gba", titulo: "DEER HUNTER", img: "deerhunter.jpg", enlace: "deerhunter.html", valoracion: "NOTA: 80/100", wr: { nombre: "HUN", puntos: "999" },
         historia: ["<h2 class='mag-titular'>DE CIBERCAFÉS A PORTÁTILES</h2><p>¿A quién se le ocurrió meter un inmenso y complejo simulador de cazadores de PC en una pantalla minúscula de consola de bolsillo? Lo consiguieron. Cazar agrupaciones de píxeles marrones entre maleza verde nunca fue un deporte tan intenso.</p>"], 
         manual: ["<h2 class='mag-titular'>PACIENCIA ABSOLUTA</h2><p>Controles Vitales: La mejor estrategia es no hacer absolutamente nada. Quédate quieto entre las malezas.</p><div class='mag-box'><strong>EL OLFATO DIGITAL:</strong> Si te mueves rápido por el bosque, el sofisticado motor del juego hará que el ciervo poligonal te huela y saldrá corriendo espantado sin que te dé tiempo a apuntar.</div>"] 
     }
@@ -762,7 +616,7 @@ function pasarPagina(dir) {
     actualizarIndicador();
 }
 
-function actualizarIndicador() { document.getElementById("pageIndicator").innerText = `PÁGINA ${paginaActual + 1} DE ${totalPaginas}`; }
+function actualizarIndicador() { document.getElementById("pageIndicator").innerText = `Pág ${paginaActual + 1} de ${totalPaginas}`; }
 function cerrarFicha() { reproducirClic(); document.getElementById("modalFicha").style.display = "none"; window.history.replaceState(null,null,window.location.pathname + window.location.hash); }
 
 function anadirRecord() {
@@ -770,14 +624,21 @@ function anadirRecord() {
     let nombre = prompt("Introduce tus 3 iniciales de salón recreativo:", "AAA"); if (!nombre) return;
     nombre = nombre.toUpperCase().substring(0, 3);
     let puntos = prompt("Introduce tu puntuación final, vuelta o nivel alcanzado:", "0");
-    if (puntos) { let records = JSON.parse(localStorage.getItem('records_' + juegoActual) || "[]"); records.push({nombre: nombre, puntos: parseInt(puntos)}); records.sort((a, b) => b.puntos - a.puntos); records = records.slice(0, 5); localStorage.setItem('records_' + juegoActual, JSON.stringify(records)); renderizarRecords(); }
+    if (puntos) { let records = JSON.parse(localStorage.getItem('records_' + juegoActual) || "[]"); records.push({nombre: nombre, puntos: puntos}); records.sort((a, b) => parseInt(b.puntos.replace(/\./g,'')) - parseInt(a.puntos.replace(/\./g,''))); records = records.slice(0, 5); localStorage.setItem('records_' + juegoActual, JSON.stringify(records)); renderizarRecords(); }
 }
 
 function renderizarRecords() {
     let records = JSON.parse(localStorage.getItem('records_' + juegoActual) || "[]");
     let body = document.getElementById("bodyRecords");
-    if(records.length === 0) body.innerHTML = "<tr><td colspan='3'>Sin récords locales. ¡Sé el primero!</td></tr>";
-    else body.innerHTML = records.map((r, i) => `<tr><td>#${i+1}</td><td>${r.nombre}</td><td>${r.puntos}</td></tr>`).join('');
+    let wr = infoJuegos[juegoActual].wr || {nombre: "CPU", puntos: "999.999"};
+    
+    // Inyectamos SIEMPRE el World Record en primera posición
+    let html = `<tr style="background: rgba(212,175,55,0.2); color: #ffd700;"><td>👑 WR</td><td>${wr.nombre}</td><td>${wr.puntos}</td></tr>`;
+    
+    if(records.length === 0) { html += "<tr><td colspan='3'>Sin récords locales. ¡Sé el primero!</td></tr>"; } 
+    else { html += records.map((r, i) => `<tr><td>#${i+1}</td><td>${r.nombre}</td><td>${r.puntos}</td></tr>`).join(''); }
+    
+    body.innerHTML = html;
 }
 
 // --- PAYWALL Y NFC ---
