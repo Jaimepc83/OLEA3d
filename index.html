@@ -662,7 +662,7 @@ const infoJuegos = {
         ] 
     },
 
-    // 📱 NINTENDO DS
+        // 📱 NINTENDO DS
     newsupermario: { 
         consola: "nds", 
         titulo: "NEW SUPER MARIO BROS", 
@@ -672,14 +672,16 @@ const infoJuegos = {
         wr: { nombre: "MAR", puntos: "100%" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='NewSuperMarioplay.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='newsupermario.png'\">",
-            "<h2 class='mag-titular'>EL REGRESO A LAS DOS DIMENSIONES</h2><p>Tras años de Mario saltando libremente en mundos 3D, Nintendo decidió volver a sus raíces más clásicas en 2006. Este cartucho arrasó en ventas en todo el mundo demostrando que las plataformas laterales nunca mueren.</p>"
+            "<h2 class='mag-titular'>EL REGRESO A LAS DOS DIMENSIONES</h2><p>Tras años de Mario saltando libremente en mundos 3D, Nintendo decidió volver a sus raíces más clásicas en 2006. Este cartucho arrasó en ventas en todo el mundo demostrando que las plataformas laterales nunca mueren. Mezclaron los fondos planos bidimensionales de toda la vida con modelos de personajes perfectamente renderizados en 3D.</p>"
         ],
         manual: [
-            "<h2 class='mag-titular'>MANUAL DEL REINO CHAMPIÑÓN</h2>",
-            "<p>Accede a nuestra <strong>Guía Interactiva Premium</strong> a pantalla completa con todos los trucos de los nuevos poderes, los mundos ocultos y el truco de las 99 vidas.</p>",
-            "<a href='mario_ds_manual.html' target='_blank' style='display:block; background:#e53935; color:#fff; text-align:center; padding:15px; text-decoration:none; font-family:Impact; font-size:18px; border-radius:8px; margin-top:20px; border:2px solid #ffeb3b; box-shadow: 0 4px 8px rgba(0,0,0,0.5);'>🍄 ABRIR GUÍA COMPLETA</a>"
+            /* PÁGINA 1 */
+            "<h2 class='mag-titular'>TÁCTICAS DEL REINO CHAMPIÑÓN</h2><p>El control vuelve a la sencillez extrema (cruceta y salto), pero añade habilidades modernas como el salto rebotando en las paredes, heredado directamente del Super Mario 64, que te permitirá salvarte de caídas mortales al vacío si tienes buenos reflejos.</p>",
+            /* PÁGINA 2 */
+            "<div class='mag-truco'><span>EL DESTRUCTOR MEGA CHAMPIÑÓN</span>Este es el objeto más bestia jamás creado en toda la saga. Cuando consigas atrapar uno, Mario crecerá hasta ocupar literalmente toda la pantalla superior de tu consola. Cuando estés así, no te molestes en saltar, simplemente corre hacia adelante sin piedad. Arrasarás y destrozarás las tuberías verdes, los bloques irrompibles, los enemigos e incluso arrancarás el banderín de meta de cuajo. Cuanto más destroces, más barras de vida extra lloverán del cielo.</div>"
         ]
     }
+
 };
 
 let currentId = ''; let currentPage = 0; let totalPages = 0;
