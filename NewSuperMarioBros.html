@@ -2,136 +2,259 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>New Super Mario Bros DS - OLEA3D Retro Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Super Mario Bros DS - Guía Premium OLEA3D</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background-color: #000; overflow: hidden; font-family: Arial, sans-serif; overscroll-behavior: none; }
-        #game-container { position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; }
-        
-        /* --- HUD FLOTANTE ESQUINADO (Botones Guardar/Cargar) --- */
-        #olea-hud {
-            position: fixed; top: -60px; left: 0; width: 100%; 
-            display: flex; justify-content: space-between; align-items: flex-start; 
-            box-sizing: border-box; padding: 0 40px;
-            z-index: 2147483647; 
-            transition: top 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            padding-top: max(15px, env(safe-area-inset-top)); 
-            pointer-events: none; 
+        /* CONFIGURACIÓN DE COLORES MARIO: Rojo, Azul y Amarillo */
+        :root {
+            --mario-red: #e53935;
+            --mario-blue: #1e88e5;
+            --mario-yellow: #ffeb3b;
+            --paper-cream: #fff9eb;
+            --text-dark: #333;
         }
-        
-        #olea-hud.visible { top: 0; }
-        .hud-grupo { display: flex; gap: 8px; }
 
-        .btn-olea {
-            pointer-events: auto; padding: 6px 12px; border-radius: 20px;
-            font-family: Arial, sans-serif; font-size: 10px; font-weight: bold;
-            text-transform: uppercase; cursor: pointer; border: 1px solid rgba(255,255,255,0.4); 
-            color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5); backdrop-filter: blur(5px); 
-            transition: transform 0.1s;
-        }
-        
-        .btn-exit { background: rgba(139, 0, 0, 0.65); text-decoration: none; display: flex; align-items: center; }
-        .btn-save { background: rgba(0, 91, 159, 0.65); }
-        .btn-load { background: rgba(107, 142, 35, 0.65); }
-        .btn-olea:active { transform: scale(0.9); }
+        * { box-sizing: border-box; }
 
-        /* --- TOAST DE NOTIFICACIÓN --- */
-        #save-toast { 
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
-            background: rgba(15,15,15,0.8); border: 1px solid #9dff3d; 
-            color: #9dff3d; padding: 8px 16px; border-radius: 20px; 
-            font-weight: bold; font-size: 11px; opacity: 0; 
-            pointer-events: none; transition: 0.3s; z-index: 2147483647; text-align: center; 
-            backdrop-filter: blur(4px);
+        body {
+            background-color: #f2f2f2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px 0;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
         }
-        #save-toast.show { opacity: 1; transform: translateX(-50%) translateY(-10px); }
+
+        /* Contenedor de Página Estilo Manual NES */
+        .page-container {
+            background-color: var(--paper-cream);
+            border: 8px double var(--text-dark);
+            box-shadow: 10px 10px 0 rgba(0,0,0,0.1);
+            max-width: 800px;
+            width: 95%;
+            margin-bottom: 40px;
+            padding: 50px 30px;
+            position: relative;
+        }
+
+        /* Títulos estilo Manual Nintendo 80s */
+        h1, h2 {
+            color: var(--mario-red);
+            font-family: 'Press Start 2P', cursive;
+            margin: 0;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        h2.slide-title {
+            color: var(--mario-blue);
+            font-size: 20px;
+            border-bottom: 2px solid var(--text-dark);
+            padding-bottom: 15px;
+            margin-bottom: 35px;
+            text-align: left;
+            width: 100%;
+        }
+
+        h3 {
+            color: var(--mario-red);
+            font-size: 24px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        p, li {
+            color: var(--text-dark);
+            font-size: 18px;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        /* Layouts de Contenido */
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            width: 100%;
+            align-items: center;
+        }
+
+        /* Contenedor de Imagen con Borde */
+        .image-wrapper {
+            background-color: #fff;
+            border: 4px solid var(--text-dark);
+            border-radius: 10px;
+            overflow: hidden;
+            width: 100%;
+            height: 350px;
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Para que las imágenes oficiales se vean enteras */
+            padding: 10px;
+        }
+
+        /* Elementos Decorativos y de Información */
+        .mag-sub {
+            color: var(--mario-blue);
+            font-weight: 900;
+            border-bottom: 1.5px solid #ccc;
+            font-size: 14px;
+            margin: 10px 0 5px;
+            text-transform: uppercase;
+        }
+
+        .mag-box {
+            background: #fff;
+            border: 2px solid var(--mario-yellow);
+            border-left: 5px solid var(--mario-blue);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .mag-truco {
+            background: #fff;
+            border: 2px dashed var(--mario-red);
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            color: var(--mario-red);
+            border-radius: 10px;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 12px;
+            color: #888;
+        }
     </style>
 </head>
 <body>
-    <div id="game-container"><div id="game"></div></div>
-    
-    <div id="olea-hud">
-        <div class="hud-grupo">
-            <a href="index.html" class="btn-olea btn-exit">⬅ SALIR</a>
-        </div>
-        <div class="hud-grupo">
-            <button class="btn-olea btn-save" onclick="oleaSave()">💾 GUARDAR</button>
-            <button class="btn-olea btn-load" onclick="oleaLoad()">📂 CARGAR</button>
+
+    <div class="page-container" style="text-align: center; padding: 60px 20px;">
+        <p style="font-family:'Press Start 2P'; font-size: 10px; color: var(--mario-blue);">--- OLEA3D RETRO HUB PRESENTA ---</p>
+        <h1>NEW<br>SUPER MARIO<br>BROS DS</h1>
+        <div style="margin-top: 30px; border-top: 4px dashed var(--text-dark); width: 200px; display: inline-block;"></div>
+        <p style="font-size: 18px; margin-top: 30px; color: var(--mario-red); font-weight: bold;">GUÍA INTERACTIVA DE AVENTURA</p>
+        <p style="margin-top: 40px; font-style: italic; color: #888;">Desliza hacia abajo para descubrir los secretos del Reino Champiñón...</p>
+    </div>
+
+    <div class="page-container">
+        <h2 class="slide-title">Bienvenido a la DS</h2>
+        <div class="content-area">
+            <div class="two-column">
+                <div class="image-wrapper">
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/5231053151045803194" alt="Mario DS Logo">
+                </div>
+                <div>
+                    <p>Tras años de Marios saltando libremente en mundos 3D, Shigeru Miyamoto decidió que era hora de volver a las raíces más clásicas en 2D en el 2006.</p>
+                    <p>Este cartucho mezcló los fondos planos bidimensionales de toda la vida con modelos de personajes perfectamente renderizados en 3D.</p>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div id="save-toast">✅ Acción completada</div>
+    <div class="page-container">
+        <h2 class="slide-title">El Mega Champiñón</h2>
+        <div class="content-area">
+            <div class="two-column">
+                <div>
+                    <h3>DESTRUCCIÓN TOTAL</h3>
+                    <p>Al comerlo, Mario crecerá hasta ocupar toda la pantalla de tu consola. Es invencible y puede destruir bloques, tuberías, enemigos e incluso la bandera final.</p>
+                    <div class="mag-truco">
+                        TRUCO DE VIDAS<br>
+                        Cuanto más destroces, más vidas extra ganarás al terminar el efecto. ¡No frenes!
+                    </div>
+                </div>
+                <div class="image-wrapper">
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/3815675716074341220" alt="Mega Mario DS">
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <script>
-        const hud = document.getElementById('olea-hud'); 
-        let temporizadorHUD;
-        
-        function mostrarHUD() { 
-            hud.classList.add('visible'); 
-            clearTimeout(temporizadorHUD); 
-            temporizadorHUD = setTimeout(() => { hud.classList.remove('visible'); }, 3000); 
-        }
-        
-        window.addEventListener('touchstart', mostrarHUD);
-        window.addEventListener('mousemove', mostrarHUD);
+    <div class="page-container">
+        <h2 class="slide-title">El Mini Champiñón</h2>
+        <div class="content-area">
+            <div class="two-column">
+                <div class="image-wrapper">
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/9649865255727004699" alt="Mini Mario DS">
+                </div>
+                <div>
+                    <h3>PEQUEÑO PERO LETAL</h3>
+                    <p>Permite a Mario entrar por tuberías diminutas y correr sobre el agua sin hundirse. Salta más alto y flota en el aire.</p>
+                    <div class="mag-truco">
+                        OJO AL DATO<br>
+                        Los enemigos no mueren si saltas sobre ellos. Debes usar el Salto Bomba (abajo en el aire).
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        document.addEventListener('fullscreenchange', () => {
-            const toast = document.getElementById('save-toast');
-            if (document.fullscreenElement) {
-                try { 
-                    document.fullscreenElement.appendChild(hud); 
-                    document.fullscreenElement.appendChild(toast); 
-                } catch(e){}
-            } else {
-                document.body.appendChild(hud);
-                document.body.appendChild(toast);
-            }
-        });
+    <div class="page-container">
+        <h2 class="slide-title">Juega como Luigi</h2>
+        <div class="content-area">
+            <div class="two-column">
+                <div>
+                    <h3>EL HERMANO DE VERDE</h3>
+                    <p>Si estás cansado de Mario, puedes jugar la aventura completa como Luigi.</p>
+                    <div class="mag-box">
+                        EL CÓDIGO SECRETO:<br>
+                        En la pantalla de selección de archivo, mantén pulsados <strong>L + R</strong> y pulsa el botón <strong>A</strong>. ¡Escucharás la voz de Luigi confirmando el cambio!
+                    </div>
+                </div>
+                <div class="image-wrapper">
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/16511122739672660201" alt="Luigi DS Art">
+                </div>
+            </div>
+        </div>
+    </div>
 
-        function oleaSave() {
-            try {
-                if (window.EJS_emulator && window.EJS_emulator.gameManager) {
-                    EJS_emulator.gameManager.quickSave(1); 
-                    mostrarToast('💾 Partida guardada');
-                } else { mostrarToast('❌ Espera a que cargue...'); }
-            } catch(e) { console.error(e); }
-        }
+    <div class="page-container">
+        <h2 class="slide-title">Vidas Infinitas (99)</h2>
+        <div class="content-area">
+            <div class="two-column">
+                <div class="image-wrapper" style="text-align: center; border-radius: 50%; width: 350px; height: 350px;">
+                    <p style="font-family: 'Press Start 2P'; font-size: 150px; color: var(--mario-red); margin-top: 100px;">99</p>
+                </div>
+                <div>
+                    <h3>TRUCO DEL NIVEL 1-4</h3>
+                    <p>Cerca del final del nivel, busca la tubería que escupe Goombas sin parar. Salta sobre ellos rítmicamente sin tocar el suelo. ¡Sumarás vidas hasta llegar al máximo!</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        function oleaLoad() {
-            try {
-                if (window.EJS_emulator && window.EJS_emulator.gameManager) {
-                    EJS_emulator.gameManager.quickLoad(1); 
-                    mostrarToast('📂 Partida cargada');
-                } else { mostrarToast('❌ Espera a que cargue...'); }
-            } catch(e) { console.error(e); }
-        }
+    <div class="footer-note">
+        <p>Tu Llavero NFC, Tu Historia</p>
+        <p><strong>WWW.INSTAGRAM.COM/OLEA3D</strong></p>
+        <p>© 2024 OLEA3D - IMPRESIÓN 3D & NOSTALGIA DIGITAL</p>
+    </div>
 
-        function mostrarToast(msg) {
-            const toast = document.getElementById('save-toast');
-            toast.innerText = msg;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2000);
-        }
-
-        window.onload = function() {
-            if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-                mostrarHUD();
-            }
-        }
-
-        // --- CONFIGURACIÓN DE NINTENDO DS ---
-        EJS_player = '#game'; 
-        EJS_core = 'nds'; 
-        EJS_gameName = 'New Super Mario Bros'; 
-        EJS_color = '#a8a8a8'; 
-        EJS_startOnLoaded = true; 
-        EJS_pathtodata = 'https://cdn.jsdelivr.net/gh/ethanaobrien/emulatorjs@main/data/';
-        
-        // ATENCIÓN: Asegúrate de que el nombre entre comillas aquí abajo 
-        // es exactamente igual al nombre del archivo .nds que has subido.
-        EJS_gameUrl = 'NewSuperMarioBros.nds'; 
-    </script>
-    <script src="https://cdn.jsdelivr.net/gh/ethanaobrien/emulatorjs@main/data/loader.js"></script>
 </body>
 </html>
