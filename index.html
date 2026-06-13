@@ -53,6 +53,8 @@ body.theme-snes { background-color: #000c1a; }
 body.theme-snes .bg-grid { background: linear-gradient(transparent 10%, rgba(0,91,159,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(0,91,159,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(0,91,159,0.3) 21px); }
 body.theme-gba { background-color: #1a001a; } 
 body.theme-gba .bg-grid { background: linear-gradient(transparent 10%, rgba(90,66,155,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(90,66,155,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(90,66,155,0.3) 21px); }
+body.theme-nds { background-color: #1a1a1a; } 
+body.theme-nds .bg-grid { background: linear-gradient(transparent 10%, rgba(180,180,180,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(180,180,180,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(180,180,180,0.3) 21px); }
 
 /* CABECERA Y LOGOS NEÓN */
 header { padding: 20px 20px 5px 20px; background: linear-gradient(180deg, rgba(26,26,26,0.9), rgba(13,13,13,0)); position: relative; z-index: 10; }
@@ -218,10 +220,11 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
     <a href="#megadrive" onclick="reproducirClic()">⚡ MD</a>
     <a href="#snes" onclick="reproducirClic()">⭐ SNES</a>
     <a href="#gba" onclick="reproducirClic()">📱 GBA</a>
+    <a href="#nds" onclick="reproducirClic()">📱 NDS</a>
 </div>
 
 <div class="main-container">
-    <div class="stats">🕹️ Catálogo de 28 Juegos | 🏆 Colección Premium</div>
+    <div class="stats">🕹️ Catálogo Premium | Colección OLEA3D</div>
 
     <h1 id="arcade" class="section-title">🕹️ SALÓN ARCADE (RECREATIVAS)</h1>
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Arcade_Machine_Vector.svg/200px-Arcade_Machine_Vector.svg.png" class="banner-console" alt="Arcade" onerror="this.style.display='none'">
@@ -246,6 +249,10 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
     <h1 id="gba" class="section-title">📱 GAME BOY ADVANCE</h1>
     <img src="gba.jpg" class="banner-console" alt="GBA">
     <div class="container" id="contGba"></div>
+
+    <h1 id="nds" class="section-title">📱 NINTENDO DS</h1>
+    <img src="nintendods.png" class="banner-console" alt="Nintendo DS" onerror="this.style.display='none'">
+    <div class="container" id="contNds"></div>
 </div>
 
 <div id="modalFicha" class="modal-ficha">
@@ -345,7 +352,7 @@ function toqueSecreto() { reproducirClic(); toquesLogo++; clearTimeout(tiempoToq
 let toquesBeltraneja = 0, tiempoBeltraneja;
 function toqueBeltraneja() { reproducirClic(); toquesBeltraneja++; clearTimeout(tiempoBeltraneja); if(toquesBeltraneja===2){ const tc = document.getElementById("tarjetaCiervo"); if(tc) { tc.style.display="block"; tc.scrollIntoView({behavior:'smooth',block:'center'}); reproducirSonidoCoin(); } toquesBeltraneja=0; } else { tiempoBeltraneja=setTimeout(()=>{toquesBeltraneja=0;},500); } }
 
-// --- LA BASE DE DATOS TITÁNICA AL 100% (LOS 28 JUEGOS CON VÍDEO EN PÁGINA 1 Y TEXTOS EXTENDIDOS) ---
+// --- LA BASE DE DATOS TITÁNICA ---
 const infoJuegos = {
     // 🕹️ ARCADE
     cadillacs: { 
@@ -380,7 +387,7 @@ const infoJuegos = {
             "<h2 class='mag-sub'>EL LORE OSCURO</h2><p>En este juego se introduce la fuerza oscura de Orochi, corrompiendo a algunos luchadores y dándoles más poder pero volviéndolos inestables. Es el comienzo de la saga argumental más épica de los juegos de lucha.</p>"
         ], 
         manual: [
-            "<h2 class='mag-titular'>EDICIÓN DE EQUIPOS</h2><p>La gran novedad: escuchando las quejas del primer juego, por fin dejaron a los jugadores crear su propio 'Dream Team', mezclando luchadores a su antojo en lugar de usar los equipos cerrados por países.</p><div class='mag-truco'><span>MAGIA DE IORI</span>Su movimiento especial requiere precisión milimétrica con el joystick: Abajo, Diagonal, Adelante, Abajo, Atrás + Puño Fuerte.</div>", 
+            "<h2 class='mag-titular'>EDICIÓN DE EQUIPOS</h2><p>La gran novedad: escuchando las quejas del primer juego, por por fin dejaron a los jugadores crear su propio 'Dream Team', mezclando luchadores a su antojo en lugar de usar los equipos cerrados por países.</p><div class='mag-truco'><span>MAGIA DE IORI</span>Su movimiento especial requiere precisión milimétrica con el joystick: Abajo, Diagonal, Adelante, Abajo, Atrás + Puño Fuerte.</div>", 
             "<h2 class='mag-sub'>ESQUIVAS Y COUNTERS</h2><p>En el KOF 95 introdujeron la esquiva agresiva. Si pulsas A+B a la vez, tu personaje dará un paso rápido esquivando proyectiles, ideal para acercarte y agarrar al enemigo por sorpresa.</p>"
         ] 
     },
@@ -388,48 +395,40 @@ const infoJuegos = {
         consola: "arcade", titulo: "NEO BOMBERMAN", img: "neobomberman.jpg", enlace: "neobombe.html", valoracion: "NOTA: 88/100", wr: { nombre: "BOM", puntos: "1.250.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='neobombe.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='neobomberman.jpg'\">",
-            "<h2 class='mag-titular'>EXPLOSIONES EN NEO GEO</h2><p>Hudson Soft llevó a su mítico muñeco pone-bombas a la todopoderosa placa arcade de SNK en 1997. El resultado es un festival de luces, colores y gritos de amigos traicionándose por acorralarse con bombas en los modos multijugador.</p>", 
-            "<h2 class='mag-sub'>RESCATE ESPACIAL</h2><p>La historia principal nos lleva a liberar a diferentes Bomberman secuestrados en jaulas espaciales. Cada nivel superado libera a un aliado con una habilidad especial única.</p>"
+            "<h2 class='mag-titular'>EXPLOSIONES EN NEO GEO</h2><p>Hudson Soft llevó a su mítico muñeco pone-bombas a la todopoderosa placa arcade de SNK en 1997. El resultado es un festival de luces, colores y gritos de amigos traicionándose por acorralarse con bombas en los modos multijugador.</p>"
         ], 
         manual: [
-            "<h2 class='mag-titular'>GUÍA PIROMANÍACA</h2><p>Regla #1: Pon una bomba, y CORRE. No te quedes atrapado en tu propio fuego o harás el ridículo más absoluto.</p><div class='mag-box'><strong>POWER-UPS:</strong> Busca las caras felices de fuego para que las llamas lleguen más lejos. Cuidado con las calaveras, te aplicarán maldiciones.</div>", 
-            "<h2 class='mag-sub'>TÁCTICAS AVANZADAS</h2><p><strong>El Guantelete:</strong> Si consigues el ítem del guante azul, puedes coger las bombas y lanzárselas a la cabeza a tus enemigos saltando muros.<br><strong>La Patada:</strong> Con el zapato rojo, si chocas contra una bomba, la mandarás rodando hasta el final del pasillo.</p>"
+            "<h2 class='mag-titular'>GUÍA PIROMANÍACA</h2><p>Regla #1: Pon una bomba, y CORRE. No te quedes atrapado en tu propio fuego o harás el ridículo más absoluto.</p><div class='mag-box'><strong>POWER-UPS:</strong> Busca las caras felices de fuego para que las llamas lleguen más lejos. Cuidado con las calaveras, te aplicarán maldiciones.</div>"
         ] 
     },
     simpsons: { 
         consola: "arcade", titulo: "THE SIMPSONS", img: "simpsons.jpg", enlace: "simpsons.html", valoracion: "NOTA: 96/100", wr: { nombre: "B.S", puntos: "8.500.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='simpsons.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='simpsons.jpg'\">",
-            "<h2 class='mag-titular'>EL REY DE LOS RECREATIVOS</h2><p>Konami lanzó este beat 'em up en 1991 y se convirtió en la tragaperras definitiva. La máquina física original tenía 4 joysticks para que cuatro amigos jugaran a la vez repartiendo leña en Springfield para rescatar a la pequeña Maggie del Sr. Burns.</p>", 
-            "<h2 class='mag-sub'>DETALLES DE LA SERIE</h2><p>El juego está lleno de referencias a las primeras temporadas. Peleas contra osos en el bosque, matones en el bar de Moe y robots en el Canal 6. ¡Hasta sale Encías Sangrantes Murphy tocando el saxo!</p>"
+            "<h2 class='mag-titular'>EL REY DE LOS RECREATIVOS</h2><p>Konami lanzó este beat 'em up en 1991 y se convirtió en la tragaperras definitiva. La máquina física original tenía 4 joysticks para que cuatro amigos jugaran a la vez repartiendo leña en Springfield para rescatar a la pequeña Maggie del Sr. Burns.</p>"
         ], 
         manual: [
-            "<h2 class='mag-titular'>CALLEJEO AMARILLO</h2><p>Elige tu estilo: Homer usa los puños a lo bruto, Bart su monopatín, Lisa salta a la comba de forma letal y Marge... Marge te revienta la cabeza con una aspiradora gigante.</p><div class='mag-truco'><span>ATAQUES EN EQUIPO</span>Si te juntas con un amigo en la misma pantalla y os quedáis quietos, los personajes harán un ataque doble loquísimo. Homer y Bart se cogen de las manos y giran arrasando todo, mientras Marge coge a Lisa y la lanza como un misil.</div>", 
-            "<h2 class='mag-sub'>CONSEJOS DE SUPERVIVENCIA</h2><p>Aprovecha los objetos del suelo. Puedes lanzar desde señales de tráfico hasta al mismísimo Ayudante de Santa Claus (el perro) para aturdir a los guardias de traje morado.</p>"
+            "<h2 class='mag-titular'>CALLEJEO AMARILLO</h2><p>Elige tu estilo: Homer usa los puños a lo bruto, Bart su monopatín, Lisa salta a la comba de forma letal y Marge... Marge te revienta la cabeza con una aspiradora gigante.</p><div class='mag-truco'><span>ATAQUES EN EQUIPO</span>Si te juntas con un amigo en la misma pantalla y os quedáis quietos, los personajes harán un ataque doble loquísimo. Homer y Bart se cogen de las manos y giran arrasando todo.</div>"
         ] 
     },
     tmnt: { 
         consola: "arcade", titulo: "TMNT ARCADE", img: "tmnt.jpg", enlace: "tmnt.html", valoracion: "NOTA: 95/100", wr: { nombre: "LEO", puntos: "5.430.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='tmnt.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='tmnt.jpg'\">",
-            "<h2 class='mag-titular'>COWABUNGA, CHICOS</h2><p>Otro éxito monstruoso de Konami en los bares (1989). Jugar a cuatro bandas con Leonardo, Raphael, Michelangelo y Donatello era el sueño de cualquier chaval de los 90. Destruir soldados del Clan del Pie por las calles de Nueva York y las cloacas nunca fue tan divertido.</p>", 
-            "<h2 class='mag-sub'>LA ERA DE LAS TORTUGAS</h2><p>El impacto de este juego fue tan bestial que en muchos salones recreativos tenían que poner alfombras antideslizantes porque el sudor y los empujones de 4 niños jugando a la vez destrozaban el suelo.</p>"
+            "<h2 class='mag-titular'>COWABUNGA, CHICOS</h2><p>Otro éxito monstruoso de Konami en los bares (1989). Jugar a cuatro bandas con Leonardo, Raphael, Michelangelo y Donatello era el sueño de cualquier chaval de los 90. Destruir soldados del Clan del Pie por las calles de Nueva York y las cloacas nunca fue tan divertido.</p>"
         ], 
         manual: [
-            "<h2 class='mag-titular'>NINJUTSU MUTANTE</h2><p>El juego es puro machacabotones, pero exige estrategia contra los jefes finales como Bebop o Rocksteady.</p><div class='mag-box'><strong>ATAQUE KAMIKAZE:</strong> Pulsa ataque y salto a la vez para hacer el icónico ataque especial que barre todo a tu alrededor. Pero ojo al dato: ¡este movimiento te quita un poco de tu propia vida cada vez que impacta! Úsalo solo para escapar de acorralamientos.</div>", 
-            "<h2 class='mag-sub'>LA DIETA NINJA</h2><p>En las calles oscuras de NY la sanidad no importa. La única forma de recuperar salud en este juego es encontrar las cajas de pizza esparcidas por los niveles y bocas de alcantarilla. Cógelas antes que tus amigos o te dejarán tirado.</p>"
+            "<h2 class='mag-titular'>NINJUTSU MUTANTE</h2><p>El juego es puro machacabotones, pero exige estrategia contra los jefes finales como Bebop o Rocksteady.</p><div class='mag-box'><strong>ATAQUE KAMIKAZE:</strong> Pulsa ataque y salto a la vez para hacer el icónico ataque especial que barre todo a tu alrededor. Pero ojo al dato: ¡este movimiento te quita un poco de tu propia vida cada vez que impacta! Úsalo solo para escapar de acorralamientos.</div>"
         ] 
     },
     pacman: { 
         consola: "arcade", titulo: "PAC-MAN", img: "pacman.jpg", enlace: "Pacman.html", valoracion: "NOTA: 95/100", wr: { nombre: "B.M", puntos: "3.333.360" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='pacman.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='pacman.jpg'\">",
-            "<h2 class='mag-titular'>EL REY DEL ARCADE</h2><p>Lanzado en 1980 por Namco. Antes de Pac-Man, todos los juegos iban de disparar a naves alienígenas. Toru Iwatani quería crear un juego pacifista que atrajera a todo el mundo, inspirándose en una pizza a la que le faltaba una porción.</p>", 
-            "<h2 class='mag-sub'>IA REVOLUCIONARIA</h2><p>Lo que hizo grande al comecocos fue que los enemigos tenían personalidad: Blinky (Rojo) te persigue directamente. Pinky (Rosa) se adelanta a tus movimientos. Inky (Azul) es impredecible, y Clyde (Naranja) directamente hace lo que le da la gana.</p>"
+            "<h2 class='mag-titular'>EL REY DEL ARCADE</h2><p>Lanzado en 1980 por Namco. Antes de Pac-Man, todos los juegos iban de disparar a naves alienígenas. Toru Iwatani quería crear un juego pacifista que atrajera a todo el mundo, inspirándose en una pizza a la que le faltaba una porción.</p>"
         ], 
         manual: [
-            "<h2 class='mag-titular'>SUPERVIVENCIA LABERÍNTICA</h2><p>Come todos los puntos del laberinto mientras huyes. Las píldoras de las esquinas hacen a los fantasmas vulnerables: te darán 200, 400, 800 y 1600 puntos si te los comes de una sentada.</p><div class='mag-truco'><span>EL TRUCO DEL TÚNEL</span>Usa los túneles laterales que conectan la pantalla constantemente. Pac-Man los cruza a toda velocidad, pero los fantasmas sufren una penalización de lentitud al entrar. Es la forma perfecta de despistarlos.</div>", 
-            "<h2 class='mag-sub'>LA PANTALLA DE LA MUERTE</h2><p>Si eres un Dios y logras llegar a la pantalla 256, el juego sufrirá un desbordamiento de memoria (overflow). La mitad derecha del laberinto se llenará de letras y símbolos basura injugables. Has vencido a la máquina.</p>"
+            "<h2 class='mag-titular'>SUPERVIVENCIA LABERÍNTICA</h2><p>Come todos los puntos del laberinto mientras huyes. Las píldoras de las esquinas hacen a los fantasmas vulnerables.</p><div class='mag-truco'><span>EL TRUCO DEL TÚNEL</span>Usa los túneles laterales que conectan la pantalla constantemente. Pac-Man los cruza a toda velocidad, pero los fantasmas sufren una penalización de lentitud al entrar. Es la forma perfecta de despistarlos.</div>"
         ] 
     },
 
@@ -438,12 +437,10 @@ const infoJuegos = {
         consola: "nes", titulo: "PUNCH-OUT!!", img: "miketyson.jpg", enlace: "miketyson.html", valoracion: "NOTA: 94/100", wr: { nombre: "MAC", puntos: "999.990" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='miketyson.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='miketyson.jpg'\">",
-            "<h2 class='mag-titular'>EL NEGOCIO DEL SIGLO</h2><p>Nintendo pagó a Mike Tyson la ridícula suma de 50.000 dólares en 1986 por usar su imagen, meses antes de que se convirtiera en el campeón mundial indiscutible de los pesos pesados. Les salió regalado y el juego vendió millones.</p>", 
-            "<h2 class='mag-sub'>POLÍTICAMENTE INCORRECTO</h2><p>Hoy en día, este juego causaría cientos de demandas. Los rivales como Von Kaiser, Glass Joe o Soda Popinski son puros estereotipos nacionales llevados a lo absurdo. ¡Pero por eso los amamos!</p>"
+            "<h2 class='mag-titular'>EL NEGOCIO DEL SIGLO</h2><p>Nintendo pagó a Mike Tyson la ridícula suma de 50.000 dólares en 1986 por usar su imagen, meses antes de que se convirtiera en el campeón mundial indiscutible de los pesos pesados. Les salió regalado y el juego vendió millones.</p>"
         ], 
         manual: [
-            "<h2 class='mag-titular'>MANUAL DE RING</h2><p>Esto no es un juego de dar puñetazos a lo loco. Es un rompecabezas rítmico. Tienes que memorizar los tics faciales, los parpadeos y los ruiditos de cada oponente antes de que te arranquen la cabeza.</p><div class='mag-box'><strong>CONTRAATAQUE:</strong> Cuando veas parpadear al rival (su tic), esquiva hacia los lados e inmediatamente pulsa el botón de ataque para meterle un gancho en las costillas que le dolerá en el alma.</div>", 
-            "<h2 class='mag-sub'>EL GOLPE ESTRELLA</h2><p>Golpea a los rivales justo cuando abran la guardia o levanten el puño para ganar 'Estrellas'. Pulsa Start cuando tengas una para lanzar el Uppercut definitivo de Little Mac. ¡Demoledor!</p>"
+            "<h2 class='mag-titular'>MANUAL DE RING</h2><p>Esto no es un juego de dar puñetazos a lo loco. Es un rompecabezas rítmico. Tienes que memorizar los tics faciales, los parpadeos y los ruiditos de cada oponente antes de que te arranquen la cabeza.</p><div class='mag-box'><strong>CONTRAATAQUE:</strong> Cuando veas parpadear al rival (su tic), esquiva hacia los lados e inmediatamente pulsa el botón de ataque para meterle un gancho en las costillas que le dolerá en el alma.</div>"
         ] 
     },
     ghostngoblin: { 
@@ -453,16 +450,14 @@ const infoJuegos = {
             "<h2 class='mag-titular'>ODIO AL JUGADOR</h2><p>Su creador, Tokuro Fujiwara, diseñó deliberadamente el juego más frustrante y difícil del mundo. Los enemigos aparecen de la nada y no puedes cambiar la dirección de tu salto una vez estás en el aire. Calculas mal y mueres.</p><div class='mag-box'><strong>LA GRAN TROLLEADA:</strong> Si consigues llegar sudando sangre a matar al jefe final, el juego te lanza un mensaje diciendo que 'todo era una ilusión de Satán' y te obliga a pasarte el juego entero OTRA VEZ desde el principio sin apagar la consola. Maldad pura.</div>"
         ], 
         manual: [
-            "<h2 class='mag-titular'>CÓMO SUFRIR CON ESTILO</h2><p>Misión: Rescatar a la princesa Prin-Prin del demonio Astaroth paseando por un cementerio que quiere matarte a cada paso.</p><div class='mag-truco'><span>MODA ÍNTIMA</span>Solo puedes recibir dos golpes. Al primer toque que te dé un zombi, perderás tu rutilante armadura medieval de hierro y te quedarás corriendo toda la fase en calzoncillos de corazones rojos. Trata de encontrar cofres para recuperar tu honor.</div>", 
-            "<h2 class='mag-sub'>ARMAMENTO VITAL</h2><p>Evita el hacha a toda costa. Tu mejor amigo será la Daga o la Lanza, porque puedes tirarlas en línea recta rápidamente y matar a los enemigos antes de que te toquen la cara.</p>"
+            "<h2 class='mag-titular'>CÓMO SUFRIR CON ESTILO</h2><p>Misión: Rescatar a la princesa Prin-Prin del demonio Astaroth paseando por un cementerio que quiere matarte a cada paso.</p><div class='mag-truco'><span>MODA ÍNTIMA</span>Solo puedes recibir dos golpes. Al primer toque que te dé un zombi, perderás tu rutilante armadura medieval de hierro y te quedarás corriendo toda la fase en calzoncillos de corazones rojos. Trata de encontrar cofres para recuperar tu honor.</div>"
         ] 
     },
     mariobros3: { 
         consola: "nes", titulo: "SUPER MARIO BROS 3", img: "supermariobros3.jpg", enlace: "supermariobros3.html", valoracion: "NOTA: 98/100", wr: { nombre: "NIF", puntos: "9.999.990" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='mariobros3.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='supermariobros3.jpg'\">",
-            "<h2 class='mag-titular'>TODO ES UNA OBRA DE TEATRO</h2><p>¿Te has fijado bien en el juego? La pantalla de título es un telón rojo levantándose. Los bloques tienen tornillos pegados al fondo, las plataformas cuelgan de cuerdas del techo y al final de cada nivel sales por unas bambalinas negras. Shigeru Miyamoto confirmó años después que todo es una función teatral.</p>", 
-            "<h2 class='mag-sub'>EL CARTUCHO DEFINITIVO</h2><p>Exprimió el cerebro de la NES hasta límites absurdos. Incluía un chip especial dentro del plástico para poder cargar mundos inmensos como el Mundo Gigante o el nivel de los tanques de Bowser.</p>"
+            "<h2 class='mag-titular'>TODO ES UNA OBRA DE TEATRO</h2><p>¿Te has fijado bien en el juego? La pantalla de título es un telón rojo levantándose. Los bloques tienen tornillos pegados al fondo, las plataformas cuelgan de cuerdas del techo y al final de cada nivel sales por unas bambalinas negras. Shigeru Miyamoto confirmó años después que todo es una función teatral.</p>"
         ], 
         manual: [
             "<h2 class='mag-titular'>MANUAL DE VUELO</h2><p>Por primera vez en la saga, Mario puede volar. Coge la hoja mágica para tener cola de mapache. Corre sin parar en línea recta y, cuando la barra 'P' parpadee con un pitido, salta repetidamente para llegar a las nubes.</p><div class='mag-truco'><span>SECRETO: LA FLAUTA MÁGICA</span>En el Nivel 3 del Mundo 1, súbete al bloque blanco final. Mantén la flecha abajo apretada durante 5 segundos y Mario caerá 'detrás' del escenario. Corre hacia la derecha y encontrarás una sala secreta con una flauta para saltarte mundos enteros.</div>"
@@ -624,7 +619,7 @@ const infoJuegos = {
             "<h2 class='mag-titular'>LA LEY DEL REVÓLVER IMPLACABLE</h2><p>Olvídate de disparar lento o esconderte. Aquí tienes la capacidad letal de disparar en 8 direcciones de la rosa de los vientos de forma ininterrumpida mientras vas caminando. Steve y Billy usan doble revólver rápido, mientras que Bob y Cormano usan unas mortíferas escopetas anchas que destrozan zonas más amplias de cobertura.</p><div class='mag-truco'><span>TÁCTICA VITAL DE SUPERVIVENCIA: EL ARTE DEL DESLIZAMIENTO</span>En las batallas de final de nivel los jefes te inundarán literalmente de balas la pantalla. Saltar a lo tonto es un suicidio seguro. La única y sagrada forma de esquivar ráfagas pesadas e ir ganando metros al enemigo es hacer el barrido. Simplemente presiona tu botón de <strong>SALTO y flecha ABAJO al mismo tiempo</strong> mientras corres. El cazarrecompensas se tirará planchado barriendo el polvo del desfiladero, volviéndose pequeñito y logrando que todos los perdigones asesinos pasen silbando inofensivamente a un milímetro de la tela de su sombrero tejano. Domina el barrido y reinarás en el oeste.</div>"
         ] 
     },
-        batmanreturn: { 
+    batmanreturn: { 
         consola: "snes", titulo: "BATMAN RETURNS", img: "batmanretur.jpg", enlace: "batmanreturn.html", valoracion: "NOTA: 91/100", wr: { nombre: "BRB", puntos: "750.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='BatmanReturns.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='batmanretur.jpg'\">",
@@ -666,13 +661,25 @@ const infoJuegos = {
         manual: [
             "<h2 class='mag-titular'>EL SAGRADO, INMOVIL Y ABURRIDO ARTE DE LA CAZA DIGITAL</h2><p>No confundas el género. Esto no es <em>Call of Duty</em> ni <em>Doom</em>. Aquí los cargadores no duran minutos ni vuelas saltando con escopetas pesadas. Es un simulador tenso y frío.</p><div class='mag-box'><strong>REGLA DE SANGRE FRÍA Y OLFATO BINARIO</strong>Las mejores armas no tienen gatillo, tienen sigilo matemático. Los controles son crueles e hiperrealistas. La mejor táctica al principio de tu mañana virtual es sencillamente arrinconarte entre el follaje espeso y no tocar absolutamente ningún botón de movimiento.<br><br>Si corres impaciente para explorar terreno y ganar un triste segundo de tu tiempo libre, el código interno implacable de la Game Boy recalculará tu ruido: el ciervo de papel virtual te escuchará pisar una sola ramita a media milla en el minimapa, calculará la dirección del viento en base a tu sudor poligonal... y desaparecerá de la memoria RAM, corriendo espantado antes siquiera de que veas sus astas. Mide el viento, equípate camuflaje, usa bien tu escaso reclamo de sonido, no respires y espera que un milagro cornutado se cuele en tu retícula.</div>"
         ] 
+    },
+
+    // 📱 NINTENDO DS (¡NUEVA SECCIÓN!)
+    newsupermario: { 
+        consola: "nds", titulo: "NEW SUPER MARIO BROS", img: "newsupermario.png", enlace: "newsupermario.html", valoracion: "NOTA: 92/100", wr: { nombre: "MAR", puntos: "100%" },
+        historia: [
+            "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='newsupermarioplay.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='newsupermario.png'\">",
+            "<h2 class='mag-titular'>EL REGRESO A LAS DOS DIMENSIONES</h2><p>Tras años de Mario saltando libremente en mundos 3D, Nintendo decidió volver a sus raíces más clásicas en 2006. Este cartucho arrasó en ventas en todo el mundo demostrando que las plataformas laterales nunca mueren. Mezclaron los fondos planos bidimensionales de toda la vida con modelos de personajes perfectamente renderizados en 3D, creando un efecto visual espectacular y súper limpio para la pantalla de la DS.</p>"
+        ],
+        manual: [
+            "<h2 class='mag-titular'>TÁCTICAS DEL REINO CHAMPIÑÓN</h2><p>El control vuelve a la sencillez extrema (cruceta y salto), pero añade habilidades modernas como el salto rebotando en las paredes, heredado directamente del Super Mario 64, que te permitirá salvarte de caídas mortales al vacío si tienes buenos reflejos.</p><div class='mag-truco'><span>EL DESTRUCTOR MEGA CHAMPIÑÓN</span>Este es el objeto más bestia jamás creado en toda la saga. Cuando consigas atrapar uno, Mario crecerá hasta ocupar literalmente toda la pantalla superior de tu consola. Cuando estés así, no te molestes en saltar, simplemente corre hacia adelante sin piedad. Arrasarás y destrozarás las tuberías verdes, los bloques irrompibles, los enemigos e incluso arrancarás el banderín de meta de cuajo. Cuanto más destroces, más barras de vida extra lloverán del cielo.</div>"
+        ]
     }
 };
 
 let currentId = ''; let currentPage = 0; let totalPages = 0;
 
 function renderCards() {
-    const sections = { arcade: 'contArcade', nes: 'contNes', n64: 'contN64', md: 'contMd', snes: 'contSnes', gba: 'contGba' };
+    const sections = { arcade: 'contArcade', nes: 'contNes', n64: 'contN64', md: 'contMd', snes: 'contSnes', gba: 'contGba', nds: 'contNds' };
     Object.keys(sections).forEach(s => document.getElementById(sections[s]).innerHTML = '');
     Object.keys(infoJuegos).forEach(id => {
         const j = infoJuegos[id];
@@ -692,7 +699,7 @@ function renderCards() {
 function verFicha(id) {
     const j = infoJuegos[id] || infoJuegos['cadillacs'];
     currentId = id;
-    const col = {nes:'#e60012',n64:'#00b140',md:'#e00000',snes:'#005b9f',gba:'#5a429b',arcade:'#ff00ff'}[j.consola] || '#d4af37';
+    const col = {nes:'#e60012',n64:'#00b140',md:'#e00000',snes:'#005b9f',gba:'#5a429b',arcade:'#ff00ff',nds:'#a8a8a8'}[j.consola] || '#d4af37';
     document.documentElement.style.setProperty('--modal-border', col); 
     document.getElementById('fichaTitulo').innerText = j.titulo;
     document.getElementById('fichaValoracion').innerText = j.valoracion;
