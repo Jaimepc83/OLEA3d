@@ -22,7 +22,6 @@
         #olea-hud.visible { top: 0; }
         .hud-grupo { display: flex; gap: 8px; }
 
-        /* Botones estilo píldora cristal semi-transparentes */
         .btn-olea {
             pointer-events: auto; padding: 6px 12px; border-radius: 20px;
             font-family: Arial, sans-serif; font-size: 10px; font-weight: bold;
@@ -37,7 +36,7 @@
         .btn-load { background: rgba(107, 142, 35, 0.65); }
         .btn-olea:active { transform: scale(0.9); }
 
-        /* --- TOAST FLOTANTE DE NOTIFICACIÓN --- */
+        /* --- TOAST DE NOTIFICACIÓN --- */
         #save-toast { 
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
             background: rgba(15,15,15,0.8); border: 1px solid #9dff3d; 
@@ -48,14 +47,15 @@
         }
         #save-toast.show { opacity: 1; transform: translateX(-50%) translateY(-10px); }
 
-        /* --- ANIMACIÓN ESPECIAL MARIO KART (OLEA3D) --- */
+        /* --- ANIMACIÓN EN LA ESQUINA SUPERIOR DERECHA --- */
         #mk64-special-intro {
             position: fixed;
-            top: 20px; 
-            left: 20px; 
-            width: 100px; 
+            top: 60px; /* Posicionado debajo de los botones de guardar/cargar */
+            right: 20px; 
+            left: auto;
+            width: 110px; 
             height: auto;
-            z-index: 2147483646; 
+            z-index: 2147483647; /* Máxima prioridad visual */
             opacity: 0; 
             pointer-events: none; 
         }
@@ -63,34 +63,36 @@
         #mk64-special-intro img {
             width: 100%; height: auto;
             image-rendering: pixelated; 
-            backdrop-filter: blur(3px); 
-            opacity: 0.85; 
-            animation: mk64IntroSequence 2.5s ease-out forwards; 
+            opacity: 0.9; 
+            animation: mk64IntroSequence 5s cubic-bezier(0.25, 1, 0.5, 1) forwards; 
         }
 
-        /* Secuencia: Aparecer -> Correr por el lateral -> Saltar -> Desaparecer */
+        /* Secuencia extendida para garantizar visibilidad en la esquina derecha */
         @keyframes mk64IntroSequence {
             0% {
                 opacity: 0;
-                transform: translateX(-50px) translateY(0);
+                transform: translateX(50px) scale(0.6);
             }
             10% {
-                opacity: 0.85;
-                transform: translateX(0) translateY(0);
+                opacity: 0.9;
+                transform: translateX(0) scale(1);
             }
-            70% {
-                transform: translateX(0) translateY(0);
+            75% {
+                /* Se mantiene corriendo en el margen negro derecho */
+                transform: translateX(0) translateY(0) scale(1);
             }
-            80% {
-                transform: translateX(0) translateY(-20px);
+            83% {
+                /* Realiza el salto característico */
+                transform: translateX(0) translateY(-25px) scale(1.05);
             }
             90% {
-                opacity: 0.85;
-                transform: translateX(0) translateY(0);
+                /* Cae del salto y empieza el desvanecimiento */
+                opacity: 0.9;
+                transform: translateX(0) translateY(0) scale(1);
             }
             100% {
                 opacity: 0;
-                transform: translateX(0) translateY(0);
+                transform: translateX(0) scale(0);
             }
         }
     </style>
