@@ -144,7 +144,7 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
 .btn-nav { flex: 1; padding: 10px 0; border-radius: 6px; font-weight: 900; font-family: 'Impact'; text-transform: uppercase; cursor: pointer; border: none; font-size: 12px; transition: transform 0.1s; }
 .btn-catalog { background: #333; color: #fff; box-shadow: 0 3px 0 #000; }
 .btn-shop { background: #d4af37; color: #000; box-shadow: 0 3px 0 #8b6508; }
-.btn-play { width: 100%; padding: 14px 0; background: #e60012; color: #fff; border-radius: 6px; font-weight: 900; font-family: 'Impact'; text-transform: uppercase; font-size: 16px; border: none; box-shadow: 0 4px 0 #8b0000; cursor: pointer; transition: transform 0.1s; position: relative; z-index: 1000; }
+.btn-play { width: 100%; padding: 14px 0; background: #e60012; color: #fff; border-radius: 6px; font-weight: 900; font-family: 'Impact'; text-transform: uppercase; font-size: 16px; border: none; box-shadow: 0 4px 0 #8b0000; cursor: pointer; transition: transform 0.1s; }
 .btn-nav:active, .btn-play:active { transform: translateY(3px); box-shadow: 0 0 0 transparent; }
 
 /* SALÓN DE FAMA Y TABLAS */
@@ -327,7 +327,7 @@ function playSound(type) {
     if (type === 'scan') { osc.type = 'sawtooth'; osc.frequency.setValueAtTime(200, now); osc.frequency.linearRampToValueAtTime(800, now + 0.5); gain.gain.setValueAtTime(0.05, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 1); osc.start(); osc.stop(now + 1); }
     if (type === '1up') { osc.type = 'square'; osc.frequency.setValueAtTime(1318.51,now); osc.frequency.setValueAtTime(1567.98,now+0.1); osc.frequency.setValueAtTime(2093.00,now+0.2); osc.frequency.setValueAtTime(2637.02,now+0.3); osc.frequency.setValueAtTime(3135.96,now+0.4); gain.gain.setValueAtTime(0.1,now); gain.gain.linearRampToValueAtTime(0,now+0.6); osc.start(); osc.stop(now+0.6); }
     if (type === 'error') { osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150,now); osc.frequency.exponentialRampToValueAtTime(50,now+0.3); gain.gain.setValueAtTime(0.2,now); gain.gain.exponentialRampToValueAtTime(0.001,now+0.3); osc.start(); osc.stop(now+0.3); }
-    if (type === 'clic') { osc.type = 'square'; osc.frequency.setValueAtTime(440,now); osc.frequency.exponentialRampToValueAtTime(880,now+0.1); gain.gain.setValueAtTime(0.1,now); gain.gain.exponentialRampToValueAtTime(0.001,now+0.1); osc.start(); osc.stop(now+0.1); }
+    if (type === 'clic') { osc.type = 'square'; osc.frequency.setValueAtTime(440,now); osc.frequency.exponentialRampToTime(880,now+0.1); gain.gain.setValueAtTime(0.1,now); gain.gain.exponentialRampToValueAtTime(0.001,now+0.1); osc.start(); osc.stop(now+0.1); }
 }
 
 function reproducirClic() { playSound('clic'); }
@@ -388,7 +388,7 @@ const infoJuegos = {
         ], 
         manual: [
             "<h2 class='mag-titular'>EDICIÓN DE EQUIPOS</h2><p>La gran novedad: escuchando las quejas del primer juego, por por fin dejaron a los jugadores crear su propio 'Dream Team', mezclando luchadores a su antojo en lugar de usar los equipos cerrados por países.</p><div class='mag-truco'><span>MAGIA DE IORI</span>Su movimiento especial requiere precisión milimétrica con el joystick: Abajo, Diagonal, Adelante, Abajo, Atrás + Puño Fuerte.</div>", 
-            "<h2 class='mag-sub'>ESQUIVAS Y COUNTERS</h2><p>En el KOF 95 introdujeron la esquiva agresiva. Si pulsas A+B a la vez, tu personaje dará un paso rápido esquivando proyectiles, ideal para acercarte y agarrar al enemigo por sorpresa.</p>"
+            "<h2 class='mag-sub'>ESQUIVAS Y COUNTERS</h2><p>En el KOF 95 introduieron la esquiva agresiva. Si pulsas A+B a la vez, tu personaje dará un paso rápido esquivando proyectiles, ideal para acercarte y agarrar al enemigo por sorpresa.</p>"
         ] 
     },
     neobombe: { 
@@ -477,7 +477,7 @@ const infoJuegos = {
         consola: "nes", titulo: "SUPER MARIO BROS", img: "SuperMarioBros.jpg", enlace: "SuperMarioBros.html", valoracion: "NOTA: 97/100", wr: { nombre: "NIF", puntos: "9.999.950" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='mariobros.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='SuperMarioBros.jpg'\">",
-            "<h2 class='mag-titular'>EL SALVADOR DE LA INDUSTRIA</h2><p>En 1985, el mercado de las consolas estaba en ruinas. Miyamoto diseñó a Mario con bigote y gorra puramente por limitaciones técnicas (dibujar bocas y pelo animado en 8 bits era muy difícil), creando sin saberlo al icono pop más grande de la historia y vendiendo 40 millones de copias.</p><div class='mag-box'><strong>EL LORE OSCURO:</strong> Los Koopas usaron magia negra para convertir a los inocentes ciudadanos en bloques de ladrillo. Sí, cada vez que rompes un ladrillo con la cabeza para coger monedas, estás cometiendo un asesinato contra un habitante del reino. Trágico.</div>"
+            "<h2 class='mag-titular'>EL SALVADOR DE LA INDUSTRIA</h2><p>En 1985, el mercado de las consolas estaba en ruinas. Miyamoto diseñó a Mario con bigote y gorra puramente por limitations técnicas (dibujar bocas y pelo animado en 8 bits era muy difícil), creando sin saberlo al icono pop más grande de la historia y vendiendo 40 millones de copias.</p><div class='mag-box'><strong>EL LORE OSCURO:</strong> Los Koopas usaron magia negra para convertir a los inocentes ciudadanos en bloques de ladrillo. Sí, cada vez que rompes un ladrillo con la cabeza para coger monedas, estás cometiendo un asesinato contra un habitante del reino. Trágico.</div>"
         ], 
         manual: [
             "<h2 class='mag-titular'>GUÍA DEL FONTANERO</h2><p>Cruza 8 mundos saltando fosos y tortugas para rescatar a la Princesa Peach. Prepárate mentalmente para que el seta Toad te diga siempre que la princesa está en otro castillo.</p><div class='mag-truco'><span>FÍSICAS PERFECTAS</span>Mantén pulsado el botón de correr (B) en todo momento. Mario gana inercia, lo que te permite saltar huecos enormes. Además, el champiñón te hace el doble de grande y te permite recibir un impacto sin perder la vida.</div>"
@@ -519,7 +519,7 @@ const infoJuegos = {
         consola: "n64", titulo: "MORTAL KOMBAT", img: "mortalkom64.png", enlace: "mortalkomleg64.html", valoracion: "NOTA: 87/100", wr: { nombre: "SHA", puntos: "99 Wins" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='mortalkomleg64.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='mortalkom64.png'\">",
-            "<h2 class='mag-titular'>SANGRE Y POLÉMICA MUNDIAL</h2><p>La franquicia Mortal Kombat fue pionera en capturar actores reales digitalizados en pantalla verde para meterlos en el juego. Ver a Sub-Zero arrancándole la columna vertebral a sus rivales con un reguero de píxeles rojos alarmó tanto a las asociaciones de padres y senadores de EE.UU. que provocó un cambio histórico en toda la industria del entretenimiento.</p><div class='mag-box'><strong>EL DATO CURIOSO:</strong> El gobierno americano montó un juicio y obligó a crear la ESRB: el sistema oficial que vemos hoy y que pone los sellos de edad (+18) en las cajas de plástico. Literalmente, Mortal Kombat cambió las leyes.</div>"
+            "<h2 class='mag-titular'>SANGRE Y POLÉMICA MUNDIAL</h2><p>La franquicia Mortal Kombat fue pionera en capturar actores reales digitalizados en pantalla verde para meterlos en el juego. Ver a Sub-Zero arrancándole la columna vertebral a sus rivales con un reguero de píxeles rojos alarmó tanto a las asociaciones de padres y senadores de EE.UU. que provocó un cambio histórico ien toda la industria del entretenimiento.</p><div class='mag-box'><strong>EL DATO CURIOSO:</strong> El gobierno americano montó un juicio y obligó a crear la ESRB: el sistema oficial que vemos hoy y que pone los sellos de edad (+18) en las cajas de plástico. Literalmente, Mortal Kombat cambió las leyes.</div>"
         ], 
         manual: [
             "<h2 class='mag-titular'>EL PERGAMINO DE SANGRE</h2><p>Los trucos y fatalities requieren combinaciones exactas. Recuerda la regla de oro: mantén la distancia adecuada (cerca, media o lejos) antes de ejecutar la combinación de botones final para tu Fatality.</p>"
@@ -581,7 +581,7 @@ const infoJuegos = {
         consola: "md", titulo: "ALADDIN", img: "aladin.jpg", enlace: "aladin.html", valoracion: "NOTA: 90/100", wr: { nombre: "ABU", puntos: "85.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='aladdin.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='aladin.jpg'\">",
-            "<h2 class='mag-titular'>MAGIA DISNEY EN TUS MANOS</h2><p>Este juego fue histórico porque los mismísimos y legendarios animadores de los estudios de Walt Disney trabajaron en conjunto con Virgin Games para dibujar a mano los sprites (píxeles) del personaje. Lograron una fluidez digna de dibujos animados que parecía imposible de renderizar en esa época de circuitos rústicos.</p><div class='mag-box'><strong>LA GRAN GUERRA:</strong> Este título generó intensas discusiones en todos los patios de colegio del país: la versión del juego para Super Nintendo la hizo Capcom y Aladdin no tenía espada, solo saltaba a lo Mario. Pero esta de Mega Drive SÍ la tenía. Era más macarra. Los fans de Sega usaron esto como arma arrojadiza.</div>"
+            "<h2 class='mag-titular'>MAGIA DISNEY EN TUS MANOS</h2><p>Este juego fue histórico porque los mismísimos y legendarios animadores de los estudios de Walt Disney trabajaron en conjunto con Virgin Games para dibujar a mano los sprites (píxeles) del personaje. Lograron una fluidez digna de dibujos animados que parecía imposible de renderizar en esa época de circuitos rústicos.</p><div class='mag-box'><strong>LA GRAN WAR:</strong> Este título generó intensas discusiones en todos los patios de colegio del país: la versión del juego para Super Nintendo la hizo Capcom y Aladdin no tenía espada, solo saltaba a lo Mario. Pero esta de Mega Drive SÍ la tenía. Era más macarra. Los fans de Sega usaron esto como arma arrojadiza.</div>"
         ], 
         manual: [
             "<h2 class='mag-titular'>PARKOUR POR AGRABAH</h2><p>Debes recorrer a brincos los tejados del mercado, entrar en la cueva de las maravillas (cuidado con la lava) y subir al palacio para enfrentarte a Jafar.</p><div class='mag-truco'><span>ARMAMENTO DEL DESIERTO</span>No uses la espada a lo loco, te cortarán. Tu mejor herramienta de control de masas son las manzanas. Lánzale frutas a la cara a los guardias acorazados para mantenerlos aturdidos antes de desenvainar tu cimitarra curva para el golpe final. Y si ves a un guardia gordito vendiendo cuchillos... esquívalo por arriba y lárgate de ahí.</div>"
@@ -630,7 +630,6 @@ const infoJuegos = {
         ] 
     },
 
-
     // 📱 GBA
     esmeralda: { 
         consola: "gba", titulo: "POKÉMON ESMERALDA", img: "pokemonesme.jpg", enlace: "esmeralda.html", valoracion: "NOTA: 95/100", wr: { nombre: "PKM", puntos: "Dex100%" },
@@ -673,10 +672,10 @@ const infoJuegos = {
         wr: { nombre: "MAR", puntos: "100%" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='NewSuperMarioplay.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='newsupermario.png'\">",
-            "<h2 class='mag-titular'>EL REGRESO A LAS DOS DIMENSIONES</h2><p>Tras años de Mario saltando libremente en mundos 3D, Nintendo decidió volver a sus raíces más clásicas en 2006. Este cartucho arrasó en ventas en todo el mundo demostrando que las plataformas laterales nunca mueren.</p>"
+            "<h2 class='mag-titular'>EL REGRESO A LAS DOS DIMENSIONES</h2><p>Tras años de Mario saltando libremente en mundos 3D, Nintendo decidió volver a sus raíces más clásicas en 2006. Este cartucho arrasó en ventas en todo el mundo demostrando que las plataformas laterales nunca mueren. Mezclaron los fondos planos bidimensionales de toda la vida con modelos de personajes perfectamente renderizados en 3D.</p>"
         ],
         manual: [
-            "<h2 class='mag-titular'>ZONA DE TRUCOS</h2><p><strong>Mega Champiñón:</strong> Destruye todo a tu paso, ¡incluso la bandera final!<br><br><strong>Jugar con Luigi:</strong> En la pantalla de selección de archivo, mantén L + R y pulsa A.</p>"
+            "<h2 class='mag-titular'>TÁCTICAS DEL REINO CHAMPIÑÓN</h2><p>El control vuelve a la sencillez extrema (cruceta y salto), pero añade habilidades modernas como el salto rebotando en las paredes, heredado directamente del Super Mario 64, que te permitirá salvarte de caídas mortales al vacío si tienes buenos reflejos.</p><div class='mag-truco'><span>EL DESTRUCTOR MEGA CHAMPIÑÓN</span>Este es el objeto más bestia jamás creado en toda la saga. Cuando consigas atrapar uno, Mario crecerá hasta ocupar literalmente toda la pantalla superior de tu consola. Cuando estés así, no te molestes en saltar, simplemente corre hacia adelante sin piedad. Arrasarás y destrozarás las tuberías verdes, los bloques irrompibles, los enemigos e incluso arrancarás el banderín de meta de cuajo. Cuanto más destroces, más barras de vida extra lloverán del cielo.</div>"
         ]
     }
 };
@@ -744,6 +743,7 @@ function pasarPagina(dir) {
     updateIndicator();
 }
 
+/* CARGA DE RÉCORDS */
 function updateIndicator() { document.getElementById('pageIndicator').innerText = `Pág ${currentPage + 1} de ${totalPages}`; }
 
 function renderRecords() {
