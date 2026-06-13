@@ -144,7 +144,7 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
 .btn-nav { flex: 1; padding: 10px 0; border-radius: 6px; font-weight: 900; font-family: 'Impact'; text-transform: uppercase; cursor: pointer; border: none; font-size: 12px; transition: transform 0.1s; }
 .btn-catalog { background: #333; color: #fff; box-shadow: 0 3px 0 #000; }
 .btn-shop { background: #d4af37; color: #000; box-shadow: 0 3px 0 #8b6508; }
-.btn-play { width: 100%; padding: 14px 0; background: #e60012; color: #fff; border-radius: 6px; font-weight: 900; font-family: 'Impact'; text-transform: uppercase; font-size: 16px; border: none; box-shadow: 0 4px 0 #8b0000; cursor: pointer; transition: transform 0.1s; }
+.btn-play { width: 100%; padding: 14px 0; background: #e60012; color: #fff; border-radius: 6px; font-weight: 900; font-family: 'Impact'; text-transform: uppercase; font-size: 16px; border: none; box-shadow: 0 4px 0 #8b0000; cursor: pointer; transition: transform 0.1s; position: relative; z-index: 1000; }
 .btn-nav:active, .btn-play:active { transform: translateY(3px); box-shadow: 0 0 0 transparent; }
 
 /* SALÓN DE FAMA Y TABLAS */
@@ -515,16 +515,15 @@ const infoJuegos = {
             "<h2 class='mag-titular'>DIARIO DEL CAZADOR</h2><p>Adéntrate en el oscuro castillo de Transilvania, elige entre el espadachín Cornell o la portadora de anillos mágicos Carrie, y usa tus armas sagradas contra las criaturas de la noche.</p><div class='mag-truco'><span>NUTRICIÓN DUDOSA Y EXPLOSIVOS</span>Esta saga tiene una lógica aplastante. Si rompes los candelabros del techo o golpeas las paredes milenarias del castillo, mágicamente encontrarás pollos asados perfectamente conservados dentro del muro. Cómetelos para curarte sin hacer preguntas.</div>"
         ] 
     },
-        mortalkomleg64: { 
+    mortalkomleg64: { 
         consola: "n64", titulo: "MORTAL KOMBAT", img: "mortalkom64.png", enlace: "mortalkomleg64.html", valoracion: "NOTA: 87/100", wr: { nombre: "SHA", puntos: "99 Wins" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='mortalkomleg64.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='mortalkom64.png'\">",
             "<h2 class='mag-titular'>SANGRE Y POLÉMICA MUNDIAL</h2><p>La franquicia Mortal Kombat fue pionera en capturar actores reales digitalizados en pantalla verde para meterlos en el juego. Ver a Sub-Zero arrancándole la columna vertebral a sus rivales con un reguero de píxeles rojos alarmó tanto a las asociaciones de padres y senadores de EE.UU. que provocó un cambio histórico en toda la industria del entretenimiento.</p><div class='mag-box'><strong>EL DATO CURIOSO:</strong> El gobierno americano montó un juicio y obligó a crear la ESRB: el sistema oficial que vemos hoy y que pone los sellos de edad (+18) en las cajas de plástico. Literalmente, Mortal Kombat cambió las leyes.</div>"
         ], 
         manual: [
-            "<h2 class='mag-titular'>EL PERGAMINO DE SANGRE</h2><p>Para este juego legendario, hemos creado un <strong>Manual Interactivo a pantalla completa</strong> de 10 páginas con todos los Fatalities, trucos y secretos exclusivos de los 64 bits.</p><a href='mk_manual.html' target='_blank' style='display:block; background:#8b0000; color:#fff; text-align:center; padding:15px; text-decoration:none; font-family:Impact; font-size:18px; border-radius:8px; margin-top:20px; border:2px solid #d4af37; box-shadow: 0 4px 8px rgba(0,0,0,0.5);'>📖 ABRIR MANUAL PREMIUM</a><p style='font-size: 11px; text-align: center; margin-top: 15px; color: #888;'>Se abrirá en una ventana nueva para no interrumpir tu partida.</p>"
+            "<h2 class='mag-titular'>EL PERGAMINO DE SANGRE</h2><p>Los trucos y fatalities requieren combinaciones exactas. Recuerda la regla de oro: mantén la distancia adecuada (cerca, media o lejos) antes de ejecutar la combinación de botones final para tu Fatality.</p>"
         ] 
-
     },
     mariotennis: { 
         consola: "n64", titulo: "MARIO TENNIS", img: "MarioTennis.jpg", enlace: "MarioTennis.html", valoracion: "NOTA: 88/100", wr: { nombre: "PRO", puntos: "N/A" },
@@ -664,8 +663,8 @@ const infoJuegos = {
         ] 
     },
 
-            // 📱 NINTENDO DS
-        newsupermario: { 
+    // 📱 NINTENDO DS
+    newsupermario: { 
         consola: "nds", 
         titulo: "NEW SUPER MARIO BROS", 
         img: "newsupermario.png", 
@@ -677,13 +676,10 @@ const infoJuegos = {
             "<h2 class='mag-titular'>EL REGRESO A LAS DOS DIMENSIONES</h2><p>Tras años de Mario saltando libremente en mundos 3D, Nintendo decidió volver a sus raíces más clásicas en 2006. Este cartucho arrasó en ventas en todo el mundo demostrando que las plataformas laterales nunca mueren.</p>"
         ],
         manual: [
-            "<h2 class='mag-titular'>ZONA DE TRUCOS</h2><p>Accede a la guía interactiva aquí:</p><a href='mario_ds_manual.html' target='_blank' style='display:block; background:#e53935; color:#fff; text-align:center; padding:15px; text-decoration:none; font-family:Impact; font-size:18px; border-radius:8px; border:2px solid #ffeb3b;'>🍄 ABRIR GUÍA COMPLETA</a>"
+            "<h2 class='mag-titular'>ZONA DE TRUCOS</h2><p><strong>Mega Champiñón:</strong> Destruye todo a tu paso, ¡incluso la bandera final!<br><br><strong>Jugar con Luigi:</strong> En la pantalla de selección de archivo, mantén L + R y pulsa A.</p>"
         ]
     }
-
 };
-
-
 
 let currentId = ''; let currentPage = 0; let totalPages = 0;
 
