@@ -340,11 +340,24 @@ function reproducirSonidoFlip() { playSound('flip'); }
 window.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     if(params.get('llave') === 'oleaVIP') { 
-        localStorage.setItem('olea3d_vip', 'true'); 
+        const horasDesbloqueo = 48; 
+        const tiempoCaducidad = new Date().getTime() + (horasDesbloqueo * 60 * 60 * 1000);
+        
+        // Guardamos la caducidad y borramos rastro de caducidades previas o pases infinitos
+        localStorage.setItem('olea3d_vip_caducidad', tiempoCaducidad); 
+        localStorage.removeItem('olea3d_vip_expirado'); 
+        localStorage.removeItem('olea3d_vip'); 
+        
         window.history.replaceState(null, null, window.location.pathname + window.location.hash); 
-        setTimeout(() => { const toast = document.getElementById("toastDesbloqueo"); toast.classList.add("active"); reproducirSonido1UP(); setTimeout(() => toast.classList.remove("active"), 4000); }, 500); 
+        setTimeout(() => { 
+            const toast = document.getElementById("toastDesbloqueo"); 
+            toast.classList.add("active"); 
+            reproducirSonido1UP(); 
+            setTimeout(() => toast.classList.remove("active"), 4000); 
+        }, 500); 
     }
 });
+
 
 let toquesLogo = 0, tiempoToques;
 function toqueSecreto() { reproducirClic(); toquesLogo++; clearTimeout(tiempoToques); if(toquesLogo===3){ const ts = document.getElementById("tarjetaSecreta"); if(ts) { ts.style.display="block"; ts.scrollIntoView({behavior:'smooth',block:'center'}); reproducirSonido1UP(); } toquesLogo=0; } else { tiempoToques=setTimeout(()=>{toquesLogo=0;},1000); } }
