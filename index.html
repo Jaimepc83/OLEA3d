@@ -842,7 +842,7 @@ function irAlJuego() {
             const textoPaywall = document.querySelector('#modalPaywall p');
             
             if (localStorage.getItem('olea3d_vip_expirado') === 'true') {
-                // Caso A: Tuvo llavero pero pasaron 48h
+                // Caso A: Tuvo llavero pero pasaron 72h
                 tituloPaywall.innerText = "⏳ CONEXIÓN PERDIDA ⏳";
                 textoPaywall.innerHTML = "Tu conexión Premium ha caducado. Vuelve a <strong>acercar tu Llavero NFC</strong> al móvil para reactivarlo al instante.";
             } else {
