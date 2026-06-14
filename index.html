@@ -782,12 +782,56 @@ function anadirRecord() {
 
 function irAlJuego() { 
     playSound('coin'); 
-    let esVip = localStorage.getItem('olea3d_vip') === 'true';
+    
+    let esVip = false;
+    let caducidad = localStorage.getItem('olea3d_vip_caducidad');
+    
+    // Comprobamos si el pase es válido o si ya ha caducado
+    if (caducidad) {
+        if (new Date().getTime() < parseInt(caducidad)) {
+            esVip = true; 
+        } else {
+            // Ha caducado: quitamos el pase y dejamos una marca de que expiró
+            localStorage.removeItem('olea3d_vip_caducidad');
+            localStorage.setItem('olea3d_vip_expirado', 'true'); 
+        }
+    }
+
+    // El contador de las 2 partidas gratuitas sigue su curso normal
     let intentos = parseInt(localStorage.getItem('olea3d_intentos') || '0');
-    if (esVip) { document.getElementById('transitionScreen').style.display='flex'; setTimeout(() => { window.location.href = infoJuegos[currentId].enlace; }, 1200); } 
-    else { if (intentos < 2) { intentos++; localStorage.setItem('olea3d_intentos', intentos); document.getElementById('transitionScreen').style.display='flex'; setTimeout(() => { window.location.href = infoJuegos[currentId].enlace; }, 1200); } 
-    else { reproducirSonidoError(); document.getElementById('modalFicha').style.display='none'; document.getElementById('modalPaywall').style.display='flex'; } }
+    
+    if (esVip) { 
+        document.getElementById('transitionScreen').style.display='flex'; 
+        setTimeout(() => { window.location.href = infoJuegos[currentId].enlace; }, 1200); 
+    } else { 
+        if (intentos < 2) { 
+            intentos++; 
+            localStorage.setItem('olea3d_intentos', intentos); 
+            document.getElementById('transitionScreen').style.display='flex'; 
+            setTimeout(() => { window.location.href = infoJuegos[currentId].enlace; }, 1200); 
+        } else { 
+            reproducirSonidoError(); 
+            document.getElementById('modalFicha').style.display='none'; 
+            
+            // Modificamos el texto del cartel de pago según el caso
+            const tituloPaywall = document.querySelector('#modalPaywall h2');
+            const textoPaywall = document.querySelector('#modalPaywall p');
+            
+            if (localStorage.getItem('olea3d_vip_expirado') === 'true') {
+                // Caso A: Tuvo llavero pero pasaron 48h
+                tituloPaywall.innerText = "⏳ CONEXIÓN PERDIDA ⏳";
+                textoPaywall.innerHTML = "Tu conexión Premium ha caducado. Vuelve a <strong>acercar tu Llavero NFC</strong> al móvil para reactivarlo al instante.";
+            } else {
+                // Caso B: Usuario nuevo que gastó sus 2 partidas gratis
+                tituloPaywall.innerText = "🛑 TIEMPO AGOTADO 🛑";
+                textoPaywall.innerHTML = "Has agotado tus <strong>2 partidas</strong> de prueba gratuitas.";
+            }
+            
+            document.getElementById('modalPaywall').style.display='flex'; 
+        } 
+    }
 }
+
 
 function cerrarFicha() { playSound('clic'); document.getElementById('modalFicha').style.display='none'; window.history.replaceState(null,null,window.location.pathname); }
 function cerrarPaywall() { playSound('clic'); document.getElementById('modalPaywall').style.display='none'; }
