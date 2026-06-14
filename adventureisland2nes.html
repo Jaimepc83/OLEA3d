@@ -1,25 +1,74 @@
-<html>
-    <head>
-        <!--HTML file auto generated using EmulatorJS codehelper-->
-        <style>
-            body, html {
-                margin: 0;
-                padding: 0;
-            }
-        </style>
-    </head>
-    <body>
-        <div style="width:100%;height:100%;max-width:100%">
-            <div id="game"></div>
-        </div>
-        <script>
-            EJS_player = "#game";
-            EJS_core = "nes";
-            EJS_gameName = "adventureisland2";
-            EJS_color = "#0064ff";
-            EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
-            EJS_gameUrl = "adventureisland2nes.nes";
-        </script>
-        <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
-    </body>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Adventure Island II - OLEA3D Retro Hub</title>
+    <style>
+        /* Ajuste para que el juego ocupe toda la pantalla del móvil sin bordes blancos */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            touch-action: none; /* Evita que la pantalla haga zoom accidental al tocar los botones */
+        }
+
+        /* Diseño del botón para volver al menú principal */
+        .boton-volver {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            border-radius: 8px;
+            padding: 8px 16px;
+            text-decoration: none;
+            font-weight: bold;
+            z-index: 9999;
+            font-size: 14px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+        }
+
+        #game-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        #game {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="boton-volver">⬅ Volver al Hub</a>
+
+    <div id="game-container">
+        <div id="game"></div>
+    </div>
+
+    <script>
+        EJS_player = '#game';
+        EJS_core = 'nes'; // Le decimos al emulador que es un juego de Nintendo de 8 bits
+        EJS_gameName = 'Adventure Island II'; // Nombre que saldrá en las partidas guardadas
+        EJS_color = '#4CAF50'; // Color de la barra de carga
+        EJS_startOnLoaded = true; // Arranca el juego automáticamente sin que el usuario tenga que darle al play
+        EJS_pathtodata = 'https://cdn.emulatorjs.org/stable/data/'; 
+        
+        // AQUÍ ESTÁ ENLAZADO TU ARCHIVO EXACTO DE GITHUB
+        EJS_gameUrl = 'adventureisland2nes.nes'; 
+    </script>
+    <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
+
+</body>
 </html>
