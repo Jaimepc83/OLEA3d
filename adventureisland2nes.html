@@ -2,73 +2,133 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Adventure Island II - OLEA3D Retro Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Adventure Island II - OLEA3D</title>
     <style>
-        /* Ajuste para que el juego ocupe toda la pantalla del móvil sin bordes blancos */
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: #000;
-            overflow: hidden;
-            font-family: Arial, sans-serif;
-            touch-action: none; /* Evita que la pantalla haga zoom accidental al tocar los botones */
-        }
-
-        /* Diseño del botón para volver al menú principal */
-        .boton-volver {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: #ffffff;
-            border: 2px solid #ffffff;
-            border-radius: 8px;
-            padding: 8px 16px;
-            text-decoration: none;
-            font-weight: bold;
-            z-index: 9999;
-            font-size: 14px;
-            text-transform: uppercase;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.5);
-        }
-
-        #game-container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background-color: #000; overflow: hidden; font-family: Arial, sans-serif; overscroll-behavior: none; }
+        #game-container { position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; }
+        
+        /* --- HUD FLOTANTE ESQUINADO --- */
+        #olea-hud {
+            position: fixed; top: -60px; left: 0; width: 100%; 
+            display: flex; justify-content: space-between; align-items: flex-start; 
+            box-sizing: border-box; padding: 0 40px; 
+            z-index: 2147483647; 
+            transition: top 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            padding-top: max(15px, env(safe-area-inset-top)); 
+            pointer-events: none; 
         }
         
-        #game {
-            width: 100%;
-            height: 100%;
+        #olea-hud.visible { top: 0; }
+
+        .hud-grupo { display: flex; gap: 8px; }
+
+        .btn-olea {
+            pointer-events: auto; 
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-family: Arial, sans-serif;
+            font-size: 10px; font-weight: bold;
+            text-transform: uppercase; cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.4); 
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px); 
+            transition: transform 0.1s;
         }
+        
+        .btn-exit { background: rgba(139, 0, 0, 0.8); text-decoration: none; display: flex; align-items: center; }
+        .btn-save { background: rgba(0, 91, 159, 0.8); }
+        .btn-load { background: rgba(107, 142, 35, 0.8); }
+        .btn-olea:active { transform: scale(0.9); }
+
+        /* --- TOAST FLOTANTE DISCRETO --- */
+        #save-toast { 
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
+            background: rgba(15,15,15,0.85); border: 1px solid #9dff3d; 
+            color: #9dff3d; padding: 8px 16px; border-radius: 20px; 
+            font-weight: bold; font-size: 11px; opacity: 0; 
+            pointer-events: none; transition: 0.3s; z-index: 2147483647; text-align: center; 
+            backdrop-filter: blur(4px);
+        }
+        #save-toast.show { opacity: 1; transform: translateX(-50%) translateY(-10px); }
     </style>
 </head>
 <body>
-
-    <a href="index.html" class="boton-volver">⬅ Volver al Hub</a>
-
-    <div id="game-container">
-        <div id="game"></div>
+    <div id="game-container"><div id="game"></div></div>
+    
+    <div id="olea-hud">
+        <div class="hud-grupo">
+            <a href="index.html" class="btn-olea btn-exit">⬅ SALIR</a>
+        </div>
+        <div class="hud-grupo">
+            <button class="btn-olea btn-save" onclick="oleaSave()">💾 GUARDAR</button>
+            <button class="btn-olea btn-load" onclick="oleaLoad()">📂 CARGAR</button>
+        </div>
     </div>
 
-    <script>
-        EJS_player = '#game';
-        EJS_core = 'nes'; // Le decimos al emulador que es un juego de Nintendo de 8 bits
-        EJS_gameName = 'Adventure Island II'; // Nombre que saldrá en las partidas guardadas
-        EJS_color = '#4CAF50'; // Color de la barra de carga
-        EJS_startOnLoaded = true; // Arranca el juego automáticamente sin que el usuario tenga que darle al play
-        EJS_pathtodata = 'https://cdn.emulatorjs.org/stable/data/'; 
-        
-        // AQUÍ ESTÁ ENLAZADO TU ARCHIVO EXACTO DE GITHUB
-        EJS_gameUrl = 'adventureisland2nes.nes'; 
-    </script>
-    <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
+    <div id="save-toast">✅ Acción completada</div>
 
+    <script>
+        const hud = document.getElementById('olea-hud'); 
+        let temporizadorHUD;
+        
+        function mostrarHUD() { 
+            hud.classList.add('visible'); 
+            clearTimeout(temporizadorHUD); 
+            temporizadorHUD = setTimeout(() => { hud.classList.remove('visible'); }, 3000); 
+        }
+        
+        window.addEventListener('touchstart', mostrarHUD);
+        window.addEventListener('mousemove', mostrarHUD);
+
+        document.addEventListener('fullscreenchange', () => {
+            const toast = document.getElementById('save-toast');
+            if (document.fullscreenElement) {
+                try { 
+                    document.fullscreenElement.appendChild(hud); 
+                    document.fullscreenElement.appendChild(toast); 
+                } catch(e){}
+            } else {
+                document.body.appendChild(hud);
+                document.body.appendChild(toast);
+            }
+        });
+
+        function oleaSave() {
+            try {
+                if (window.EJS_emulator && window.EJS_emulator.gameManager) {
+                    EJS_emulator.gameManager.quickSave(1); 
+                    mostrarToast('💾 Partida guardada');
+                } else { mostrarToast('❌ Espera a que cargue...'); }
+            } catch(e) { console.error(e); }
+        }
+
+        function oleaLoad() {
+            try {
+                if (window.EJS_emulator && window.EJS_emulator.gameManager) {
+                    EJS_emulator.gameManager.quickLoad(1); 
+                    mostrarToast('📂 Partida cargada');
+                } else { mostrarToast('❌ Espera a que cargue...'); }
+            } catch(e) { console.error(e); }
+        }
+
+        function mostrarToast(msg) {
+            const toast = document.getElementById('save-toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        EJS_player = '#game';
+        EJS_core = 'nes'; 
+        EJS_gameName = 'Adventure Island II';
+        EJS_gameUrl = 'adventureisland2nes.nes'; 
+        EJS_color = '#e60012';
+        EJS_startOnLoaded = true;
+        EJS_pathtodata = 'https://cdn.jsdelivr.net/gh/ethanaobrien/emulatorjs@main/data/';
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/ethanaobrien/emulatorjs@main/data/loader.js"></script>
 </body>
 </html>
