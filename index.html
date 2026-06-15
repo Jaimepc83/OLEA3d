@@ -309,7 +309,16 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
             <p style="font-size: 14px; color: #ddd; margin-bottom: 10px;">Consíguelo físicamente en el <strong>Pub La Beltraneja</strong> o en la <strong>Cafetería Garden</strong>.</p>
         </div>
         <button class="btn-tienda-principal" style="width: 100%; display: block; margin-top:0;" onclick="abrirTiendaGeneral()">💬 ENCARGAR POR WHATSAPP</button>
-    </div>
+
+        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px dashed #444;">
+            <p style="color: #aaa; font-size: 13px; margin-bottom: 8px;">¿Tienes un código de acceso VIP?</p>
+            <div style="display: flex; gap: 5px; justify-content: center;">
+                <input type="password" id="inputClave" placeholder="Escribe aquí..." style="background: #222; border: 1px solid #d4af37; color: white; padding: 8px 12px; border-radius: 20px; outline: none; text-align: center; font-weight: bold; width: 50%;">
+                <button onclick="verificarClave()" style="background: #d4af37; color: #000; border: none; padding: 8px 15px; border-radius: 20px; font-weight: bold; cursor: pointer; font-family: 'Impact'; box-shadow: 0 2px 5px rgba(0,0,0,0.5);">ENTRAR</button>
+            </div>
+            <p id="errorClave" style="color: #ff003c; font-size: 12px; margin-top: 8px; display: none; font-weight: bold; text-transform: uppercase;">❌ Código incorrecto</p>
+        </div>
+        </div>
 </div>
 
 <script>
@@ -856,7 +865,6 @@ function irAlJuego() {
     }
 }
 
-
 function cerrarFicha() { playSound('clic'); document.getElementById('modalFicha').style.display='none'; window.history.replaceState(null,null,window.location.pathname); }
 function cerrarPaywall() { playSound('clic'); document.getElementById('modalPaywall').style.display='none'; }
 function encargarLlaveroEspecifico() { playSound('clic'); window.open(`https://wa.me/34652824867?text=Quiero%20el%20llavero%20de%20${infoJuegos[currentId].titulo}`, '_blank'); }
@@ -881,6 +889,38 @@ document.addEventListener("DOMContentLoaded", () => {
     }, { threshold: 0.6 });
     document.querySelectorAll('.container').forEach(s => ob.observe(s));
 });
+
+// --- SISTEMA DE CLAVE MAESTRA ---
+function verificarClave() {
+    const input = document.getElementById('inputClave').value;
+    
+    // Aquí puedes cambiar "OLEA2026" por la contraseña que tú quieras
+    const claveCorrecta = "OLEA2026"; 
+    
+    if(input.toUpperCase() === claveCorrecta.toUpperCase()) {
+        playSound('1up'); 
+        
+        const horasDesbloqueo = 48; 
+        const tiempoCaducidad = new Date().getTime() + (horasDesbloqueo * 60 * 60 * 1000);
+        localStorage.setItem('olea3d_vip_caducidad', tiempoCaducidad); 
+        localStorage.removeItem('olea3d_vip_expirado'); 
+        
+        cerrarPaywall();
+        document.getElementById('inputClave').value = ''; 
+        
+        const toast = document.getElementById("toastDesbloqueo"); 
+        toast.classList.add("active"); 
+        setTimeout(() => toast.classList.remove("active"), 4000); 
+        
+    } else {
+        playSound('error');
+        const errorText = document.getElementById('errorClave');
+        errorText.style.display = 'block';
+        setTimeout(() => errorText.style.display = 'none', 2000);
+        document.getElementById('inputClave').value = '';
+    }
+}
+
 </script>
 </body>
 </html>
