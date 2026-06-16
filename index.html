@@ -158,9 +158,10 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
 .toast-notification { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: rgba(18, 18, 18, 0.95); border: 2px solid #d4af37; color: #ffd700; padding: 15px 25px; border-radius: 30px; font-size: 16px; font-weight: bold; box-shadow: 0 5px 20px rgba(212,175,55,0.5); z-index: 9999999999; transition: top 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); display: flex; align-items: center; gap: 10px; backdrop-filter: blur(5px); }
 .toast-notification.active { top: 25px; }
 
-/* NUEVO STILO: Toast específico para la alerta flotante de logros desbloqueados */
-.toast-logro { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: rgba(0, 15, 30, 0.96); border: 2px solid #00f0ff; color: #ffffff; padding: 12px 25px; border-radius: 20px; font-size: 14px; font-weight: bold; box-shadow: 0 0 25px rgba(0,240,255,0.6); z-index: 999999999; transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-align: center; backdrop-filter: blur(5px); border-left: 6px solid #ffd700; }
-.toast-logro.active { top: 25px; }
+/* TOAST LOGROS (Más bajo para no tapar los logos) */
+.toast-logro { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); background: rgba(0, 15, 30, 0.96); border: 2px solid #00f0ff; color: #ffffff; padding: 12px 25px; border-radius: 20px; font-size: 14px; font-weight: bold; box-shadow: 0 0 25px rgba(0,240,255,0.6); z-index: 999999999; display: none; text-align: center; backdrop-filter: blur(5px); border-left: 6px solid #ffd700; }
+.toast-logro.active { display: block; animation: slideDown 0.5s forwards; }
+@keyframes slideDown { from { top: -100px; } to { top: 80px; } }
 
 .transition-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
 .transition-screen.active { opacity: 1; pointer-events: all; }
@@ -176,12 +177,12 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
 </head>
 
 <body>
+<div id="toastLogro" class="toast-logro">🏆 <span id="txtLogro">Logro Desbloqueado</span></div>
+
 <div id="portalContainer" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgb(0, 0, 0); z-index: 99999999; display: none; overflow: hidden;">
     <div id="destelloLuz" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); width: 10px; height: 10px; background: radial-gradient(circle, #fff 10%, #ff007f 40%, #00f0ff 70%, transparent 100%); border-radius: 50%; box-shadow: 0 0 120px #00f0ff; transition: transform 1.5s cubic-bezier(0.1, 0.8, 0.3, 1);"></div>
     <canvas id="canvasPortal" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></canvas>
 </div>
-
-<div id="toastLogro" class="toast-logro">🏆 ¡LOGRO DESBLOQUEADO!<br><span id="txtLogro" style="color: #ffd700;">Insignia</span></div>
 
 <div id="toastDesbloqueo" class="toast-notification">🔓 ¡SISTEMA DESBLOQUEADO! Catálogo Premium activado.</div>
 
@@ -191,6 +192,7 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
         <div class="nfc-laser"></div>
     </div>
     <div style="color: #9dff3d; font-family: 'Courier New', monospace; margin-top: 25px; font-size: 18px; font-weight: bold;">SISTEMA OLEA3D...</div>
+    <div style="color: white; margin-top: 15px; font-size: 14px;">(Toca la pantalla si no hay sonido)</div>
 </div>
 
 <div id="transitionScreen" class="transition-screen">
@@ -286,7 +288,7 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
 
         <div id="flipbookWrapper">
             <div class="flipbook-container" id="flipbookContainer"></div>
-            <div class="flipbook-controls">
+            <div class="flip-controls">
                 <button class="btn-flip" onclick="pasarPagina(-1)">◀ ANT.</button>
                 <span class="page-indicator" id="pageIndicator">Pág 1/1</span>
                 <button class="btn-flip" onclick="pasarPagina(1)">SIG. ▶</button>
@@ -334,15 +336,27 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
 </div>
 
 <script>
-// --- MOTOR DE AUDIO ---
-let audioCtx = null;
+// --- MOTOR DE AUDIO (CORREGIDO PARA NAVEGADORES MÓVILES) ---
+let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+let audioDesbloqueado = false;
+
+// Esta función desbloquea el audio al primer toque en la pantalla
+function desbloquearAudio() {
+    if (!audioDesbloqueado) {
+        audioCtx.resume();
+        audioDesbloqueado = true;
+    }
+}
+document.addEventListener('touchstart', desbloquearAudio, { once: true });
+document.addEventListener('click', desbloquearAudio, { once: true });
+
 function playSound(type) {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     if (audioCtx.state === 'suspended') audioCtx.resume();
+    const now = audioCtx.currentTime;
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
     osc.connect(gain); gain.connect(audioCtx.destination);
-    const now = audioCtx.currentTime;
+    
     if (type === 'coin') { osc.type = 'square'; osc.frequency.setValueAtTime(987, now); osc.frequency.setValueAtTime(1318, now + 0.1); gain.gain.setValueAtTime(0.1, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4); osc.start(); osc.stop(now + 0.4); }
     if (type === 'flip') { osc.type = 'sine'; osc.frequency.setValueAtTime(300, now); osc.frequency.exponentialRampToValueAtTime(100, now + 0.15); gain.gain.setValueAtTime(0.05, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15); osc.start(); osc.stop(now + 0.15); }
     if (type === 'scan') { osc.type = 'sawtooth'; osc.frequency.setValueAtTime(200, now); osc.frequency.linearRampToValueAtTime(800, now + 0.5); gain.gain.setValueAtTime(0.05, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 1); osc.start(); osc.stop(now + 1); }
@@ -350,7 +364,7 @@ function playSound(type) {
     if (type === 'error') { osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150,now); osc.frequency.exponentialRampToValueAtTime(50,now+0.3); gain.gain.setValueAtTime(0.2,now); gain.gain.exponentialRampToValueAtTime(0.001,now+0.3); osc.start(); osc.stop(now+0.3); }
     if (type === 'clic') { osc.type = 'square'; osc.frequency.setValueAtTime(440,now); osc.frequency.exponentialRampToValueAtTime(880,now+0.1); gain.gain.setValueAtTime(0.1,now); gain.gain.exponentialRampToValueAtTime(0.001,now+0.1); osc.start(); osc.stop(now+0.1); }
     
-    // CORREGIDO: Sintetizador nativo para el sonido de explosión arcade de 8 bits (Sube volumen y potencia)
+    // EXPLOSIÓN: Volumen alto y sin retraso
     if (type === 'explosion') {
         const bufferSize = audioCtx.sampleRate * 0.6; 
         const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
@@ -363,10 +377,10 @@ function playSound(type) {
         filter.frequency.setValueAtTime(900, now);
         filter.frequency.exponentialRampToValueAtTime(40, now + 0.45); 
         const filterGain = audioCtx.createGain();
-        filterGain.gain.setValueAtTime(0.4, now); // Volumen aumentado
+        filterGain.gain.setValueAtTime(0.5, now); 
         filterGain.gain.exponentialRampToValueAtTime(0.001, now + 0.45); 
         noiseNode.connect(filter); filter.connect(filterGain); filterGain.connect(audioCtx.destination);
-        noiseNode.start(); noiseNode.stop(now + 0.45);
+        noiseNode.start(now); noiseNode.stop(now + 0.45);
     }
 }
 
@@ -377,6 +391,17 @@ function reproducirSonidoError() { playSound('error'); }
 function reproducirSonidoEscaner() { playSound('scan'); }
 function reproducirSonidoFlip() { playSound('flip'); }
 function reproducirSonidoExplosion() { playSound('explosion'); }
+
+// --- SISTEMA DE LOGROS ---
+function verificarYDesbloquearLogro(idLogro, textoInsignia) {
+    if (localStorage.getItem('logro_' + idLogro)) return;
+    localStorage.setItem('logro_' + idLogro, 'true');
+    playSound('coin'); 
+    const toast = document.getElementById('toastLogro');
+    document.getElementById('txtLogro').innerHTML = textoInsignia;
+    toast.classList.add('active');
+    setTimeout(() => toast.classList.remove('active'), 4000);
+}
 
 window.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
@@ -398,19 +423,6 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// NUEVA FUNCIÓN: Lanzar el cartel flotante de logro desbloqueado de forma visual
-function verificarYDesbloquearLogro(idLogro, textoInsignia) {
-    if (localStorage.getItem('logro_' + idLogro)) return; // Si ya se consiguió, no hace nada
-    localStorage.setItem('logro_' + idLogro, 'true'); // Lo guarda para siempre
-    
-    setTimeout(() => {
-        playSound('coin'); // Sonido clásico de recompensa
-        const toast = document.getElementById('toastLogro');
-        document.getElementById('txtLogro').innerHTML = textoInsignia;
-        toast.classList.add('active');
-        setTimeout(() => toast.classList.remove('active'), 4000);
-    }, 600);
-}
 
 let toquesLogo = 0, tiempoToques;
 function toqueSecreto() { 
@@ -418,9 +430,7 @@ function toqueSecreto() {
     toquesLogo++; 
     clearTimeout(tiempoToques); 
     if(toquesLogo===3){ 
-        // ¡LOGRO 3 ADQUIRIDO! Por descubrir la tarjeta secreta
         verificarYDesbloquearLogro('detective', '🕵️‍♂️ DETECTIVE DE PÍXELES:<br>Has descubierto el menú secreto de Olea.');
-        
         const ts = document.getElementById("tarjetaSecreta"); 
         if(ts) { 
             ts.style.display="block"; 
@@ -605,7 +615,7 @@ const infoJuegos = {
         consola: "n64", titulo: "CASTLEVANIA", img: "castlegacy.jpg", enlace: "Castlegacy.html", valoracion: "NOTA: 82/100", wr: { nombre: "BEL", puntos: "100%" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='castlegacy.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='castlegacy.jpg'\">",
-            "<h2 class='mag-titular'>VAMPIROS POLIGONALES</h2><p>Conocido popularly como Castlevania 64, fue el primer y ambicioso salto de la legendaria familia de cazavampiros a las tres dimensiones de la N64. El juego es oscuro y lúgubre, pero todo el mundo le echaba la culpa de sus muertes al mismísimo Drácula, cuando en realidad, el verdadero jefe final invencible del juego era el nefasto control automático de la cámara.</p>"
+            "<h2 class='mag-titular'>VAMPIROS POLIGONALES</h2><p>Conocido popularmente como Castlevania 64, fue el primer y ambicioso salto de la legendaria familia de cazavampiros a las tres dimensiones de la N64. El juego es oscuro y lúgubre, pero todo el mundo le echaba la culpa de sus muertes al mismísimo Drácula, cuando en realidad, el verdadero jefe final invencible del juego era el nefasto control automático de la cámara.</p>"
         ], 
         manual: [
             "<h2 class='mag-titular'>DIARIO DEL CAZADOR</h2><p>Adéntrate en el oscuro castillo de Transilvania, elige entre el espadachín Cornell o la portadora de anillos mágicos Carrie, y usa tus armas sagradas contra las criaturas de la noche.</p><div class='mag-truco'><span>NUTRICIÓN DUDOSA Y EXPLOSIVOS</span>Esta saga tiene una lógica aplastante. Si rompes los candelabros del techo o golpeas las paredes milenarias del castillo, mágicamente encontrarás pollos asados perfectamente conservados dentro del muro. Cómetelos para curarte sin hacer preguntas.</div>"
@@ -881,7 +891,7 @@ function verFicha(id) {
     const j = infoJuegos[id] || infoJuegos['cadillacs'];
     currentId = id;
     
-    // CONTROL LOGROS 1 y 2: Detectamos qué juego se abre para los contadores
+    // CONTROL LOGROS 1 y 2
     if(id === 'mariobros' || id === 'mariobros3' || id === 'marioworld' || id === 'newsupermario') {
         verificarYDesbloquearLogro('mario', '🍄 BIENVENIDO AL REINO:<br>Has escaneado un juego de la saga Mario.');
     }
@@ -1011,7 +1021,7 @@ function abrirTiendaGeneral() { playSound('clic'); window.open(`https://wa.me/34
 
 function filtrarJuegos() { let input=document.getElementById("buscadorJuegos").value.toLowerCase(); document.querySelectorAll(".card-wrapper").forEach(t => { let h=t.querySelector("h2").innerText.toLowerCase(); t.style.display = h.includes(input) ? "block" : "none"; }); }
 
-// --- MOTOR DEL PORTAL RETRO CON FIX DE AUDIO DE EXPLOSIÓN ---
+// --- MOTOR DEL PORTAL RETRO HIPERCOLORIDO ---
 function lanzarAnimacionPortal(callback) {
     const container = document.getElementById('portalContainer');
     const destello = document.getElementById('destelloLuz');
@@ -1030,9 +1040,8 @@ function lanzarAnimacionPortal(callback) {
     
     container.style.display = 'block';
     
-    reproducirSonido1UP();
-    // FIX DE TIEMPO: Dejamos 150ms de margen para que la explosión no sea cancelada por el 1UP
-    setTimeout(() => { reproducirSonidoExplosion(); }, 150);
+    // AQUÍ SUENA LA EXPLOSIÓN INSTANTÁNEAMENTE AL ABRIR EL PORTAL
+    reproducirSonidoExplosion();
     
     setTimeout(() => {
         destello.style.transform = 'translate(-50%, -50%) scale(100)';
@@ -1128,7 +1137,7 @@ function lanzarAnimacionPortal(callback) {
     }, 2300);
 }
 
-// --- ESCÁNER NFC CON CONEXIÓN AL PORTAL RETRO ---
+// --- ACTUALIZACIÓN DEL ESCÁNER (TIEMPO DE ESPERA REDUCIDO A 1.5s) ---
 window.onload = () => {
     renderCards();
     const hash = window.location.hash.replace('#','');
@@ -1137,14 +1146,13 @@ window.onload = () => {
         document.getElementById('nfcScannerScreen').classList.add('active');
         reproducirSonidoEscaner();
         
+        // Reducido a 1.5s para no desesperar al usuario
         setTimeout(() => { 
             document.getElementById('nfcScannerScreen').classList.remove('active'); 
-            
             lanzarAnimacionPortal(() => {
                 verFicha(hash); 
             });
-            
-        }, 2000);
+        }, 1500);
     }
 };
 
