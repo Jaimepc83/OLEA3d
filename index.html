@@ -89,7 +89,7 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
 /* CONTENEDORES DE JUEGOS */
 .main-container { max-width: 1200px; margin: auto; padding: 10px; position: relative; z-index: 10; }
 .section-title { color: #ffd700; margin: 30px 0 15px 0; font-size: 22px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
-.banner-console { width: 100%; max-width: 160px; border-radius: 12px; box-shadow: 0 0 15px rgba(247,210,74,0.3); margin-bottom: 10px; }
+.banner-console { width: 100%; max-width: 160px; border-radius: 12px; box-shadow: 0 0 15px rgba(247,210,74,0.35); margin-bottom: 10px; }
 .container { display: flex; gap: 20px; overflow-x: auto; padding: 20px 10px; scroll-behavior: smooth; perspective: 1000px; }
 .container::-webkit-scrollbar { display: none; }
 .card-wrapper { position: relative; min-width: 200px; height: 270px; flex-shrink: 0; cursor: pointer; z-index: 1; transition: transform 0.4s; }
@@ -171,6 +171,11 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
 </head>
 
 <body>
+<div id="portalContainer" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgb(0, 0, 0); z-index: 99999999; display: none; overflow: hidden;">
+    <div id="destelloLuz" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); width: 10px; height: 10px; background: radial-gradient(circle, #fff 20%, #ffd700 60%, transparent 100%); border-radius: 50%; box-shadow: 0 0 100px #ffd700; transition: transform 1.2s cubic-bezier(0.1, 0.8, 0.3, 1);"></div>
+    <canvas id="canvasPortal" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></canvas>
+</div>
+
 <div id="toastDesbloqueo" class="toast-notification">🔓 ¡SISTEMA DESBLOQUEADO! Catálogo Premium activado.</div>
 
 <div id="nfcScannerScreen" class="nfc-scanner">
@@ -502,7 +507,7 @@ const infoJuegos = {
             "<h2 class='mag-titular'>EL SALVADOR DE LA INDUSTRIA</h2><p>En 1985, el mercado de las consolas estaba en ruinas. Miyamoto diseñó a Mario con bigote y gorra puramente por limitaciones técnicas (dibujar bocas y pelo animado en 8 bits era muy difícil), creando sin saberlo al icono pop más grande de la historia y vendiendo 40 millones de copias.</p><div class='mag-box'><strong>EL LORE OSCURO:</strong> Los Koopas usaron magia negra para convertir a los inocentes ciudadanos en bloques de ladrillo. Sí, cada vez que rompes un ladrillo con la cabeza para coger monedas, estás cometiendo un asesinato contra un habitante del reino. Trágico.</div>"
         ], 
         manual: [
-            "<h2 class='mag-titular'>GUÍA DEL FONTANERO</h2><p>Cruza 8 mundos saltando fosos y tortugas para rescatar a la Princesa Peach. Prepárate mentalmente para que el seta Toad te diga siempre que la princesa está en otro castillo.</p><div class='mag-truco'><span>FÍSICAS PERFECTAS</span>Mantén pulsado el botón de correr (B) en todo momento. Mario gana inercia, lo que te permite saltar huecos enormes. Además, el champiñón te hace el doble de grande y te permite recibir un impacto sin perder la vida.</div>"
+            "<h2 class='mag-truco'>GUÍA DEL FONTANERO</h2><p>Cruza 8 mundos saltando fosos y tortugas para rescatar a la Princesa Peach. Prepárate mentalmente para que el seta Toad te diga siempre que la princesa está en otro castillo.</p><div class='mag-truco'><span>FÍSICAS PERFECTAS</span>Mantén pulsado el botón de correr (B) en todo momento. Mario gana inercia, lo que te permite saltar huecos enormes. Además, el champiñón te hace el doble de grande y te permite recibir un impacto sin perder la vida.</div>"
         ] 
     },
     tortugasnes: { 
@@ -615,7 +620,7 @@ const infoJuegos = {
         consola: "md", titulo: "ALADDIN", img: "aladin.jpg", enlace: "aladin.html", valoracion: "NOTA: 90/100", wr: { nombre: "ABU", puntos: "85.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='aladdin.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='aladin.jpg'\">",
-            "<h2 class='mag-titular'>MAGIA DISNEY EN TUS MANOS</h2><p>Este juego fue histórico porque los mismísimos y legendarios animadores de los estudios de Walt Disney trabajaron en conjunto con Virgin Games para dibujar a mano los sprites (píxeles) del personaje. Lograron una fluidez digna de dibujos animados que parecía imposible de renderizar en esa época de circuitos rústicos.</p><div class='mag-box'><strong>LA GRAN GUERRA:</strong> Este título generó intensas discusiones en todos los patios de colegio del país: la versión del juego para Super Nintendo la hizo Capcom y Aladdin no tenía espada, solo saltaba a lo Mario. Pero esta de Mega Drive SÍ la tenía. Era más macarra. Los fans de Sega usaron esto como arma arrojadiza.</div>"
+            "<h2 class='mag-titular'>MAGIA DISNEY EN TUS MANOS</h2><p>Este juego fue histórico porque los mismísimos y legendarios animadores de los estudios de Walt Disney worked en conjunto con Virgin Games para dibujar a mano los sprites (píxeles) del personaje. Lograron una fluidez digna de dibujos animados que parecía imposible de renderizar en esa época de circuitos rústicos.</p><div class='mag-box'><strong>LA GRAN GUERRA:</strong> Este título generó intensas discusiones en todos los patios de colegio del país: la versión del juego para Super Nintendo la hizo Capcom y Aladdin no tenía espada, solo saltaba a lo Mario. Pero esta de Mega Drive SÍ la tenía. Era más macarra. Los fans de Sega usaron esto como arma arrojadiza.</div>"
         ], 
         manual: [
             "<h2 class='mag-titular'>PARKOUR POR AGRABAH</h2><p>Debes recorrer a brincos los tejados del mercado, entrar en la cueva de las maravillas (cuidado con la lava) y subir al palacio para enfrentarte a Jafar.</p><div class='mag-truco'><span>ARMAMENTO DEL DESIERTO</span>No uses la espada a lo loco, te cortarán. Tu mejor herramienta de control de masas son las manzanas. Lánzale frutas a la cara a los guardias acorazados para mantenerlos aturdidos antes de desenvainar tu cimitarra curva para el golpe final. Y si ves a un guardia gordito vendiendo cuchillos... esquívalo por arriba y lárgate de ahí.</div>"
@@ -937,14 +942,141 @@ function abrirTiendaGeneral() { playSound('clic'); window.open(`https://wa.me/34
 
 function filtrarJuegos() { let input=document.getElementById("buscadorJuegos").value.toLowerCase(); document.querySelectorAll(".card-wrapper").forEach(t => { let h=t.querySelector("h2").innerText.toLowerCase(); t.style.display = h.includes(input) ? "block" : "none"; }); }
 
+// --- NUEVO: SISTEMA DE ANIMACIÓN PORTAL DE PÍXELES ---
+function lanzarAnimacionPortal(callback) {
+    const container = document.getElementById('portalContainer');
+    const destello = document.getElementById('destelloLuz');
+    const canvas = document.getElementById('canvasPortal');
+    const ctx = canvas.getContext('2d');
+    
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    
+    let particulas = [];
+    let monedas = [];
+    let animacionId;
+    
+    container.style.display = 'block';
+    reproducirSonido1UP();
+    
+    setTimeout(() => {
+        destello.style.transform = 'translate(-50%, -50%) scale(80)';
+    }, 50);
+    
+    // Generar píxeles de explosión
+    const colores = ['#d4af37', '#9acd32', '#ffd700', '#ffffff', '#9dff3d'];
+    for (let i = 0; i < 150; i++) {
+        particulas.push({
+            x: centerX,
+            y: centerY,
+            size: Math.random() * 8 + 4,
+            color: colores[Math.floor(Math.random() * colores.length)],
+            vx: (Math.random() - 0.5) * 15,
+            vy: (Math.random() - 0.5) * 15 - 2,
+            alpha: 1,
+            gravedad: 0.15
+        });
+    }
+    
+    // Generar monedas giratorias virtuales
+    for (let i = 0; i < 6; i++) {
+        monedas.push({
+            x: centerX + (Math.random() - 0.5) * 120,
+            y: centerY + (Math.random() - 0.5) * 120,
+            radius: 12,
+            vy: -Math.random() * 3 - 2,
+            frame: Math.random() * 10,
+            scaleX: 1,
+            vRojo: Math.random() * 0.1 + 0.1
+        });
+    }
+    
+    function bucle() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Render Píxeles
+        particulas.forEach((p, index) => {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += p.gravedad;
+            p.alpha -= 0.015;
+            
+            if (p.alpha <= 0) {
+                particulas.splice(index, 1);
+            } else {
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = p.alpha;
+                ctx.fillRect(p.x, p.y, p.size, p.size);
+            }
+        });
+        
+        // Render Monedas
+        monedas.forEach((m) => {
+            m.y += m.vy;
+            m.frame += m.vRojo;
+            m.scaleX = Math.sin(m.frame);
+            
+            ctx.save();
+            ctx.translate(m.x, m.y);
+            ctx.scale(m.scaleX, 1);
+            ctx.globalAlpha = 0.9;
+            
+            ctx.beginPath();
+            ctx.arc(0, 0, m.radius, 0, Math.PI * 2);
+            ctx.fillStyle = '#ffd700';
+            ctx.fill();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = '#d4af37';
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.arc(0, 0, m.radius - 4, 0, Math.PI * 2);
+            ctx.strokeStyle = '#fff';
+            ctx.stroke();
+            
+            ctx.restore();
+        });
+        
+        ctx.globalAlpha = 1.0;
+        animacionId = requestAnimationFrame(bucle);
+    }
+    
+    bucle();
+    
+    setTimeout(() => {
+        cancelAnimationFrame(animacionId);
+        container.style.opacity = '0';
+        container.style.transition = 'opacity 0.5s ease';
+        setTimeout(() => {
+            container.style.display = 'none';
+            container.style.opacity = '1';
+            destello.style.transform = 'translate(-50%, -50%) scale(0)';
+            if (callback) callback();
+        }, 500);
+    }, 1800);
+}
+
+// --- ACTUALIZADO: ENTRADA NFC CON LA ANIMACIÓN DEL PORTAL ---
 window.onload = () => {
     renderCards();
     const hash = window.location.hash.replace('#','');
     if (hash && infoJuegos[hash]) {
         if(hash === 'pacman') { document.getElementById('tarjetaSecreta').style.display = 'block'; }
         document.getElementById('nfcScannerScreen').classList.add('active');
-        playSound('scan');
-        setTimeout(() => { document.getElementById('nfcScannerScreen').classList.remove('active'); setTimeout(() => verFicha(hash), 300); }, 2000);
+        reproducirSonidoEscaner();
+        
+        setTimeout(() => { 
+            document.getElementById('nfcScannerScreen').classList.remove('active'); 
+            
+            // Lanza el portal pixelado y, al terminar, abre la ficha técnica del juego
+            lanzarAnimacionPortal(() => {
+                verFicha(hash); 
+            });
+            
+        }, 2000);
     }
 };
 
@@ -958,12 +1090,10 @@ document.addEventListener("DOMContentLoaded", () => {
 // --- SISTEMA DE CLAVE MAESTRA ---
 function verificarClave() {
     const input = document.getElementById('inputClave').value;
-    
-    // Aquí puedes cambiar "2491" por la contraseña que tú quieras
     const claveCorrecta = "2491"; 
     
     if(input.toUpperCase() === claveCorrecta.toUpperCase()) {
-        playSound('1up'); 
+        reproducirSonido1UP(); 
         
         const horasDesbloqueo = 48; 
         const tiempoCaducidad = new Date().getTime() + (horasDesbloqueo * 60 * 60 * 1000);
@@ -978,7 +1108,7 @@ function verificarClave() {
         setTimeout(() => toast.classList.remove("active"), 4000); 
         
     } else {
-        playSound('error');
+        reproducirSonidoError();
         const errorText = document.getElementById('errorClave');
         errorText.style.display = 'block';
         setTimeout(() => errorText.style.display = 'none', 2000);
