@@ -1,170 +1,173 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="OLEA3D Retro">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="OLEA3D Retro">
 
-<title>OLEA3D Retro Hub - Enciclopedia Premium</title>
+    <title>OLEA3D Retro Hub - Enciclopedia Premium</title>
 
-<style>
-/* 1. SETUP Y FONDOS */
-:root { --modal-border: #d4af37; --modal-title: #ffd700; --modal-tab: #9dff3d; }
-body { 
-    margin: 0; 
-    font-family: Arial, sans-serif; 
-    background-color: #0d0d0d; 
-    color: white; 
-    text-align: center; 
-    overflow-x: hidden; 
-    position: relative; 
-    min-height: 100vh; 
-    transition: background-color 0.8s ease; 
-    padding-top: env(safe-area-inset-top); 
-}
+    <style>
+        /* 1. SETUP Y FONDOS */
+        :root { --modal-border: #d4af37; --modal-title: #ffd700; --modal-tab: #9dff3d; }
+        
+        body { 
+            margin: 0; 
+            font-family: Arial, sans-serif; 
+            background-color: #0d0d0d; 
+            color: white; 
+            text-align: center; 
+            overflow-x: hidden; 
+            position: relative; 
+            min-height: 100vh; 
+            transition: background-color 0.8s ease; 
+            padding-top: env(safe-area-inset-top); 
+        }
 
-.bg-grid { 
-    position: fixed; bottom: 0; left: -50%; width: 200%; height: 60vh; 
-    background: linear-gradient(transparent 10%, rgba(157,255,61,0.3) 100%), 
-                repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(157,255,61,0.5) 21px), 
-                repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(157,255,61,0.5) 21px); 
-    transform-origin: bottom; 
-    transform: perspective(500px) rotateX(60deg); 
-    animation: gridMove 2s linear infinite; 
-    z-index: -1; opacity: 0.6; transition: background 0.8s ease; 
-}
-@keyframes gridMove { 
-    0% { transform: perspective(500px) rotateX(60deg) translateY(0); } 
-    100% { transform: perspective(500px) rotateX(60deg) translateY(21px); } 
-}
+        .bg-grid { 
+            position: fixed; bottom: 0; left: -50%; width: 200%; height: 60vh; 
+            background: linear-gradient(transparent 10%, rgba(157,255,61,0.3) 100%), 
+                        repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(157,255,61,0.5) 21px), 
+                        repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(157,255,61,0.5) 21px); 
+            transform-origin: bottom; 
+            transform: perspective(500px) rotateX(60deg); 
+            animation: gridMove 2s linear infinite; 
+            z-index: -1; opacity: 0.6; transition: background 0.8s ease; 
+        }
+        
+        @keyframes gridMove { 
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0); } 
+            100% { transform: perspective(500px) rotateX(60deg) translateY(21px); } 
+        }
 
-/* TEMAS POR CONSOLA */
-body.theme-arcade { background-color: #1a001a; } 
-body.theme-arcade .bg-grid { background: linear-gradient(transparent 10%, rgba(255,0,255,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(255,0,255,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(255,0,255,0.3) 21px); }
-body.theme-nes { background-color: #1a0000; } 
-body.theme-nes .bg-grid { background: linear-gradient(transparent 10%, rgba(230,0,18,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(230,0,18,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(230,0,18,0.3) 21px); }
-body.theme-n64 { background-color: #001a08; } 
-body.theme-n64 .bg-grid { background: linear-gradient(transparent 10%, rgba(0,177,64,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(0,177,64,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(0,177,64,0.3) 21px); }
-body.theme-md { background-color: #110800; } 
-body.theme-md .bg-grid { background: linear-gradient(transparent 10%, rgba(212,175,55,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(212,175,55,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(212,175,55,0.3) 21px); }
-body.theme-snes { background-color: #000c1a; } 
-body.theme-snes .bg-grid { background: linear-gradient(transparent 10%, rgba(0,91,159,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(0,91,159,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(0,91,159,0.3) 21px); }
-body.theme-gba { background-color: #1a001a; } 
-body.theme-gba .bg-grid { background: linear-gradient(transparent 10%, rgba(90,66,155,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(90,66,155,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(90,66,155,0.3) 21px); }
-body.theme-nds { background-color: #1a1a1a; } 
-body.theme-nds .bg-grid { background: linear-gradient(transparent 10%, rgba(180,180,180,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(180,180,180,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(180,180,180,0.3) 21px); }
+        /* TEMAS POR CONSOLA */
+        body.theme-arcade { background-color: #1a001a; } 
+        body.theme-arcade .bg-grid { background: linear-gradient(transparent 10%, rgba(255,0,255,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(255,0,255,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(255,0,255,0.3) 21px); }
+        body.theme-nes { background-color: #1a0000; } 
+        body.theme-nes .bg-grid { background: linear-gradient(transparent 10%, rgba(230,0,18,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(230,0,18,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(230,0,18,0.3) 21px); }
+        body.theme-n64 { background-color: #001a08; } 
+        body.theme-n64 .bg-grid { background: linear-gradient(transparent 10%, rgba(0,177,64,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(0,177,64,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(0,177,64,0.3) 21px); }
+        body.theme-md { background-color: #110800; } 
+        body.theme-md .bg-grid { background: linear-gradient(transparent 10%, rgba(212,175,55,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(212,175,55,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(212,175,55,0.3) 21px); }
+        body.theme-snes { background-color: #000c1a; } 
+        body.theme-snes .bg-grid { background: linear-gradient(transparent 10%, rgba(0,91,159,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(0,91,159,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(0,91,159,0.3) 21px); }
+        body.theme-gba { background-color: #1a001a; } 
+        body.theme-gba .bg-grid { background: linear-gradient(transparent 10%, rgba(90,66,155,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(90,66,155,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(90,66,155,0.3) 21px); }
+        body.theme-nds { background-color: #1a1a1a; } 
+        body.theme-nds .bg-grid { background: linear-gradient(transparent 10%, rgba(180,180,180,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(180,180,180,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(180,180,180,0.3) 21px); }
 
-/* CABECERA Y LOGOS NEÓN */
-header { padding: 20px 20px 5px 20px; background: linear-gradient(180deg, rgba(26,26,26,0.9), rgba(13,13,13,0)); position: relative; z-index: 10; }
-.header-logos { display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 10px; }
-.logo-side { width: 70px; height: 70px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: 0.3s; }
-.logo-side:hover { transform: scale(1.1); }
-#logoBeltraneja { border-color: #e60012; box-shadow: 0 0 15px rgba(230,0,18,0.8); animation: pulseNeonRed 2.5s infinite; }
-#logoGarden { border-color: #00ffc8; box-shadow: 0 0 15px rgba(0,255,200,0.8); animation: pulseNeonGreen 2.5s infinite; }
-@keyframes pulseNeonRed { 0%, 100% { box-shadow: 0 0 10px rgba(230,0,18,0.7); } 50% { box-shadow: 0 0 25px rgba(230,0,18,1); } }
-@keyframes pulseNeonGreen { 0%, 100% { box-shadow: 0 0 10px rgba(0,255,200,0.7); } 50% { box-shadow: 0 0 25px rgba(0,255,200,1); } }
-.logo { width: 110px; border-radius: 50%; box-shadow: 0 0 20px #d4af37; cursor: pointer; }
-h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
-.sub { color: #9acd32; font-size: 16px; margin-bottom: 10px; }
-.btn-instagram { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); color: white; padding: 10px 20px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; display: inline-block; text-decoration: none; position: relative; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.5); transition: 0.3s; }
+        /* CABECERA Y LOGOS NEÓN */
+        header { padding: 20px 20px 5px 20px; background: linear-gradient(180deg, rgba(26,26,26,0.9), rgba(13,13,13,0)); position: relative; z-index: 10; }
+        .header-logos { display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 10px; }
+        .logo-side { width: 70px; height: 70px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: 0.3s; }
+        .logo-side:hover { transform: scale(1.1); }
+        #logoBeltraneja { border-color: #e60012; box-shadow: 0 0 15px rgba(230,0,18,0.8); animation: pulseNeonRed 2.5s infinite; }
+        #logoGarden { border-color: #00ffc8; box-shadow: 0 0 15px rgba(0,255,200,0.8); animation: pulseNeonGreen 2.5s infinite; }
+        @keyframes pulseNeonRed { 0%, 100% { box-shadow: 0 0 10px rgba(230,0,18,0.7); } 50% { box-shadow: 0 0 25px rgba(230,0,18,1); } }
+        @keyframes pulseNeonGreen { 0%, 100% { box-shadow: 0 0 10px rgba(0,255,200,0.7); } 50% { box-shadow: 0 0 25px rgba(0,255,200,1); } }
+        .logo { width: 110px; border-radius: 50%; box-shadow: 0 0 20px #d4af37; cursor: pointer; }
+        h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
+        .sub { color: #9acd32; font-size: 16px; margin-bottom: 10px; }
+        .btn-instagram { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); color: white; padding: 10px 20px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; display: inline-block; text-decoration: none; position: relative; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.5); transition: 0.3s; }
 
-/* TIENDA DE LLAVEROS */
-.tienda-banner { background: rgba(20,20,20,0.85); border: 2px solid #d4af37; border-radius: 15px; margin: 10px auto 25px auto; padding: 20px; max-width: 90%; position: relative; z-index: 10; backdrop-filter: blur(5px); box-shadow: 0 0 20px rgba(212,175,55,0.25); }
-.tienda-titulo { color: #ffd700; margin: 0 0 8px 0; font-size: 20px; }
-.tienda-desc { color: #ddd; font-size: 14px; margin-bottom: 15px; }
-.galeria-llaveros { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; justify-content: center; }
-.galeria-llaveros img { width: 85px; height: 85px; object-fit: cover; border-radius: 12px; border: 2px solid #9acd32; transition: 0.3s; }
-.btn-tienda-principal { background: #25D366; color: white; border: none; padding: 12px 25px; border-radius: 25px; font-weight: bold; font-size: 15px; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 10px rgba(37,211,102,0.4); }
+        /* TIENDA DE LLAVEROS */
+        .tienda-banner { background: rgba(20,20,20,0.85); border: 2px solid #d4af37; border-radius: 15px; margin: 10px auto 25px auto; padding: 20px; max-width: 90%; position: relative; z-index: 10; backdrop-filter: blur(5px); box-shadow: 0 0 20px rgba(212,175,55,0.25); }
+        .tienda-titulo { color: #ffd700; margin: 0 0 8px 0; font-size: 20px; }
+        .tienda-desc { color: #ddd; font-size: 14px; margin-bottom: 15px; }
+        .galeria-llaveros { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; justify-content: center; }
+        .galeria-llaveros img { width: 85px; height: 85px; object-fit: cover; border-radius: 12px; border: 2px solid #9acd32; transition: 0.3s; }
+        .btn-tienda-principal { background: #25D366; color: white; border: none; padding: 12px 25px; border-radius: 25px; font-weight: bold; font-size: 15px; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 10px rgba(37,211,102,0.4); }
 
-/* BUSCADOR CORREGIDO */
-.buscador-container { margin: 15px auto; width: 85%; max-width: 300px; z-index: 10; position: relative; }
-#buscadorJuegos { width: 100%; box-sizing: border-box; padding: 10px 15px; border-radius: 20px; border: 2px solid #d4af37; background: rgba(0,0,0,0.8); color: white; font-size: 14px; text-align: center; }
+        /* BUSCADOR CORREGIDO */
+        .buscador-container { margin: 15px auto; width: 85%; max-width: 300px; z-index: 10; position: relative; }
+        #buscadorJuegos { width: 100%; box-sizing: border-box; padding: 10px 15px; border-radius: 20px; border: 2px solid #d4af37; background: rgba(0,0,0,0.8); color: white; font-size: 14px; text-align: center; }
 
-/* MENÚ BOTONES CONSOLAS */
-.menu { display: flex; justify-content: center; gap: 5px; flex-wrap: wrap; padding: 10px; z-index: 10; position: relative; max-width: 95%; margin: 0 auto; }
-.menu a { color: white; text-decoration: none; background: #222; padding: 6px 12px; border-radius: 15px; font-size: 11px; font-weight: bold; border: 1px solid #d4af37; }
+        /* MENÚ BOTONES CONSOLAS */
+        .menu { display: flex; justify-content: center; gap: 5px; flex-wrap: wrap; padding: 10px; z-index: 10; position: relative; max-width: 95%; margin: 0 auto; }
+        .menu a { color: white; text-decoration: none; background: #222; padding: 6px 12px; border-radius: 15px; font-size: 11px; font-weight: bold; border: 1px solid #d4af37; }
 
-/* CONTENEDORES DE JUEGOS */
-.main-container { max-width: 1200px; margin: auto; padding: 10px; position: relative; z-index: 10; }
-.section-title { color: #ffd700; margin: 30px 0 15px 0; font-size: 22px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
-.banner-console { width: 100%; max-width: 160px; border-radius: 12px; box-shadow: 0 0 15px rgba(247,210,74,0.3); margin-bottom: 10px; }
-.container { display: flex; gap: 20px; overflow-x: auto; padding: 20px 10px; scroll-behavior: smooth; perspective: 1000px; }
-.container::-webkit-scrollbar { display: none; }
-.card-wrapper { position: relative; min-width: 200px; height: 270px; flex-shrink: 0; cursor: pointer; z-index: 1; transition: transform 0.4s; }
-.card-wrapper:hover { transform: translateY(-10px) rotateX(8deg) rotateY(-5deg) scale(1.05); z-index: 100; }
-.card-wrapper::before { content: ''; position: absolute; top: -3px; left: -3px; right: -3px; bottom: -3px; background: linear-gradient(45deg, #d4af37, #f8f9fa, #9acd32, #d4af37); background-size: 300%; border-radius: 23px; z-index: -1; animation: brilloSeda 4s linear infinite; }
-.card { background: rgba(15, 15, 15, 0.95); border-radius: 20px; padding: 15px; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; box-sizing: border-box; }
-.card h2 { color: #fff; font-size: 15px; margin: 8px 0; text-transform: uppercase; }
-.card img { max-height: 110px; object-fit: contain; border-radius: 8px; }
-.btn-ver { display: inline-block; padding: 10px 15px; background: #6b8e23; color: white; border-radius: 6px; font-weight: bold; font-size: 12px; }
-.stats { margin: 10px 0; font-size: 14px; font-weight: bold; color: #9dff3d; }
-.nfc-badge { display: inline-block; background: #9dff3d; color: #111; font-weight: bold; padding: 3px 10px; border-radius: 20px; margin: 2px; font-size: 11px; }  
+        /* CONTENEDORES DE JUEGOS */
+        .main-container { max-width: 1200px; margin: auto; padding: 10px; position: relative; z-index: 10; }
+        .section-title { color: #ffd700; margin: 30px 0 15px 0; font-size: 22px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+        .banner-console { width: 100%; max-width: 160px; border-radius: 12px; box-shadow: 0 0 15px rgba(247,210,74,0.3); margin-bottom: 10px; }
+        .container { display: flex; gap: 20px; overflow-x: auto; padding: 20px 10px; scroll-behavior: smooth; perspective: 1000px; }
+        .container::-webkit-scrollbar { display: none; }
+        .card-wrapper { position: relative; min-width: 200px; height: 270px; flex-shrink: 0; cursor: pointer; z-index: 1; transition: transform 0.4s; }
+        .card-wrapper:hover { transform: translateY(-10px) rotateX(8deg) rotateY(-5deg) scale(1.05); z-index: 100; }
+        .card-wrapper::before { content: ''; position: absolute; top: -3px; left: -3px; right: -3px; bottom: -3px; background: linear-gradient(45deg, #d4af37, #f8f9fa, #9acd32, #d4af37); background-size: 300%; border-radius: 23px; z-index: -1; animation: brilloSeda 4s linear infinite; }
+        .card { background: rgba(15, 15, 15, 0.95); border-radius: 20px; padding: 15px; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; box-sizing: border-box; }
+        .card h2 { color: #fff; font-size: 15px; margin: 8px 0; text-transform: uppercase; }
+        .card img { max-height: 110px; object-fit: contain; border-radius: 8px; }
+        .btn-ver { display: inline-block; padding: 10px 15px; background: #6b8e23; color: white; border-radius: 6px; font-weight: bold; font-size: 12px; }
+        .stats { margin: 10px 0; font-size: 14px; font-weight: bold; color: #9dff3d; }
+        .nfc-badge { display: inline-block; background: #9dff3d; color: #111; font-weight: bold; padding: 3px 10px; border-radius: 20px; margin: 2px; font-size: 11px; }  
 
-/* --- MODAL ESTILO REVISTA PREMIUM --- */
-.modal-ficha { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 99999; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box; backdrop-filter: blur(8px); }
-.ficha-content { background: #1a1a1a; border: 4px solid var(--modal-border); border-radius: 15px; max-width: 500px; width: 100%; padding: 15px; position: relative; max-height: 98vh; overflow-y: auto; text-align: left; box-sizing: border-box; animation: popIn 0.3s; box-shadow: 0 0 30px rgba(0,0,0,0.8); }
-@keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        /* --- MODAL ESTILO REVISTA PREMIUM --- */
+        .modal-ficha { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 99999; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box; backdrop-filter: blur(8px); }
+        .ficha-content { background: #1a1a1a; border: 4px solid var(--modal-border); border-radius: 15px; max-width: 500px; width: 100%; padding: 15px; position: relative; max-height: 98vh; overflow-y: auto; text-align: left; box-sizing: border-box; animation: popIn 0.3s; box-shadow: 0 0 30px rgba(0,0,0,0.8); }
+        @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-.close-btn { position: absolute; top: 12px; right: 12px; background: #ff003c; color: white; border: 2px solid #fff; width: 35px; height: 35px; font-weight: bold; border-radius: 50%; cursor: pointer; font-size: 16px; z-index: 20; box-shadow: 0 4px 10px rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; padding: 0; }
+        .close-btn { position: absolute; top: 12px; right: 12px; background: #ff003c; color: white; border: 2px solid #fff; width: 35px; height: 35px; font-weight: bold; border-radius: 50%; cursor: pointer; font-size: 16px; z-index: 20; box-shadow: 0 4px 10px rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; padding: 0; }
 
-.ficha-header { display: flex; gap: 10px; align-items: center; background: #000; padding: 8px; border-radius: 10px; border-left: 5px solid var(--modal-border); margin-top: 5px; margin-bottom: 8px; }
-.ficha-header img { width: 70px; border-radius: 5px; object-fit: contain; border: 1px solid #333; }
-.ficha-titulos h2 { color: #fff; margin: 0; font-size: 18px; font-style: italic; text-transform: uppercase; font-family: 'Impact', sans-serif; letter-spacing: 1px; padding-right: 25px; }
-.valoracion-box { background: #e60012; border: 2px solid #fff; color: white; padding: 2px 8px; border-radius: 5px; font-size: 12px; font-weight: bold; display: inline-block; margin-top: 3px; transform: skew(-10deg); }
+        .ficha-header { display: flex; gap: 10px; align-items: center; background: #000; padding: 8px; border-radius: 10px; border-left: 5px solid var(--modal-border); margin-top: 5px; margin-bottom: 8px; }
+        .ficha-header img { width: 70px; border-radius: 5px; object-fit: contain; border: 1px solid #333; }
+        .ficha-titulos h2 { color: #fff; margin: 0; font-size: 18px; font-style: italic; text-transform: uppercase; font-family: 'Impact', sans-serif; letter-spacing: 1px; padding-right: 25px; }
+        .valoracion-box { background: #e60012; border: 2px solid #fff; color: white; padding: 2px 8px; border-radius: 5px; font-size: 12px; font-weight: bold; display: inline-block; margin-top: 3px; transform: skew(-10deg); }
 
-.tabs { display: flex; gap: 5px; margin-bottom: 8px; border-bottom: 4px solid #444; padding-bottom: 0; }
-.tab-btn { background: #333; color: #aaa; border: none; font-size: 12px; font-weight: 900; cursor: pointer; padding: 8px 10px; border-radius: 8px 8px 0 0; transition: 0.2s; text-transform: uppercase; font-family: 'Impact', sans-serif; }
-.tab-btn.active { background: #fff; color: #000; border-top: 4px solid var(--modal-border); border-left: 4px solid var(--modal-border); border-right: 4px solid var(--modal-border); transform: translateY(4px); }
+        .tabs { display: flex; gap: 5px; margin-bottom: 8px; border-bottom: 4px solid #444; padding-bottom: 0; }
+        .tab-btn { background: #333; color: #aaa; border: none; font-size: 12px; font-weight: 900; cursor: pointer; padding: 8px 10px; border-radius: 8px 8px 0 0; transition: 0.2s; text-transform: uppercase; font-family: 'Impact', sans-serif; }
+        .tab-btn.active { background: #fff; color: #000; border-top: 4px solid var(--modal-border); border-left: 4px solid var(--modal-border); border-right: 4px solid var(--modal-border); transform: translateY(4px); }
 
-/* CONTENIDO REVISTA COMPACTO */
-#flipbookWrapper { display: block; }
-.flipbook-container { background: #ffffff; border-radius: 0 0 10px 10px; padding: 12px; margin-bottom: 10px; min-height: 230px; position: relative; perspective: 1200px; border: 1px solid #ccc; overflow: hidden; box-shadow: inset 0 0 15px rgba(0,0,0,0.1); }
-.flipbook-page { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 10px; box-sizing: border-box; background: #fff; color: #111; font-size: 12.5px; line-height: 1.3; font-family: 'Helvetica Neue', sans-serif; overflow-y: auto; opacity: 0; z-index: 1; transform-origin: left center; transition: transform 0.6s ease; backface-visibility: hidden; background-image: linear-gradient(90deg, rgba(0,0,0,0.03) 0%, transparent 5%); }
-.flipbook-page.active { opacity: 1; z-index: 5; transform: rotateY(0deg); pointer-events: all; }
-.flipbook-page.flipped { opacity: 1; transform: rotateY(-180deg); z-index: 10; pointer-events: none; }
+        /* CONTENIDO REVISTA COMPACTO */
+        #flipbookWrapper { display: block; }
+        .flipbook-container { background: #ffffff; border-radius: 0 0 10px 10px; padding: 12px; margin-bottom: 10px; min-height: 230px; position: relative; perspective: 1200px; border: 1px solid #ccc; overflow: hidden; box-shadow: inset 0 0 15px rgba(0,0,0,0.1); }
+        .flipbook-page { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 10px; box-sizing: border-box; background: #fff; color: #111; font-size: 12.5px; line-height: 1.3; font-family: 'Helvetica Neue', sans-serif; overflow-y: auto; opacity: 0; z-index: 1; transform-origin: left center; transition: transform 0.6s ease; backface-visibility: hidden; background-image: linear-gradient(90deg, rgba(0,0,0,0.03) 0%, transparent 5%); }
+        .flipbook-page.active { opacity: 1; z-index: 5; transform: rotateY(0deg); pointer-events: all; }
+        .flipbook-page.flipped { opacity: 1; transform: rotateY(-180deg); z-index: 10; pointer-events: none; }
 
-.mag-titular { background: #000; color: #fff; padding: 4px 8px; font-family: 'Impact', sans-serif; font-size: 18px; text-transform: uppercase; transform: skew(-5deg); display: inline-block; margin-top: 0; margin-bottom: 8px; border-bottom: 3px solid var(--modal-border); }
-.mag-sub { color: #e60012; font-weight: 900; border-bottom: 1.5px solid #ccc; font-size: 14px; margin: 10px 0 5px; text-transform: uppercase; }
-.mag-box { background: #f0f8ff; border-left: 4px solid #005b9f; padding: 8px; margin: 8px 0; font-size: 11.5px; border-radius: 0 5px 5px 0; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
-.mag-truco { background: #fffde6; border: 2px dashed #d4af37; padding: 10px; margin: 8px 0; font-size: 11.5px; font-weight: bold; color: #634a00; text-align: center; }
-.mag-truco span { display: block; background: #d4af37; color: #000; padding: 2px; text-transform: uppercase; margin: -10px -10px 8px -10px; font-family: 'Impact'; font-size: 14px; }
+        .mag-titular { background: #000; color: #fff; padding: 4px 8px; font-family: 'Impact', sans-serif; font-size: 18px; text-transform: uppercase; transform: skew(-5deg); display: inline-block; margin-top: 0; margin-bottom: 8px; border-bottom: 3px solid var(--modal-border); }
+        .mag-sub { color: #e60012; font-weight: 900; border-bottom: 1.5px solid #ccc; font-size: 14px; margin: 10px 0 5px; text-transform: uppercase; }
+        .mag-box { background: #f0f8ff; border-left: 4px solid #005b9f; padding: 8px; margin: 8px 0; font-size: 11.5px; border-radius: 0 5px 5px 0; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+        .mag-truco { background: #fffde6; border: 2px dashed #d4af37; padding: 10px; margin: 8px 0; font-size: 11.5px; font-weight: bold; color: #634a00; text-align: center; }
+        .mag-truco span { display: block; background: #d4af37; color: #000; padding: 2px; text-transform: uppercase; margin: -10px -10px 8px -10px; font-family: 'Impact'; font-size: 14px; }
 
-.flip-controls { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 8px; }
-.btn-flip { background: #000; color: #fff; border: 1px solid var(--modal-border); padding: 4px 10px; font-family: 'Impact'; font-size: 11px; cursor: pointer; box-shadow: 2px 2px 0 var(--modal-border); text-transform: uppercase; transition: 0.1s; }
-.btn-flip:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0 var(--modal-border); }
-.page-indicator { color: #fff; font-size: 11px; font-weight: bold; background: #333; padding: 3px 8px; border-radius: 10px; }
+        .flip-controls { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 8px; }
+        .btn-flip { background: #000; color: #fff; border: 1px solid var(--modal-border); padding: 4px 10px; font-family: 'Impact'; font-size: 11px; cursor: pointer; box-shadow: 2px 2px 0 var(--modal-border); text-transform: uppercase; transition: 0.1s; }
+        .btn-flip:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0 var(--modal-border); }
+        .page-indicator { color: #fff; font-size: 11px; font-weight: bold; background: #333; padding: 3px 8px; border-radius: 10px; }
 
-/* BOTONES DE ACCIÓN */
-.botones-row { display: flex; gap: 6px; margin-bottom: 5px; }
-.btn-nav { flex: 1; padding: 10px 0; border-radius: 6px; font-weight: 900; font-family: 'Impact'; text-transform: uppercase; cursor: pointer; border: none; font-size: 12px; transition: transform 0.1s; }
-.btn-catalog { background: #333; color: #fff; box-shadow: 0 3px 0 #000; }
-.btn-shop { background: #d4af37; color: #000; box-shadow: 0 3px 0 #8b6508; }
-.btn-play { width: 100%; padding: 14px 0; background: #e60012; color: #fff; border-radius: 6px; font-weight: 900; font-family: 'Impact'; text-transform: uppercase; font-size: 16px; border: none; box-shadow: 0 4px 0 #8b0000; cursor: pointer; transition: transform 0.1s; position: relative; z-index: 1000; }
-.btn-nav:active, .btn-play:active { transform: translateY(3px); box-shadow: 0 0 0 transparent; }
+        /* BOTONES DE ACCIÓN */
+        .botones-row { display: flex; gap: 6px; margin-bottom: 5px; }
+        .btn-nav { flex: 1; padding: 10px 0; border-radius: 6px; font-weight: 900; font-family: 'Impact'; text-transform: uppercase; cursor: pointer; border: none; font-size: 12px; transition: transform 0.1s; }
+        .btn-catalog { background: #333; color: #fff; box-shadow: 0 3px 0 #000; }
+        .btn-shop { background: #d4af37; color: #000; box-shadow: 0 3px 0 #8b6508; }
+        .btn-play { width: 100%; padding: 14px 0; background: #e60012; color: #fff; border-radius: 6px; font-weight: 900; font-family: 'Impact'; text-transform: uppercase; font-size: 16px; border: none; box-shadow: 0 4px 0 #8b0000; cursor: pointer; transition: transform 0.1s; position: relative; z-index: 1000; }
+        .btn-nav:active, .btn-play:active { transform: translateY(3px); box-shadow: 0 0 0 transparent; }
 
-/* SALÓN DE FAMA Y TABLAS */
-.salon-fama { background: #fff; color: #000; border-radius: 0 0 8px 8px; padding: 10px; display: none; min-height: 230px; border: 1px solid #ccc; margin-bottom: 8px;}
-.tabla-records { width: 100%; border-collapse: collapse; font-family: monospace; font-weight: bold; font-size: 12.5px; }
-.tabla-records th { background: #000; color: #fff; padding: 5px; text-align: center; border: 2px solid #000; }
-.tabla-records td { padding: 5px; text-align: center; border-bottom: 1px dashed #ccc; vertical-align: middle; }
-.btn-anadir { background: #005b9f; color: #fff; border: none; padding: 10px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; font-family: 'Impact'; font-size: 16px; text-transform: uppercase; }
+        /* SALÓN DE FAMA Y TABLAS */
+        .salon-fama { background: #fff; color: #000; border-radius: 0 0 8px 8px; padding: 10px; display: none; min-height: 230px; border: 1px solid #ccc; margin-bottom: 8px;}
+        .tabla-records { width: 100%; border-collapse: collapse; font-family: monospace; font-weight: bold; font-size: 12.5px; }
+        .tabla-records th { background: #000; color: #fff; padding: 5px; text-align: center; border: 2px solid #000; }
+        .tabla-records td { padding: 5px; text-align: center; border-bottom: 1px dashed #ccc; vertical-align: middle; }
+        .btn-anadir { background: #005b9f; color: #fff; border: none; padding: 10px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; font-family: 'Impact'; font-size: 16px; text-transform: uppercase; }
 
-/* TRANSICIÓN, ESCÁNER Y PAYWALL */
-.toast-notification { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: rgba(18, 18, 18, 0.95); border: 2px solid #d4af37; color: #ffd700; padding: 15px 25px; border-radius: 30px; font-size: 16px; font-weight: bold; box-shadow: 0 5px 20px rgba(212,175,55,0.5); z-index: 9999999999; transition: top 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); display: flex; align-items: center; gap: 10px; backdrop-filter: blur(5px); }
-.toast-notification.active { top: 25px; }
-.transition-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
-.transition-screen.active { opacity: 1; pointer-events: all; }
-.insert-coin-text { color: #ffd700; font-size: 28px; font-family: 'Courier New', Courier, monospace; font-weight: bold; animation: blink 0.5s infinite alternate; }
-@keyframes blink { from { opacity: 1; } to { opacity: 0.2; } }
-.nfc-scanner { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,10,0,0.97); z-index: 999999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: 0.3s; backdrop-filter: blur(10px); }
-.nfc-scanner.active { opacity: 1; pointer-events: all; }
-.nfc-laser { width: 250px; height: 3px; background: #9dff3d; box-shadow: 0 0 15px #9dff3d; position: absolute; animation: scanLaser 1.5s infinite alternate; }
-@keyframes scanLaser { from { transform: translateY(-100px); } to { transform: translateY(100px); } }
-#modalPaywall .ficha-content { text-align: center; border-color: #e60012; box-shadow: 0 0 40px #e60012; max-width: 400px; background: #111; }
-.secreto::before { background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff) !important; animation: brilloSeda 2s linear infinite !important; }
-</style>
+        /* TRANSICIÓN, ESCÁNER Y PAYWALL */
+        .toast-notification { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: rgba(18, 18, 18, 0.95); border: 2px solid #d4af37; color: #ffd700; padding: 15px 25px; border-radius: 30px; font-size: 16px; font-weight: bold; box-shadow: 0 5px 20px rgba(212,175,55,0.5); z-index: 9999999999; transition: top 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); display: flex; align-items: center; gap: 10px; backdrop-filter: blur(5px); }
+        .toast-notification.active { top: 25px; }
+        .transition-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
+        .transition-screen.active { opacity: 1; pointer-events: all; }
+        .insert-coin-text { color: #ffd700; font-size: 28px; font-family: 'Courier New', Courier, monospace; font-weight: bold; animation: blink 0.5s infinite alternate; }
+        @keyframes blink { from { opacity: 1; } to { opacity: 0.2; } }
+        .nfc-scanner { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,10,0,0.97); z-index: 999999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: 0.3s; backdrop-filter: blur(10px); }
+        .nfc-scanner.active { opacity: 1; pointer-events: all; }
+        .nfc-laser { width: 250px; height: 3px; background: #9dff3d; box-shadow: 0 0 15px #9dff3d; position: absolute; animation: scanLaser 1.5s infinite alternate; }
+        @keyframes scanLaser { from { transform: translateY(-100px); } to { transform: translateY(100px); } }
+        
+        #modalPaywall .ficha-content { text-align: center; border-color: #e60012; box-shadow: 0 0 40px #e60012; max-width: 400px; background: #111; }
+        .secreto::before { background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff) !important; animation: brilloSeda 2s linear infinite !important; }
+    </style>
 </head>
 
 <body>
@@ -348,6 +351,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if(params.get('llave') === 'oleaVIP') { 
         const horasDesbloqueo = 48; 
         const tiempoCaducidad = new Date().getTime() + (horasDesbloqueo * 60 * 60 * 1000);
+        
         localStorage.setItem('olea3d_vip_caducidad', tiempoCaducidad); 
         localStorage.removeItem('olea3d_vip_expirado'); 
         localStorage.removeItem('olea3d_vip'); 
@@ -364,16 +368,52 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 let toquesLogo = 0, tiempoToques;
-function toqueSecreto() { reproducirClic(); toquesLogo++; clearTimeout(tiempoToques); if(toquesLogo===3){ const ts = document.getElementById("tarjetaSecreta"); if(ts) { ts.style.display="block"; ts.scrollIntoView({behavior:'smooth',block:'center'}); reproducirSonido1UP(); } toquesLogo=0; } else { tiempoToques=setTimeout(()=>{toquesLogo=0;},1000); } }
+function toqueSecreto() { 
+    reproducirClic(); 
+    toquesLogo++; 
+    clearTimeout(tiempoToques); 
+    if(toquesLogo===3){ 
+        const ts = document.getElementById("tarjetaSecreta"); 
+        if(ts) { 
+            ts.style.display="block"; 
+            ts.scrollIntoView({behavior:'smooth',block:'center'}); 
+            reproducirSonido1UP(); 
+        } 
+        toquesLogo=0; 
+    } else { 
+        tiempoToques=setTimeout(()=>{toquesLogo=0;},1000); 
+    } 
+}
 
 let toquesBeltraneja = 0, tiempoBeltraneja;
-function toqueBeltraneja() { reproducirClic(); toquesBeltraneja++; clearTimeout(tiempoBeltraneja); if(toquesBeltraneja===2){ const tc = document.getElementById("tarjetaCiervo"); if(tc) { tc.style.display="block"; tc.scrollIntoView({behavior:'smooth',block:'center'}); reproducirSonidoCoin(); } toquesBeltraneja=0; } else { tiempoBeltraneja=setTimeout(()=>{toquesBeltraneja=0;},500); } }
+function toqueBeltraneja() { 
+    reproducirClic(); 
+    toquesBeltraneja++; 
+    clearTimeout(tiempoBeltraneja); 
+    if(toquesBeltraneja===2){ 
+        const tc = document.getElementById("tarjetaCiervo"); 
+        if(tc) { 
+            tc.style.display="block"; 
+            tc.scrollIntoView({behavior:'smooth',block:'center'}); 
+            reproducirSonidoCoin(); 
+        } 
+        toquesBeltraneja=0; 
+    } else { 
+        tiempoBeltraneja=setTimeout(()=>{toquesBeltraneja=0;},500); 
+    } 
+}
 
 // --- LA BASE DE DATOS TITÁNICA ---
 const infoJuegos = {
+    
     // 🕹️ ARCADE
     cadillacs: { 
-        consola: "arcade", titulo: "CADILLACS & DINOS", img: "dino.jpg", enlace: "dino.html", valoracion: "NOTA: 98/100", wr: { nombre: "YOO", puntos: "9.999.900" },
+        consola: "arcade", 
+        titulo: "CADILLACS & DINOS", 
+        img: "dino.jpg", 
+        enlace: "dino.html", 
+        valoracion: "NOTA: 98/100", 
+        wr: { nombre: "YOO", puntos: "9.999.900" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='dino.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='dino.jpg'\">",
             "<h2 class='mag-titular'>MEGA HIT ARCADE</h2><p>En 1993, a los genios de Capcom se les ocurrió mezclar tíos duros, coches clásicos y dinosaurios enormes. Basado libremente en el cómic <em>Xenozoic Tales</em> de Mark Schultz, este juego arrasó literalmente en los salones recreativos de medio mundo.</p><div class='mag-box'><strong>EL ARGUMENTO:</strong> El planeta se ha ido al traste y la naturaleza ha reclamado la Tierra. Ahora los humanos conviven con dinosaurios resucitados. Una banda de furtivos está cazando a los dinos para mutarlos. Tu misión es reventarlos a golpes.</div>", 
@@ -385,19 +425,29 @@ const infoJuegos = {
         ] 
     },
     kof94: { 
-        consola: "arcade", titulo: "KOF '94", img: "thekingoffighters94.jpg", enlace: "kof94.html", valoracion: "NOTA: 90/100", wr: { nombre: "DAI", puntos: "2.350.000" },
+        consola: "arcade", 
+        titulo: "KOF '94", 
+        img: "thekingoffighters94.jpg", 
+        enlace: "kof94.html", 
+        valoracion: "NOTA: 90/100", 
+        wr: { nombre: "DAI", puntos: "2.350.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='kof94.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='thekingoffighters94.jpg'\">",
             "<h2 class='mag-titular'>EL CROSSOVER MÁXIMO</h2><p>En 1994, a SNK se le ocurrió la loca idea de meter a los personajes de sus mejores franquicias (Fatal Fury, Art of Fighting, Ikari Warriors) en un solo juego. Fue el equivalente a crear Los Vengadores, pero en los salones recreativos, con tipos musculosos dándose palizas en torneos clandestinos.</p>", 
-            "<h2 class='mag-sub'>LA ERA DORADA DE SNK</h2><p>Este título sentó las bases de los juegos de lucha modernos. La idea de agrupar a personajes por nacionalidades dio lugar a escenarios icónicos como el bar de México o las calles inundadas de Italia.</p>"
+            "<h2 class='mag-sub'>LA ERA DORADA DE SNK</h2><p>Este título sentó las bases de los juegos de lucha modernos. La idea de agrupar a personajes por nacionalidades dio lugar a escenarios icónicos como el pub de México o las calles de España.</p>"
         ], 
         manual: [
-            "<h2 class='mag-titular'>PELEA EN EQUIPO</h2><p>Aquí no hay uno contra uno. Tienes que elegir un equipo completo de 3 luchadores que representan a un país (Italia, Japón, USA...). Si uno cae en combate, entra el siguiente. Así hasta barrer el suelo con el equipo rival completo.</p><div class='mag-box'><strong>CARGAR ENERGÍA:</strong> Mantén pulsados A+B+C a la vez para cargar tu barra. Cuando parpadee, desata tu Desperation Move y quítale media barra al rival.</div>", 
+            "<h2 class='mag-titular'>PELEA EN EQUIPO</h2><p>Aquí no hay uno contra uno. Tienes que elegir un equipo completo de 3 luchadores que representan a un país (Japón, USA...). Si uno cae en combate, entra el siguiente. Así hasta barrer el suelo con el equipo rival completo.</p><div class='mag-box'><strong>CARGAR ENERGÍA:</strong> Mantén pulsados A+B+C a la vez para cargar tu barra. Cuando parpadee, desata tu Desperation Move y quítale media barra al rival.</div>", 
             "<h2 class='mag-sub'>GOLPES DEFINITIVOS</h2><p>Cada personaje tiene su técnica secreta. Para lanzar el proyectil de fuego clásico de Kyo Kusanagi, pulsa: Abajo, Diagonal-Abajo-Adelante, Adelante + Puño. Domina las medias lunas en tu cruceta si quieres sobrevivir al jefe Rugal Bernstein.</p>"
         ] 
     },
     kof95: { 
-        consola: "arcade", titulo: "KOF '95", img: "thekingoffighters95.jpg", enlace: "kof95.html", valoracion: "NOTA: 93/100", wr: { nombre: "KYO", puntos: "3.100.500" },
+        consola: "arcade", 
+        titulo: "KOF '95", 
+        img: "thekingoffighters95.jpg", 
+        enlace: "kof95.html", 
+        valoracion: "NOTA: 93/100", 
+        wr: { nombre: "KYO", puntos: "3.100.500" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='kof95.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='thekingoffighters95.jpg'\">",
             "<h2 class='mag-titular'>NACE LA RIVALIDAD</h2><p>El juego que perfeccionó la fórmula y nos presentó al emo más famoso de los videojuegos: Iori Yagami. Su rivalidad eterna con Kyo dividió a los jugadores en los salones arcade. Si en tu barrio sabías hacer los combos infinitos de Iori, eras el rey indiscutible de la máquina.</p>", 
@@ -409,7 +459,12 @@ const infoJuegos = {
         ] 
     },
     neobombe: { 
-        consola: "arcade", titulo: "NEO BOMBERMAN", img: "neobomberman.jpg", enlace: "neobombe.html", valoracion: "NOTA: 88/100", wr: { nombre: "BOM", puntos: "1.250.000" },
+        consola: "arcade", 
+        titulo: "NEO BOMBERMAN", 
+        img: "neobomberman.jpg", 
+        enlace: "neobombe.html", 
+        valoracion: "NOTA: 88/100", 
+        wr: { nombre: "BOM", puntos: "1.250.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='neobombe.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='neobomberman.jpg'\">",
             "<h2 class='mag-titular'>EXPLOSIONES EN NEO GEO</h2><p>Hudson Soft llevó a su mítico muñeco pone-bombas a la todopoderosa placa arcade de SNK en 1997. El resultado es un festival de luces, colores y gritos de amigos traicionándose por acorralarse con bombas en los modos multijugador.</p>"
@@ -419,7 +474,12 @@ const infoJuegos = {
         ] 
     },
     simpsons: { 
-        consola: "arcade", titulo: "THE SIMPSONS", img: "simpsons.jpg", enlace: "simpsons.html", valoracion: "NOTA: 96/100", wr: { nombre: "B.S", puntos: "8.500.000" },
+        consola: "arcade", 
+        titulo: "THE SIMPSONS", 
+        img: "simpsons.jpg", 
+        enlace: "simpsons.html", 
+        valoracion: "NOTA: 96/100", 
+        wr: { nombre: "B.S", puntos: "8.500.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='simpsons.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='simpsons.jpg'\">",
             "<h2 class='mag-titular'>EL REY DE LOS RECREATIVOS</h2><p>Konami lanzó este beat 'em up en 1991 y se convirtió en la tragaperras definitiva. La máquina física original tenía 4 joysticks para que cuatro amigos jugaran a la vez repartiendo leña en Springfield para rescatar a la pequeña Maggie del Sr. Burns.</p>"
@@ -429,7 +489,12 @@ const infoJuegos = {
         ] 
     },
     tmnt: { 
-        consola: "arcade", titulo: "TMNT ARCADE", img: "tmnt.jpg", enlace: "tmnt.html", valoracion: "NOTA: 95/100", wr: { nombre: "LEO", puntos: "5.430.000" },
+        consola: "arcade", 
+        titulo: "TMNT ARCADE", 
+        img: "tmnt.jpg", 
+        enlace: "tmnt.html", 
+        valoracion: "NOTA: 95/100", 
+        wr: { nombre: "LEO", puntos: "5.430.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='tmnt.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='tmnt.jpg'\">",
             "<h2 class='mag-titular'>COWABUNGA, CHICOS</h2><p>Otro éxito monstruoso de Konami en los bares (1989). Jugar a cuatro bandas con Leonardo, Raphael, Michelangelo y Donatello era el sueño de cualquier chaval de los 90. Destruir soldados del Clan del Pie por las calles de Nueva York y las cloacas nunca fue tan divertido.</p>"
@@ -439,7 +504,12 @@ const infoJuegos = {
         ] 
     },
     pacman: { 
-        consola: "arcade", titulo: "PAC-MAN", img: "pacman.jpg", enlace: "Pacman.html", valoracion: "NOTA: 95/100", wr: { nombre: "B.M", puntos: "3.333.360" },
+        consola: "arcade", 
+        titulo: "PAC-MAN", 
+        img: "pacman.jpg", 
+        enlace: "Pacman.html", 
+        valoracion: "NOTA: 95/100", 
+        wr: { nombre: "B.M", puntos: "3.333.360" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='pacman.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='pacman.jpg'\">",
             "<h2 class='mag-titular'>EL REY DEL ARCADE</h2><p>Lanzado en 1980 por Namco. Antes de Pac-Man, todos los juegos iban de disparar a naves alienígenas. Toru Iwatani quería crear un juego pacifista que atrajera a todo el mundo, inspirándose en una pizza a la que le faltaba una porción.</p>"
@@ -451,7 +521,12 @@ const infoJuegos = {
 
     // 🎮 NES
     miketyson: { 
-        consola: "nes", titulo: "PUNCH-OUT!!", img: "miketyson.jpg", enlace: "miketyson.html", valoracion: "NOTA: 94/100", wr: { nombre: "MAC", puntos: "999.990" },
+        consola: "nes", 
+        titulo: "PUNCH-OUT!!", 
+        img: "miketyson.jpg", 
+        enlace: "miketyson.html", 
+        valoracion: "NOTA: 94/100", 
+        wr: { nombre: "MAC", puntos: "999.990" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='miketyson.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='miketyson.jpg'\">",
             "<h2 class='mag-titular'>EL NEGOCIO DEL SIGLO</h2><p>Nintendo pagó a Mike Tyson la ridícula suma de 50.000 dólares en 1986 por usar su imagen, meses antes de que se convirtiera en el campeón mundial indiscutible de los pesos pesados. Les salió regalado y el juego vendió millones.</p>"
@@ -461,7 +536,12 @@ const infoJuegos = {
         ] 
     },
     ghostngoblin: { 
-        consola: "nes", titulo: "GHOSTS 'N GOBLINS", img: "ghostngoblin.jpg", enlace: "ghostngoblin.html", valoracion: "NOTA: 85/100", wr: { nombre: "ART", puntos: "1.120.000" },
+        consola: "nes", 
+        titulo: "GHOSTS 'N GOBLINS", 
+        img: "ghostngoblin.jpg", 
+        enlace: "ghostngoblin.html", 
+        valoracion: "NOTA: 85/100", 
+        wr: { nombre: "ART", puntos: "1.120.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='ghostngoblin.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='ghostngoblin.jpg'\">",
             "<h2 class='mag-titular'>ODIO AL JUGADOR</h2><p>Su creador, Tokuro Fujiwara, diseñó deliberadamente el juego más frustrante y difícil del mundo. Los enemigos aparecen de la nada y no puedes cambiar la dirección de tu salto una vez estás en el aire. Calculas mal y mueres.</p><div class='mag-box'><strong>LA GRAN TROLLEADA:</strong> Si consigues llegar sudando sangre a matar al jefe final, el juego te lanza un mensaje diciendo que 'todo era una ilusión de Satán' y te obliga a pasarte el juego entero OTRA VEZ desde el principio sin apagar la consola. Maldad pura.</div>"
@@ -471,7 +551,12 @@ const infoJuegos = {
         ] 
     },
     mariobros3: { 
-        consola: "nes", titulo: "SUPER MARIO BROS 3", img: "supermariobros3.jpg", enlace: "supermariobros3.html", valoracion: "NOTA: 98/100", wr: { nombre: "NIF", puntos: "9.999.990" },
+        consola: "nes", 
+        titulo: "SUPER MARIO BROS 3", 
+        img: "supermariobros3.jpg", 
+        enlace: "supermariobros3.html", 
+        valoracion: "NOTA: 98/100", 
+        wr: { nombre: "NIF", puntos: "9.999.990" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='mariobros3.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='supermariobros3.jpg'\">",
             "<h2 class='mag-titular'>TODO ES UNA OBRA DE TEATRO</h2><p>¿Te has fijado bien en el juego? La pantalla de título es un telón rojo levantándose. Los bloques tienen tornillos pegados al fondo, las plataformas cuelgan de cuerdas del techo y al final de cada nivel sales por unas bambalinas negras. Shigeru Miyamoto confirmó años después que todo es una función teatral.</p>"
@@ -481,7 +566,12 @@ const infoJuegos = {
         ] 
     },
     tetris: { 
-        consola: "nes", titulo: "TETRIS", img: "TetrisNes.png", enlace: "TetrisFicha.html", valoracion: "NOTA: 95/100", wr: { nombre: "JON", puntos: "999.999" },
+        consola: "nes", 
+        titulo: "TETRIS", 
+        img: "TetrisNes.png", 
+        enlace: "TetrisFicha.html", 
+        valoracion: "NOTA: 95/100", 
+        wr: { nombre: "JON", puntos: "999.999" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='tetris.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='TetrisNes.png'\">",
             "<h2 class='mag-titular'>UN NACIMIENTO FRÍO</h2><p>Nació en 1984 en plena Unión Soviética, durante la Guerra Fría. Alexey Pajitnov lo programó en sus ratos libres en un ordenador gubernamental que ni siquiera tenía gráficos. Los primeros bloques estaban dibujados uniendo corchetes en la pantalla de texto: [ ] [ ].</p><div class='mag-box'><strong>CONTRABANDO MUNDIAL:</strong> El juego paralizó la productividad en los ministerios rusos porque todos jugaban a escondidas. Fue sacado de contrabando hacia occidente, desatando una guerra legal salvaje. Nintendo ganó y lo metió en cada consola.</div>"
@@ -491,7 +581,12 @@ const infoJuegos = {
         ] 
     },
     mariobros: { 
-        consola: "nes", titulo: "SUPER MARIO BROS", img: "SuperMarioBros.jpg", enlace: "SuperMarioBros.html", valoracion: "NOTA: 97/100", wr: { nombre: "NIF", puntos: "9.999.950" },
+        consola: "nes", 
+        titulo: "SUPER MARIO BROS", 
+        img: "SuperMarioBros.jpg", 
+        enlace: "SuperMarioBros.html", 
+        valoracion: "NOTA: 97/100", 
+        wr: { nombre: "NIF", puntos: "9.999.950" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='mariobros.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='SuperMarioBros.jpg'\">",
             "<h2 class='mag-titular'>EL SALVADOR DE LA INDUSTRIA</h2><p>En 1985, el mercado de las consolas estaba en ruinas. Miyamoto diseñó a Mario con bigote y gorra puramente por limitaciones técnicas (dibujar bocas y pelo animado en 8 bits era muy difícil), creando sin saberlo al icono pop más grande de la historia y vendiendo 40 millones de copias.</p><div class='mag-box'><strong>EL LORE OSCURO:</strong> Los Koopas usaron magia negra para convertir a los inocentes ciudadanos en bloques de ladrillo. Sí, cada vez que rompes un ladrillo con la cabeza para coger monedas, estás cometiendo un asesinato contra un habitante del reino. Trágico.</div>"
@@ -501,7 +596,12 @@ const infoJuegos = {
         ] 
     },
     tortugasnes: { 
-        consola: "nes", titulo: "TMNT (NES)", img: "tnmnes.jpg", enlace: "tortugasnes.html", valoracion: "NOTA: 82/100", wr: { nombre: "DON", puntos: "2.400.000" },
+        consola: "nes", 
+        titulo: "TMNT (NES)", 
+        img: "tnmnes.jpg", 
+        enlace: "tortugasnes.html", 
+        valoracion: "NOTA: 82/100", 
+        wr: { nombre: "DON", puntos: "2.400.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='tortugasnes.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='tnmnes.jpg'\">",
             "<h2 class='mag-titular'>TRAUMAS DE LA INFANCIA</h2><p>Este juego es históricamente famoso por tener una de las fases más odiadas, difíciles y estresantes de toda la época de los 8 bits: El famoso Nivel de la Presa. Tenías que bucear a contrarreloj bajo el agua para desactivar 8 bombas mientras esquivabas unas algas eléctricas rosas que te electrocutaban sin piedad. Ansiedad en estado puro.</p>"
@@ -511,7 +611,12 @@ const infoJuegos = {
         ] 
     },
     adventureisland2nes: { 
-        consola: "nes", titulo: "ADVENTURE ISLAND II", img: "adventureisland2nes.jpg", enlace: "adventureisland2nes.html", valoracion: "NOTA: 90/100", wr: { nombre: "HIG", puntos: "850.000" },
+        consola: "nes", 
+        titulo: "ADVENTURE ISLAND II", 
+        img: "adventureisland2nes.jpg", 
+        enlace: "adventureisland2nes.html", 
+        valoracion: "NOTA: 90/100", 
+        wr: { nombre: "HIG", puntos: "850.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='adventureisland2nes.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='adventureisland2nes.jpg'\">",
             "<h2 class='mag-titular'>EL REGRESO DE MASTER HIGGINS</h2><p>¡Los alienígenas han secuestrado a la novia de Higgins (otra vez)! Pero esta vez nuestro héroe de la gorra no está solo. En esta mítica secuela de 8 bits se introdujo la mejor mecánica de la saga: ¡los dinosaurios! Podrás montar en cuatro compañeros diferentes (el dragón azul de hielo, el rojo de fuego, el volador y el acuático). Un plataformas brillante y un auténtico desafío para tus reflejos.</p>"
@@ -525,7 +630,12 @@ const infoJuegos = {
 
     // 🕹️ N64
     mariokart64: { 
-        consola: "n64", titulo: "MARIO KART 64", img: "Mariokart64.jpg", enlace: "Mariokart64.html", valoracion: "NOTA: 95/100", wr: { nombre: "MAT", puntos: "150cc" },
+        consola: "n64", 
+        titulo: "MARIO KART 64", 
+        img: "Mariokart64.jpg", 
+        enlace: "Mariokart64.html", 
+        valoracion: "NOTA: 95/100", 
+        wr: { nombre: "MAT", puntos: "150cc" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='mariokart64.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='Mariokart64.jpg'\">",
             "<h2 class='mag-titular'>DESTRUCTOR DE AMISTADES</h2><p>El juego de carreras que arruinó las tardes pacíficas de miles de niños en los años 90 con sus piques a cuatro mandos dividiendo la tele. Fue el paso revolucionario de los karts planos al 3D absoluto.</p><div class='mag-box'><strong>CURIOSIDAD WARIO:</strong> ¿Sabías que el grandote Wario no estaba originalmente en los planes de Nintendo? Entró en el último momento del desarrollo para robarle la plaza al pobre Koopa Troopa.</div>"
@@ -535,7 +645,12 @@ const infoJuegos = {
         ] 
     },
     castlegacy: { 
-        consola: "n64", titulo: "CASTLEVANIA", img: "castlegacy.jpg", enlace: "Castlegacy.html", valoracion: "NOTA: 82/100", wr: { nombre: "BEL", puntos: "100%" },
+        consola: "n64", 
+        titulo: "CASTLEVANIA", 
+        img: "castlegacy.jpg", 
+        enlace: "Castlegacy.html", 
+        valoracion: "NOTA: 82/100", 
+        wr: { nombre: "BEL", puntos: "100%" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='castlegacy.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='castlegacy.jpg'\">",
             "<h2 class='mag-titular'>VAMPIROS POLIGONALES</h2><p>Conocido popularmente como Castlevania 64, fue el primer y ambicioso salto de la legendaria familia de cazavampiros a las tres dimensiones de la N64. El juego es oscuro y lúgubre, pero todo el mundo le echaba la culpa de sus muertes al mismísimo Drácula, cuando en realidad, el verdadero jefe final invencible del juego era el nefasto control automático de la cámara.</p>"
@@ -545,7 +660,12 @@ const infoJuegos = {
         ] 
     },
     mortalkomleg64: { 
-        consola: "n64", titulo: "MORTAL KOMBAT", img: "mortalkom64.png", enlace: "mortalkomleg64.html", valoracion: "NOTA: 87/100", wr: { nombre: "SHA", puntos: "99 Wins" },
+        consola: "n64", 
+        titulo: "MORTAL KOMBAT", 
+        img: "mortalkom64.png", 
+        enlace: "mortalkomleg64.html", 
+        valoracion: "NOTA: 87/100", 
+        wr: { nombre: "SHA", puntos: "99 Wins" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='mortalkomleg64.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='mortalkom64.png'\">",
             "<h2 class='mag-titular'>SANGRE Y POLÉMICA MUNDIAL</h2><p>La franquicia Mortal Kombat fue pionera en capturar actores reales digitalizados en pantalla verde para meterlos en el juego. Ver a Sub-Zero arrancándole la columna vertebral a sus rivales con un reguero de píxeles rojos alarmó tanto a las asociaciones de padres y senadores de EE.UU. que provocó un cambio histórico en toda la industria del entretenimiento.</p><div class='mag-box'><strong>EL DATO CURIOSO:</strong> El gobierno americano montó un juicio y obligó a crear la ESRB: el sistema oficial que vemos hoy y que pone los sellos de edad (+18) en las cajas de plástico. Literalmente, Mortal Kombat cambió las leyes.</div>"
@@ -555,29 +675,44 @@ const infoJuegos = {
         ] 
     },
     mariotennis: { 
-        consola: "n64", titulo: "MARIO TENNIS", img: "MarioTennis.jpg", enlace: "MarioTennis.html", valoracion: "NOTA: 88/100", wr: { nombre: "PRO", puntos: "N/A" },
+        consola: "n64", 
+        titulo: "MARIO TENNIS", 
+        img: "MarioTennis.jpg", 
+        enlace: "MarioTennis.html", 
+        valoracion: "NOTA: 88/100", 
+        wr: { nombre: "PRO", puntos: "N/A" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='mariotennis.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='MarioTennis.jpg'\">",
             "<h2 class='mag-titular'>EL ORIGEN DEL MAL EN LA RED</h2><p>Para este juego de raquetas en N64 querían crear un modo de torneos de dobles épico, pero se dieron cuenta de un problema gravísimo de diseño: el malvado Wario no tenía a ningún compañero de fechorías para hacer equipo. En lugar de emparejarlo con Bowser (que ya tenía su estilo), se inventaron de la nada a un tipo larguirucho, con bigote en zigzag, voz de pito y una gorra con una 'L' invertida. Así nació la leyenda de Waluigi.</p>"
         ], 
         manual: [
-            "<h2 class='mag-titular'>REGLAMENTO EN PISTA</h2><p>No te limites a darle a la bola de cualquier manera. Camelot (el estudio) introdujo mucha profundidad técnica en los controles para destrozar a tus amigos en el salón.</p><div class='mag-truco'><span>TIPOS DE GOLPE CORTADO</span>La magia está en los botones de colores de la Nintendo 64:<br><strong>Botón A:</strong> Darás un golpe plano, potente, rápido y directo con estela Roja.<br><strong>Botón B:</strong> Golpe cortado y engañoso con efecto azul para romperle la cintura al rival.<br><strong>Pulsar A + B a la vez:</strong> Harás un globo parabólico altísimo. Perfecto para cuando tu amigo es un abusón y se pega a la red todo el rato.</div>"
+            "<h2 class='mag-titular'>REGLAMENTO EN PISTA</h2><p>No te limites a darle a la bola de cualquier manera. Camelot (el estudio) introdujo mucha profundidad técnica en los controles para destrozar a tus amigos en el salón.</p><div class='mag-truco'><span>TIPOS DE GOLPE CORTADO</span>La magia está en los botones de colores de la Nintendo 64:<br><strong>Botón A:</strong> Darás un golpe plano, potente, rápido y listo con estela Roja.<br><strong>Botón B:</strong> Golpe cortado y engañoso con efecto azul para romperle la cintura al rival.<br><strong>Pulsar A + B a la vez:</strong> Harás un globo parabólico altísimo. Perfecto para cuando tu amigo es un abusón y se pega a la red todo el rato.</div>"
         ] 
     },
 
     // ⚡ MEGA DRIVE
     batman: { 
-        consola: "md", titulo: "BATMAN", img: "batman.jpg", enlace: "batman.html", valoracion: "NOTA: 88/100", wr: { nombre: "WAY", puntos: "1.000.000" },
+        consola: "md", 
+        titulo: "BATMAN", 
+        img: "batman.jpg", 
+        enlace: "batman.html", 
+        valoracion: "NOTA: 88/100", 
+        wr: { nombre: "WAY", puntos: "1.000.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='batman.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='batman.jpg'\">",
-            "<h2 class='mag-titular'>LA NOCHE OSCURA DE LOS 16 BITS</h2><p>Basado directamente en la icónica película de Tim Burton con Michael Keaton y Jack Nicholson (1989). El estudio Sunsoft lo programó con una paleta de colores tan sombría, negra y fiel al cine gótico que a veces no veías literalmente dónde tenías que saltar en los tejados de Gotham, fundiéndote con el fondo.</p><div class='mag-box'><strong>MÚSICA INMORTAL:</strong> Hoy en día es reverenciado en la comunidad técnica por tener la mejor, más épica y rítmica banda sonora que jamás haya exprimido el chip de síntesis FM de la consola Mega Drive. Pura magia sonora.</div>"
+            "<h2 class='mag-titular'>LA NOCHE OSCURA DE LOS 16 BITS</h2><p>Basado tal cual en la icónica película de Tim Burton con Michael Keaton y Jack Nicholson (1989). El estudio Sunsoft lo programó con una paleta de colores tan sombría, negra y fiel al cine gótico que a veces no veías literalmente dónde tenías que saltar en los tejados de Gotham, fundiéndote con el fondo.</p><div class='mag-box'><strong>MÚSICA INMORTAL:</strong> Hoy en día es reverenciado en la comunidad técnica por tener la mejor, más épica y rítmica banda sonora que jamás haya exprimido el chip de síntesis FM de la consola Mega Drive. Pura magia sonora.</div>"
         ], 
         manual: [
             "<h2 class='mag-titular'>MANUAL DEL JUSTICIERO</h2><p>Misión: Limpiar los callejones del crimen de Gotham a puñetazo limpio, recorrer el museo de arte y llegar hasta lo alto del campanario de la catedral para tirarle la sonrisa de la cara al mismísimo Joker.</p><div class='mag-truco'><span>GADGETS DE WAYNE</span>Usa sabiamente tus armas limitadas. Tira los icónicos Batarangs dirigidos para mantener a los payasos gordos y pistoleros a distancia. El Gancho es esencial: lánzalo en diagonal para engancharte a las cornisas altas y esquivar los barriles de ácido subiéndote a lo alto de las farolas.</div>"
         ] 
     },
     goldenaxe2: { 
-        consola: "md", titulo: "GOLDEN AXE II", img: "goldenaxe2.jpg", enlace: "goldenaxe2.html", valoracion: "NOTA: 85/100", wr: { nombre: "GIL", puntos: "850.000" },
+        consola: "md", 
+        titulo: "GOLDEN AXE II", 
+        img: "goldenaxe2.jpg", 
+        enlace: "goldenaxe2.html", 
+        valoracion: "NOTA: 85/100", 
+        wr: { nombre: "GIL", puntos: "850.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='goldenaxe2.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='goldenaxe2.jpg'\">",
             "<h2 class='mag-titular'>MÁS MAGIA, MÁS GUANTAZOS</h2><p>Salió al mercado tan escandalosamente rápido tras el éxito masivo del primer juego, que muchas revistas de la época lo criticaron diciendo que era solo una expansión glorificada con los gráficos reciclados. Pero a los jugadores en sus casas les dio exactamente igual: los ataques mágicos a pantalla completa eran aún más chulos y los dichosos esqueletos inmortales seguían apareciendo de la tierra para amargarnos la existencia.</p>"
@@ -587,7 +722,12 @@ const infoJuegos = {
         ] 
     },
     rambo3: { 
-        consola: "md", titulo: "RAMBO III", img: "Rambo3.jpg", enlace: "Rambo3.html", valoracion: "NOTA: 80/100", wr: { nombre: "SLY", puntos: "500.000" },
+        consola: "md", 
+        titulo: "RAMBO III", 
+        img: "Rambo3.jpg", 
+        enlace: "Rambo3.html", 
+        valoracion: "NOTA: 80/100", 
+        wr: { nombre: "SLY", puntos: "500.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='rambo3.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='Rambo3.jpg'\">",
             "<h2 class='mag-titular'>EJÉRCITO DE UN SOLO HOMBRE</h2><p>¿Qué puede hacer un solo soldado curtido, sin camiseta, sudando bajo el sol y con una simple cinta roja en la cabeza contra batallones soviéticos, tanques pesados y helicópteros blindados? Exacto: reventarlos a todos en pedazos usando un arco de madera prehistórico y flechas con cartuchos de dinamita C4 atados en la punta. Pura lógica aplastante de Sylvester Stallone en la edad de oro del cine de acción.</p>"
@@ -597,7 +737,12 @@ const infoJuegos = {
         ] 
     },
     sonic: { 
-        consola: "md", titulo: "SONIC THE HEDGEHOG", img: "sonicthehedgehog.jpg", enlace: "SONIC 1 - Shadow The Hedgehog.html", valoracion: "NOTA: 92/100", wr: { nombre: "SEG", puntos: "99.999" },
+        consola: "md", 
+        titulo: "SONIC THE HEDGEHOG", 
+        img: "sonicthehedgehog.jpg", 
+        enlace: "SONIC 1 - Shadow The Hedgehog.html", 
+        valoracion: "NOTA: 92/100", 
+        wr: { nombre: "SEG", puntos: "99.999" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='sonic.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='sonicthehedgehog.jpg'\">",
             "<h2 class='mag-titular'>LA MASCOTA MÁS RÁPIDA Y REBELDE</h2><p>SEGA necesitaba imperiosamente una figura para destruir el monopolio absoluto y buenista de Mario en consolas. Querían algo rápido, agresivo, chulo y que reflejara los años 90. Así crearon a Sonic. Empezó siendo un conejo, pero acabó como un erizo azul (el color del logo de Sega) con zapatillas inspiradas en las de Michael Jackson y Michael Jordan.</p><div class='mag-box'><strong>CURIOSIDAD BIOLÓGICA:</strong> Sonic se ahoga estrepitosamente en el juego (y suena esa música de angustia) porque los programadores japoneses creían falsamente que los erizos reales se hundían en el agua. Tiempo después descubrieron que flotan de maravilla.</div>"
@@ -607,7 +752,12 @@ const infoJuegos = {
         ] 
     },
     aladdin: { 
-        consola: "md", titulo: "ALADDIN", img: "aladin.jpg", enlace: "aladin.html", valoracion: "NOTA: 90/100", wr: { nombre: "ABU", puntos: "85.000" },
+        consola: "md", 
+        titulo: "ALADDIN", 
+        img: "aladin.jpg", 
+        enlace: "aladin.html", 
+        valoracion: "NOTA: 90/100", 
+        wr: { nombre: "ABU", puntos: "85.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='aladdin.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='aladin.jpg'\">",
             "<h2 class='mag-titular'>MAGIA DISNEY EN TUS MANOS</h2><p>Este juego fue histórico porque los mismísimos y legendarios animadores de los estudios de Walt Disney trabajaron en conjunto con Virgin Games para dibujar a mano los sprites (píxeles) del personaje. Lograron una fluidez digna de dibujos animados que parecía imposible de renderizar en esa época de circuitos rústicos.</p><div class='mag-box'><strong>LA GRAN GUERRA:</strong> Este título generó intensas discusiones en todos los patios de colegio del país: la versión del juego para Super Nintendo la hizo Capcom y Aladdin no tenía espada, solo saltaba a lo Mario. Pero esta de Mega Drive SÍ la tenía. Era más macarra. Los fans de Sega usaron esto como arma arrojadiza.</div>"
@@ -617,21 +767,30 @@ const infoJuegos = {
         ] 
     },
     tokimg: { 
-        consola: "md", titulo: "TOKI", img: "tokimg.jpg", enlace: "tokimg.html", valoracion: "NOTA: 86/100", wr: { nombre: "JUJ", puntos: "320.000" },
+        consola: "md", 
+        titulo: "TOKI", 
+        img: "tokimg.jpg", 
+        enlace: "tokimg.html", 
+        valoracion: "NOTA: 86/100", 
+        wr: { nombre: "JUJ", puntos: "320.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='tokimg.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='tokimg.jpg'\">",
             "<h2 class='mag-titular'>UN HÉROE PRIMATE</h2><p>¡Vaya papeleta! Un malvado hechicero ha secuestrado a tu novia Miho y, para rematar la faena, te ha convertido en un mono rechoncho y bastante lento. Este clásico plataformero, que nació en las máquinas recreativas y tuvo un port brillante en Mega Drive, te obligará a escupir bolas de energía por la boca para abrirte paso a través de la jungla y recuperar tu forma humana.</p>"
         ], 
         manual: [
-            "<h2 class='mag-titular'>GUÍA DE SUPERVIVENCIA SALIVAL</h2><p>Toki no es Sonic; es un mono lento y pesado. La paciencia es tu mejor arma en este juego. Avanza poco a poco y no saltes a lo loco hacia lo desconocido o acabarás en un foso de pinchos o devorado por un monstruo oculto.</p><div class='mag-box'><strong>CASCO DE FÚTBOL AMERICANO:</strong> De vez en cuando encontrarás un mítico casco de fútbol americano. ¡Póntelo rápido! Te hará temporalmente inmune a los ataques y enemigos que te caigan directamente desde arriba. Es una ventaja tremenda.</div>",
+            "<h2 class='mag-titular'>GUÍA DE SUPERVIVENCIA SALIVAL</h2><p>Toki no es Sonic; es un mono lento y pesado. La paciencia es tu mejor arma en este juego. Avanza poco a poco y no saltes a lo loco hacia lo desconocido o acabarás en un foso de pinchos o devorado por un monstruo oculto.</p><div class='mag-box'><strong>CASCO DE FÚTBOL AMERICANO:</strong> De vez en cuando encontrarás un mítico casco de fútbol americano. ¡Póntelo rápido! Te hará temporalmente inmune a los ataques y enemigos que te caigan sin rodeos desde arriba. Es una ventaja tremenda.</div>",
             "<h2 class='mag-sub'>MUNICIÓN ESPECIAL</h2><p>Rompe los objetos del escenario para cambiar tu tipo de disparo. Intenta conseguir y mantener el disparo múltiple o el lanzallamas, ya que limpian la pantalla de enemigos a toda velocidad y facilitan muchísimo las duras batallas contra los jefes finales.</p>"
         ] 
     },
 
-
     // ⭐ SNES
     marioworld: { 
-        consola: "snes", titulo: "SUPER MARIO WORLD", img: "SuperMarioWorld.jpg", enlace: "SuperMarioorld.html", valoracion: "NOTA: 98/100", wr: { nombre: "NIF", puntos: "9.999.990" },
+        consola: "snes", 
+        titulo: "SUPER MARIO WORLD", 
+        img: "SuperMarioWorld.jpg", 
+        enlace: "SuperMarioorld.html", 
+        valoracion: "NOTA: 98/100", 
+        wr: { nombre: "NIF", puntos: "9.999.990" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='marioworld.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='SuperMarioWorld.jpg'\">",
             "<h2 class='mag-titular'>EL JUEGO DE LANZAMIENTO PERFECTO</h2><p>Miyamoto, el creador, tenía un sueño oculto: quería que Mario montara a lomos de un dinosaurio verde desde el primer juego de NES en el 85. Pero los ingenieros le dijeron que era imposible, el procesador se freiría al intentar animar dos personajes complejos pegados a la vez. Tuvieron que esperar más de cinco años al poder en bruto de la nueva Super Nintendo para poder, por fin, codificar y hacer realidad al adorable y comilón Yoshi.</p>"
@@ -641,7 +800,12 @@ const infoJuegos = {
         ] 
     },
     mariokartsnes: { 
-        consola: "snes", titulo: "SUPER MARIO KART", img: "SuperMarioKartsnes.jpg", enlace: "Supermariokartsnes.html", valoracion: "NOTA: 93/100", wr: { nombre: "MKP", puntos: "150cc" },
+        consola: "snes", 
+        titulo: "SUPER MARIO KART", 
+        img: "SuperMarioKartsnes.jpg", 
+        enlace: "Supermariokartsnes.html", 
+        valoracion: "NOTA: 93/100", 
+        wr: { nombre: "MKP", puntos: "150cc" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='mariokartsnes.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='SuperMarioKartsnes.jpg'\">",
             "<h2 class='mag-titular'>EL INICIO DE LA LEYENDA DEL ASFALTO</h2><p>Este es el humilde padre de toda la gigantesca franquicia de karts que vende millones hoy. Y aquí viene el golpe de realidad: no hay ni un solo polígono en 3D en este juego. Ni uno.</p><div class='mag-box'><strong>MAGIA NEGRA DE HARDWARE:</strong> Usa el revolucionario chip técnico llamado 'Modo 7' soldado en la consola. Esta técnica agarraba una imagen gigante y totalmente plana de la pista (dibujada en 2D), la inclinaba hacia atrás y la rotaba sobre un eje central a una velocidad tan endiablada que engañaba por completo a tu cerebro, creándote la falsa ilusión óptica de que había una profundidad kilométrica y perspectiva 3D real. ¡Brujería de la vieja escuela!</div>"
@@ -651,7 +815,12 @@ const infoJuegos = {
         ] 
     },
     sunsetrider: { 
-        consola: "snes", titulo: "SUNSET RIDERS", img: "sunsetriders.jpg", enlace: "sunsetrider.html", valoracion: "NOTA: 94/100", wr: { nombre: "BOB", puntos: "1.250.000" },
+        consola: "snes", 
+        titulo: "SUNSET RIDERS", 
+        img: "sunsetriders.jpg", 
+        enlace: "sunsetrider.html", 
+        valoracion: "NOTA: 94/100", 
+        wr: { nombre: "BOB", puntos: "1.250.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='sunsetrider.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='sunsetriders.jpg'\">",
             "<h2 class='mag-titular'>DUELO AL SOL Y COLORES CHILLONES</h2><p>Un clásico arcade arrollador diseñado por los maestros del 2D en Konami, que fue llevado de forma magistral y fiel a la consola doméstica. El juego rebosa puro carisma noventero. Desde la primera pantalla, cuando abatías a balazos al primer jefe final del balcón y este se desplomaba soltando al viento una placa de voz comprimida diciendo su dramática última voluntad: <em>'Bury me with my money...' (Entiérrame con mis billetes...)</em>. Eso es historia en mayúsculas de los salones de videojuegos de medio mundo.</p>"
@@ -661,7 +830,12 @@ const infoJuegos = {
         ] 
     },
     batmanreturn: { 
-        consola: "snes", titulo: "BATMAN RETURNS", img: "batmanretur.jpg", enlace: "batmanreturn.html", valoracion: "NOTA: 91/100", wr: { nombre: "BRB", puntos: "750.000" },
+        consola: "snes", 
+        titulo: "BATMAN RETURNS", 
+        img: "batmanretur.jpg", 
+        enlace: "batmanreturn.html", 
+        valoracion: "NOTA: 91/100", 
+        wr: { nombre: "BRB", puntos: "750.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='BatmanReturns.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='batmanretur.jpg'\">",
             "<h2 class='mag-titular'>GOTHAM EN 16 BITS</h2><p>Konami firmó una auténtica obra maestra de la acción callejera adaptando la película de Tim Burton. El ambiente nocturno, la música orquestal y el tamaño de los sprites hacen que jugar a este cartucho en el móvil sea una delicia nostálgica.</p>"
@@ -671,7 +845,12 @@ const infoJuegos = {
         ] 
     },
     tmnt4in: { 
-        consola: "snes", titulo: "TMNT IV: TURTLES IN TIME", img: "tmnt4in.jpg", enlace: "tmnt4in.html", valoracion: "NOTA: 97/100", wr: { nombre: "MIK", puntos: "1.250.000" },
+        consola: "snes", 
+        titulo: "TMNT IV: TURTLES IN TIME", 
+        img: "tmnt4in.jpg", 
+        enlace: "tmnt4in.html", 
+        valoracion: "NOTA: 97/100", 
+        wr: { nombre: "MIK", puntos: "1.250.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='tmnt4in.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='tmnt4in.jpg'\">",
             "<h2 class='mag-titular'>VIAJE EN EL TIEMPO A 16 BITS</h2><p>Considerado por muchos como el mejor 'Beat 'em up' (yo contra el barrio) de la historia de Super Nintendo. Shredder ha robado la Estatua de la Libertad y ha lanzado a nuestras tortugas favoritas a través de un vórtice temporal. Desde la prehistoria hasta el futuro neón del año 2100, este cartucho exprime el cerebro de la consola al máximo con unos gráficos coloridos brutales y una música trepidante.</p>"
@@ -681,24 +860,38 @@ const infoJuegos = {
         ] 
     },
     captaincomandosnes: {
-        consola: "snes", titulo: "CAPTAIN COMMANDO", img: "captaincomandosnes.jpg", enlace: "captaincomandosnes.html", valoracion: "NOTA: 89/100", wr: { nombre: "CAP", puntos: "1.500.000" },
+        consola: "snes", 
+        titulo: "CAPTAIN COMMANDO", 
+        img: "captaincomandosnes.jpg", 
+        enlace: "captaincomandosnes.html", 
+        valoracion: "NOTA: 89/100", 
+        wr: { nombre: "CAP", puntos: "1.500.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='captaincomandosnes.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='captaincomandosnes.jpg'\">",
             "<h2 class='mag-titular'>LA MASCOTA DE CAPCOM</h2><p>Antes de que Ryu de Street Fighter se llevara toda la fama, Capcom creó a este superhéroe para que fuera literalmente su mascota oficial (CAPtain COMmando). El juego nos sitúa en una futurista Metro City en el año 2026, donde el Capitán lidera a un variopinto escuadrón para limpiar la Tierra y el espacio de supercriminales mutantes.</p>"
         ],
         manual: [
+            /* PÁGINA 1 */
             "<h2 class='mag-titular'>EL ESCUADRÓN COMMANDO</h2><p>Elige bien a tu luchador, porque el plantel es una locura. Tienes al propio Capitán (equilibrado y dispara fuego/electricidad), a Ginzu (un ninja rapidísimo), a Mack the Knife (una momia alienígena con cuchillos letales) y al favorito de muchos: Baby Head, un bebé superdotado manejando un robot gigante que él mismo ha construido.</p>",
+            /* PÁGINA 2 */
             "<div class='mag-truco'><span>ROBO DE MECHAS Y SUPERVIVENCIA</span>En varios niveles te encontrarás con enemigos subidos a trajes robóticos. Dales una patada voladora para tirarlos y róbales el vehículo. Puedes usar mechas de fuego o hielo, pero cuidado: si reciben mucho daño explotarán contigo dentro. Además, como en todos los buenos clásicos de Capcom, si te ves rodeado pulsa Salto + Ataque a la vez para hacer tu movimiento especial invencible, aunque te costará un poco de tu propia barra de salud.</div>"
         ]
     },
     asterixobelixsnes: {
-        consola: "snes", titulo: "ASTÉRIX & OBÉLIX", img: "axterixobelixsnes.jpg", enlace: "AsterixObelixsnes.html", valoracion: "NOTA: 88/100", wr: { nombre: "GAL", puntos: "850.000" },
+        consola: "snes", 
+        titulo: "ASTÉRIX & OBÉLIX", 
+        img: "axterixobelixsnes.jpg", 
+        enlace: "AsterixObelixsnes.html", 
+        valoracion: "NOTA: 88/100", 
+        wr: { nombre: "GAL", puntos: "850.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='axterixobelix.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='axterixobelixsnes.jpg'\">",
             "<h2 class='mag-titular'>POR TUTATIS</h2><p>El estudio Infogrames se coronó en 1995 trayendo a los galos más famosos del cómic a la Super Nintendo. Los gráficos son tan grandes y coloridos que parecen literalmente sacados de las viñetas dibujadas por Uderzo. Tu misión es viajar por toda Europa (Helvecia, Hispania, Bretaña...) repartiendo bofetadas a diestro y siniestro para devolverle una empalizada robada a Julio César.</p>"
         ],
         manual: [
+            /* PÁGINA 1 */
             "<h2 class='mag-titular'>DOS ESTILOS DE LUCHA</h2><p>Puedes jugar en solitario alternando entre ellos, o en modo cooperativo. <strong>Astérix</strong> es pequeñito, salta muy alto y es rápido como un rayo. <strong>Obélix</strong> es mucho más lento, pero sus tortazos rompen el suelo y puede embestir con la barriga. ¡Elige el que mejor se adapte a ti!</p>",
+            /* PÁGINA 2 */
             "<div class='mag-truco'><span>JABALÍES Y POCIÓN MÁGICA</span>En este juego, comer es vivir. Ataca a los jabalíes asados que encuentres por el escenario para recuperar vida. Si llevas a Astérix, busca siempre la petaca de poción mágica del druida Panoramix: te volverá invencible temporalmente para atravesar campamentos romanos corriendo a toda pastilla. Obélix no puede beberla... ¡porque se cayó en la marmita cuando era pequeño!</div>"
         ]
     },
@@ -706,7 +899,12 @@ const infoJuegos = {
 
     // 📱 GBA
     esmeralda: { 
-        consola: "gba", titulo: "POKÉMON ESMERALDA", img: "pokemonesme.jpg", enlace: "Pokemonesme.html", valoracion: "NOTA: 95/100", wr: { nombre: "PKM", puntos: "Dex100%" },
+        consola: "gba", 
+        titulo: "POKÉMON ESMERALDA", 
+        img: "pokemonesme.jpg", 
+        enlace: "Pokemonesme.html", 
+        valoracion: "NOTA: 95/100", 
+        wr: { nombre: "PKM", puntos: "Dex100%" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='esmeralda.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='pokemonesme.jpg'\">",
             "<h2 class='mag-titular'>LA TORMENTA PERFECTA SOBRE HOENN</h2><p>Se considera la obra maestra de la tercera generación portátil. Años más tarde, este cartucho verde cristalino se volvió el centro de todas las burlas y pasó a los anales de los memes de internet debido a la prestigiosa y gigante revista americana IGN. El crítico que lo analizó se atrevió a bajarle la nota casi a un 7 (un castigo enorme) poniendo como punto negativo textual que <em>'El juego tenía demasiada agua' (Too Much Water)</em> en sus rutas finales. Las carcajadas se escucharon en todo el planeta gamer, ya que, evidentemente... la trama va literalmente sobre pelear contra piratas marinos del Team Aqua en zonas de buceo y tormentas torrenciales.</p>"
@@ -716,7 +914,12 @@ const infoJuegos = {
         ] 
     },
     rubi: { 
-        consola: "gba", titulo: "POKÉMON RUBÍ", img: "pokemonrubi.jpg", enlace: "PokemonRubi.html", valoracion: "NOTA: 92/100", wr: { nombre: "PKM", puntos: "Dex100%" },
+        consola: "gba", 
+        titulo: "POKÉMON RUBÍ", 
+        img: "pokemonrubi.jpg", 
+        enlace: "PokemonRubi.html", 
+        valoracion: "NOTA: 92/100", 
+        wr: { nombre: "PKM", puntos: "Dex100%" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='rubi.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='pokemonrubi.jpg'\">",
             "<h2 class='mag-titular'>CORTANDO CABLES Y CREANDO ADN NUEVO</h2><p>La épica y esperadísima llegada a la pantalla iluminada de la portátil Game Boy Advance trajo la mayor crisis nostálgica de la saga de Nintendo. Este juego supuso la temida 'ruptura total'. No podías usar tu cable Link para pasarte a tus viejos y amados nivel 100 y a tu Charizard de los cartuchos transparentes de Game Boy Color (Oro, Plata, Cristal). Los fans lloraron por los foros y enviaron correos de quejas formales. La memoria se había borrado para siempre.</p><br><p>Pero todo tenía una justificación puramente técnica y visionaria. A cambio de ese sacrificio masivo, este fue el bloque sobre el que construyeron las matemáticas modernas. Programaron desde cero toda la 'genética real', la cadena de Naturalezas, pasivas y puntos de esfuerzo, dando comienzo a todo el intrincado ecosistema competitivo mundial que se juega hoy en estadios en la vida real.</p>"
@@ -726,7 +929,12 @@ const infoJuegos = {
         ] 
     },
     deerhunter: { 
-        consola: "gba", titulo: "DEER HUNTER", img: "deerhunter.jpg", enlace: "deerhunter.html", valoracion: "NOTA: 80/100", wr: { nombre: "HUN", puntos: "999" },
+        consola: "gba", 
+        titulo: "DEER HUNTER", 
+        img: "deerhunter.jpg", 
+        enlace: "deerhunter.html", 
+        valoracion: "NOTA: 80/100", 
+        wr: { nombre: "HUN", puntos: "999" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='deerhunter.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='deerhunter.jpg'\">",
             "<h2 class='mag-titular'>DEL CIBERCAFÉ CLÁSICO A LA PANTALLITA PORTÁTIL</h2><p>Hagamos una reflexión seria sobre este cartucho marciano. ¿A quién en su sano juicio se le ocurrió meter un colosal simulador americano para cazadores con mira telescópica lenta de los viejos Pentium de PC de sobremesa, forzándolo para encajar en una pantalla portátil minúscula de apenas 240 ridículos píxeles horizontales que jugaban chavales moviéndose en un coche por carreteras irregulares?</p><br><p>Nadie sabe a quién se le iluminó la bombilla corporativa, pero, por increíble que parezca, lograron meter toda la interfaz y la balística allí dentro. Cazar una difuminada mezcla de cuadraditos pardos que se asoman fugazmente por detrás de una telaraña indescifrable de texturas vegetales verdes brillantes y machacadas en 32 bits, se convirtió sin planearlo en uno de los deportes de la paciencia y tensión ocular más frustrantes y satisfactorios del oscuro catálogo del fondo de la GBA.</p>"
@@ -738,24 +946,38 @@ const infoJuegos = {
 
     // 📱 NINTENDO DS
     newsupermario: { 
-        consola: "nds", titulo: "NEW SUPER MARIO BROS", img: "newsupermario.png", enlace: "NewSuperMarioBros.html", valoracion: "NOTA: 92/100", wr: { nombre: "MAR", puntos: "100%" },
+        consola: "nds", 
+        titulo: "NEW SUPER MARIO BROS", 
+        img: "newsupermario.png", 
+        enlace: "NewSuperMarioBros.html", 
+        valoracion: "NOTA: 92/100", 
+        wr: { nombre: "MAR", puntos: "100%" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='NewSuperMarioplay.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='newsupermario.png'\">",
             "<h2 class='mag-titular'>EL REGRESO A LAS DOS DIMENSIONES</h2><p>Tras años de Mario saltando libremente en mundos 3D, Nintendo decidió volver a sus raíces más clásicas en 2006. Este cartucho arrasó en ventas en todo el mundo demostrando que las plataformas laterales nunca mueren. Mezclaron los fondos planos bidimensionales de toda la vida con modelos de personajes perfectamente renderizados en 3D.</p>"
         ],
         manual: [
+            /* PÁGINA 1 */
             "<h2 class='mag-titular'>TÁCTICAS DEL REINO CHAMPIÑÓN</h2><p>El control vuelve a la sencillez extrema (cruceta y salto), pero añade habilidades modernas como el salto rebotando en las paredes, heredado directamente del Super Mario 64, que te permitirá salvarte de caídas mortales al vacío si tienes buenos reflejos.</p>",
+            /* PÁGINA 2 */
             "<div class='mag-truco'><span>EL DESTRUCTOR MEGA CHAMPIÑÓN</span>Este es el objeto más bestia jamás creado en toda la saga. Cuando consigas atrapar uno, Mario crecerá hasta ocupar literalmente toda la pantalla superior de tu consola. Cuando estés así, no te molestes en saltar, simplemente corre hacia adelante sin piedad. Arrasarás y destrozarás las tuberías verdes, los bloques irrompibles, los enemigos e incluso arrancarás el banderín de meta de cuajo. Cuanto más destroces, más barras de vida extra lloverán del cielo.</div>"
         ]
     },
     metalslug7nds: {
-        consola: "nds", titulo: "METAL SLUG 7", img: "metalslug7nds.jpg", enlace: "metalslug7nds.html", valoracion: "NOTA: 90/100", wr: { nombre: "MAR", puntos: "2.500.000" },
+        consola: "nds", 
+        titulo: "METAL SLUG 7", 
+        img: "metalslug7nds.jpg", 
+        enlace: "metalslug7nds.html", 
+        valoracion: "NOTA: 90/100", 
+        wr: { nombre: "MAR", puntos: "2.500.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='metalslug7nds.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='metalslug7nds.jpg'\">",
             "<h2 class='mag-titular'>GUERRA PORTÁTIL</h2><p>La séptima entrega de la legendaria saga de SNK llegó en exclusiva para Nintendo DS. El general Morden ha vuelto del futuro con un ejército ultra moderno, y el Escuadrón de los Halcones Peregrinos tendrá que hacerle frente a base de plomo, explosiones y tanques con patas.</p>"
         ],
         manual: [
+            /* PÁGINA 1 */
             "<h2 class='mag-titular'>ACCIÓN SIN FRENO</h2><p>Corre y dispara, no hay más misterio. Mantén el dedo en el gatillo y no te quedes quieto. Salvar a los prisioneros rubios atados te recompensará con armas brutales como la mítica Heavy Machine Gun o escopetas devastadoras.</p>",
+            /* PÁGINA 2 */
             "<div class='mag-box'><strong>VEHÍCULOS SLUG:</strong> Aprovecha siempre los vehículos que encuentres. Además del tanque clásico, en esta entrega hay robots gigantes bípedos y avestruces armados. Si tu vehículo está a punto de explotar, realiza el ataque kamikaze para lanzarlo contra el jefe de turno y causarle daño masivo antes de saltar en paracaídas.</div>"
         ]
     }
