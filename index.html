@@ -157,6 +157,11 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
 /* TRANSICIÓN, ESCÁNER Y PAYWALL */
 .toast-notification { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: rgba(18, 18, 18, 0.95); border: 2px solid #d4af37; color: #ffd700; padding: 15px 25px; border-radius: 30px; font-size: 16px; font-weight: bold; box-shadow: 0 5px 20px rgba(212,175,55,0.5); z-index: 9999999999; transition: top 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); display: flex; align-items: center; gap: 10px; backdrop-filter: blur(5px); }
 .toast-notification.active { top: 25px; }
+
+/* NUEVO STILO: Toast específico para la alerta flotante de logros desbloqueados */
+.toast-logro { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: rgba(0, 15, 30, 0.96); border: 2px solid #00f0ff; color: #ffffff; padding: 12px 25px; border-radius: 20px; font-size: 14px; font-weight: bold; box-shadow: 0 0 25px rgba(0,240,255,0.6); z-index: 999999999; transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-align: center; backdrop-filter: blur(5px); border-left: 6px solid #ffd700; }
+.toast-logro.active { top: 25px; }
+
 .transition-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
 .transition-screen.active { opacity: 1; pointer-events: all; }
 .insert-coin-text { color: #ffd700; font-size: 28px; font-family: 'Courier New', Courier, monospace; font-weight: bold; animation: blink 0.5s infinite alternate; }
@@ -171,11 +176,12 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
 </head>
 
 <body>
-<!-- CONTENEDOR CANVAS: Animación del portal retro neón hipercolorido (Dura 2.3 segundos) -->
 <div id="portalContainer" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgb(0, 0, 0); z-index: 99999999; display: none; overflow: hidden;">
     <div id="destelloLuz" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); width: 10px; height: 10px; background: radial-gradient(circle, #fff 10%, #ff007f 40%, #00f0ff 70%, transparent 100%); border-radius: 50%; box-shadow: 0 0 120px #00f0ff; transition: transform 1.5s cubic-bezier(0.1, 0.8, 0.3, 1);"></div>
     <canvas id="canvasPortal" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></canvas>
 </div>
+
+<div id="toastLogro" class="toast-logro">🏆 ¡LOGRO DESBLOQUEADO!<br><span id="txtLogro" style="color: #ffd700;">Insignia</span></div>
 
 <div id="toastDesbloqueo" class="toast-notification">🔓 ¡SISTEMA DESBLOQUEADO! Catálogo Premium activado.</div>
 
@@ -280,7 +286,7 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
 
         <div id="flipbookWrapper">
             <div class="flipbook-container" id="flipbookContainer"></div>
-            <div class="flip-controls">
+            <div class="flipbook-controls">
                 <button class="btn-flip" onclick="pasarPagina(-1)">◀ ANT.</button>
                 <span class="page-indicator" id="pageIndicator">Pág 1/1</span>
                 <button class="btn-flip" onclick="pasarPagina(1)">SIG. ▶</button>
@@ -344,25 +350,23 @@ function playSound(type) {
     if (type === 'error') { osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150,now); osc.frequency.exponentialRampToValueAtTime(50,now+0.3); gain.gain.setValueAtTime(0.2,now); gain.gain.exponentialRampToValueAtTime(0.001,now+0.3); osc.start(); osc.stop(now+0.3); }
     if (type === 'clic') { osc.type = 'square'; osc.frequency.setValueAtTime(440,now); osc.frequency.exponentialRampToValueAtTime(880,now+0.1); gain.gain.setValueAtTime(0.1,now); gain.gain.exponentialRampToValueAtTime(0.001,now+0.1); osc.start(); osc.stop(now+0.1); }
     
-    // NUEVO: Sintetizador nativo para el sonido de explosión arcade de 8 bits
+    // CORREGIDO: Sintetizador nativo para el sonido de explosión arcade de 8 bits (Sube volumen y potencia)
     if (type === 'explosion') {
-        const bufferSize = audioCtx.sampleRate * 0.5; // Duración de 0.5 segundos
+        const bufferSize = audioCtx.sampleRate * 0.6; 
         const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
         const data = buffer.getChannelData(0);
-        // Crear ruido blanco puro de fondo
         for (let i = 0; i < bufferSize; i++) { data[i] = Math.random() * 2 - 1; }
         const noiseNode = audioCtx.createBufferSource();
         noiseNode.buffer = buffer;
-        // Filtro pasabajo para darle el cuerpo pesado a la explosión
         const filter = audioCtx.createBiquadFilter();
         filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(800, now);
-        filter.frequency.exponentialRampToValueAtTime(50, now + 0.4); // Cae la frecuencia a plomo
+        filter.frequency.setValueAtTime(900, now);
+        filter.frequency.exponentialRampToValueAtTime(40, now + 0.45); 
         const filterGain = audioCtx.createGain();
-        filterGain.gain.setValueAtTime(0.3, now);
-        filterGain.gain.exponentialRampToValueAtTime(0.001, now + 0.4); // Cae el volumen rápidamente
+        filterGain.gain.setValueAtTime(0.4, now); // Volumen aumentado
+        filterGain.gain.exponentialRampToValueAtTime(0.001, now + 0.45); 
         noiseNode.connect(filter); filter.connect(filterGain); filterGain.connect(audioCtx.destination);
-        noiseNode.start(); noiseNode.stop(now + 0.4);
+        noiseNode.start(); noiseNode.stop(now + 0.45);
     }
 }
 
@@ -372,7 +376,7 @@ function reproducirSonido1UP() { playSound('1up'); }
 function reproducirSonidoError() { playSound('error'); }
 function reproducirSonidoEscaner() { playSound('scan'); }
 function reproducirSonidoFlip() { playSound('flip'); }
-function reproducirSonidoExplosion() { playSound('explosion'); } // Atajo para la explosión
+function reproducirSonidoExplosion() { playSound('explosion'); }
 
 window.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
@@ -394,9 +398,40 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// NUEVA FUNCIÓN: Lanzar el cartel flotante de logro desbloqueado de forma visual
+function verificarYDesbloquearLogro(idLogro, textoInsignia) {
+    if (localStorage.getItem('logro_' + idLogro)) return; // Si ya se consiguió, no hace nada
+    localStorage.setItem('logro_' + idLogro, 'true'); // Lo guarda para siempre
+    
+    setTimeout(() => {
+        playSound('coin'); // Sonido clásico de recompensa
+        const toast = document.getElementById('toastLogro');
+        document.getElementById('txtLogro').innerHTML = textoInsignia;
+        toast.classList.add('active');
+        setTimeout(() => toast.classList.remove('active'), 4000);
+    }, 600);
+}
 
 let toquesLogo = 0, tiempoToques;
-function toqueSecreto() { reproducirClic(); toquesLogo++; clearTimeout(tiempoToques); if(toquesLogo===3){ const ts = document.getElementById("tarjetaSecreta"); if(ts) { ts.style.display="block"; ts.scrollIntoView({behavior:'smooth',block:'center'}); reproducirSonido1UP(); } toquesLogo=0; } else { tiempoToques=setTimeout(()=>{toquesLogo=0;},1000); } }
+function toqueSecreto() { 
+    reproducirClic(); 
+    toquesLogo++; 
+    clearTimeout(tiempoToques); 
+    if(toquesLogo===3){ 
+        // ¡LOGRO 3 ADQUIRIDO! Por descubrir la tarjeta secreta
+        verificarYDesbloquearLogro('detective', '🕵️‍♂️ DETECTIVE DE PÍXELES:<br>Has descubierto el menú secreto de Olea.');
+        
+        const ts = document.getElementById("tarjetaSecreta"); 
+        if(ts) { 
+            ts.style.display="block"; 
+            ts.scrollIntoView({behavior:'smooth',block:'center'}); 
+            reproducirSonido1UP(); 
+        } 
+        toquesLogo=0; 
+    } else { 
+        tiempoToques=setTimeout(()=>{toquesLogo=0;},1000); 
+    } 
+}
 
 let toquesBeltraneja = 0, tiempoBeltraneja;
 function toqueBeltraneja() { reproducirClic(); toquesBeltraneja++; clearTimeout(tiempoBeltraneja); if(toquesBeltraneja===2){ const tc = document.getElementById("tarjetaCiervo"); if(tc) { tc.style.display="block"; tc.scrollIntoView({behavior:'smooth',block:'center'}); reproducirSonidoCoin(); } toquesBeltraneja=0; } else { tiempoBeltraneja=setTimeout(()=>{toquesBeltraneja=0;},500); } }
@@ -413,7 +448,7 @@ const infoJuegos = {
         ],
         manual: [
             "<h2 class='mag-titular'>S.O.S. TRUCOS</h2><p>La sanidad no importa aquí. Si ves un pollo asado entero escondido dentro de un bidón de metal oxidado o una caja de madera... <strong>cómetelo sin dudar</strong>. Curará tu barra de vida mágicamente.</p><div class='mag-truco'><span>EL COCHE DE LA MUERTE</span>En el Nivel 3, podrás subirte al mismísimo Cadillac. El truco aquí es <strong>no frenar jamás</strong>. Acelera de lado a lado atropellando a los enemigos para conseguir puntos extra y ganar vidas.</div>", 
-            "<h2 class='mag-sub'>Combos de Combate</h2><p><strong>Golpe + Salto:</strong> Pulsa ambos botones a la vez para hacer tu ataque especial giratorio a 360 grados. Te salvará la vida cuando estés rodeado, pero ojo: <em>¡te resta un poquito de tu propia vida al impactar!</em> Úsalo solo en caso de emergencia.</p><p><strong>Combo de Mustapha:</strong> Adelante, Adelante + Salto + Golpe. Verás su famosa patada voladora con destello amarillo que limpia la pantalla entera.</p>"
+            "<h2 class='mag-sub'>Combos de Combate</h2><p><strong>Golpe + Salto:</strong> Pulsa ambos botones a la vez para hacer tu ataque especial giratorio a 360 grados. Te salvará la via cuando estés rodeado, pero ojo: <em>¡te resta un poquito de tu propia vida al impactar!</em> Úsalo solo en caso de emergencia.</p><p><strong>Combo de Mustapha:</strong> Adelante, Adelante + Salto + Golpe. Verás su famosa patada voladora con destello amarillo que limpia la pantalla entera.</p>"
         ] 
     },
     kof94: { 
@@ -526,7 +561,7 @@ const infoJuegos = {
         consola: "nes", titulo: "SUPER MARIO BROS", img: "SuperMarioBros.jpg", enlace: "SuperMarioBros.html", valoracion: "NOTA: 97/100", wr: { nombre: "NIF", puntos: "9.999.950" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='mariobros.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='SuperMarioBros.jpg'\">",
-            "<h2 class='mag-titular'>EL SALVADOR DE LA INDUSTRIA</h2><p>En 1985, el mercado de las consolas estaba en ruinas. Miyamoto diseñó a Mario con bigote y gorra puramente por limitations técnicas (dibujar bocas y pelo animado en 8 bits era muy difícil), creando sin saberlo al icono pop más grande de la historia y vendiendo 40 millones de copias.</p><div class='mag-box'><strong>EL LORE OSCURO:</strong> Los Koopas usaron magia negra para convertir a los inocentes ciudadanos en bloques de ladrillo. Sí, cada vez que rompes un ladrillo con la cabeza para coger monedas, estás cometiendo un asesinato contra un habitante del reino. Trágico.</div>"
+            "<h2 class='mag-titular'>EL SALVADOR DE LA INDUSTRIA</h2><p>En 1985, el mercado de las consolas estaba en ruinas. Miyamoto diseñó a Mario con bigote y gorra puramente por limitaciones técnicas (dibujar bocas y pelo animado en 8 bits era muy difícil), creando sin saberlo al icono pop más grande de la historia y vendiendo 40 millones de copias.</p><div class='mag-box'><strong>EL LORE OSCURO:</strong> Los Koopas usaron magia negra para convertir a los inocentes ciudadanos en bloques de ladrillo. Sí, cada vez que rompes un ladrillo con la cabeza para coger monedas, estás cometiendo un asesinato contra un habitante del reino. Trágico.</div>"
         ], 
         manual: [
             "<h2 class='mag-titular'>GUÍA DEL FONTANERO</h2><p>Cruza 8 mundos saltando fosos y tortugas para rescatar a la Princesa Peach. Prepárate mentalmente para que el seta Toad te diga siempre que la princesa está en otro castillo.</p><div class='mag-truco'><span>FÍSICAS PERFECTAS</span>Mantén pulsado el botón de correr (B) en todo momento. Mario gana inercia, lo que te permite saltar huecos enormes. Además, el champiñón te hace el doble de grande y te permite recibir un impacto sin perder la vida.</div>"
@@ -570,7 +605,7 @@ const infoJuegos = {
         consola: "n64", titulo: "CASTLEVANIA", img: "castlegacy.jpg", enlace: "Castlegacy.html", valoracion: "NOTA: 82/100", wr: { nombre: "BEL", puntos: "100%" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='castlegacy.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='castlegacy.jpg'\">",
-            "<h2 class='mag-titular'>VAMPIROS POLIGONALES</h2><p>Conocido popularmente como Castlevania 64, fue el primer y ambicioso salto de la legendaria familia de cazavampiros a las tres dimensiones de la N64. El juego es oscuro y lúgubre, pero todo el mundo le echaba la culpa de sus muertes al mismísimo Drácula, cuando en realidad, el verdadero jefe final invencible del juego era el nefasto control automático de la cámara.</p>"
+            "<h2 class='mag-titular'>VAMPIROS POLIGONALES</h2><p>Conocido popularly como Castlevania 64, fue el primer y ambicioso salto de la legendaria familia de cazavampiros a las tres dimensiones de la N64. El juego es oscuro y lúgubre, pero todo el mundo le echaba la culpa de sus muertes al mismísimo Drácula, cuando en realidad, el verdadero jefe final invencible del juego era el nefasto control automático de la cámara.</p>"
         ], 
         manual: [
             "<h2 class='mag-titular'>DIARIO DEL CAZADOR</h2><p>Adéntrate en el oscuro castillo de Transilvania, elige entre el espadachín Cornell o la portadora de anillos mágicos Carrie, y usa tus armas sagradas contra las criaturas de la noche.</p><div class='mag-truco'><span>NUTRICIÓN DUDOSA Y EXPLOSIVOS</span>Esta saga tiene una lógica aplastante. Si rompes los candelabros del techo o golpeas las paredes milenarias del castillo, mágicamente encontrarás pollos asados perfectamente conservados dentro del muro. Cómetelos para curarte sin hacer preguntas.</div>"
@@ -775,7 +810,7 @@ const infoJuegos = {
         consola: "gba", titulo: "DEER HUNTER", img: "deerhunter.jpg", enlace: "deerhunter.html", valoracion: "NOTA: 80/100", wr: { nombre: "HUN", puntos: "999" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='deerhunter.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='deerhunter.jpg'\">",
-            "<h2 class='mag-titular'>DEL CIBERCAFÉ CLÁSICO A LA PANTALLITA PORTÁTIL</h2><p>Hagamos una reflexión seria sobre este cartucho marciano. ¿A quién en su sano juicio se le ocurrió meter un colosal simulador americano para cazadores con mira telescópica lenta de los viejos Pentium de PC de sobremesa, forzándolo para encajar en una pantalla portátil minúscula de apenas 240 ridículos píxeles horizontales que jugaban chavales moviéndose en un coche por carreteras irregulares?</p><br><p>Nadie sabe a quién se le iluminó la bombilla corporativa, pero, por increíble que parezca, lograron meter toda la interfaz y la balística allí dentro. Cazar una difuminada mezcla de cuadraditos pardos que se asoman fugazmente por detrás de una telaraña indescifrable de texturas vegetales verdes brillantes y machacadas en 32 bits, se convirtió sin planearlo en uno de los deportes de la paciencia y tensión ocular más frustrantes y satisfactorios del oscuro catálogo del fondo de la GBA.</p>"
+            "<h2 class='mag-titular'>DEL CIBERCAFÉ CLÁSICO A LA PANTALLITA PORTÁTIL</h2><p>Hagamos una reflexión seria sobre este cartucho marciano. ¿A quién en su sano juicio se le ocurrió meter un colosal simulador americano para cazadores con mira telescópica lenta de los viejos Pentium de PC de sobremesa, forzándolo para encajar en una pantalla portátil minúscula de apenas 240 ridículos píxeles horizontales que jugaban chavales moviéndose en un coche por carreteras irregulares?</p><br><p>Nadie sabe a quién se le iluminó la bombilla corporativa, pero, por increíble que parezca, lograron meter toda la interfaz y la balística allí dentro. Cazar una difuminada mezcla de cuadraditos pardos que se asoman fugazmente por detrás de una telaraña indescifrable de texturas vegetales verdes brillantes y machacadas en 32 bits, se convirtió sin planearlo en uno de los deportes de la paciencia y tensión ocular más frustrantes y satisfaceres del oscuro catálogo del fondo de la GBA.</p>"
         ], 
         manual: [
             "<h2 class='mag-titular'>EL SAGRADO, INMOVIL Y ABURRIDO ARTE DE LA CAZA DIGITAL</h2><p>No confundas el género. Esto no es <em>Call of Duty</em> ni <em>Doom</em>. Aquí los cargadores no duran minutos ni vuelas saltando con escopetas pesadas. Es un simulador tenso y frío.</p><div class='mag-box'><strong>REGLA DE SANGRE FRÍA Y OLFATO BINARIO</strong>Las mejores armas no tienen gatillo, tienen sigilo matemático. Los controles son crueles e hiperrealistas. La mejor táctica al principio de tu mañana virtual es sencillamente arrinconarte entre el follaje espeso y no tocar absolutamente ningún botón de movimiento.<br><br>Si corres impaciente para explorar terreno y ganar un triste segundo de tu tiempo libre, el código interno implacable de la Game Boy recalculará tu ruido: el ciervo de papel virtual te escuchará pisar una sola ramita a media milla en el minimapa, calculará la dirección del viento en base a tu sudor poligonal... y desaparecerá de la memoria RAM, corriendo espantado antes siquiera de que veas sus astas. Mide el viento, equípate camuflaje, usa bien tu escaso reclamo de sonido, no respires y espera que un milagro cornutado se cuele en tu retícula.</div>"
@@ -845,6 +880,15 @@ function renderCards() {
 function verFicha(id) {
     const j = infoJuegos[id] || infoJuegos['cadillacs'];
     currentId = id;
+    
+    // CONTROL LOGROS 1 y 2: Detectamos qué juego se abre para los contadores
+    if(id === 'mariobros' || id === 'mariobros3' || id === 'marioworld' || id === 'newsupermario') {
+        verificarYDesbloquearLogro('mario', '🍄 BIENVENIDO AL REINO:<br>Has escaneado un juego de la saga Mario.');
+    }
+    if(j.consola === 'arcade') {
+        verificarYDesbloquearLogro('arcade', '🪙 INSERT COIN:<br>Has activado tu primera review del Salón Arcade.');
+    }
+
     const col = {nes:'#e60012',n64:'#00b140',md:'#e00000',snes:'#005b9f',gba:'#5a429b',arcade:'#ff00ff',nds:'#a8a8a8'}[j.consola] || '#d4af37';
     document.documentElement.style.setProperty('--modal-border', col); 
     document.getElementById('fichaTitulo').innerText = j.titulo;
@@ -902,7 +946,16 @@ function anadirRecord() {
     playSound('clic');
     let n = prompt("TUS 3 INICIALES:","AAA"); if (!n) return;
     let p = prompt("PUNTUACIÓN O NIVEL:");
-    if (p) { let list = JSON.parse(localStorage.getItem('rec_'+currentId) || "[]"); list.push({nombre: n.toUpperCase().substring(0,3), puntos: p}); list.sort((a,b) => parseInt(b.puntos.replace(/\./g,'')) - parseInt(a.puntos.replace(/\./g,''))); localStorage.setItem('rec_'+currentId, JSON.stringify(list.slice(0,5))); renderRecords(); }
+    if (p) { 
+        let list = JSON.parse(localStorage.getItem('rec_'+currentId) || "[]"); 
+        list.push({nombre: n.toUpperCase().substring(0,3), puntos: p}); 
+        list.sort((a,b) => parseInt(b.puntos.replace(/\./g,'')) - parseInt(a.puntos.replace(/\./g,''))); 
+        localStorage.setItem('rec_'+currentId, JSON.stringify(list.slice(0,5))); 
+        renderRecords(); 
+        
+        // ¡LOGRO 4 ADQUIRIDO! Por firmar la tabla de récords
+        verificarYDesbloquearLogro('records', '🏅 REY DEL BARRIO:<br>Has dejado tu firma en el Salón de la Fama.');
+    }
 }
 
 function irAlJuego() { 
@@ -958,7 +1011,7 @@ function abrirTiendaGeneral() { playSound('clic'); window.open(`https://wa.me/34
 
 function filtrarJuegos() { let input=document.getElementById("buscadorJuegos").value.toLowerCase(); document.querySelectorAll(".card-wrapper").forEach(t => { let h=t.querySelector("h2").innerText.toLowerCase(); t.style.display = h.includes(input) ? "block" : "none"; }); }
 
-// --- MOTOR DEL PORTAL RETRO HIPERCOLORIDO CON SONIDO DE EXPLOSIÓN ARCADE (2.3 SEGUNDOS) ---
+// --- MOTOR DEL PORTAL RETRO CON FIX DE AUDIO DE EXPLOSIÓN ---
 function lanzarAnimacionPortal(callback) {
     const container = document.getElementById('portalContainer');
     const destello = document.getElementById('destelloLuz');
@@ -977,18 +1030,16 @@ function lanzarAnimacionPortal(callback) {
     
     container.style.display = 'block';
     
-    // Lanzamos a la vez el sonido melódico 1UP y el petardazo arcade de fondo
     reproducirSonido1UP();
-    reproducirSonidoExplosion();
+    // FIX DE TIEMPO: Dejamos 150ms de margen para que la explosión no sea cancelada por el 1UP
+    setTimeout(() => { reproducirSonidoExplosion(); }, 150);
     
     setTimeout(() => {
         destello.style.transform = 'translate(-50%, -50%) scale(100)';
     }, 50);
     
-    // PALETA ARCADE COMPLETA
     const colores = ['#ff007f', '#00f0ff', '#9dff3d', '#ffd700', '#ff5500', '#ba55d3', '#ffffff'];
     
-    // Generar píxeles de explosión
     for (let i = 0; i < 180; i++) {
         particulas.push({
             x: centerX,
@@ -1002,7 +1053,6 @@ function lanzarAnimacionPortal(callback) {
         });
     }
     
-    // Generar monedas virtuales
     for (let i = 0; i < 7; i++) {
         monedas.push({
             x: centerX + (Math.random() - 0.5) * 140,
@@ -1018,7 +1068,6 @@ function lanzarAnimacionPortal(callback) {
     function bucle() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
-        // Render Píxeles
         particulas.forEach((p, index) => {
             p.x += p.vx;
             p.y += p.vy;
@@ -1034,7 +1083,6 @@ function lanzarAnimacionPortal(callback) {
             }
         });
         
-        // Render Monedas
         monedas.forEach((m) => {
             m.y += m.vy;
             m.frame += m.vRojo;
@@ -1067,7 +1115,6 @@ function lanzarAnimacionPortal(callback) {
     
     bucle();
     
-    // Temporizador a 2.3 segundos
     setTimeout(() => {
         cancelAnimationFrame(animacionId);
         container.style.opacity = '0';
