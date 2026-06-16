@@ -172,7 +172,7 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
 
 <body>
 <div id="portalContainer" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgb(0, 0, 0); z-index: 99999999; display: none; overflow: hidden;">
-    <div id="destelloLuz" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); width: 10px; height: 10px; background: radial-gradient(circle, #fff 20%, #ffd700 60%, transparent 100%); border-radius: 50%; box-shadow: 0 0 100px #ffd700; transition: transform 1.2s cubic-bezier(0.1, 0.8, 0.3, 1);"></div>
+    <div id="destelloLuz" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); width: 10px; height: 10px; background: radial-gradient(circle, #fff 10%, #ff007f 40%, #00f0ff 70%, transparent 100%); border-radius: 50%; box-shadow: 0 0 120px #00f0ff; transition: transform 1.5s cubic-bezier(0.1, 0.8, 0.3, 1);"></div>
     <canvas id="canvasPortal" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></canvas>
 </div>
 
@@ -504,10 +504,10 @@ const infoJuegos = {
         consola: "nes", titulo: "SUPER MARIO BROS", img: "SuperMarioBros.jpg", enlace: "SuperMarioBros.html", valoracion: "NOTA: 97/100", wr: { nombre: "NIF", puntos: "9.999.950" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='mariobros.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='SuperMarioBros.jpg'\">",
-            "<h2 class='mag-titular'>EL SALVADOR DE LA INDUSTRIA</h2><p>En 1985, el mercado de las consolas estaba en ruinas. Miyamoto diseñó a Mario con bigote y gorra puramente por limitaciones técnicas (dibujar bocas y pelo animado en 8 bits era muy difícil), creando sin saberlo al icono pop más grande de la historia y vendiendo 40 millones de copias.</p><div class='mag-box'><strong>EL LORE OSCURO:</strong> Los Koopas usaron magia negra para convertir a los inocentes ciudadanos en bloques de ladrillo. Sí, cada vez que rompes un ladrillo con la cabeza para coger monedas, estás cometiendo un asesinato contra un habitante del reino. Trágico.</div>"
+            "<h2 class='mag-titular'>EL SALVADOR DE LA INDUSTRIA</h2><p>En 1985, el mercado de las consolas estaba en ruinas. Miyamoto diseñó a Mario con bigote y gorra puramente por limitaciones técnicas (dibujar bocas y pelo animado en 8 bits era muy difícil), creando sin saberlo al icono pop más grande de la historia and vendiendo 40 millones de copias.</p><div class='mag-box'><strong>EL LORE OSCURO:</strong> Los Koopas usaron magia negra para convertir a los inocentes ciudadanos en bloques de ladrillo. Sí, cada vez que rompes un ladrillo con la cabeza para coger monedas, estás cometiendo un asesinato contra un habitante del reino. Trágico.</div>"
         ], 
         manual: [
-            "<h2 class='mag-truco'>GUÍA DEL FONTANERO</h2><p>Cruza 8 mundos saltando fosos y tortugas para rescatar a la Princesa Peach. Prepárate mentalmente para que el seta Toad te diga siempre que la princesa está en otro castillo.</p><div class='mag-truco'><span>FÍSICAS PERFECTAS</span>Mantén pulsado el botón de correr (B) en todo momento. Mario gana inercia, lo que te permite saltar huecos enormes. Además, el champiñón te hace el doble de grande y te permite recibir un impacto sin perder la vida.</div>"
+            "<h2 class='mag-titular'>GUÍA DEL FONTANERO</h2><p>Cruza 8 mundos saltando fosos y tortugas para rescatar a la Princesa Peach. Prepárate mentalmente para que el seta Toad te diga siempre que la princesa está en otro castillo.</p><div class='mag-truco'><span>FÍSICAS PERFECTAS</span>Mantén pulsado el botón de correr (B) en todo momento. Mario gana inercia, lo que te permite saltar huecos enormes. Además, el champiñón te hace el doble de grande y te permite recibir un impacto sin perder la vida.</div>"
         ] 
     },
     tortugasnes: { 
@@ -889,18 +889,15 @@ function irAlJuego() {
     let esVip = false;
     let caducidad = localStorage.getItem('olea3d_vip_caducidad');
     
-    // Comprobamos si el pase es válido o si ya ha caducado
     if (caducidad) {
         if (new Date().getTime() < parseInt(caducidad)) {
             esVip = true; 
         } else {
-            // Ha caducado: quitamos el pase y dejamos una marca de que expiró
             localStorage.removeItem('olea3d_vip_caducidad');
             localStorage.setItem('olea3d_vip_expirado', 'true'); 
         }
     }
 
-    // El contador de las 2 partidas gratuitas sigue su curso normal
     let intentos = parseInt(localStorage.getItem('olea3d_intentos') || '0');
     
     if (esVip) { 
@@ -916,16 +913,13 @@ function irAlJuego() {
             reproducirSonidoError(); 
             document.getElementById('modalFicha').style.display='none'; 
             
-            // Modificamos el texto del cartel de pago según el caso
             const tituloPaywall = document.querySelector('#modalPaywall h2');
             const textoPaywall = document.querySelector('#modalPaywall p');
             
             if (localStorage.getItem('olea3d_vip_expirado') === 'true') {
-                // Caso A: Tuvo llavero pero pasaron 72h
                 tituloPaywall.innerText = "⏳ CONEXIÓN PERDIDA ⏳";
                 textoPaywall.innerHTML = "Tu conexión Premium ha caducado. Vuelve a <strong>acercar tu Llavero NFC</strong> al móvil para reactivarlo al instante.";
             } else {
-                // Caso B: Usuario nuevo que gastó sus 2 partidas gratis
                 tituloPaywall.innerText = "🛑 TIEMPO AGOTADO 🛑";
                 textoPaywall.innerHTML = "Has agotado tus <strong>2 partidas</strong> de prueba gratuitas.";
             }
@@ -942,7 +936,7 @@ function abrirTiendaGeneral() { playSound('clic'); window.open(`https://wa.me/34
 
 function filtrarJuegos() { let input=document.getElementById("buscadorJuegos").value.toLowerCase(); document.querySelectorAll(".card-wrapper").forEach(t => { let h=t.querySelector("h2").innerText.toLowerCase(); t.style.display = h.includes(input) ? "block" : "none"; }); }
 
-// --- NUEVO: SISTEMA DE ANIMACIÓN PORTAL DE PÍXELES ---
+// --- MOTOR DEL PORTAL RETRO HIPERCOLORIDO Y EXTENDIDO (2.3 SEGUNDOS) ---
 function lanzarAnimacionPortal(callback) {
     const container = document.getElementById('portalContainer');
     const destello = document.getElementById('destelloLuz');
@@ -963,46 +957,56 @@ function lanzarAnimacionPortal(callback) {
     reproducirSonido1UP();
     
     setTimeout(() => {
-        destello.style.transform = 'translate(-50%, -50%) scale(80)';
+        destello.style.transform = 'translate(-50%, -50%) scale(100)';
     }, 50);
     
-    // Generar píxeles de explosión
-    const colores = ['#d4af37', '#9acd32', '#ffd700', '#ffffff', '#9dff3d'];
-    for (let i = 0; i < 150; i++) {
+    // PALETA ARCADE: Rosas neón, azules eléctricos, verdes, dorados, naranjas y lilas
+    const colores = [
+        '#ff007f', // Rosa Neón (Arcade)
+        '#00f0ff', // Azul Eléctrico (Sega)
+        '#9dff3d', // Verde Neón Olea
+        '#ffd700', // Oro Premium
+        '#ff5500', // Naranja NES
+        '#ba55d3', // Lila Game Boy
+        '#ffffff'  // Brillo Blanco central
+    ];
+    
+    // Generar píxeles cuadrados de explosión
+    for (let i = 0; i < 180; i++) {
         particulas.push({
             x: centerX,
             y: centerY,
-            size: Math.random() * 8 + 4,
+            size: Math.random() * 9 + 4,
             color: colores[Math.floor(Math.random() * colores.length)],
-            vx: (Math.random() - 0.5) * 15,
-            vy: (Math.random() - 0.5) * 15 - 2,
+            vx: (Math.random() - 0.5) * 16,
+            vy: (Math.random() - 0.5) * 16 - 3,
             alpha: 1,
-            gravedad: 0.15
+            gravedad: 0.12
         });
     }
     
     // Generar monedas giratorias virtuales
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 7; i++) {
         monedas.push({
-            x: centerX + (Math.random() - 0.5) * 120,
-            y: centerY + (Math.random() - 0.5) * 120,
-            radius: 12,
-            vy: -Math.random() * 3 - 2,
+            x: centerX + (Math.random() - 0.5) * 140,
+            y: centerY + (Math.random() - 0.5) * 140,
+            radius: 13,
+            vy: -Math.random() * 2.5 - 1.5, // Subida flotante lenta majestuosa
             frame: Math.random() * 10,
             scaleX: 1,
-            vRojo: Math.random() * 0.1 + 0.1
+            vRojo: Math.random() * 0.08 + 0.08 // Velocidad de rotación
         });
     }
     
     function bucle() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
-        // Render Píxeles
+        // Renderizar Píxeles
         particulas.forEach((p, index) => {
             p.x += p.vx;
             p.y += p.vy;
             p.vy += p.gravedad;
-            p.alpha -= 0.015;
+            p.alpha -= 0.011; // Desvanecimiento optimizado para aguantar 2.3s
             
             if (p.alpha <= 0) {
                 particulas.splice(index, 1);
@@ -1013,7 +1017,7 @@ function lanzarAnimacionPortal(callback) {
             }
         });
         
-        // Render Monedas
+        // Renderizar Monedas
         monedas.forEach((m) => {
             m.y += m.vy;
             m.frame += m.vRojo;
@@ -1046,6 +1050,7 @@ function lanzarAnimacionPortal(callback) {
     
     bucle();
     
+    // Temporizador final extendido (2.3 segundos de pura épica retro)
     setTimeout(() => {
         cancelAnimationFrame(animacionId);
         container.style.opacity = '0';
@@ -1056,10 +1061,10 @@ function lanzarAnimacionPortal(callback) {
             destello.style.transform = 'translate(-50%, -50%) scale(0)';
             if (callback) callback();
         }, 500);
-    }, 1800);
+    }, 2300);
 }
 
-// --- ACTUALIZADO: ENTRADA NFC CON LA ANIMACIÓN DEL PORTAL ---
+// --- ENTRADA DEL ESCÁNER NFC ASOCIADA AL PORTAL DE PARTÍCULAS ---
 window.onload = () => {
     renderCards();
     const hash = window.location.hash.replace('#','');
@@ -1071,7 +1076,7 @@ window.onload = () => {
         setTimeout(() => { 
             document.getElementById('nfcScannerScreen').classList.remove('active'); 
             
-            // Lanza el portal pixelado y, al terminar, abre la ficha técnica del juego
+            // Lanzamos el portal de píxeles y al terminar se abre la revista del juego
             lanzarAnimacionPortal(() => {
                 verFicha(hash); 
             });
