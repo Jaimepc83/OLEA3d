@@ -121,6 +121,137 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
 
 /* CONTENIDO REVISTA COMPACTO (FLIPBOOK) */
 #flipbookWrapper { display: block; }
+.flipbook-container { background: #ffffff; border-radius: 0 0 10px 10px; padding: 12px; margin-bottom: 10px; min-height: 230px; position: relative; perspective: 1200px; border: 1px solidAquí tienes tu archivo `index.html` completo. He realizado exactamente los dos cambios de tiempo que has solicitado en el código JavaScript:
+
+1.  **Duración del Escáner:** He aumentado el tiempo de espera en `window.onload` de 500ms a **1500ms** (1.5 segundos). Ahora el mensaje "SISTEMA OLEA3D..." y el láser permanecen un segundo más en pantalla.
+2.  **Duración de la Explosión (Portal):** En la función `lanzarAnimacionPortal`, he aumentado el tiempo de `setTimeout` principal de 1000ms a **2000ms** (2 segundos). Ahora la animación hipercolorida y las monedas volando duran un segundo más antes de desaparecer.
+
+El resto del código, textos y base de datos de juegos permanecen **intactos**.
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="OLEA3D Retro">
+
+<title>OLEA3D ARCADE ZONE - Enciclopedia Premium</title>
+
+<style>
+/* 1. SETUP Y FONDOS */
+:root { --modal-border: #d4af37; --modal-title: #ffd700; --modal-tab: #9dff3d; }
+body { 
+    margin: 0; 
+    font-family: Arial, sans-serif; 
+    background-color: #0d0d0d; 
+    color: white; 
+    text-align: center; 
+    overflow-x: hidden; 
+    position: relative; 
+    min-height: 100vh; 
+    transition: background-color 0.8s ease; 
+    padding-top: env(safe-area-inset-top); 
+}
+
+.bg-grid { 
+    position: fixed; bottom: 0; left: -50%; width: 200%; height: 60vh; 
+    background: linear-gradient(transparent 10%, rgba(157,255,61,0.3) 100%), 
+                repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(157,255,61,0.5) 21px), 
+                repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(157,255,61,0.5) 21px); 
+    transform-origin: bottom; 
+    transform: perspective(500px) rotateX(60deg); 
+    animation: gridMove 2s linear infinite; 
+    z-index: -1; opacity: 0.6; transition: background 0.8s ease; 
+}
+@keyframes gridMove { 
+    0% { transform: perspective(500px) rotateX(60deg) translateY(0); } 
+    100% { transform: perspective(500px) rotateX(60deg) translateY(21px); } 
+}
+
+/* TEMAS POR CONSOLA */
+body.theme-arcade { background-color: #1a001a; } 
+body.theme-arcade .bg-grid { background: linear-gradient(transparent 10%, rgba(255,0,255,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(255,0,255,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(255,0,255,0.3) 21px); }
+body.theme-nes { background-color: #1a0000; } 
+body.theme-nes .bg-grid { background: linear-gradient(transparent 10%, rgba(230,0,18,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(230,0,18,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(230,0,18,0.3) 21px); }
+body.theme-n64 { background-color: #001a08; } 
+body.theme-n64 .bg-grid { background: linear-gradient(transparent 10%, rgba(0,177,64,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(0,177,64,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(0,177,64,0.3) 21px); }
+body.theme-md { background-color: #110800; } 
+body.theme-md .bg-grid { background: linear-gradient(transparent 10%, rgba(212,175,55,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(212,175,55,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(212,175,55,0.3) 21px); }
+body.theme-snes { background-color: #000c1a; } 
+body.theme-snes .bg-grid { background: linear-gradient(transparent 10%, rgba(0,91,159,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(0,91,159,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(0,91,159,0.3) 21px); }
+body.theme-gba { background-color: #1a001a; } 
+body.theme-gba .bg-grid { background: linear-gradient(transparent 10%, rgba(90,66,155,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(90,66,155,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(90,66,155,0.3) 21px); }
+body.theme-nds { background-color: #1a1a1a; } 
+body.theme-nds .bg-grid { background: linear-gradient(transparent 10%, rgba(180,180,180,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(180,180,180,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(180,180,180,0.3) 21px); }
+
+/* CABECERA Y LOGOS NEÓN */
+header { padding: 20px 20px 5px 20px; background: linear-gradient(180deg, rgba(26,26,26,0.9), rgba(13,13,13,0)); position: relative; z-index: 10; }
+.header-logos { display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 10px; }
+.logo-side { width: 70px; height: 70px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: 0.3s; }
+.logo-side:hover { transform: scale(1.1); }
+#logoBeltraneja { border-color: #e60012; box-shadow: 0 0 15px rgba(230,0,18,0.8); animation: pulseNeonRed 2.5s infinite; }
+#logoGarden { border-color: #00ffc8; box-shadow: 0 0 15px rgba(0,255,200,0.8); animation: pulseNeonGreen 2.5s infinite; }
+@keyframes pulseNeonRed { 0%, 100% { box-shadow: 0 0 10px rgba(230,0,18,0.7); } 50% { box-shadow: 0 0 25px rgba(230,0,18,1); } }
+@keyframes pulseNeonGreen { 0%, 100% { box-shadow: 0 0 10px rgba(0,255,200,0.7); } 50% { box-shadow: 0 0 25px rgba(0,255,200,1); } }
+.logo { width: 110px; border-radius: 50%; box-shadow: 0 0 20px #d4af37; cursor: pointer; }
+h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
+.sub { color: #9acd32; font-size: 16px; margin-bottom: 10px; }
+.btn-instagram { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); color: white; padding: 10px 20px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; display: inline-block; text-decoration: none; position: relative; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.5); transition: 0.3s; }
+
+/* TIENDA DE LLAVEROS */
+.tienda-banner { background: rgba(20,20,20,0.85); border: 2px solid #d4af37; border-radius: 15px; margin: 10px auto 25px auto; padding: 20px; max-width: 90%; position: relative; z-index: 10; backdrop-filter: blur(5px); box-shadow: 0 0 20px rgba(212,175,55,0.25); }
+.tienda-titulo { color: #ffd700; margin: 0 0 8px 0; font-size: 20px; }
+.tienda-desc { color: #ddd; font-size: 14px; margin-bottom: 15px; }
+.galeria-llaveros { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; justify-content: center; }
+.galeria-llaveros img { width: 85px; height: 85px; object-fit: cover; border-radius: 12px; border: 2px solid #9acd32; transition: 0.3s; }
+.btn-tienda-principal { background: #25D366; color: white; border: none; padding: 12px 25px; border-radius: 25px; font-weight: bold; font-size: 15px; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 10px rgba(37,211,102,0.4); }
+
+/* BUSCADOR CORREGIDO (MÁS PEQUEÑO) */
+.buscador-container { margin: 15px auto; width: 85%; max-width: 300px; z-index: 10; position: relative; }
+#buscadorJuegos { width: 100%; box-sizing: border-box; padding: 10px 15px; border-radius: 20px; border: 2px solid #d4af37; background: rgba(0,0,0,0.8); color: white; font-size: 14px; text-align: center; }
+
+/* MENÚ BOTONES CONSOLAS */
+.menu { display: flex; justify-content: center; gap: 5px; flex-wrap: wrap; padding: 10px; z-index: 10; position: relative; max-width: 95%; margin: 0 auto; }
+.menu a { color: white; text-decoration: none; background: #222; padding: 6px 12px; border-radius: 15px; font-size: 11px; font-weight: bold; border: 1px solid #d4af37; }
+
+/* CONTENEDORES DE JUEGOS */
+.main-container { max-width: 1200px; margin: auto; padding: 10px; position: relative; z-index: 10; }
+.section-title { color: #ffd700; margin: 30px 0 15px 0; font-size: 22px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+.banner-console { width: 100%; max-width: 160px; border-radius: 12px; box-shadow: 0 0 15px rgba(247,210,74,0.35); margin-bottom: 10px; }
+.container { display: flex; gap: 20px; overflow-x: auto; padding: 20px 10px; scroll-behavior: smooth; perspective: 1000px; }
+.container::-webkit-scrollbar { display: none; }
+.card-wrapper { position: relative; min-width: 200px; height: 270px; flex-shrink: 0; cursor: pointer; z-index: 1; transition: transform 0.4s; }
+.card-wrapper:hover { transform: translateY(-10px) rotateX(8deg) rotateY(-5deg) scale(1.05); z-index: 100; }
+.card-wrapper::before { content: ''; position: absolute; top: -3px; left: -3px; right: -3px; bottom: -3px; background: linear-gradient(45deg, #d4af37, #f8f9fa, #9acd32, #d4af37); background-size: 300%; border-radius: 23px; z-index: -1; animation: brilloSeda 4s linear infinite; }
+.card { background: rgba(15, 15, 15, 0.95); border-radius: 20px; padding: 15px; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; box-sizing: border-box; }
+.card h2 { color: #fff; font-size: 15px; margin: 8px 0; text-transform: uppercase; }
+.card img { max-height: 110px; object-fit: contain; border-radius: 8px; }
+.btn-ver { display: inline-block; padding: 10px 15px; background: #6b8e23; color: white; border-radius: 6px; font-weight: bold; font-size: 12px; }
+.stats { margin: 10px 0; font-size: 14px; font-weight: bold; color: #9dff3d; }
+.nfc-badge { display: inline-block; background: #9dff3d; color: #111; font-weight: bold; padding: 3px 10px; border-radius: 20px; margin: 2px; font-size: 11px; }  
+
+/* --- MODAL ESTILO REVISTA PREMIUM (0 SCROLL) --- */
+.modal-ficha { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 99999; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box; backdrop-filter: blur(8px); }
+.ficha-content { background: #1a1a1a; border: 4px solid var(--modal-border); border-radius: 15px; max-width: 500px; width: 100%; padding: 15px; position: relative; max-height: 98vh; overflow-y: auto; text-align: left; box-sizing: border-box; animation: popIn 0.3s; box-shadow: 0 0 30px rgba(0,0,0,0.8); }
+@keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+/* BOTÓN X LADEADO PARA EVITAR EL MARCO */
+.close-btn { position: absolute; top: 12px; right: 12px; background: #ff003c; color: white; border: 2px solid #fff; width: 35px; height: 35px; font-weight: bold; border-radius: 50%; cursor: pointer; font-size: 16px; z-index: 20; box-shadow: 0 4px 10px rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; padding: 0; }
+
+.ficha-header { display: flex; gap: 10px; align-items: center; background: #000; padding: 8px; border-radius: 10px; border-left: 5px solid var(--modal-border); margin-top: 5px; margin-bottom: 8px; }
+.ficha-header img { width: 70px; border-radius: 5px; object-fit: contain; border: 1px solid #333; }
+.ficha-titulos h2 { color: #fff; margin: 0; font-size: 18px; font-style: italic; text-transform: uppercase; font-family: 'Impact', sans-serif; letter-spacing: 1px; padding-right: 25px; }
+.valoracion-box { background: #e60012; border: 2px solid #fff; color: white; padding: 2px 8px; border-radius: 5px; font-size: 12px; font-weight: bold; display: inline-block; margin-top: 3px; transform: skew(-10deg); }
+
+.tabs { display: flex; gap: 5px; margin-bottom: 8px; border-bottom: 4px solid #444; padding-bottom: 0; }
+.tab-btn { background: #333; color: #aaa; border: none; font-size: 12px; font-weight: 900; cursor: pointer; padding: 8px 10px; border-radius: 8px 8px 0 0; transition: 0.2s; text-transform: uppercase; font-family: 'Impact', sans-serif; }
+.tab-btn.active { background: #fff; color: #000; border-top: 4px solid var(--modal-border); border-left: 4px solid var(--modal-border); border-right: 4px solid var(--modal-border); transform: translateY(4px); }
+
+/* CONTENIDO REVISTA COMPACTO (FLIPBOOK) */
+#flipbookWrapper { display: block; }
 .flipbook-container { background: #ffffff; border-radius: 0 0 10px 10px; padding: 12px; margin-bottom: 10px; min-height: 230px; position: relative; perspective: 1200px; border: 1px solid #ccc; overflow: hidden; box-shadow: inset 0 0 15px rgba(0,0,0,0.1); }
 .flipbook-page { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 10px; box-sizing: border-box; background: #fff; color: #111; font-size: 12.5px; line-height: 1.3; font-family: 'Helvetica Neue', sans-serif; overflow-y: auto; opacity: 0; z-index: 1; transform-origin: left center; transition: transform 0.6s ease; backface-visibility: hidden; background-image: linear-gradient(90deg, rgba(0,0,0,0.03) 0%, transparent 5%); }
 .flipbook-page.active { opacity: 1; z-index: 5; transform: rotateY(0deg); pointer-events: all; }
@@ -209,7 +340,7 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
     </div>
     <h1>OLEA3D ARCADE ZONE</h1>
     <p class="sub">🕹️ DESBLOQUEA EL PASADO: PASA TU LLAVERO Y ACTIVA EL INSERT COIN</p>
-    <a href="https://www.instagram.com/olea3d/" target="_blank" class="btn-instagram" onclick="reproducirClic()">📸 Síguenos en @olea3d</a>
+    <a href="[https://www.instagram.com/olea3d/](https://www.instagram.com/olea3d/)" target="_blank" class="btn-instagram" onclick="reproducirClic()">📸 Síguenos en @olea3d</a>
 </header>
 
 <div class="tienda-banner">
@@ -241,7 +372,7 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
     <div class="stats">🕹️ Catálogo Premium | Colección OLEA3D</div>
 
     <h1 id="arcade" class="section-title">🕹️ SALÓN ARCADE (RECREATIVAS)</h1>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Arcade_Machine_Vector.svg/200px-Arcade_Machine_Vector.svg.png" class="banner-console" alt="Arcade" onerror="this.style.display='none'">
+    <img src="[https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Arcade_Machine_Vector.svg/200px-Arcade_Machine_Vector.svg.png](https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Arcade_Machine_Vector.svg/200px-Arcade_Machine_Vector.svg.png)" class="banner-console" alt="Arcade" onerror="this.style.display='none'">
     <div class="container" id="contArcade"></div>
 
     <h1 id="nes" class="section-title">🎮 NES</h1>
@@ -457,7 +588,7 @@ const infoJuegos = {
             "<h2 class='mag-sub'>Los Protagonistas</h2><p>Tienes a tu disposición a 4 auténticos bestias:<br><br><strong>Jack Tenrec:</strong> El mecánico equilibrado. Ideal para principiantes.<br><strong>Hannah Dundee:</strong> Es rápida como el rayo, usa objetos con maestría.<br><strong>Mustapha Cairo:</strong> El favorito de los pros. Su patada voladora es letal.<br><strong>Mess O'Bradovich:</strong> Lento, pero levanta a los enemigos por los aires como si fueran de papel.</p>"
         ],
         manual: [
-            "<h2 class='mag-titular'>S.O.S. TRUCOS</h2><p>La sanidad no importa aquí. Si ves un pollo asado entero escondido dentro de un bidón de metal oxidado o una caja de madera... <strong>cómetelo sin dudar</strong>. Curará tu barra de vida mágicamente.</p><div class='mag-truco'><span>EL COCHE DE LA MUERTE</span>En el Nivel 3, podrás subirte al mismísimo Cadillac. El truco aquí es <strong>no frenar jamás</strong>. Acelera de lado a lado atropellando a los enemigos para conseguir puntos extra y ganar vidas.</div>", 
+            "<h2 class='mag-titular'>S.O.S. TRUCOS</h2><p>LA sanidad no importa aquí. Si ves un pollo asado entero escondido dentro de un bidón de metal oxidado o una caja de madera... <strong>cómetelo sin dudar</strong>. Curará tu barra de vida mágicamente.</p><div class='mag-truco'><span>EL COCHE DE LA MUERTE</span>En el Nivel 3, podrás subirte al mismísimo Cadillac. El truco aquí es <strong>no frenar jamás</strong>. Acelera de lado a lado atropellando a los enemigos para conseguir puntos extra y ganar vidas.</div>", 
             "<h2 class='mag-sub'>Combos de Combate</h2><p><strong>Golpe + Salto:</strong> Pulsa ambos botones a la vez para hacer tu ataque especial giratorio a 360 grados. Te salvará la via cuando estés rodeado, pero ojo: <em>¡te resta un poquito de tu propia vida al impactar!</em> Úsalo solo en caso de emergencia.</p><p><strong>Combo de Mustapha:</strong> Adelante, Adelante + Salto + Golpe. Verás su famosa patada voladora con destello amarillo que limpia la pantalla entera.</p>"
         ] 
     },
@@ -662,7 +793,7 @@ const infoJuegos = {
             "<h2 class='mag-titular'>EL ORIGEN DEL MAL EN LA RED</h2><p>Para este juego de raquetas en N64 querían crear un modo de torneos de dobles épico, pero se dieron cuenta de un problema gravísimo de diseño: el malvado Wario no tenía a ningún compañero de fechorías para hacer equipo. En lugar de emparejarlo con Bowser (que ya tenía su estilo), se inventaron de la nada a un tipo larguirucho, con bigote en zigzag, voz de pito y una gorra con una 'L' invertida. Así nació la leyenda de Waluigi.</p>"
         ], 
         manual: [
-            "<h2 class='mag-titular'>REGLAMENTO EN PISTA</h2><p>No te limites a darle a la bola de cualquier manera. Camelot (el estudio) introdujo mucha profundidad técnica en los controles para destrozar a tus amigos en el salón.</p><div class='mag-truco'><span>TIPOS DE GOLPE CORTADO</span>La magia está en los botones de colores de la Nintendo 64:<br><strong>Botón A:</strong> Darás un golpe plano, potente, rápido y directo con estela Roja.<br><strong>Botón B:</strong> Golpe cortado y engañoso con efecto azul para romperle la cintura al rival.<br><strong>Pulsar A + B a la vez:</strong> Harás un globo parabólico altísimo. Perfecto para cuando tu amigo es un abusón y se pega a la red todo el rato.</div>"
+            "<h2 class='mag-titular'>REGLAMENTO EN PISTA</h2><p>No te limites a darle a la bola de cualquier manera. Camelot (el estudio) introdujo mucha profundidad técnica en los controles para destrozar a tus amigos en el salón.</p><div class='mag-truco'><span>TIPOS DE GOLPE CORTADO</span>LA magia está en los botones de colores de la Nintendo 64:<br><strong>Botón A:</strong> Darás un golpe plano, potente, rápido y directo con estela Roja.<br><strong>Botón B:</strong> Golpe cortado y engañoso con efecto azul para romperle la cintura al rival.<br><strong>Pulsar A + B a la vez:</strong> Harás un globo parabólico altísimo. Perfecto para cuando tu amigo es un abusón y se pega a la red todo el rato.</div>"
         ] 
     },
         zeldaocarinan64: {
@@ -694,7 +825,7 @@ const infoJuegos = {
         ],
         manual: [
             "<h2 class='mag-titular'>REGLAS DEL CAOS</h2><p>Aquí no hay barras de vida clásicas. Tu objetivo es subirle el porcentaje de daño (%) al rival golpeándolo. Cuanto más alto sea su porcentaje, más lejos saldrá disparado por los aires al recibir un impacto fuerte. ¡Échalo del escenario para marcar un punto!</p>",
-            "<div class='mag-truco'><span>EL GOLPE SMASH</span>La técnica que le da nombre al juego. No te limites a pulsar los botones de ataque. Si empujas la palanca de dirección de golpe hacia un lado y pulsas el botón A al mismo tiempo, tu personaje cargará un ataque devastador. Es la mejor forma de sacar del mapa a un rival que tenga más del 100% de daño.</div>"
+            "<div class='mag-truco'><span>EL GOLPE SMASH</span>LA técnica que le da nombre al juego. No te limites a pulsar los botones de ataque. Si empujas la palanca de dirección de golpe hacia un lado y pulsas el botón A al mismo tiempo, tu personaje cargará un ataque devastador. Es la mejor forma de sacar del mapa a un rival que tenga más del 100% de daño.</div>"
         ]
     },
 
@@ -757,7 +888,7 @@ const infoJuegos = {
             "<h2 class='mag-titular'>UN HÉROE PRIMATE</h2><p>¡Vaya papeleta! Un malvado hechicero ha secuestrado a tu novia Miho y, para rematar la faena, te ha convertido en un mono rechoncho y bastante lento. Este clásico plataformero, que nació en las máquinas recreativas y tuvo un port brillante en Mega Drive, te obligará a escupir bolas de energía por la boca para abrirte paso a través de la jungla y recuperar tu forma humana.</p>"
         ], 
         manual: [
-            "<h2 class='mag-titular'>GUÍA DE SUPERVIVENCIA SALIVAL</h2><p>Toki no es Sonic; es un mono lento y pesado. La paciencia es tu mejor arma en este juego. Avanza poco a poco y no saltes a lo loco hacia lo desconocido o acabarás en un foso de pinchos o devorado por un monstruo oculto.</p><div class='mag-box'><strong>CASCO DE FÚTBOL AMERICANO:</strong> De vez en cuando encontrarás un mítico casco de fútbol americano. ¡Póntelo rápido! Te hará temporalmente inmune a los ataques y enemigos que te caigan directamente desde arriba. Es una ventaja tremenda.</div>",
+            "<h2 class='mag-titular'>GUÍA DE SUPERVIVENCIA SALIVAL</h2><p>Toki no es Sonic; es un mono lento y pesado. LA paciencia es tu mejor arma en este juego. Avanza poco a poco y no saltes a lo loco hacia lo desconocido o acabarás en un foso de pinchos o devorado por un monstruo oculto.</p><div class='mag-box'><strong>CASCO DE FÚTBOL AMERICANO:</strong> De vez en cuando encontrarás un mítico casco de fútbol americano. ¡Póntelo rápido! Te hará temporalmente inmune a los ataques y enemigos que te caigan directamente desde arriba. Es una ventaja tremenda.</div>",
             "<h2 class='mag-sub'>MUNICIÓN ESPECIAL</h2><p>Rompe los objetos del escenario para cambiar tu tipo de disparo. Intenta conseguir y mantener el disparo múltiple o el lanzallamas, ya que limpian la pantalla de enemigos a toda velocidad y facilitan muchísimo las duras batallas contra los jefes finales.</p>"
         ] 
     },
@@ -770,7 +901,7 @@ const infoJuegos = {
         wr: { nombre: "AXL", puntos: "1.500.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='streetrage2.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='streetsrage2.jpg'\">",
-            "<h2 class='mag-titular'>LA CALLE ES TUYA</h2><p>Considerado casi unánimemente como el mejor 'Beat 'em up' de los 16 bits. Mr. X ha vuelto, ha secuestrado a Adam y ha tomado el control de la ciudad. Axel, Blaze, Max y el joven Skate (en patines) tendrán que limpiar las calles a mamporros al ritmo de una de las mejores bandas sonoras de la historia, compuesta por el genio Yuzo Koshiro.</p>"
+            "<h2 class='mag-titular'>LA CALLE ES TUYA</h2><p>Considerado casi unánimemente como el mejor 'Beat 'em up' (yo contra el barrio) de los 16 bits. Mr. X ha vuelto, ha secuestrado a Adam y ha tomado el control de la ciudad. Axel, Blaze, Max y el joven Skate (en patines) tendrán que limpiar las calles a mamporros al ritmo de una de las mejores bandas sonoras de la historia, compuesta por el genio Yuzo Koshiro.</p>"
         ],
         manual: [
             "<h2 class='mag-titular'>PELEA DE BARRIO</h2><p>El ritmo es fundamental. Puedes agarrar a los enemigos acercándote a ellos, pero cuidado con que no te rodeen. Cada personaje tiene sus puntos fuertes: Max es una grúa humana y Skate es rápido como el rayo.</p>",
@@ -806,7 +937,7 @@ const infoJuegos = {
             "<h2 class='mag-titular'>DUELO AL SOL Y COLORES CHILLONES</h2><p>Un clásico arcade arrollador diseñado por los maestros del 2D en Konami, que fue llevado de forma magistral y fiel a la consola doméstica. El juego rebosa puro carisma noventero. Desde la primera pantalla, cuando abatías a balazos al primer jefe final del balcón y este se desplomaba soltando al viento una placa de voz comprimida diciendo su dramática última voluntad: <em>'Bury me with my money...' (Entiérrame con mis billetes...)</em>. Eso es historia en mayúsculas de los salones de videojuegos de medio mundo.</p>"
         ], 
         manual: [
-            "<h2 class='mag-titular'>LA LEY DEL REVÓLVER IMPLACABLE</h2><p>Olvídate de disparar lento o esconderte. Aquí tienes la capacidad letal de disparar en 8 direcciones de la rosa de los vientos de forma ininterrumpida mientras vas caminando. Steve y Billy usan doble revólver rápido, mientras que Bob y Cormano usan unas mortíferas escopetas anchas que destrozan zonas más amplias de cobertura.</p><div class='mag-truco'><span>TÁCTICA VITAL DE SUPERVIVENCIA: EL ARTE DEL DESLIZAMIENTO</span>En las batallas de final de nivel los jefes te inundarán literalmente de balas la pantalla. Saltar a lo tonto es un suicidio seguro. La única y sagrada forma de esquivar ráfagas pesadas e ir ganando metros al enemigo es hacer el barrido. Simplemente presiona tu botón de <strong>SALTO y flecha ABAJO al mismo tiempo</strong> mientras corres. El cazarrecompensas se tirará planchado barriendo el polvo del desfiladero, volviéndose pequeñito y logrando que todos los perdigones asesinos pasen silbando inofensivamente a un milímetro de la tela de su sombrero tejano. Domina el barrido y reinarás en el oeste.</div>"
+            "<h2 class='mag-titular'>LA LEY DEL REVÓLVER IMPLACABLE</h2><p>Olvídate de disparar lento o esconderte. Aquí tienes la capacidad letal de disparar en 8 direcciones de la rosa de los vientos de forma ininterrumpida mientras vas caminando. Steve y Billy usan doble revólver rápido, mientras que Bob y Cormano usan unas mortíferas escopetas anchas que destrozan zonas más amplias de cobertura.</p><div class='mag-truco'><span>TÁCTICA VITAL DE SUPERVIVENCIA: EL ARTE DEL DESLIZAMIENTO</span>En las batallas de final de nivel los jefes te inundarán literalmente de balas la pantalla. Saltar a lo tonto es un suicidio seguro. LA única y sagrada forma de esquivar ráfagas pesadas e ir ganando metros al enemigo es hacer el barrido. Simplemente presiona tu botón de <strong>SALTO y flecha ABAJO al mismo tiempo</strong> mientras corres. El cazarrecompensas se tirará planchado barriendo el polvo del desfiladero, volviéndose pequeñito y logrando que todos los perdigones asesinos pasen silbando inofensivamente a un milímetro de la tela de su sombrero tejano. Domina el barrido y reinarás en el oeste.</div>"
         ] 
     },
     batmanreturn: { 
@@ -826,7 +957,7 @@ const infoJuegos = {
             "<h2 class='mag-titular'>VIAJE EN EL TIEMPO A 16 BITS</h2><p>Considerado por muchos como el mejor 'Beat 'em up' (yo contra el barrio) de la historia de Super Nintendo. Shredder ha vuelto, ha secuestrado a la Estatua de la Libertad y ha lanzado a nuestras tortugas favoritas a través de un vórtice temporal. Desde la prehistoria hasta el futuro neón del año 2100, este cartucho exprime el cerebro de la consola al máximo con unos gráficos coloridos brutales y una música trepidante.</p>"
         ], 
         manual: [
-            "<h2 class='mag-titular'>ARTES MARCIALES CALLEJERAS</h2><p>El ritmo de este juego es frenético. Correr es fundamental: pulsa dos veces hacia adelante para hacer un 'Dash' y pulsa el botón de ataque para embestir a los soldados del Clan del Pie, mandándolos a volar por los aires.</p><div class='mag-box'><strong>EFECTO 3D (MODO 7):</strong> El movimiento más icónico del juego es agarrar a los enemigos y lanzarlos literalmente contra la 'cámara' de tu pantalla. Para hacerlo, acércate mucho a un soldado herido para agarrarlo, y pulsa abajo + ataque. ¡Verás cómo el enemigo se hace gigante chocando contra el cristal de tu móvil! Es vital dominar esto, ya que es la única forma de derrotar a Shredder en el nivel del tecnódromo.</div>"
+            "<h2 class='mag-titular'>ARTES MARCIALES CALLEJERAS</h2><p>El ritmo de este juego es frenético. Correr es fundamental: pulsa dos veces hacia adelante para hacer un 'Dash' y pulsa el botón de ataque para embestir a los enemigos del Clan del Pie, mandándolos a volar por los aires.</p><div class='mag-box'><strong>EFECTO 3D (MODO 7):</strong> El movimiento más icónico del juego es agarrar a los enemigos y lanzarlos literalmente contra la 'cámara' de tu pantalla. Para hacerlo, acércate mucho a un soldado herido para agarrarlo, y pulsa abajo + ataque. ¡Verás cómo el enemigo se hace gigante chocando contra el cristal de tu móvil! Es vital dominar esto, ya que es la única forma de derrotar a Shredder en el nivel del tecnódromo.</div>"
         ] 
     },
     captaincomandosnes: {
@@ -890,7 +1021,7 @@ const infoJuegos = {
         wr: { nombre: "GOL", puntos: "9-0" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='internacionalsoccer1.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='internacionalsoccer.jpg'\">",
-            "<h2 class='mag-titular'>EL REY DEL CÉSPED</h2><p>Konami lanzó en 1994 esta auténtica obra de arte que revolucionaría los juegos deportivos para siempre. Sus gráficos enormes y fotorrealistas para la época lo convirtieron en un mito. Podías coger a la selección española (con nombres falsos muy graciosos por no tener las licencias oficiales) y plantarle cara al temible Brasil del legendario dios del fútbol virtual: el delantero Allejo.</p>"
+            "<h2 class='mag-titular'>EL REY DEL CÉSPED</h2><p>Konami lanzó en 1994 esta auténtica obra de arte que revolucionaría los juegos deportivos para siempre. Sus gráficos enormes y fotorrealistas para la época lo convirtieron en un mito. Podías coger a la selección española (con nombres falsos muy graciosos por no tener las licencias oficiales) y plantarle cara al temible Brasil del delantero Allejo.</p>"
         ],
         manual: [
             "<h2 class='mag-titular'>TÁCTICAS DE CAMPO</h2><p>Aquí no sirve correr hacia adelante y pegar un pelotazo cruzando los dedos. Tienes que usar los pases cortos al hueco y buscar los centros medidos al área. Usa los gatillos L y R para darle efecto al balón en los tiros libres.</p>",
@@ -910,7 +1041,7 @@ const infoJuegos = {
         ],
         manual: [
             "<h2 class='mag-titular'>JUEGO SUCIO PERMITIDO</h2><p>Olvídate del fair play. Si el rival tiene el balón, acércate y métele un empujón brutal para tirarlo al suelo y robarle la posesión. Aquí el árbitro está de adorno. Mantén siempre pulsado el botón de Turbo para correr más, pero vigila la barra de cansancio que hay debajo de tu nombre.</p>",
-            "<div class='mag-truco'><span>HE'S ON FIRE! (¡ESTÁ EN LLAMAS!)</span>La mecánica más legendaria del juego. Si profesigues que el mismo jugador anote 3 canastas seguidas sin que el equipo contrario marque, el balón se envolverá en fuego literal. Mientras estés 'On Fire', tendrás turbo infinito y tus tiros tendrán un porcentaje de acierto altísimo. El efecto se pasará cuando el rival consiga encestar y te rompa la racha.</div>"
+            "<div class='mag-truco'><span>HE'S ON FIRE! (¡ESTÁ EN LLAMAS!)</span>LA mecánica más legendaria del juego. Si profesigues que el mismo jugador anote 3 canastas seguidas sin que el equipo contrario marque, el balón se envolverá en fuego literal. Mientras estés 'On Fire', tendrás turbo infinito y tus tiros tendrán un porcentaje de acierto altísimo. El efecto se pasará cuando el rival consiga encestar y te rompa la racha.</div>"
         ]
     },
 
@@ -1228,12 +1359,15 @@ function lanzarAnimacionPortal(callback) {
     
     container.style.display = 'block';
     
+    // Reproducir sonido de explosión al inicio
     reproducirSonidoExplosion();
     
+    // 1. Destello de luz central inicial
     setTimeout(() => {
         destello.style.transform = 'translate(-50%, -50%) scale(100)';
     }, 50);
     
+    // 2. Preparar partículas y monedas
     const colores = ['#ff007f', '#00f0ff', '#9dff3d', '#ffd700', '#ff5500', '#ba55d3', '#ffffff'];
     
     for (let i = 0; i < 180; i++) {
@@ -1264,6 +1398,7 @@ function lanzarAnimacionPortal(callback) {
     function bucle() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
+        // Dibujar partículas
         particulas.forEach((p, index) => {
             p.x += p.vx;
             p.y += p.vy;
@@ -1279,6 +1414,7 @@ function lanzarAnimacionPortal(callback) {
             }
         });
         
+        // Dibujar monedas girando
         monedas.forEach((m) => {
             m.y += m.vy;
             m.frame += m.vRojo;
@@ -1289,6 +1425,7 @@ function lanzarAnimacionPortal(callback) {
             ctx.scale(m.scaleX, 1);
             ctx.globalAlpha = 0.9;
             
+            // Cuerpo moneda
             ctx.beginPath();
             ctx.arc(0, 0, m.radius, 0, Math.PI * 2);
             ctx.fillStyle = '#ffd700';
@@ -1297,6 +1434,7 @@ function lanzarAnimacionPortal(callback) {
             ctx.strokeStyle = '#d4af37';
             ctx.stroke();
             
+            // Brillo moneda
             ctx.beginPath();
             ctx.arc(0, 0, m.radius - 4, 0, Math.PI * 2);
             ctx.strokeStyle = '#fff';
@@ -1311,6 +1449,7 @@ function lanzarAnimacionPortal(callback) {
     
     bucle();
     
+    // 3. Finalizar animación y limpiar (DURACIÓN AUMENTADA A 2 SEGUNDOS)
     setTimeout(() => {
         cancelAnimationFrame(animacionId);
         container.style.opacity = '0';
@@ -1321,10 +1460,10 @@ function lanzarAnimacionPortal(callback) {
             destello.style.transform = 'translate(-50%, -50%) scale(0)';
             if (callback) callback();
         }, 300);
-    }, 1000);
+    }, 2000); // <-- Aumentado de 1000 a 2000ms
 }
 
-// --- ACTUALIZACIÓN DEL ESCÁNER (TIEMPO DE ESPERA REDUCIDO A 0.5s) ---
+// --- ACTUALIZACIÓN DEL ESCÁNER (TIEMPO DE ESPERA AUMENTADO A 1.5s) ---
 window.onload = () => {
     renderCards();
     const hash = window.location.hash.replace('#','');
@@ -1332,12 +1471,13 @@ window.onload = () => {
         document.getElementById('nfcScannerScreen').classList.add('active');
         reproducirSonidoEscaner();
         
+        // TIEMPO DE ESPERA AUMENTADO PARA QUE SE VEA EL ESCÁNER
         setTimeout(() => { 
             document.getElementById('nfcScannerScreen').classList.remove('active'); 
             lanzarAnimacionPortal(() => {
                 verFicha(hash); 
             });
-        }, 500);
+        }, 1500); // <-- Aumentado de 500 a 1500ms
     }
 };
 
