@@ -121,193 +121,6 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
 
 /* CONTENIDO REVISTA COMPACTO (FLIPBOOK) */
 #flipbookWrapper { display: block; }
-.flipbook-container { background: #ffffff; border-radius: 0 0 10px 10px; padding: 12px; margin-bottom: 10px; min-height: 230px; position: relative; perspective: 1200px; border: 1px solidAquí tienes tu archivo `index.html` completo. He realizado exactamente los dos cambios de tiempo que has solicitado en el código JavaScript:
-
-1.  **Duración del Escáner:** He aumentado el tiempo de espera en `window.onload` de 500ms a **2500ms** (2.5 segundos). Ahora el mensaje "SISTEMA OLEA3D..." y el láser permanecen un segundo más en pantalla.
-2.  **Duración de la Explosión (Portal):** En la función `lanzarAnimacionPortal`, he aumentado el tiempo de `setTimeout` principal de 1000ms a **3000ms** (3 segundos). Ahora la animación hipercolorida y las monedas volando duran un segundo más antes de desaparecer.
-
-El resto del código, textos y base de datos de juegos permanecen **intactos**.
-
-```html
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="OLEA3D Retro">
-
-<title>OLEA3D ARCADE ZONE - Enciclopedia Premium</title>
-
-<style>
-/* 1. SETUP Y FONDOS */
-:root { --modal-border: #d4af37; --modal-title: #ffd700; --modal-tab: #9dff3d; }
-body { 
-    margin: 0; 
-    font-family: Arial, sans-serif; 
-    background-color: #0d0d0d; 
-    color: white; 
-    text-align: center; 
-    overflow-x: hidden; 
-    position: relative; 
-    min-height: 100/* CONTENIDO REVISTA COMPACTO (FLIPBOOK) */
-#flipbookWrapper { display: block; }
-.flipbook-container { background: #ffffff; border-radius: 0 0 10px 10px; padding: 12px; margin-bottom: 10px; min-height: 230px; position: relative; perspective: 1200px; border: 1px solid #ccc; overflow: hidden; box-shadow: inset 0 0 15px rgba(0,0,0,0.1); }
-.flipbook-page { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 10px; box-sizing: border-box; background: #fff; color: #111; font-size: 12.5px; line-height: 1.3; font-family: 'Helvetica Neue', sans-serif; overflow-y: auto; opacity: 0; z-index: 1; transform-origin: left center; transition: transform 0.6s ease; backface-visibility: hidden; background-image: linear-gradient(90deg, rgba(0,0,0,0.03) 0%, transparent 5%); }
-.flipbook-page.active { opacity: 1; z-index: 5; transform: rotateY(0deg); pointer-events: all; }
-.flipbook-page.flipped { opacity: 1; transform: rotateY(-180deg); z-index: 10; pointer-events: none; }
-
-/* MAQUETACIÓN REVISTA (TEXTOS, CAJAS Y TRUCOS) */
-.mag-titular { background: #000; color: #fff; padding: 4px 8px; font-family: 'Impact', sans-serif; font-size: 18px; text-transform: uppercase; transform: skew(-5deg); display: inline-block; margin-top: 0; margin-bottom: 8px; border-bottom: 3px solid var(--modal-border); }
-.mag-sub { color: #e60012; font-weight: 900; border-bottom: 1.5px solid #ccc; font-size: 14px; margin: 10px 0 5px; text-transform: uppercase; }
-.mag-box { background: #f0f8ff; border-left: 4px solid #005b9f; padding: 8px; margin: 8px 0; font-size: 11.5px; border-radius: 0 5px 5px 0; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
-.mag-truco { background: #fffde6; border: 2px dashed #d4af37; padding: 10px; margin: 8px 0; font-size: 11.5px; font-weight: bold; color: #634a00; text-align: center; }
-.mag-truco span { display: block; background: #d4af37; color: #000; padding: 2px; text-transform: uppercase; margin: -10px -10px 8px -10px; font-family: 'Impact'; font-size: 14px; }
-
-/* CONTROLES PÁGINA REDUCIDOS */
-.flip-controls { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 8px; }
-.btn-flip { background: #000; color: #fff; border: 1px solid var(--modal-border); padding: 4px 10px; font-family: 'Impact'; font-size: 11px; cursor: pointer; box-shadow: 2px 2px 0 var(--modal-border); text-transform: uppercase; transition: 0.1s; }
-.btn-flip:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0 var(--modal-border); }
-.page-indicator { color: #fff; font-size: 11px; font-weight: bold; background: #333; padding: 3px 8px; border-radius: 10px; }
-
-/* BOTONES DE ACCIÓN (CATÁLOGO Y MONEDA) */
-.botones-row { display: flex; gap: 6px; margin-bottom: 5px; }
-.btn-nav { flex: 1; padding: 10px 0; border-radius: 6px; font-weight: 900; font-family: 'Impact'; text-transform: uppercase; cursor: pointer; border: none; font-size: 12px; transition: transform 0.1s; }
-.btn-catalog { background: #333; color: #fff; box-shadow: 0 3px 0 #000; }
-.btn-shop { background: #d4af37; color: #000; box-shadow: 0 3px 0 #8b6508; }
-.btn-play { width: 100%; padding: 14px 0; background: #e60012; color: #fff; border-radius: 6px; font-weight: 900; font-family: 'Impact'; text-transform: uppercase; font-size: 16px; border: none; box-shadow: 0 4px 0 #8b0000; cursor: pointer; transition: transform 0.1s; position: relative; z-index: 1000; }
-.btn-nav:active, .btn-play:active { transform: translateY(3px); box-shadow: 0 0 0 transparent; }
-
-/* SALÓN DE FAMA Y TABLAS */
-.salon-fama { background: #fff; color: #000; border-radius: 0 0 8px 8px; padding: 10px; display: none; min-height: 230px; border: 1px solid #ccc; margin-bottom: 8px;}
-.tabla-records { width: 100%; border-collapse: collapse; font-family: monospace; font-weight: bold; font-size: 12.5px; }
-.tabla-records th { background: #000; color: #fff; padding: 5px; text-align: center; border: 2px solid #000; }
-.tabla-records td { padding: 5px; text-align: center; border-bottom: 1px dashed #ccc; vertical-align: middle; }
-.btn-anadir { background: #005b9f; color: #fff; border: none; padding: 10px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; font-family: 'Impact'; font-size: 16px; text-transform: uppercase; }
-
-/* TRANSICIÓN, ESCÁNER Y PAYWALL */
-.toast-notification { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: rgba(18, 18, 18, 0.95); border: 2px solid #d4af37; color: #ffd700; padding: 15px 25px; border-radius: 30px; font-size: 16px; font-weight: bold; box-shadow: 0 5px 20px rgba(212,175,55,0.5); z-index: 9999999999; transition: top 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); display: flex; align-items: center; gap: 10px; backdrop-filter: blur(5px); }
-.toast-notification.active { top: 25px; }
-
-/* TOAST LOGROS (Más bajo para no tapar los logos) */
-.toast-logro { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); background: rgba(0, 15, 30, 0.96); border: 2px solid #00f0ff; color: #ffffff; padding: 12px 25px; border-radius: 20px; font-size: 14px; font-weight: bold; box-shadow: 0 0 25px rgba(0,240,255,0.6); z-index: 999999999; display: none; text-align: center; backdrop-filter: blur(5px); border-left: 6px solid #ffd700; }
-.toast-logro.active { display: block; animation: slideDown 0.5s forwards; }
-@keyframes slideDown { from { top: -100px; } to { top: 80px; } }
-
-.transition-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
-.transition-screen.active { opacity: 1; pointer-events: all; }
-.insert-coin-text { color: #ffd700; font-size: 28px; font-family: 'Courier New', Courier, monospace; font-weight: bold; animation: blink 0.5s infinite alternate; }
-@keyframes blink { from { opacity: 1; } to { opacity: 0.2; } }
-
-.nfc-scanner { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,10,0,0.97); z-index: 999999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: 0.3s; backdrop-filter: blur(10px); }
-.nfc-scanner.active { opacity: 1; pointer-events: all; }
-.nfc-laser { width: 250px; height: 3px; background: #9dff3d; box-shadow: 0 0 15px #9dff3d; position: absolute; animation: scanLaser 1.5s infinite alternate; }
-@keyframes scanLaser { from { transform: translateY(-100px); } to { transform: translateY(100px); } }
-#modalPaywall .ficha-content { text-align: center; border-color: #e60012; box-shadow: 0 0 40px #e60012; max-width: 400px; background: #111; }
-.secreto::before { background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff) !important; animation: brilloSeda 2s linear infinite !important; }
-</style>
-vh; 
-    transition: background-color 0.8s ease; 
-    padding-top: env(safe-area-inset-top); 
-}
-
-.bg-grid { 
-    position: fixed; bottom: 0; left: -50%; width: 200%; height: 60vh; 
-    background: linear-gradient(transparent 10%, rgba(157,255,61,0.3) 100%), 
-                repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(157,255,61,0.5) 21px), 
-                repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(157,255,61,0.5) 21px); 
-    transform-origin: bottom; 
-    transform: perspective(500px) rotateX(60deg); 
-    animation: gridMove 2s linear infinite; 
-    z-index: -1; opacity: 0.6; transition: background 0.8s ease; 
-}
-@keyframes gridMove { 
-    0% { transform: perspective(500px) rotateX(60deg) translateY(0); } 
-    100% { transform: perspective(500px) rotateX(60deg) translateY(21px); } 
-}
-
-/* TEMAS POR CONSOLA */
-body.theme-arcade { background-color: #1a001a; } 
-body.theme-arcade .bg-grid { background: linear-gradient(transparent 10%, rgba(255,0,255,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(255,0,255,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(255,0,255,0.3) 21px); }
-body.theme-nes { background-color: #1a0000; } 
-body.theme-nes .bg-grid { background: linear-gradient(transparent 10%, rgba(230,0,18,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(230,0,18,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(230,0,18,0.3) 21px); }
-body.theme-n64 { background-color: #001a08; } 
-body.theme-n64 .bg-grid { background: linear-gradient(transparent 10%, rgba(0,177,64,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(0,177,64,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(0,177,64,0.3) 21px); }
-body.theme-md { background-color: #110800; } 
-body.theme-md .bg-grid { background: linear-gradient(transparent 10%, rgba(212,175,55,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(212,175,55,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(212,175,55,0.3) 21px); }
-body.theme-snes { background-color: #000c1a; } 
-body.theme-snes .bg-grid { background: linear-gradient(transparent 10%, rgba(0,91,159,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(0,91,159,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(0,91,159,0.3) 21px); }
-body.theme-gba { background-color: #1a001a; } 
-body.theme-gba .bg-grid { background: linear-gradient(transparent 10%, rgba(90,66,155,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(90,66,155,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(90,66,155,0.3) 21px); }
-body.theme-nds { background-color: #1a1a1a; } 
-body.theme-nds .bg-grid { background: linear-gradient(transparent 10%, rgba(180,180,180,0.2) 100%), repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(180,180,180,0.3) 21px), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(180,180,180,0.3) 21px); }
-
-/* CABECERA Y LOGOS NEÓN */
-header { padding: 20px 20px 5px 20px; background: linear-gradient(180deg, rgba(26,26,26,0.9), rgba(13,13,13,0)); position: relative; z-index: 10; }
-.header-logos { display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 10px; }
-.logo-side { width: 70px; height: 70px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: 0.3s; }
-.logo-side:hover { transform: scale(1.1); }
-#logoBeltraneja { border-color: #e60012; box-shadow: 0 0 15px rgba(230,0,18,0.8); animation: pulseNeonRed 2.5s infinite; }
-#logoGarden { border-color: #00ffc8; box-shadow: 0 0 15px rgba(0,255,200,0.8); animation: pulseNeonGreen 2.5s infinite; }
-@keyframes pulseNeonRed { 0%, 100% { box-shadow: 0 0 10px rgba(230,0,18,0.7); } 50% { box-shadow: 0 0 25px rgba(230,0,18,1); } }
-@keyframes pulseNeonGreen { 0%, 100% { box-shadow: 0 0 10px rgba(0,255,200,0.7); } 50% { box-shadow: 0 0 25px rgba(0,255,200,1); } }
-.logo { width: 110px; border-radius: 50%; box-shadow: 0 0 20px #d4af37; cursor: pointer; }
-h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
-.sub { color: #9acd32; font-size: 16px; margin-bottom: 10px; }
-.btn-instagram { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); color: white; padding: 10px 20px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; display: inline-block; text-decoration: none; position: relative; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.5); transition: 0.3s; }
-
-/* TIENDA DE LLAVEROS */
-.tienda-banner { background: rgba(20,20,20,0.85); border: 2px solid #d4af37; border-radius: 15px; margin: 10px auto 25px auto; padding: 20px; max-width: 90%; position: relative; z-index: 10; backdrop-filter: blur(5px); box-shadow: 0 0 20px rgba(212,175,55,0.25); }
-.tienda-titulo { color: #ffd700; margin: 0 0 8px 0; font-size: 20px; }
-.tienda-desc { color: #ddd; font-size: 14px; margin-bottom: 15px; }
-.galeria-llaveros { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; justify-content: center; }
-.galeria-llaveros img { width: 85px; height: 85px; object-fit: cover; border-radius: 12px; border: 2px solid #9acd32; transition: 0.3s; }
-.btn-tienda-principal { background: #25D366; color: white; border: none; padding: 12px 25px; border-radius: 25px; font-weight: bold; font-size: 15px; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 10px rgba(37,211,102,0.4); }
-
-/* BUSCADOR CORREGIDO (MÁS PEQUEÑO) */
-.buscador-container { margin: 15px auto; width: 85%; max-width: 300px; z-index: 10; position: relative; }
-#buscadorJuegos { width: 100%; box-sizing: border-box; padding: 10px 15px; border-radius: 20px; border: 2px solid #d4af37; background: rgba(0,0,0,0.8); color: white; font-size: 14px; text-align: center; }
-
-/* MENÚ BOTONES CONSOLAS */
-.menu { display: flex; justify-content: center; gap: 5px; flex-wrap: wrap; padding: 10px; z-index: 10; position: relative; max-width: 95%; margin: 0 auto; }
-.menu a { color: white; text-decoration: none; background: #222; padding: 6px 12px; border-radius: 15px; font-size: 11px; font-weight: bold; border: 1px solid #d4af37; }
-
-/* CONTENEDORES DE JUEGOS */
-.main-container { max-width: 1200px; margin: auto; padding: 10px; position: relative; z-index: 10; }
-.section-title { color: #ffd700; margin: 30px 0 15px 0; font-size: 22px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
-.banner-console { width: 100%; max-width: 160px; border-radius: 12px; box-shadow: 0 0 15px rgba(247,210,74,0.35); margin-bottom: 10px; }
-.container { display: flex; gap: 20px; overflow-x: auto; padding: 20px 10px; scroll-behavior: smooth; perspective: 1000px; }
-.container::-webkit-scrollbar { display: none; }
-.card-wrapper { position: relative; min-width: 200px; height: 270px; flex-shrink: 0; cursor: pointer; z-index: 1; transition: transform 0.4s; }
-.card-wrapper:hover { transform: translateY(-10px) rotateX(8deg) rotateY(-5deg) scale(1.05); z-index: 100; }
-.card-wrapper::before { content: ''; position: absolute; top: -3px; left: -3px; right: -3px; bottom: -3px; background: linear-gradient(45deg, #d4af37, #f8f9fa, #9acd32, #d4af37); background-size: 300%; border-radius: 23px; z-index: -1; animation: brilloSeda 4s linear infinite; }
-.card { background: rgba(15, 15, 15, 0.95); border-radius: 20px; padding: 15px; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; box-sizing: border-box; }
-.card h2 { color: #fff; font-size: 15px; margin: 8px 0; text-transform: uppercase; }
-.card img { max-height: 110px; object-fit: contain; border-radius: 8px; }
-.btn-ver { display: inline-block; padding: 10px 15px; background: #6b8e23; color: white; border-radius: 6px; font-weight: bold; font-size: 12px; }
-.stats { margin: 10px 0; font-size: 14px; font-weight: bold; color: #9dff3d; }
-.nfc-badge { display: inline-block; background: #9dff3d; color: #111; font-weight: bold; padding: 3px 10px; border-radius: 20px; margin: 2px; font-size: 11px; }  
-
-/* --- MODAL ESTILO REVISTA PREMIUM (0 SCROLL) --- */
-.modal-ficha { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 99999; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box; backdrop-filter: blur(8px); }
-.ficha-content { background: #1a1a1a; border: 4px solid var(--modal-border); border-radius: 15px; max-width: 500px; width: 100%; padding: 15px; position: relative; max-height: 98vh; overflow-y: auto; text-align: left; box-sizing: border-box; animation: popIn 0.3s; box-shadow: 0 0 30px rgba(0,0,0,0.8); }
-@keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
-/* BOTÓN X LADEADO PARA EVITAR EL MARCO */
-.close-btn { position: absolute; top: 12px; right: 12px; background: #ff003c; color: white; border: 2px solid #fff; width: 35px; height: 35px; font-weight: bold; border-radius: 50%; cursor: pointer; font-size: 16px; z-index: 20; box-shadow: 0 4px 10px rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; padding: 0; }
-
-.ficha-header { display: flex; gap: 10px; align-items: center; background: #000; padding: 8px; border-radius: 10px; border-left: 5px solid var(--modal-border); margin-top: 5px; margin-bottom: 8px; }
-.ficha-header img { width: 70px; border-radius: 5px; object-fit: contain; border: 1px solid #333; }
-.ficha-titulos h2 { color: #fff; margin: 0; font-size: 18px; font-style: italic; text-transform: uppercase; font-family: 'Impact', sans-serif; letter-spacing: 1px; padding-right: 25px; }
-.valoracion-box { background: #e60012; border: 2px solid #fff; color: white; padding: 2px 8px; border-radius: 5px; font-size: 12px; font-weight: bold; display: inline-block; margin-top: 3px; transform: skew(-10deg); }
-
-.tabs { display: flex; gap: 5px; margin-bottom: 8px; border-bottom: 4px solid #444; padding-bottom: 0; }
-.tab-btn { background: #333; color: #aaa; border: none; font-size: 12px; font-weight: 900; cursor: pointer; padding: 8px 10px; border-radius: 8px 8px 0 0; transition: 0.2s; text-transform: uppercase; font-family: 'Impact', sans-serif; }
-.tab-btn.active { background: #fff; color: #000; border-top: 4px solid var(--modal-border); border-left: 4px solid var(--modal-border); border-right: 4px solid var(--modal-border); transform: translateY(4px); }
-
-/* CONTENIDO REVISTA COMPACTO (FLIPBOOK) */
-#flipbookWrapper { display: block; }
 .flipbook-container { background: #ffffff; border-radius: 0 0 10px 10px; padding: 12px; margin-bottom: 10px; min-height: 230px; position: relative; perspective: 1200px; border: 1px solid #ccc; overflow: hidden; box-shadow: inset 0 0 15px rgba(0,0,0,0.1); }
 .flipbook-page { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 10px; box-sizing: border-box; background: #fff; color: #111; font-size: 12.5px; line-height: 1.3; font-family: 'Helvetica Neue', sans-serif; overflow-y: auto; opacity: 0; z-index: 1; transform-origin: left center; transition: transform 0.6s ease; backface-visibility: hidden; background-image: linear-gradient(90deg, rgba(0,0,0,0.03) 0%, transparent 5%); }
 .flipbook-page.active { opacity: 1; z-index: 5; transform: rotateY(0deg); pointer-events: all; }
@@ -396,7 +209,7 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
     </div>
     <h1>OLEA3D ARCADE ZONE</h1>
     <p class="sub">🕹️ DESBLOQUEA EL PASADO: PASA TU LLAVERO Y ACTIVA EL INSERT COIN</p>
-    <a href="[https://www.instagram.com/olea3d/](https://www.instagram.com/olea3d/)" target="_blank" class="btn-instagram" onclick="reproducirClic()">📸 Síguenos en @olea3d</a>
+    <a href="https://www.instagram.com/olea3d/" target="_blank" class="btn-instagram" onclick="reproducirClic()">📸 Síguenos en @olea3d</a>
 </header>
 
 <div class="tienda-banner">
@@ -428,7 +241,7 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
     <div class="stats">🕹️ Catálogo Premium | Colección OLEA3D</div>
 
     <h1 id="arcade" class="section-title">🕹️ SALÓN ARCADE (RECREATIVAS)</h1>
-    <img src="[https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Arcade_Machine_Vector.svg/200px-Arcade_Machine_Vector.svg.png](https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Arcade_Machine_Vector.svg/200px-Arcade_Machine_Vector.svg.png)" class="banner-console" alt="Arcade" onerror="this.style.display='none'">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Arcade_Machine_Vector.svg/200px-Arcade_Machine_Vector.svg.png" class="banner-console" alt="Arcade" onerror="this.style.display='none'">
     <div class="container" id="contArcade"></div>
 
     <h1 id="nes" class="section-title">🎮 NES</h1>
@@ -644,7 +457,7 @@ const infoJuegos = {
             "<h2 class='mag-sub'>Los Protagonistas</h2><p>Tienes a tu disposición a 4 auténticos bestias:<br><br><strong>Jack Tenrec:</strong> El mecánico equilibrado. Ideal para principiantes.<br><strong>Hannah Dundee:</strong> Es rápida como el rayo, usa objetos con maestría.<br><strong>Mustapha Cairo:</strong> El favorito de los pros. Su patada voladora es letal.<br><strong>Mess O'Bradovich:</strong> Lento, pero levanta a los enemigos por los aires como si fueran de papel.</p>"
         ],
         manual: [
-            "<h2 class='mag-titular'>S.O.S. TRUCOS</h2><p>LA sanidad no importa aquí. Si ves un pollo asado entero escondido dentro de un bidón de metal oxidado o una caja de madera... <strong>cómetelo sin dudar</strong>. Curará tu barra de vida mágicamente.</p><div class='mag-truco'><span>EL COCHE DE LA MUERTE</span>En el Nivel 3, podrás subirte al mismísimo Cadillac. El truco aquí es <strong>no frenar jamás</strong>. Acelera de lado a lado atropellando a los enemigos para conseguir puntos extra y ganar vidas.</div>", 
+            "<h2 class='mag-titular'>S.O.S. TRUCOS</h2><p>La sanidad no importa aquí. Si ves un pollo asado entero escondido dentro de un bidón de metal oxidado o una caja de madera... <strong>cómetelo sin dudar</strong>. Curará tu barra de vida mágicamente.</p><div class='mag-truco'><span>EL COCHE DE LA MUERTE</span>En el Nivel 3, podrás subirte al mismísimo Cadillac. El truco aquí es <strong>no frenar jamás</strong>. Acelera de lado a lado atropellando a los enemigos para conseguir puntos extra y ganar vidas.</div>", 
             "<h2 class='mag-sub'>Combos de Combate</h2><p><strong>Golpe + Salto:</strong> Pulsa ambos botones a la vez para hacer tu ataque especial giratorio a 360 grados. Te salvará la via cuando estés rodeado, pero ojo: <em>¡te resta un poquito de tu propia vida al impactar!</em> Úsalo solo en caso de emergencia.</p><p><strong>Combo de Mustapha:</strong> Adelante, Adelante + Salto + Golpe. Verás su famosa patada voladora con destello amarillo que limpia la pantalla entera.</p>"
         ] 
     },
@@ -894,7 +707,7 @@ const infoJuegos = {
             "<h2 class='mag-titular'>LA NOCHE OSCURA DE LOS 16 BITS</h2><p>Basado tal cual en la icónica película de Tim Burton con Michael Keaton y Jack Nicholson (1989). El estudio Sunsoft lo programó con una paleta de colores tan sombría, negra y fiel al cine gótico que a veces no veías literalmente dónde tendías que saltar en los tejados de Gotham, fundiéndote con el fondo.</p><div class='mag-box'><strong>MÚSICA INMORTAL:</strong> Hoy en día es reverenciado en la comunidad técnica por tener la mejor, más épica y rítmica banda sonora que jamás haya exprimido el chip de síntesis FM de la consola Mega Drive. Pura magia sonora.</div>"
         ], 
         manual: [
-            "<h2 class='mag-titular'>MANUAL DEL JUSTICIERO</h2><p>Misión: Limpiar los callejones del crimen de Gotham a puñetazo limpio, recorrer el museo de arte y llegar hasta lo alto del campanario de la catedral para tirarle la sonrisa de la cara al mismísimo Joker.</p><div class='mag-truco'><span>GADGETS DE WAYNE</span>Usa sabiamente tus armas limitadas. Tira los icónicos Batarangs dirigidos para mantener a los payasos gordos y pistoleros a distancia. El Gancho es esencial: lánzalo en diagonal para engancharte a las cornisas altas y esquivar los barriles de ácido subiéndote a lo alto de las farolas.</div>"
+            "<h2 class='mag-titular'>MANUAL DEL JUSTICIERO</h2><p>Misión: Limpiar los callejones del crimen de Gotham a puñetazo limpio, recorrer el museo de arte y llegar hasta lo lo alto del campanario de la catedral para tirarle la sonrisa de la cara al mismísimo Joker.</p><div class='mag-truco'><span>GADGETS DE WAYNE</span>Usa sabiamente tus armas limitadas. Tira los icónicos Batarangs dirigidos para mantener a los payasos gordos y pistoleros a distancia. El Gancho es esencial: lánzalo en diagonal para engancharte a las cornisas altas y esquivar los barriles de ácido subiéndote a lo alto de las farolas.</div>"
         ] 
     },
     goldenaxe2: { 
@@ -1013,7 +826,7 @@ const infoJuegos = {
             "<h2 class='mag-titular'>VIAJE EN EL TIEMPO A 16 BITS</h2><p>Considerado por muchos como el mejor 'Beat 'em up' (yo contra el barrio) de la historia de Super Nintendo. Shredder ha vuelto, ha secuestrado a la Estatua de la Libertad y ha lanzado a nuestras tortugas favoritas a través de un vórtice temporal. Desde la prehistoria hasta el futuro neón del año 2100, este cartucho exprime el cerebro de la consola al máximo con unos gráficos coloridos brutales y una música trepidante.</p>"
         ], 
         manual: [
-            "<h2 class='mag-titular'>ARTES MARCIALES CALLEJERAS</h2><p>El ritmo de este juego es frenético. Correr es fundamental: pulsa dos veces hacia adelante para hacer un 'Dash' y pulsa el botón de ataque para embestir a los enemigos del Clan del Pie, mandándolos a volar por los aires.</p><div class='mag-box'><strong>EFECTO 3D (MODO 7):</strong> El movimiento más icónico del juego es agarrar a los enemigos y lanzarlos literalmente contra la 'cámara' de tu pantalla. Para hacerlo, acércate mucho a un soldado herido para agarrarlo, y pulsa abajo + ataque. ¡Verás cómo el enemigo se hace gigante chocando contra el cristal de tu móvil! Es vital dominar esto, ya que es la única forma de derrotar a Shredder en el nivel del tecnódromo.</div>"
+            "<h2 class='mag-titular'>ARTES MARCIALES CALLEJERAS</h2><p>El ritmo de este juego es frenético. Correr es fundamental: pulsa dos veces hacia adelante para hacer un 'Dash' y pulsa el botón de ataque para embestir a los soldados del Clan del Pie, mandándolos a volar por los aires.</p><div class='mag-box'><strong>EFECTO 3D (MODO 7):</strong> El movimiento más icónico del juego es agarrar a los enemigos y lanzarlos literalmente contra la 'cámara' de tu pantalla. Para hacerlo, acércate mucho a un soldado herido para agarrarlo, y pulsa abajo + ataque. ¡Verás cómo el enemigo se hace gigante chocando contra el cristal de tu móvil! Es vital dominar esto, ya que es la única forma de derrotar a Shredder en el nivel del tecnódromo.</div>"
         ] 
     },
     captaincomandosnes: {
@@ -1077,7 +890,7 @@ const infoJuegos = {
         wr: { nombre: "GOL", puntos: "9-0" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='internacionalsoccer1.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='internacionalsoccer.jpg'\">",
-            "<h2 class='mag-titular'>EL REY DEL CÉSPED</h2><p>Konami lanzó en 1994 esta auténtica obra de arte que revolucionaría los juegos deportivos para siempre. Sus gráficos enormes y fotorrealistas para la época lo convirtieron en un mito. Podías coger a la selección española (con nombres falsos muy graciosos por no tener las licencias oficiales) y plantarle cara al temible Brasil del delantero Allejo.</p>"
+            "<h2 class='mag-titular'>EL REY DEL CÉSPED</h2><p>Konami lanzó en 1994 esta auténtica obra de arte que revolucionaría los juegos deportivos para siempre. Sus gráficos enormes y fotorrealistas para la época lo convirtieron en un mito. Podías coger a la selección española (con nombres falsos muy graciosos por no tener las licencias oficiales) y plantarle cara al temible Brasil del legendario dios del fútbol virtual: el delantero Allejo.</p>"
         ],
         manual: [
             "<h2 class='mag-titular'>TÁCTICAS DE CAMPO</h2><p>Aquí no sirve correr hacia adelante y pegar un pelotazo cruzando los dedos. Tienes que usar los pases cortos al hueco y buscar los centros medidos al área. Usa los gatillos L y R para darle efecto al balón en los tiros libres.</p>",
@@ -1097,7 +910,7 @@ const infoJuegos = {
         ],
         manual: [
             "<h2 class='mag-titular'>JUEGO SUCIO PERMITIDO</h2><p>Olvídate del fair play. Si el rival tiene el balón, acércate y métele un empujón brutal para tirarlo al suelo y robarle la posesión. Aquí el árbitro está de adorno. Mantén siempre pulsado el botón de Turbo para correr más, pero vigila la barra de cansancio que hay debajo de tu nombre.</p>",
-            "<div class='mag-truco'><span>HE'S ON FIRE! (¡ESTÁ EN LLAMAS!)</span>LA mecánica más legendaria del juego. Si profesigues que el mismo jugador anote 3 canastas seguidas sin que el equipo contrario marque, el balón se envolverá en fuego literal. Mientras estés 'On Fire', tendrás turbo infinito y tus tiros tendrán un porcentaje de acierto altísimo. El efecto se pasará cuando el rival consiga encestar y te rompa la racha.</div>"
+            "<div class='mag-truco'><span>HE'S ON FIRE! (¡ESTÁ EN LLAMAS!)</span>La mecánica más legendaria del juego. Si profesigues que el mismo jugador anote 3 canastas seguidas sin que el equipo contrario marque, el balón se envolverá en fuego literal. Mientras estés 'On Fire', tendrás turbo infinito y tus tiros tendrán un porcentaje de acierto altísimo. El efecto se pasará cuando el rival consiga encestar y te rompa la racha.</div>"
         ]
     },
 
@@ -1415,7 +1228,6 @@ function lanzarAnimacionPortal(callback) {
     
     container.style.display = 'block';
     
-    // Reproducir sonido de explosión al inicio
     reproducirSonidoExplosion();
     
     // 1. Destello de luz central inicial
@@ -1505,7 +1317,7 @@ function lanzarAnimacionPortal(callback) {
     
     bucle();
     
-    // 3. Finalizar animación y limpiar (DURACIÓN AUMENTADA A 2 SEGUNDOS)
+    // 3. Finalizar animación y limpiar (DURACIÓN AUMENTADA A 3.5 SEGUNDOS)
     setTimeout(() => {
         cancelAnimationFrame(animacionId);
         container.style.opacity = '0';
@@ -1516,10 +1328,10 @@ function lanzarAnimacionPortal(callback) {
             destello.style.transform = 'translate(-50%, -50%) scale(0)';
             if (callback) callback();
         }, 300);
-    }, 2000); // <-- Aumentado de 1000 a 2000ms
+    }, 3500); 
 }
 
-// --- ACTUALIZACIÓN DEL ESCÁNER (TIEMPO DE ESPERA AUMENTADO A 1.5s) ---
+// --- ACTUALIZACIÓN DEL ESCÁNER (TIEMPO DE ESPERA AUMENTADO A 3s) ---
 window.onload = () => {
     renderCards();
     const hash = window.location.hash.replace('#','');
@@ -1533,7 +1345,7 @@ window.onload = () => {
             lanzarAnimacionPortal(() => {
                 verFicha(hash); 
             });
-        }, 1500); // <-- Aumentado de 500 a 1500ms
+        }, 3000); 
     }
 };
 
