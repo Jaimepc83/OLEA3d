@@ -151,7 +151,63 @@ body {
     text-align: center; 
     overflow-x: hidden; 
     position: relative; 
-    min-height: 100vh; 
+    min-height: 100/* CONTENIDO REVISTA COMPACTO (FLIPBOOK) */
+#flipbookWrapper { display: block; }
+.flipbook-container { background: #ffffff; border-radius: 0 0 10px 10px; padding: 12px; margin-bottom: 10px; min-height: 230px; position: relative; perspective: 1200px; border: 1px solid #ccc; overflow: hidden; box-shadow: inset 0 0 15px rgba(0,0,0,0.1); }
+.flipbook-page { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 10px; box-sizing: border-box; background: #fff; color: #111; font-size: 12.5px; line-height: 1.3; font-family: 'Helvetica Neue', sans-serif; overflow-y: auto; opacity: 0; z-index: 1; transform-origin: left center; transition: transform 0.6s ease; backface-visibility: hidden; background-image: linear-gradient(90deg, rgba(0,0,0,0.03) 0%, transparent 5%); }
+.flipbook-page.active { opacity: 1; z-index: 5; transform: rotateY(0deg); pointer-events: all; }
+.flipbook-page.flipped { opacity: 1; transform: rotateY(-180deg); z-index: 10; pointer-events: none; }
+
+/* MAQUETACIÓN REVISTA (TEXTOS, CAJAS Y TRUCOS) */
+.mag-titular { background: #000; color: #fff; padding: 4px 8px; font-family: 'Impact', sans-serif; font-size: 18px; text-transform: uppercase; transform: skew(-5deg); display: inline-block; margin-top: 0; margin-bottom: 8px; border-bottom: 3px solid var(--modal-border); }
+.mag-sub { color: #e60012; font-weight: 900; border-bottom: 1.5px solid #ccc; font-size: 14px; margin: 10px 0 5px; text-transform: uppercase; }
+.mag-box { background: #f0f8ff; border-left: 4px solid #005b9f; padding: 8px; margin: 8px 0; font-size: 11.5px; border-radius: 0 5px 5px 0; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+.mag-truco { background: #fffde6; border: 2px dashed #d4af37; padding: 10px; margin: 8px 0; font-size: 11.5px; font-weight: bold; color: #634a00; text-align: center; }
+.mag-truco span { display: block; background: #d4af37; color: #000; padding: 2px; text-transform: uppercase; margin: -10px -10px 8px -10px; font-family: 'Impact'; font-size: 14px; }
+
+/* CONTROLES PÁGINA REDUCIDOS */
+.flip-controls { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 8px; }
+.btn-flip { background: #000; color: #fff; border: 1px solid var(--modal-border); padding: 4px 10px; font-family: 'Impact'; font-size: 11px; cursor: pointer; box-shadow: 2px 2px 0 var(--modal-border); text-transform: uppercase; transition: 0.1s; }
+.btn-flip:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0 var(--modal-border); }
+.page-indicator { color: #fff; font-size: 11px; font-weight: bold; background: #333; padding: 3px 8px; border-radius: 10px; }
+
+/* BOTONES DE ACCIÓN (CATÁLOGO Y MONEDA) */
+.botones-row { display: flex; gap: 6px; margin-bottom: 5px; }
+.btn-nav { flex: 1; padding: 10px 0; border-radius: 6px; font-weight: 900; font-family: 'Impact'; text-transform: uppercase; cursor: pointer; border: none; font-size: 12px; transition: transform 0.1s; }
+.btn-catalog { background: #333; color: #fff; box-shadow: 0 3px 0 #000; }
+.btn-shop { background: #d4af37; color: #000; box-shadow: 0 3px 0 #8b6508; }
+.btn-play { width: 100%; padding: 14px 0; background: #e60012; color: #fff; border-radius: 6px; font-weight: 900; font-family: 'Impact'; text-transform: uppercase; font-size: 16px; border: none; box-shadow: 0 4px 0 #8b0000; cursor: pointer; transition: transform 0.1s; position: relative; z-index: 1000; }
+.btn-nav:active, .btn-play:active { transform: translateY(3px); box-shadow: 0 0 0 transparent; }
+
+/* SALÓN DE FAMA Y TABLAS */
+.salon-fama { background: #fff; color: #000; border-radius: 0 0 8px 8px; padding: 10px; display: none; min-height: 230px; border: 1px solid #ccc; margin-bottom: 8px;}
+.tabla-records { width: 100%; border-collapse: collapse; font-family: monospace; font-weight: bold; font-size: 12.5px; }
+.tabla-records th { background: #000; color: #fff; padding: 5px; text-align: center; border: 2px solid #000; }
+.tabla-records td { padding: 5px; text-align: center; border-bottom: 1px dashed #ccc; vertical-align: middle; }
+.btn-anadir { background: #005b9f; color: #fff; border: none; padding: 10px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; font-family: 'Impact'; font-size: 16px; text-transform: uppercase; }
+
+/* TRANSICIÓN, ESCÁNER Y PAYWALL */
+.toast-notification { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: rgba(18, 18, 18, 0.95); border: 2px solid #d4af37; color: #ffd700; padding: 15px 25px; border-radius: 30px; font-size: 16px; font-weight: bold; box-shadow: 0 5px 20px rgba(212,175,55,0.5); z-index: 9999999999; transition: top 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); display: flex; align-items: center; gap: 10px; backdrop-filter: blur(5px); }
+.toast-notification.active { top: 25px; }
+
+/* TOAST LOGROS (Más bajo para no tapar los logos) */
+.toast-logro { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); background: rgba(0, 15, 30, 0.96); border: 2px solid #00f0ff; color: #ffffff; padding: 12px 25px; border-radius: 20px; font-size: 14px; font-weight: bold; box-shadow: 0 0 25px rgba(0,240,255,0.6); z-index: 999999999; display: none; text-align: center; backdrop-filter: blur(5px); border-left: 6px solid #ffd700; }
+.toast-logro.active { display: block; animation: slideDown 0.5s forwards; }
+@keyframes slideDown { from { top: -100px; } to { top: 80px; } }
+
+.transition-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
+.transition-screen.active { opacity: 1; pointer-events: all; }
+.insert-coin-text { color: #ffd700; font-size: 28px; font-family: 'Courier New', Courier, monospace; font-weight: bold; animation: blink 0.5s infinite alternate; }
+@keyframes blink { from { opacity: 1; } to { opacity: 0.2; } }
+
+.nfc-scanner { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,10,0,0.97); z-index: 999999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: 0.3s; backdrop-filter: blur(10px); }
+.nfc-scanner.active { opacity: 1; pointer-events: all; }
+.nfc-laser { width: 250px; height: 3px; background: #9dff3d; box-shadow: 0 0 15px #9dff3d; position: absolute; animation: scanLaser 1.5s infinite alternate; }
+@keyframes scanLaser { from { transform: translateY(-100px); } to { transform: translateY(100px); } }
+#modalPaywall .ficha-content { text-align: center; border-color: #e60012; box-shadow: 0 0 40px #e60012; max-width: 400px; background: #111; }
+.secreto::before { background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff) !important; animation: brilloSeda 2s linear infinite !important; }
+</style>
+vh; 
     transition: background-color 0.8s ease; 
     padding-top: env(safe-area-inset-top); 
 }
