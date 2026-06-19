@@ -158,8 +158,8 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
 .toast-notification { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: rgba(18, 18, 18, 0.95); border: 2px solid #d4af37; color: #ffd700; padding: 15px 25px; border-radius: 30px; font-size: 16px; font-weight: bold; box-shadow: 0 5px 20px rgba(212,175,55,0.5); z-index: 9999999999; transition: top 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); display: flex; align-items: center; gap: 10px; backdrop-filter: blur(5px); }
 .toast-notification.active { top: 25px; }
 
-/* TOAST LOGROS (Más bajo para no tapar los logos) */
-.toast-logro { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); background: rgba(0, 15, 30, 0.96); border: 2px solid #00f0ff; color: #ffffff; padding: 12px 25px; border-radius: 20px; font-size: 14px; font-weight: bold; box-shadow: 0 0 25px rgba(0,240,255,0.6); z-index: 999999999; display: none; text-align: center; backdrop-filter: blur(5px); border-left: 6px solid #ffd700; }
+/* TOAST DE LOGROS (Posicionado en top: 80px) */
+.toast-logro { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); background: rgba(0, 15, 30, 0.96); border: 2px solid #00f0ff; color: #ffffff; padding: 12px 25px; border-radius: 20px; font-size: 14px; font-weight: bold; box-shadow: 0 0 25px rgba(0,240,255,0.6); z-index: 999999999; display: none; text-align: center; backdrop-filter: blur(5px); border-left: 6px solid #ffd700; pointer-events: none; }
 .toast-logro.active { display: block; animation: slideDown 0.5s forwards; }
 @keyframes slideDown { from { top: -100px; } to { top: 80px; } }
 
@@ -192,7 +192,7 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
         <div class="nfc-laser"></div>
     </div>
     <div style="color: #9dff3d; font-family: 'Courier New', monospace; margin-top: 25px; font-size: 18px; font-weight: bold;">SISTEMA OLEA3D...</div>
-    <div style="color: white; margin-top: 15px; font-size: 14px;">(Toca la pantalla si no hay sonido)</div>
+    <div style="color: white; margin-top: 15px; font-size: 14px;">(Toca la pantalla para activar el audio)</div>
 </div>
 
 <div id="transitionScreen" class="transition-screen">
@@ -205,7 +205,7 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
     <div class="header-logos">
         <img src="beltraneja.png" class="logo-side" id="logoBeltraneja" onclick="toqueBeltraneja()" onerror="this.style.display='none'">
         <img src="logo.png" class="logo" alt="OLEA3D Logo" onclick="toqueSecreto()">
-        <img src="garden.png" class="logo-side" id="logoGarden" onerror="this.style.display='none'">
+        <img src="garden.png" class="logo-side" id="logoGarden" onclick="toqueGarden()" onerror="this.style.display='none'">
     </div>
     <h1>OLEA3D ARCADE ZONE</h1>
     <p class="sub">🕹️ DESBLOQUEA EL PASADO: PASA TU LLAVERO Y ACTIVA EL INSERT COIN</p>
@@ -336,11 +336,10 @@ h1 { color: #d4af37; margin: 10px 0 0; font-size: 24px; text-shadow: 0 0 10px rg
 </div>
 
 <script>
-// --- MOTOR DE AUDIO (CORREGIDO PARA NAVEGADORES MÓVILES) ---
+// --- MOTOR DE AUDIO Y DESBLOQUEO TÁCTIL ---
 let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 let audioDesbloqueado = false;
 
-// Esta función desbloquea el audio al primer toque en la pantalla
 function desbloquearAudio() {
     if (!audioDesbloqueado) {
         audioCtx.resume();
@@ -364,7 +363,7 @@ function playSound(type) {
     if (type === 'error') { osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150,now); osc.frequency.exponentialRampToValueAtTime(50,now+0.3); gain.gain.setValueAtTime(0.2,now); gain.gain.exponentialRampToValueAtTime(0.001,now+0.3); osc.start(); osc.stop(now+0.3); }
     if (type === 'clic') { osc.type = 'square'; osc.frequency.setValueAtTime(440,now); osc.frequency.exponentialRampToValueAtTime(880,now+0.1); gain.gain.setValueAtTime(0.1,now); gain.gain.exponentialRampToValueAtTime(0.001,now+0.1); osc.start(); osc.stop(now+0.1); }
     
-    // EXPLOSIÓN: Volumen alto y sin retraso
+    // EXPLOSIÓN ARCADE
     if (type === 'explosion') {
         const bufferSize = audioCtx.sampleRate * 0.6; 
         const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
@@ -392,10 +391,10 @@ function reproducirSonidoEscaner() { playSound('scan'); }
 function reproducirSonidoFlip() { playSound('flip'); }
 function reproducirSonidoExplosion() { playSound('explosion'); }
 
-// --- SISTEMA DE LOGROS ---
+// --- SISTEMA DE LOGROS CENTRAL ---
 function verificarYDesbloquearLogro(idLogro, textoInsignia) {
-    if (localStorage.getItem('logro_' + idLogro)) return;
-    localStorage.setItem('logro_' + idLogro, 'true');
+    if (localStorage.getItem('logro_' + idLogro)) return; 
+    localStorage.setItem('logro_' + idLogro, 'true'); 
     playSound('coin'); 
     const toast = document.getElementById('toastLogro');
     document.getElementById('txtLogro').innerHTML = textoInsignia;
@@ -403,50 +402,39 @@ function verificarYDesbloquearLogro(idLogro, textoInsignia) {
     setTimeout(() => toast.classList.remove('active'), 4000);
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-    const params = new URLSearchParams(window.location.search);
-    if(params.get('llave') === 'oleaVIP') { 
-        const horasDesbloqueo = 48; 
-        const tiempoCaducidad = new Date().getTime() + (horasDesbloqueo * 60 * 60 * 1000);
-        
-        localStorage.setItem('olea3d_vip_caducidad', tiempoCaducidad); 
-        localStorage.removeItem('olea3d_vip_expirado'); 
-        localStorage.removeItem('olea3d_vip'); 
-        
-        window.history.replaceState(null, null, window.location.pathname + window.location.hash); 
-        setTimeout(() => { 
-            const toast = document.getElementById("toastDesbloqueo"); 
-            toast.classList.add("active"); 
-            reproducirSonido1UP(); 
-            setTimeout(() => toast.classList.remove("active"), 4000); 
-        }, 500); 
-    }
-});
-
-
+// LOGROS DE LOGOS
 let toquesLogo = 0, tiempoToques;
 function toqueSecreto() { 
-    reproducirClic(); 
-    toquesLogo++; 
-    clearTimeout(tiempoToques); 
+    reproducirClic(); toquesLogo++; clearTimeout(tiempoToques); 
     if(toquesLogo===3){ 
         verificarYDesbloquearLogro('detective', '🕵️‍♂️ DETECTIVE DE PÍXELES:<br>Has descubierto el menú secreto de Olea.');
         const ts = document.getElementById("tarjetaSecreta"); 
-        if(ts) { 
-            ts.style.display="block"; 
-            ts.scrollIntoView({behavior:'smooth',block:'center'}); 
-            reproducirSonido1UP(); 
-        } 
+        if(ts) { ts.style.display="block"; ts.scrollIntoView({behavior:'smooth',block:'center'}); reproducirSonido1UP(); } 
         toquesLogo=0; 
-    } else { 
-        tiempoToques=setTimeout(()=>{toquesLogo=0;},1000); 
-    } 
+    } else { tiempoToques=setTimeout(()=>{toquesLogo=0;},1000); } 
 }
 
 let toquesBeltraneja = 0, tiempoBeltraneja;
-function toqueBeltraneja() { reproducirClic(); toquesBeltraneja++; clearTimeout(tiempoBeltraneja); if(toquesBeltraneja===2){ const tc = document.getElementById("tarjetaCiervo"); if(tc) { tc.style.display="block"; tc.scrollIntoView({behavior:'smooth',block:'center'}); reproducirSonidoCoin(); } toquesBeltraneja=0; } else { tiempoBeltraneja=setTimeout(()=>{toquesBeltraneja=0;},500); } }
+function toqueBeltraneja() { 
+    reproducirClic(); toquesBeltraneja++; clearTimeout(tiempoBeltraneja); 
+    if(toquesBeltraneja===2){ 
+        verificarYDesbloquearLogro('beltraneja', '🍻 ALMA DE PUB:<br>Celebrando el 25 aniversario en La Beltraneja.');
+        const tc = document.getElementById("tarjetaCiervo"); 
+        if(tc) { tc.style.display="block"; tc.scrollIntoView({behavior:'smooth',block:'center'}); reproducirSonidoCoin(); } 
+        toquesBeltraneja=0; 
+    } else { tiempoBeltraneja=setTimeout(()=>{toquesBeltraneja=0;},500); } 
+}
 
-// --- LA BASE DE DATOS TITÁNICA ---
+let toquesGarden = 0, tiempoGarden;
+function toqueGarden() { 
+    reproducirClic(); toquesGarden++; clearTimeout(tiempoGarden); 
+    if(toquesGarden===2){ 
+        verificarYDesbloquearLogro('garden', '☕ TARDEO RETRO:<br>Disfrutando de la zona arcade en Cafetería Garden.');
+        toquesGarden=0; 
+    } else { tiempoGarden=setTimeout(()=>{toquesGarden=0;},500); } 
+}
+
+// --- LA BASE DE DATOS TITÁNICA COMPLETA ---
 const infoJuegos = {
     // 🕹️ ARCADE
     cadillacs: { 
@@ -465,11 +453,11 @@ const infoJuegos = {
         consola: "arcade", titulo: "KOF '94", img: "thekingoffighters94.jpg", enlace: "kof94.html", valoracion: "NOTA: 90/100", wr: { nombre: "DAI", puntos: "2.350.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='kof94.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='thekingoffighters94.jpg'\">",
-            "<h2 class='mag-titular'>EL CROSSOVER MÁXIMO</h2><p>En 1994, a SNK se le ocurrió la loca idea de meter a los personajes de sus mejores franquicias (Fatal Fury, Art of Fighting, Ikari Warriors) in un solo juego. Fue el equivalente a crear Los Vengadores, pero en los salones recreativos, con tipos musculosos dándose palizas en torneos clandestinos.</p>", 
-            "<h2 class='mag-sub'>LA ERA DORADA DE SNK</h2><p>Este título sentó las bases de los juegos de lucha modernos. La idea de agrupar a personajes por nacionalidades dio lugar a escenarios icónicos como el pub de México o las calles de España.</p>"
+            "<h2 class='mag-titular'>EL CROSSOVER MÁXIMO</h2><p>En 1994, a SNK se le ocurrió la loca idea de meter a los personajes de sus mejores franquicias (Fatal Fury, Art of Fighting, Ikari Warriors) en un solo juego. Fue el equivalente a crear Los Vengadores, pero en los salones recreativos, con tipos musculosos dándose palizas en torneos clandestinos.</p>", 
+            "<h2 class='mag-sub'>LA ERA DORADA DE SNK</h2><p>Este título sentó las bases de los juegos de lucha modernos. La idea de agrupar a personajes por nacionalidades dio lugar a escenarios icónicos como el bar de México o las calles de Italia.</p>"
         ], 
         manual: [
-            "<h2 class='mag-titular'>PELEA EN EQUIPO</h2><p>Aquí no hay uno contra uno. Tienes que elegir un equipo completo de 3 luchadores que representan a un país (Japón, USA...). Si uno cae en combate, entra el siguiente. Así hasta barrer el suelo con el equipo rival completo.</p><div class='mag-box'><strong>CARGAR ENERGÍA:</strong> Mantén pulsados A+B+C a la vez para cargar tu barra. Cuando parpadee, desata tu Desperation Move y quítale media barra al rival.</div>", 
+            "<h2 class='mag-titular'>PELEA EN EQUIPO</h2><p>Aquí no hay uno contra uno. Tienes que elegir un equipo completo de 3 luchadores que representan a un país (Italia, Japón, USA...). Si uno cae en combate, entra el siguiente. Así hasta barrer el suelo con el equipo rival completo.</p><div class='mag-box'><strong>CARGAR ENERGÍA:</strong> Mantén pulsados A+B+C a la vez para cargar tu barra. Cuando parpadee, desata tu Desperation Move y quítale media barra al rival.</div>", 
             "<h2 class='mag-sub'>GOLPES DEFINITIVOS</h2><p>Cada personaje tiene su técnica secreta. Para lanzar el proyectil de fuego clásico de Kyo Kusanagi, pulsa: Abajo, Diagonal-Abajo-Adelante, Adelante + Puño. Domina las medias lunas en tu cruceta si quieres sobrevivir al jefe Rugal Bernstein.</p>"
         ] 
     },
@@ -477,7 +465,7 @@ const infoJuegos = {
         consola: "arcade", titulo: "KOF '95", img: "thekingoffighters95.jpg", enlace: "kof95.html", valoracion: "NOTA: 93/100", wr: { nombre: "KYO", puntos: "3.100.500" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='kof95.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='thekingoffighters95.jpg'\">",
-            "<h2 class='mag-titular'>NACE LA RIVALIDAD</h2><p>EL juego que perfeccionó la fórmula y nos presentó al emo más famoso de los videojuegos: Iori Yagami. Su rivalidad eterna con Kyo dividió a los jugadores en los salones arcade. Si en tu barrio sabías hacer los combos infinitos de Iori, eras el rey indiscutible de la máquina.</p>", 
+            "<h2 class='mag-titular'>NACE LA RIVALIDAD</h2><p>El juego que perfeccionó la fórmula y nos presentó al emo más famoso de los videojuegos: Iori Yagami. Su rivalidad eterna con Kyo dividió a los jugadores en los salones arcade. Si en tu barrio sabías hacer los combos infinitos de Iori, eras el rey indiscutible de la máquina.</p>", 
             "<h2 class='mag-sub'>EL LORE OSCURO</h2><p>En este juego se introduce la fuerza oscura de Orochi, corrompiendo a algunos luchadores y dándoles más poder pero volviéndolos inestables. Es el comienzo de la saga argumental más épica de los juegos de lucha.</p>"
         ], 
         manual: [
@@ -509,21 +497,30 @@ const infoJuegos = {
         consola: "arcade", titulo: "TMNT ARCADE", img: "tmnt.jpg", enlace: "tmnt.html", valoracion: "NOTA: 95/100", wr: { nombre: "LEO", puntos: "5.430.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='tmnt.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='tmnt.jpg'\">",
-            "<h2 class='mag-titular'>COWABUNGA, CHICOS</h2><p>Otro éxito monstruoso de Konami en los bares (1989). Jugar a cuatro bandas con Leonardo, Raphael, Michelangelo y Donatello era el sueño de cualquier chaval de los 90. Destruir soldados del Clan del Pie por las calles de Nueva York y las cloacas nunca fue tan divertido.</p>"
+            "<h2 class='mag-titular'>COWABUNGA, CHICOS</h2><p>Otro éxito monstruoso de Konami en los bars (1989). Jugar a cuatro bandas con Leonardo, Raphael, Michelangelo y Donatello era el sueño de cualquier chaval de los 90. Destruir soldados del Clan del Pie por las calles de Nueva York y las cloacas nunca fue tan divertido.</p>"
         ], 
         manual: [
             "<h2 class='mag-titular'>NINJUTSU MUTANTE</h2><p>El juego es puro machacabotones, pero exige estrategia contra los jefes finales como Bebop o Rocksteady.</p><div class='mag-box'><strong>ATAQUE KAMIKAZE:</strong> Pulsa ataque y salto a la vez para hacer el icónico ataque especial que barre todo a tu alrededor. Pero ojo al dato: ¡este movimiento te quita un poco de tu propia vida cada vez que impacta! Úsalo solo para escapar de acorralamientos.</div>"
         ] 
     },
+    pacman: { 
+        consola: "arcade", titulo: "PAC-MAN", img: "pacman.jpg", enlace: "Pacman.html", valoracion: "NOTA: 95/100", wr: { nombre: "B.M", puntos: "3.333.360" },
+        historia: [
+            "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='pacman.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='pacman.jpg'\">",
+            "<h2 class='mag-titular'>EL REY DEL ARCADE</h2><p>Lanzado en 1980 por Namco. Antes de Pac-Man, todos los juegos iban de disparar a naves alienígenas. Toru Iwatani quería crear un juego pacifista que atrajera a todo el mundo, inspirándose en una pizza a la que le faltaba una porción.</p>"
+        ], 
+        manual: [
+            "<h2 class='mag-titular'>SUPERVIVENCIA LABERÍNTICA</h2><p>Come todos los puntos del laberinto mientras huyes. Las píldoras de las esquinas hacen a los fantasmas vulnerables.</p><div class='mag-truco'><span>EL TRUCO DEL TÚNEL</span>Usa los túneles laterales que conectan la pantalla constantemente. Pac-Man los cruza a toda velocidad, pero los fantasmas sufren una penalización de lentitud al entrar. Es la forma perfecta de despistarlos.</div>"
+        ] 
+    },
     windjammers: {
         consola: "arcade",
         titulo: "WINDJAMMERS",
-        img: "windjammers.png", /* <-- Cambiado a .png para que coincida con tu subida */
+        img: "windjammers.png",
         enlace: "windjammers.html",
         valoracion: "NOTA: 97/100",
         wr: { nombre: "JAM", puntos: "99 Pts" },
         historia: [
-            /* <-- Ojo a la "W" mayúscula de Windjammers.gif y el fallo a .png */
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='Windjammers.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='windjammers.png'\">",
             "<h2 class='mag-titular'>EL DEPORTE DEL FUTURO (EN 1994)</h2><p>Data East creó el juego competitivo definitivo para los salones recreativos. Una mezcla hipervitaminada entre el tenis, el Pong y el hockey de aire, pero jugando con un disco volador pesado. Los piques, los rebotes imposibles y los gritos de victoria en la máquina de Windjammers son historia viva del arcade.</p>"
         ],
@@ -637,7 +634,7 @@ const infoJuegos = {
             "<h2 class='mag-sub'>LA ABEJA DE HUDSON</h2><p>En la primera isla, busca el huevo oculto disparando a la nada cerca del borde de un precipicio. ¡Dentro está la mítica abeja logo de Hudson Soft! Cogerla es vital, ya que te permitirá continuar la partida si pierdes todas las vidas.</p>"
         ] 
     },
-            superpang: {
+    superpang: {
         consola: "snes",
         titulo: "SUPER PANG",
         img: "superpang.jpg",
@@ -653,7 +650,6 @@ const infoJuegos = {
             "<div class='mag-truco'><span>EL MODO PÁNICO (PANIC MODE)</span>Si te cansas de viajar por el mapamundi del modo Tour, activa el Panic Mode desde el menú principal. Una pantalla fija con un marcador de 99 niveles donde las esferas no paran de llover de forma infinita. ¡El truco aquí es reventar primero las burbujas que parpadean con un reloj para congelar el tiempo por completo y limpiar la pantalla a placer!</div>"
         ]
     },
-
 
 
     // 🕹️ NINTENDO 64
@@ -697,7 +693,7 @@ const infoJuegos = {
             "<h2 class='mag-titular'>REGLAMENTO EN PISTA</h2><p>No te limites a darle a la bola de cualquier manera. Camelot (el estudio) introdujo mucha profundidad técnica en los controles para destrozar a tus amigos en el salón.</p><div class='mag-truco'><span>TIPOS DE GOLPE CORTADO</span>La magia está en los botones de colores de la Nintendo 64:<br><strong>Botón A:</strong> Darás un golpe plano, potente, rápido y directo con estela Roja.<br><strong>Botón B:</strong> Golpe cortado y engañoso con efecto azul para romperle la cintura al rival.<br><strong>Pulsar A + B a la vez:</strong> Harás un globo parabólico altísimo. Perfecto para cuando tu amigo es un abusón y se pega a la red todo el rato.</div>"
         ] 
     },
-        zeldaocarinan64: {
+    zeldaocarinan64: {
         consola: "n64",
         titulo: "ZELDA: OCARINA OF TIME",
         img: "zeldaocarina64.png",
@@ -730,13 +726,12 @@ const infoJuegos = {
         ]
     },
 
-
     // ⚡ MEGA DRIVE
     batman: { 
         consola: "md", titulo: "BATMAN", img: "batman.jpg", enlace: "batman.html", valoracion: "NOTA: 88/100", wr: { nombre: "WAY", puntos: "1.000.000" },
         historia: [
             "<h2 class='mag-titular'>PORTADA: VÍDEO</h2><img src='batman.gif' style='width:100%; border-radius:8px; border:2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.5);' onerror=\"this.src='batman.jpg'\">",
-            "<h2 class='mag-titular'>LA NOCHE OSCURA DE LOS 16 BITS</h2><p>Basado tal cual en la icónica película de Tim Burton con Michael Keaton y Jack Nicholson (1989). El estudio Sunsoft lo programó con una paleta de colores tan sombría, negra y fiel al cine gótico que a veces no veías literalmente dónde tendías que saltar en los tejados de Gotham, fundiéndote con el fondo.</p><div class='mag-box'><strong>MÚSICA INMORTAL:</strong> Hoy en día es reverenciado en la comunidad técnica por tener la mejor, más épica y rítmica banda sonora que jamás haya exprimido el chip de síntesis FM de la consola Mega Drive. Pura magia sonora.</div>"
+            "<h2 class='mag-titular'>LA NOCHE OSCURA DE LOS 16 BITS</h2><p>Basado directamente en la icónica película de Tim Burton con Michael Keaton y Jack Nicholson (1989). El estudio Sunsoft lo programó con una paleta de colores tan sombría, negra y fiel al cine gótico que a veces no veías literalmente dónde tenías que saltar en los tejados de Gotham, fundiéndote con el fondo.</p><div class='mag-box'><strong>MÚSICA INMORTAL:</strong> Hoy en día es reverenciado en la comunidad técnica por tener la mejor, más épica y rítmica banda sonora que jamás haya exprimido el chip de síntesis FM de la consola Mega Drive. Pura magia sonora.</div>"
         ], 
         manual: [
             "<h2 class='mag-titular'>MANUAL DEL JUSTICIERO</h2><p>Misión: Limpiar los callejones del crimen de Gotham a puñetazo limpio, recorrer el museo de arte y llegar hasta lo alto del campanario de la catedral para tirarle la sonrisa de la cara al mismísimo Joker.</p><div class='mag-truco'><span>GADGETS DE WAYNE</span>Usa sabiamente tus armas limitadas. Tira los icónicos Batarangs dirigidos para mantener a los payasos gordos y pistoleros a distancia. El Gancho es esencial: lánzalo en diagonal para engancharte a las cornisas altas y esquivar los barriles de ácido subiéndote a lo alto de las farolas.</div>"
@@ -749,7 +744,7 @@ const infoJuegos = {
             "<h2 class='mag-titular'>MÁS MAGIA, MÁS GUANTAZOS</h2><p>Salió al mercado tan escandalosamente rápido tras el éxito masivo del primer juego, que muchas revistas de la época lo criticaron diciendo que era solo una expansión glorificada con los gráficos reciclados. Pero a los jugadores en sus casas les dio exactamente igual: los ataques mágicos a pantalla completa eran aún más chulos y los dichosos esqueletos inmortales seguían apareciendo de la tierra para amargarnos la existencia.</p>"
         ], 
         manual: [
-            "<h2 class='mag-titular'>GUÍA DEL BÁRBARO</h2><p>Selecciona tu arma: Ax Battler (el bárbaro rubio con el mandoble), Tyris Flare (la amazona experta en magia de fuego rojo) o Gilius Thunderhead (el enano furioso del hacha verde con la magia eléctrica más letal del juego).</p><div class='mag-truco'><span>ECONOMÍA Y LADRONES NOCTURNOS</span>LA magia aquí se gasta y es la clave para ganar. Cuando superes un nivel y llegues al campamento de descanso, prepárate: aparecerán unos odiosos duendes encapuchados intentando robarte mientras duermes. Levántate echando leches y dales una buena patada voladora para recuperar tus valiosas botellas de pociones azules antes de que huyan.</div>"
+            "<h2 class='mag-titular'>GUÍA DEL BÁRBARO</h2><p>Selecciona tu arma: Ax Battler (el bárbaro rubio con el mandoble), Tyris Flare (la amazona experta en magia de fuego rojo) o Gilius Thunderhead (el enano furioso del hacha verde con la magia eléctrica más letal del juego).</p><div class='mag-truco'><span>ECONOMÍA Y LADRONES NOCTURNOS</span>La magia aquí se gasta y es la clave para ganar. Cuando superes un nivel y llegues al campamento de descanso, prepárate: aparecerán unos odiosos duendes encapuchados intentando robarte mientras duermes. Levántate echando leches y dales una buena patada voladora para recuperar tus valiosas botellas de pociones azules antes de que huyan.</div>"
         ] 
     },
     rambo3: { 
@@ -959,7 +954,7 @@ const infoJuegos = {
         ],
         manual: [
             "<h2 class='mag-titular'>JUEGO SUCIO PERMITIDO</h2><p>Olvídate del fair play. Si el rival tiene el balón, acércate y métele un empujón brutal para tirarlo al suelo y robarle la posesión. Aquí el árbitro está de adorno. Mantén siempre pulsado el botón de Turbo para correr más, pero vigila la barra de cansancio que hay debajo de tu nombre.</p>",
-            "<div class='mag-truco'><span>HE'S ON FIRE! (¡ESTÁ EN LLAMAS!)</span>La mecánica más legendaria del juego. Si profesigues que el mismo jugador anote 3 canastas seguidas sin que el equipo contrario marque, el balón se envolverá en fuego literal. Mientras estés 'On Fire', tendrás turbo infinito y tus tiros tendrán un porcentaje de acierto altísimo. El efecto se pasará cuando el rival consiga encestar y te rompa la racha.</div>"
+            "<div class='mag-truco'><span>HE'S ON FIRE! (¡ESTÁ EN LLAMAS!)</span>La mecánica más legendaria del juego. Si consigues que el mismo jugador anote 3 canastas seguidas sin que el equipo contrario marque, el balón se envolverá en fuego literal. Mientras estés 'On Fire', tendrás turbo infinito y tus tiros tendrán un porcentaje de acierto altísimo. El efecto se pasará cuando el rival consiga encestar y te rompa la racha.</div>"
         ]
     },
 
@@ -1114,7 +1109,7 @@ const infoJuegos = {
             "<div class='mag-box'><strong>VEHÍCULOS SLUG:</strong> Aprovecha siempre los vehículos que encuentres. Además del tanque clásico, en esta entrega hay robots gigantes bípedos y avestruces armados. Si tu vehículo está a punto de explotar, realiza el ataque kamikaze para lanzarlo contra el jefe de turno y causarle daño masivo antes de saltar en paracaídas.</div>"
         ]
     },
-        dragonballorigin2: { 
+    dragonballorigin2: { 
         consola: "nds", 
         titulo: "DRAGON BALL ORIGINS 2", 
         img: "dragonballorigin2.jpg", 
@@ -1147,8 +1142,7 @@ const infoJuegos = {
             /* PÁGINA 2 */
             "<div class='mag-truco'><span>EL CÓDIGO SAGRADO Y LAS ARMAS</span>Vuelve el mítico código Konami (Arriba, Arriba, Abajo, Abajo, Izq, Der, Izq, Der, B, A). En cuanto a las armas, busca siempre la cápsula voladora con la letra 'S' (Spread Gun o disparo de expansión). Es el arma definitiva para limpiar el caos. ¡Si consigues agarrar dos armas 'S' iguales, se fusionarán y mejorarán a un nivel destructivo brutal que cubre toda la pantalla!</div>"
         ]
-    },
-
+    }
 };
 
 let currentId = ''; let currentPage = 0; let totalPages = 0;
@@ -1158,7 +1152,6 @@ function renderCards() {
     Object.keys(sections).forEach(s => document.getElementById(sections[s]).innerHTML = '');
     Object.keys(infoJuegos).forEach(id => {
         const j = infoJuegos[id];
-        // CORREGIDO: Mapea correctamente 'n64', 'gba' y 'megadrive' a sus respectivos contenedores visuales
         let consolaClave = j.consola.replace('megadrive','md');
         const target = sections[consolaClave] || 'contArcade';
         
@@ -1181,12 +1174,30 @@ function verFicha(id) {
     const j = infoJuegos[id] || infoJuegos['cadillacs'];
     currentId = id;
     
-    // CONTROL LOGROS 1 y 2
-    if(id === 'mariobros' || id === 'mariobros3' || id === 'marioworld' || id === 'newsupermario') {
-        verificarYDesbloquearLogro('mario', '🍄 BIENVENIDO AL REINO:<br>Has escaneado un juego de la saga Mario.');
+    // --- INTEGRACIÓN DE LOGROS AL ABRIR LA FICHA ---
+    // 1. Logro Mario
+    if(['mariobros', 'mariobros3', 'marioworld', 'newsupermario', 'mariokart64', 'mariokartsnes'].includes(id)) {
+        verificarYDesbloquearLogro('mario', '🍄 BIENVENIDO AL REINO:<br>Has escaneado tu primer juego de Mario.');
     }
+    // 2. Logro Arcade
     if(j.consola === 'arcade') {
         verificarYDesbloquearLogro('arcade', '🪙 INSERT COIN:<br>Has activado tu primera review del Salón Arcade.');
+    }
+    // 3. Logro Maestro Pokémon
+    if(['esmeralda', 'rubi', 'pokemonredgb', 'pokemoncrystal'].includes(id)) {
+        verificarYDesbloquearLogro('hoenn', '🧢 MAESTRO POKÉMON:<br>Has escaneado un cartucho de Pokémon.');
+    }
+    // 4. Logro Broma Pokémon Esmeralda (Too Much Water)
+    if(id === 'esmeralda') {
+        verificarYDesbloquearLogro('toomuchwater', '🌊 TOO MUCH WATER:<br>7.8/10. Hay demasiada agua en Hoenn.');
+    }
+    // 5. Logro Juegos de Lucha
+    if(['kof94', 'kof95', 'streetfighter2turbo', 'supersmashbros', 'streetrage2'].includes(id)) {
+        verificarYDesbloquearLogro('lucha', '🥋 ¡K.O. TÉCNICO!:<br>Has entrado al ring de combate.');
+    }
+    // 6. Logro de Películas a Videojuegos
+    if(['batman', 'batmanreturn', 'aladdin', 'simpsons', 'tmnt', 'tmnt4in'].includes(id)) {
+        verificarYDesbloquearLogro('cine', '🎬 DE CINE A 16 BITS:<br>Has escaneado un juego de TV o película.');
     }
 
     const col = {nes:'#e60012',n64:'#00b140',md:'#e00000',snes:'#005b9f',gba:'#5a429b',arcade:'#ff00ff',nds:'#a8a8a8'}[j.consola] || '#d4af37';
@@ -1202,6 +1213,16 @@ function cambiarPestana(tipo) {
     reproducirClic();
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('tab' + tipo.charAt(0).toUpperCase() + tipo.slice(1)).classList.add('active');
+    
+    // 7. Logro Ratón de Biblioteca (Zonas de Trucos)
+    if (tipo === 'manual') {
+        let manualCount = parseInt(localStorage.getItem('count_manual') || '0') + 1;
+        localStorage.setItem('count_manual', manualCount);
+        if(manualCount === 3) {
+            verificarYDesbloquearLogro('trucos', '📖 RATÓN DE BIBLIOTECA:<br>Has consultado 3 zonas de trucos distintas.');
+        }
+    }
+
     if (tipo === 'fama') { document.getElementById('flipbookWrapper').style.display = 'none'; document.getElementById('contenidoFama').style.display = 'block'; renderRecords(); } 
     else { document.getElementById('flipbookWrapper').style.display = 'block'; document.getElementById('contenidoFama').style.display = 'none'; loadFlipbook(tipo); }
 }
@@ -1253,13 +1274,22 @@ function anadirRecord() {
         localStorage.setItem('rec_'+currentId, JSON.stringify(list.slice(0,5))); 
         renderRecords(); 
         
-        // ¡LOGRO 4 ADQUIRIDO! Por firmar la tabla de récords
-        verificarYDesbloquearLogro('records', '🏅 REY DEL BARRIO:<br>Has dejado tu firma en el Salón de la Fama.');
+        // 8. Logro Rey del Barrio (Firma en Hall of Fame)
+        verificarYDesbloquearLogro('records', '🏅 REY DEL BARRIO:<br>Has dejado tu firma en el Salón de la Fama local.');
     }
 }
 
 function irAlJuego() { 
     playSound('coin'); 
+    
+    // --- LÓGICA DE HORARIOS PARA LOGROS 9 Y 10 ---
+    let horaActual = new Date().getHours();
+    if(horaActual >= 8 && horaActual <= 11) {
+        verificarYDesbloquearLogro('desayuno', '🍞 ENERGÍA DE OCHÍO:<br>Echando una partida a la hora de almorzar.');
+    }
+    if(horaActual >= 0 && horaActual <= 5) {
+        verificarYDesbloquearLogro('noctambulo', '🧛 NOCTÁMBULO:<br>Jugando de madrugada... ¡Cuidado con Drácula!');
+    }
     
     let esVip = false;
     let caducidad = localStorage.getItem('olea3d_vip_caducidad');
@@ -1306,8 +1336,18 @@ function irAlJuego() {
 
 function cerrarFicha() { playSound('clic'); document.getElementById('modalFicha').style.display='none'; window.history.replaceState(null,null,window.location.pathname); }
 function cerrarPaywall() { playSound('clic'); document.getElementById('modalPaywall').style.display='none'; }
-function encargarLlaveroEspecifico() { playSound('clic'); window.open(`https://wa.me/34652824867?text=Quiero%20el%20llavero%20de%20${infoJuegos[currentId].titulo}`, '_blank'); }
-function abrirTiendaGeneral() { playSound('clic'); window.open(`https://wa.me/34652824867?text=Quiero%20mi%20llavero%20NFC`, '_blank'); }
+
+// 11. Logro Cliente VIP (Tienda WhatsApp)
+function encargarLlaveroEspecifico() { 
+    playSound('clic'); 
+    verificarYDesbloquearLogro('cliente', '🛒 CLIENTE VIP:<br>Has conectado con la tienda oficial OLEA3D.');
+    window.open(`https://wa.me/34652824867?text=Quiero%20el%20llavero%20de%20${infoJuegos[currentId].titulo}`, '_blank'); 
+}
+function abrirTiendaGeneral() { 
+    playSound('clic'); 
+    verificarYDesbloquearLogro('cliente', '🛒 CLIENTE VIP:<br>Has conectado con la tienda oficial OLEA3D.');
+    window.open(`https://wa.me/34652824867?text=Quiero%20mi%20llavero%20NFC`, '_blank'); 
+}
 
 function filtrarJuegos() { let input=document.getElementById("buscadorJuegos").value.toLowerCase(); document.querySelectorAll(".card-wrapper").forEach(t => { let h=t.querySelector("h2").innerText.toLowerCase(); t.style.display = h.includes(input) ? "block" : "none"; }); }
 
@@ -1423,10 +1463,10 @@ function lanzarAnimacionPortal(callback) {
             destello.style.transform = 'translate(-50%, -50%) scale(0)';
             if (callback) callback();
         }, 300);
-    }, 1000);
+    }, 2300);
 }
 
-// --- ACTUALIZACIÓN DEL ESCÁNER (TIEMPO DE ESPERA REDUCIDO A 0.5s) ---
+// --- ACTUALIZACIÓN DEL ESCÁNER ---
 window.onload = () => {
     renderCards();
     const hash = window.location.hash.replace('#','');
@@ -1439,7 +1479,7 @@ window.onload = () => {
             lanzarAnimacionPortal(() => {
                 verFicha(hash); 
             });
-        }, 2500);
+        }, 1500);
     }
 };
 
@@ -1457,6 +1497,9 @@ function verificarClave() {
     
     if(input.toUpperCase() === claveCorrecta.toUpperCase()) {
         reproducirSonido1UP(); 
+        
+        // 12. Logro Hackerman (Clave secreta VIP)
+        verificarYDesbloquearLogro('hackerman', '🔓 HACKERMAN:<br>Has descifrado la seguridad del sistema OLEA3D.');
         
         const horasDesbloqueo = 48; 
         const tiempoCaducidad = new Date().getTime() + (horasDesbloqueo * 60 * 60 * 1000);
