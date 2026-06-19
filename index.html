@@ -1206,6 +1206,10 @@ function verFicha(id) {
     if(['batman', 'batmanreturn', 'aladdin', 'simpsons', 'tmnt', 'tmnt4in'].includes(id)) {
         verificarYDesbloquearLogro('cine', '🎬 DE CINE A 16 BITS:<br>Has escaneado un juego de TV o película.');
     }
+    // Logro exclusivo de Toki
+    if(id === 'tokia') {
+        verificarYDesbloquearLogro('mono_magico', '🐒 MAGIA PRIMATE:<br>Has recordado la leyenda de Toki.');
+    }
 
     const col = {nes:'#e60012',n64:'#00b140',md:'#e00000',snes:'#005b9f',gba:'#5a429b',arcade:'#ff00ff',nds:'#a8a8a8'}[j.consola] || '#d4af37';
     document.documentElement.style.setProperty('--modal-border', col); 
