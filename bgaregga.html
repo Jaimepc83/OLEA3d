@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Pokémon Cristal - OLEA3D</title>
+    <title>Battle Garegga - OLEA3D</title>
     <style>
         /* Bloqueo rígido total para evitar acercamientos y descuadres al rotar */
         body, html { 
@@ -45,7 +45,7 @@
         
         .btn-exit { background: rgba(139, 0, 0, 0.8); text-decoration: none; display: flex; align-items: center; }
         .btn-full { background: rgba(0, 150, 255, 0.8); } 
-        .btn-save { background: rgba(0, 191, 255, 0.8); } /* Azul Cristal GBC */
+        .btn-save { background: rgba(255, 0, 255, 0.8); } /* Magenta Arcade */
         .btn-load { background: rgba(212, 175, 55, 0.8); }
         .btn-olea:active { transform: scale(0.9); }
 
@@ -89,7 +89,6 @@
         window.addEventListener('touchstart', mostrarHUD);
         window.addEventListener('mousemove', mostrarHUD);
 
-        // Mantiene el menú visible incluso si el emulador entra en pantalla completa nativa
         document.addEventListener('fullscreenchange', () => {
             const toast = document.getElementById('save-toast');
             if (document.fullscreenElement) {
@@ -149,10 +148,10 @@
 
         /* --- CONFIGURACIÓN DEL JUEGO --- */
         EJS_player = '#game'; 
-        EJS_core = 'gb'; 
-        EJS_gameName = 'Pokemon Cristal'; 
-        EJS_gameUrl = 'pokemoncrystal.gbc'; 
-        EJS_color = '#00bfff'; 
+        EJS_core = 'arcade'; 
+        EJS_gameName = 'Battle Garegga'; 
+        EJS_gameUrl = 'bgaregga.zip'; 
+        EJS_color = '#ff00ff'; 
         EJS_startOnLoaded = true; 
         EJS_pathtodata = 'https://cdn.jsdelivr.net/gh/ethanaobrien/emulatorjs@main/data/';
     </script>
