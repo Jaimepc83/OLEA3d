@@ -1242,6 +1242,10 @@ function verFicha(id) {
     if(id === 'tokia') {
         verificarYDesbloquearLogro('mono_magico', '🐒 MAGIA PRIMATE:<br>Has recordado la leyenda de Toki.');
     }
+    // Logro exclusivo de Neo Turf Masters
+    if(id === 'neoturf') {
+        verificarYDesbloquearLogro('hoyo_en_uno', '⛳ HOYO EN UNO:<br>Has entrado en el club de golf Neo Geo.');
+    }
 
     const col = {nes:'#e60012',n64:'#00b140',md:'#e00000',snes:'#005b9f',gba:'#5a429b',arcade:'#ff00ff',nds:'#a8a8a8'}[j.consola] || '#d4af37';
     document.documentElement.style.setProperty('--modal-border', col); 
