@@ -1347,6 +1347,10 @@ function verFicha(id) {
     if(id === 'neoturf') {
         verificarYDesbloquearLogro('hoyo_en_uno', '⛳ HOYO EN UNO:<br>Has entrado en el club de golf Neo Geo.');
     }
+    // Logro exclusivo The King of Dragons
+    if(id === 'kingofdragon') {
+        verificarYDesbloquearLogro('matadragones', '🐉 CAZADOR DE DRAGONES:<br>Has reunido al gremio en King of Dragons.');
+    }
 
     const col = {nes:'#e60012',n64:'#00b140',md:'#e00000',snes:'#005b9f',gba:'#5a429b',arcade:'#ff00ff',nds:'#a8a8a8'}[j.consola] || '#d4af37';
     document.documentElement.style.setProperty('--modal-border', col); 
