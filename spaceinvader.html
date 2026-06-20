@@ -146,17 +146,18 @@
             setTimeout(() => toast.classList.remove('show'), 2000);
         }
 
-        /* --- CONFIGURACIÓN DEL JUEGO SPACE INVADERS --- */
+                /* --- CONFIGURACIÓN DEL JUEGO SPACE INVADERS --- */
         window.EJS_player = '#game'; 
         
-        /* OJO: He puesto el core MAME por defecto. Lee la advertencia abajo. */
-        window.EJS_core = 'mame2003'; 
+        /* AQUÍ ESTÁ LA MAGIA: Le decimos que use el motor de Mega Drive */
+        window.EJS_core = 'segaMD'; 
         
         window.EJS_gameName = 'Space Invaders'; 
         window.EJS_gameUrl = 'spaceinvader.bin'; 
         window.EJS_color = '#d4af37'; 
         window.EJS_startOnLoaded = true; 
         window.EJS_pathtodata = 'https://cdn.jsdelivr.net/gh/ethanaobrien/emulatorjs@main/data/';
+
     </script>
     <script src="https://cdn.jsdelivr.net/gh/ethanaobrien/emulatorjs@main/data/loader.js"></script>
 </body>
