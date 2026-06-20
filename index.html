@@ -440,6 +440,17 @@ function verificarYDesbloquearLogro(idLogro, textoInsignia) {
     toast.classList.add('active');
     setTimeout(() => toast.classList.remove('active'), 4000);
 }
+// --- FUNCIÓN PARA VER FOTOS EN GRANDE ---
+function abrirFoto(src) {
+    playSound('clic'); 
+    document.getElementById('modalFoto').style.display = 'block';
+    document.getElementById('fotoAmpliada').src = src;
+}
+
+function cerrarFoto() {
+    playSound('clic');
+    document.getElementById('modalFoto').style.display = 'none';
+}
 
 // LOGROS DE LOGOS
 let toquesLogo = 0, tiempoToques;
