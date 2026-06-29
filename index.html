@@ -2254,19 +2254,20 @@ function lanzarAnimacionPortal(callback) {
     }, 2300);
 }
 
-// --- ACTUALIZACIÓN DEL ESCÁNER ---
+// --- ACTUALIZACIÓN DEL ESCÁNER (VIP PERMANENTE) ---
 window.onload = () => {
-    // --- NUEVO: DETECTOR VIP AUTOMÁTICO DEL LLAVERO NFC ---
+    // --- BYPASS VIP TOTAL: BARRA LIBRE HASTA EL AÑO 2099 ---
+    // Esto fuerza a que el móvil siempre tenga el VIP activo.
+    // Es imposible que salte el bloqueo rojo con esto puesto.
+    localStorage.setItem('olea3d_vip_caducidad', new Date('2099-01-01').getTime());
+    localStorage.removeItem('olea3d_vip_expirado');
+
+    // Limpiamos la URL por si usan el llavero, para que quede limpia
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('llave') === '2491') {
-        // Si detecta la llave en el enlace, da 48 horas de barra libre
-        const tiempoCaducidad = new Date().getTime() + (48 * 60 * 60 * 1000);
-        localStorage.setItem('olea3d_vip_caducidad', tiempoCaducidad);
-        localStorage.removeItem('olea3d_vip_expirado');
-        // Limpiamos la URL para ocultar la clave y dejarla bonita
         window.history.replaceState(null, null, window.location.pathname + window.location.hash);
     }
-    // --------------------------------------------------------
+    // ------------------------------------------------------
 
     renderCards();
     const hash = window.location.hash.replace('#','');
@@ -2282,6 +2283,7 @@ window.onload = () => {
         }, 1500);
     }
 };
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
