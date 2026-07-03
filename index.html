@@ -2349,8 +2349,20 @@ let currentId = ''; let currentPage = 0; let totalPages = 0;
 
 function renderCards() {
     const sections = { arcade: 'contArcade', nes: 'contNes', n64: 'contN64', md: 'contMd', snes: 'contSnes', gba: 'contGba', nds: 'contNds' };
-    Object.keys(sections).forEach(s => document.getElementById(sections[s]).innerHTML = '');
-    Object.keys(infoJuegos).forEach(id => {
+    Object.keys(sections).forEach(s => {
+        if(document.getElementById(sections[s])) document.getElementById(sections[s]).innerHTML = '';
+    });
+    
+    // Obtenemos todas las claves de los juegos
+    let clavesJuegos = Object.keys(infoJuegos);
+    
+    // MAGIA: Ordenamos el array alfabéticamente comparando el título de cada juego
+    clavesJuegos.sort((a, b) => {
+        return infoJuegos[a].titulo.localeCompare(infoJuegos[b].titulo);
+    });
+
+    // Ahora iteramos sobre las claves ya ordenadas
+    clavesJuegos.forEach(id => {
         const j = infoJuegos[id];
         let consolaClave = j.consola.replace('megadrive','md');
         const target = sections[consolaClave] || 'contArcade';
@@ -2369,6 +2381,7 @@ function renderCards() {
         }
     });
 }
+
 
 function verFicha(id) {
     const j = infoJuegos[id] || infoJuegos['cadillacs'];
