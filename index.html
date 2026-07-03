@@ -2447,6 +2447,10 @@ function verFicha(id) {
     if(id === 'pokemongold') {
         verificarYDesbloquearLogro('ho_oh', '🪶 RENACER DORADO:<br>Has iniciado tu viaje por la región de Johto.');
     }
+    // Logro exclusivo Stone Protectors
+    if(id === 'stoneprotector') {
+        verificarYDesbloquearLogro('troll_rock', '🎸 ROCK & TROLL:<br>Te has unido a la banda de los Stone Protectors.');
+    }
 
     const col = {nes:'#e60012',n64:'#00b140',md:'#e00000',snes:'#005b9f',gba:'#5a429b',arcade:'#ff00ff',nds:'#a8a8a8'}[j.consola] || '#d4af37';
     document.documentElement.style.setProperty('--modal-border', col); 
