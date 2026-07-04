@@ -2487,6 +2487,10 @@ function verFicha(id) {
     if(id === 'stoneprotector') {
         verificarYDesbloquearLogro('troll_rock', '🎸 ROCK & TROLL:<br>Te has unido a la banda de los Stone Protectors.');
     }
+    // Logro exclusivo Soccer Kid
+    if(id === 'soccerkid') {
+        verificarYDesbloquearLogro('mundial_rescatado', '🏆 HÉROE DEL MUNDIAL:<br>Has recuperado el trofeo dorado a balonazo limpio.');
+    }
 
     const col = {nes:'#e60012',n64:'#00b140',md:'#e00000',snes:'#005b9f',gba:'#5a429b',arcade:'#ff00ff',nds:'#a8a8a8'}[j.consola] || '#d4af37';
     document.documentElement.style.setProperty('--modal-border', col); 
