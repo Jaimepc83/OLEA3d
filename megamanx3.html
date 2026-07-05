@@ -3,124 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>MEGA MAN X3 - OLEA3D Arcade Zone</title>
+    <title>Mega Man X3 - OLEA3D</title>
     <style>
-        /* Bloqueo rígido absoluto para evitar gestos de zoom y descuadres de pantalla */
+        /* Bloqueo rígido total para evitar acercamientos y descuadres al rotar */
         body, html { 
-            margin: 0; 
-            padding: 0; 
-            width: 100%; 
-            height: 100%; 
-            background-color: #000; 
-            overflow: hidden; 
+            margin: 0; padding: 0; width: 100%; height: 100%; 
+            background-color: #000; overflow: hidden; 
             font-family: Arial, sans-serif; 
             touch-action: none; 
             position: fixed; 
         }
-        
         #game-container { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100vw; 
-            height: 100vh; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            z-index: 1;
+            position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; 
+            display: flex; justify-content: center; align-items: center; 
         }
+        #game { width: 100%; height: 100%; }
         
-        #game { 
-            width: 100%; 
-            height: 100%; 
-        }
-        
-        /* --- PANEL DE CONTROL FLOTANTE OLEA3D --- */
+        /* --- MENÚ FLOTANTE ESQUINADO OLEA3D --- */
         #olea-hud {
-            position: fixed; 
-            top: -70px; 
-            left: 0; 
-            width: 100vw; 
-            height: auto;
-            display: flex; 
-            justify-content: space-between; 
-            align-items: flex-start; 
-            box-sizing: border-box; 
-            padding: 20px; 
-            z-index: 2147483647; 
-            transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: fixed; top: -60px; left: 0; width: 100vw; height: auto;
+            display: flex; justify-content: space-between; align-items: flex-start; 
+            box-sizing: border-box; padding: 20px; z-index: 2147483647; 
+            transition: top 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             padding-top: max(20px, env(safe-area-inset-top)); 
             pointer-events: none; 
         }
         
-        #olea-hud.visible { 
-            top: 0; 
-        }
-        
-        .hud-grupo { 
-            display: flex; 
-            gap: 10px; 
-            pointer-events: auto; 
-        }
+        #olea-hud.visible { top: 0; }
+        .hud-grupo { display: flex; gap: 8px; pointer-events: auto; }
 
         .btn-olea {
-            padding: 10px 18px; 
-            border-radius: 25px;
-            font-family: Arial, sans-serif; 
-            font-size: 11px; 
-            font-weight: bold;
-            text-transform: uppercase; 
-            cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.25); 
-            color: white;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(12px); 
-            background: rgba(15, 15, 15, 0.6);
-            transition: transform 0.1s, background-color 0.2s;
+            padding: 8px 16px; border-radius: 20px;
+            font-family: Arial, sans-serif; font-size: 11px; font-weight: bold;
+            text-transform: uppercase; cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.3); color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px); background: rgba(0,0,0,0.5);
+            transition: transform 0.1s;
         }
         
-        .btn-exit { 
-            background: rgba(180, 0, 30, 0.85); 
-            text-decoration: none; 
-            display: flex; 
-            align-items: center; 
-        }
-        
-        .btn-full { background: rgba(0, 130, 230, 0.85); } 
-        .btn-save { background: rgba(0, 91, 159, 0.85); } /* Azul SNES */
-        .btn-load { background: rgba(200, 150, 20, 0.85); }
-        
-        .btn-olea:active { 
-            transform: scale(0.92); 
-        }
+        .btn-exit { background: rgba(139, 0, 0, 0.8); text-decoration: none; display: flex; align-items: center; }
+        .btn-full { background: rgba(0, 150, 255, 0.8); } 
+        .btn-save { background: rgba(0, 91, 159, 0.8); } /* Azul SNES X */
+        .btn-load { background: rgba(212, 175, 55, 0.8); }
+        .btn-olea:active { transform: scale(0.9); }
 
-        /* --- VENTANA DE NOTIFICACIÓN TOAST --- */
+        /* --- NOTIFICACIÓN FLOTANTE --- */
         #save-toast { 
-            position: fixed; 
-            bottom: 30px; 
-            left: 50%; 
-            transform: translateX(-50%); 
-            background: rgba(10, 10, 10, 0.9); 
-            border: 1px solid #9dff3d; 
-            color: #9dff3d; 
-            padding: 10px 22px; 
-            border-radius: 25px; 
-            font-weight: bold; 
-            font-size: 11px; 
-            opacity: 0; 
-            pointer-events: none; 
-            transition: transform 0.3s, opacity 0.3s; 
-            z-index: 2147483647; 
-            text-align: center; 
-            backdrop-filter: blur(6px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
+            background: rgba(15,15,15,0.85); border: 1px solid #9dff3d; 
+            color: #9dff3d; padding: 8px 16px; border-radius: 20px; 
+            font-weight: bold; font-size: 11px; opacity: 0; 
+            pointer-events: none; transition: 0.3s; z-index: 2147483647; text-align: center; backdrop-filter: blur(4px);
         }
-        
-        #save-toast.show { 
-            opacity: 1; 
-            transform: translateX(-50%) translateY(-10px); 
-        }
+        #save-toast.show { opacity: 1; transform: translateX(-50%) translateY(-10px); }
     </style>
 </head>
 <body>
@@ -129,7 +66,7 @@
     <div id="olea-hud">
         <div class="hud-grupo">
             <a href="index.html" class="btn-olea btn-exit">⬅ SALIR</a>
-            <button class="btn-olea btn-full" onclick="pantallaCompleta()">📺 FULL</button>
+            <button class="btn-olea btn-full" onclick="pantallaCompleta()">📺 COMPLETA</button>
         </div>
         <div class="hud-grupo">
             <button class="btn-olea btn-save" onclick="oleaSave()">💾 GUARDAR</button>
@@ -137,7 +74,7 @@
         </div>
     </div>
 
-    <div id="save-toast">✅ Operación realizada con éxito</div>
+    <div id="save-toast">✅ Acción completada</div>
 
     <script>
         const hud = document.getElementById('olea-hud'); 
@@ -146,22 +83,19 @@
         function mostrarHUD() { 
             hud.classList.add('visible'); 
             clearTimeout(temporizadorHUD); 
-            temporizadorHUD = setTimeout(() => { 
-                hud.classList.remove('visible'); 
-            }, 3500); 
+            temporizadorHUD = setTimeout(() => { hud.classList.remove('visible'); }, 3000); 
         }
         
-        window.addEventListener('touchstart', mostrarHUD, {passive: true});
+        window.addEventListener('touchstart', mostrarHUD);
         window.addEventListener('mousemove', mostrarHUD);
 
-        // Controlador de Pantalla Completa Nativa
         document.addEventListener('fullscreenchange', () => {
             const toast = document.getElementById('save-toast');
             if (document.fullscreenElement) {
                 try { 
                     document.fullscreenElement.appendChild(hud); 
                     document.fullscreenElement.appendChild(toast); 
-                } catch(e) { console.error(e); }
+                } catch(e){}
             } else {
                 document.body.appendChild(hud);
                 document.body.appendChild(toast);
@@ -171,22 +105,18 @@
         function oleaSave() {
             try {
                 if (window.EJS_emulator && window.EJS_emulator.gameManager) {
-                    window.EJS_emulator.gameManager.quickSave(1); 
-                    mostrarToast('💾 Partida guardada en el navegador');
-                } else { 
-                    mostrarToast('❌ Espera a que el cartucho cargue...'); 
-                }
+                    EJS_emulator.gameManager.quickSave(1); 
+                    mostrarToast('💾 Partida guardada');
+                } else { mostrarToast('❌ Espera a que cargue...'); }
             } catch(e) { console.error(e); }
         }
 
         function oleaLoad() {
             try {
                 if (window.EJS_emulator && window.EJS_emulator.gameManager) {
-                    window.EJS_emulator.gameManager.quickLoad(1); 
-                    mostrarToast('📂 Partida cargada correctamente');
-                } else { 
-                    mostrarToast('❌ Espera a que el cartucho cargue...'); 
-                }
+                    EJS_emulator.gameManager.quickLoad(1); 
+                    mostrarToast('📂 Partida cargada');
+                } else { mostrarToast('❌ Espera a que cargue...'); }
             } catch(e) { console.error(e); }
         }
 
@@ -205,7 +135,7 @@
                 if (document.exitFullscreen) {
                     document.exitFullscreen();
                 }
-                mostrarToast('📱 Modo de vista normal');
+                mostrarToast('📱 Modo normal');
             }
         }
 
@@ -213,22 +143,18 @@
             const toast = document.getElementById('save-toast');
             toast.innerText = msg;
             toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 2500);
+            setTimeout(() => toast.classList.remove('show'), 2000);
         }
 
-        /* --- ENTORNO DE EJECUCIÓN EMULATORJS --- */
-        window.EJS_player = '#game'; 
-        window.EJS_core = 'snes'; 
-        window.EJS_gameName = 'Mega Man X3'; 
-        window.EJS_gameUrl = 'megamanx3.sfc'; 
-        window.EJS_color = '#005b9f'; 
-        window.EJS_startOnLoaded = true; 
-        
-        // Redirigimos al servidor espejo rápido
-        window.EJS_pathtodata = 'https://unpkg.com/@emulatorjs/emulatorjs@latest/data/';
+        /* --- CONFIGURACIÓN DEL JUEGO --- */
+        EJS_player = '#game'; 
+        EJS_core = 'snes'; 
+        EJS_gameName = 'Mega Man X3'; 
+        EJS_gameUrl = 'megamanx3.sfc'; 
+        EJS_color = '#005b9f'; 
+        EJS_startOnLoaded = true; 
+        EJS_pathtodata = 'https://cdn.jsdelivr.net/gh/ethanaobrien/emulatorjs@main/data/';
     </script>
-    <script src="https://unpkg.com/@emulatorjs/emulatorjs@latest/data/loader.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ethanaobrien/emulatorjs@main/data/loader.js"></script>
 </body>
 </html>
