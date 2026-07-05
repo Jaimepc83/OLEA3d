@@ -2603,6 +2603,10 @@ function verFicha(id) {
     if(id === 'soccerkid') {
         verificarYDesbloquearLogro('mundial_rescatado', '🏆 HÉROE DEL MUNDIAL:<br>Has recuperado el trofeo dorado a balonazo limpio.');
     }
+    // Logro exclusivo Mortal Kombat 3
+    if(id === 'mortalkombat3') {
+        verificarYDesbloquearLogro('flawless_victory', '💀 FLAWLESS VICTORY:<br>Has ejecutado un Fatality y sobrevivido al kombate.');
+    }
 
     const col = {nes:'#e60012',n64:'#00b140',md:'#e00000',snes:'#005b9f',gba:'#5a429b',arcade:'#ff00ff',nds:'#a8a8a8'}[j.consola] || '#d4af37';
     document.documentElement.style.setProperty('--modal-border', col); 
