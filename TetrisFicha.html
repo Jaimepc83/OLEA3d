@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Tetris - OLEA3D</title>
     <style>
-        /* Bloqueo rígido total para evitar acercamientos y descuadres al rotar */
         body, html { 
             margin: 0; padding: 0; width: 100%; height: 100%; 
             background-color: #000; overflow: hidden; 
@@ -45,15 +44,14 @@
         
         .btn-exit { background: rgba(139, 0, 0, 0.8); text-decoration: none; display: flex; align-items: center; }
         .btn-full { background: rgba(0, 150, 255, 0.8); } 
-        .btn-save { background: rgba(230, 0, 18, 0.8); } /* Rojo NES */
+        .btn-save { background: rgba(230, 0, 18, 0.8); color: white; } /* Rojo Nintendo */
         .btn-load { background: rgba(212, 175, 55, 0.8); }
         .btn-olea:active { transform: scale(0.9); }
 
-        /* --- NOTIFICACIÓN FLOTANTE --- */
         #save-toast { 
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
-            background: rgba(15,15,15,0.85); border: 1px solid #9dff3d; 
-            color: #9dff3d; padding: 8px 16px; border-radius: 20px; 
+            background: rgba(15,15,15,0.85); border: 1px solid #e60012; 
+            color: #e60012; padding: 8px 16px; border-radius: 20px; 
             font-weight: bold; font-size: 11px; opacity: 0; 
             pointer-events: none; transition: 0.3s; z-index: 2147483647; text-align: center; backdrop-filter: blur(4px);
         }
@@ -89,26 +87,13 @@
         window.addEventListener('touchstart', mostrarHUD);
         window.addEventListener('mousemove', mostrarHUD);
 
-        document.addEventListener('fullscreenchange', () => {
-            const toast = document.getElementById('save-toast');
-            if (document.fullscreenElement) {
-                try { 
-                    document.fullscreenElement.appendChild(hud); 
-                    document.fullscreenElement.appendChild(toast); 
-                } catch(e){}
-            } else {
-                document.body.appendChild(hud);
-                document.body.appendChild(toast);
-            }
-        });
-
         function oleaSave() {
             try {
                 if (window.EJS_emulator && window.EJS_emulator.gameManager) {
                     EJS_emulator.gameManager.quickSave(1); 
                     mostrarToast('💾 Partida guardada');
-                } else { mostrarToast('❌ Espera a que cargue...'); }
-            } catch(e) { console.error(e); }
+                }
+            } catch(e) {}
         }
 
         function oleaLoad() {
@@ -116,26 +101,16 @@
                 if (window.EJS_emulator && window.EJS_emulator.gameManager) {
                     EJS_emulator.gameManager.quickLoad(1); 
                     mostrarToast('📂 Partida cargada');
-                } else { mostrarToast('❌ Espera a que cargue...'); }
-            } catch(e) { console.error(e); }
+                }
+            } catch(e) {}
         }
 
         function pantallaCompleta() {
             let elemento = document.documentElement;
             if (!document.fullscreenElement) {
-                if (elemento.requestFullscreen) {
-                    elemento.requestFullscreen();
-                } else if (elemento.webkitRequestFullscreen) {
-                    elemento.webkitRequestFullscreen();
-                } else if (elemento.msRequestFullscreen) {
-                    elemento.msRequestFullscreen();
-                }
-                mostrarToast('📺 Pantalla completa activada');
+                if (elemento.requestFullscreen) elemento.requestFullscreen();
             } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                }
-                mostrarToast('📱 Modo normal');
+                if (document.exitFullscreen) document.exitFullscreen();
             }
         }
 
@@ -146,11 +121,11 @@
             setTimeout(() => toast.classList.remove('show'), 2000);
         }
 
-        /* --- CONFIGURACIÓN DEL JUEGO --- */
+        /* --- CONFIGURACIÓN DEL JUEGO (NES) --- */
         EJS_player = '#game'; 
         EJS_core = 'nes'; 
         EJS_gameName = 'Tetris'; 
-        EJS_gameUrl = 'tetris.nes'; /* Asegúrate de que tu juego se llama así, o cámbialo por 'tetris.zip' si lo subiste comprimido */
+        EJS_gameUrl = 'tetris.nes'; // <- Asegúrate de que tu ROM se llame exactamente así
         EJS_color = '#e60012'; 
         EJS_startOnLoaded = true; 
         EJS_pathtodata = 'https://cdn.jsdelivr.net/gh/ethanaobrien/emulatorjs@main/data/';
